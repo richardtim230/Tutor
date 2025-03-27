@@ -6,12 +6,14 @@ const loginForm = document.getElementById('login-form');
 
 switchToRegister.addEventListener('click', (e) => {
     e.preventDefault();
+    console.log('Switch to register button clicked');
     loginForm.classList.add('hidden');
     registerForm.classList.remove('hidden');
 });
 
 switchToLogin.addEventListener('click', (e) => {
     e.preventDefault();
+    console.log('Switch to login button clicked');
     registerForm.classList.add('hidden');
     loginForm.classList.remove('hidden');
 });
