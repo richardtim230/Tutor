@@ -38,8 +38,11 @@ registerForm.addEventListener('submit', async (e) => {
 // Handle Login Form Submission
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log('Login form submitted'); // Add this line
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
+    console.log('Email:', email); // Add this line
+    console.log('Password:', password); // Add this line
 
     const response = await fetch('https://tutorapi.vercel.app/auth/login', {
         method: 'POST',
@@ -48,6 +51,7 @@ loginForm.addEventListener('submit', async (e) => {
     });
 
     const result = await response.json();
+    console.log('Response:', result); // Add this line
     if (result.token) {
         alert('Login successful!');
         // Save the token (optional)
