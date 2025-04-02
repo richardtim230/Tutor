@@ -1,86 +1,80 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+    padding: 0;
+    background: #f5f5f5;
 }
 
 .container {
-    max-width: 800px;
+    width: 80%;
+    margin: auto;
     background: white;
     padding: 20px;
-    margin: auto;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
 }
 
 header {
+    display: flex;
+    justify-content: space-between;
     text-align: center;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid #000;
     padding-bottom: 10px;
-    margin-bottom: 20px;
 }
 
-h1 {
+.school-logo img {
+    width: 80px;
+}
+
+.school-info h1 {
     font-size: 20px;
-    margin: 0;
+    color: #ff8800;
 }
 
-h2 {
-    font-size: 18px;
-    color: #444;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
+.report-title {
+    text-align: center;
+    margin: 20px 0;
 }
 
-p {
-    margin: 5px 0;
+.report-title img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
 }
 
-.school-info,
-.student-info,
-.grades,
-.skills,
-.attendance,
-.psychomotor {
-    margin-bottom: 20px;
-}
-
-table {
+.scores-table table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
+.scores-table th, .scores-table td {
+    border: 1px solid #000;
+    padding: 10px;
     text-align: center;
 }
 
-th {
-    background-color: #f8f8f8;
+.ratings {
+    display: flex;
+    justify-content: space-between;
 }
 
-ul {
+.ratings ul {
     list-style: none;
     padding: 0;
 }
 
-ul li {
-    background: #eee;
-    padding: 8px;
-    margin-bottom: 5px;
-    border-radius: 5px;
+.chart img {
+    width: 100%;
 }
 
-@media (max-width: 600px) {
-    .container {
-        width: 100%;
-        padding: 10px;
-    }
+.signatures p {
+    font-weight: bold;
+    text-align: center;
+}
 
-    table {
-        font-size: 14px;
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #000;
+    color: white;
     }
-                                  }
+    
