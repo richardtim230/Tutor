@@ -2,79 +2,77 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f5f5f5;
+    background: #f0f0f0;
 }
 
 .container {
-    width: 80%;
-    margin: auto;
+    width: 90%;
+    margin: 20px auto;
     background: white;
     padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
     text-align: center;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #333;
     padding-bottom: 10px;
 }
 
-.school-logo img {
-    width: 80px;
-}
-
-.school-info h1 {
-    font-size: 20px;
-    color: #ff8800;
-}
-
-.report-title {
-    text-align: center;
-    margin: 20px 0;
-}
-
-.report-title img {
+.school-logo {
     width: 100px;
-    height: 100px;
+}
+
+.student-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 2px solid #333;
+}
+
+.student-photo img {
+    width: 100px;
     border-radius: 50%;
 }
 
-.scores-table table {
+.scores table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.scores-table th, .scores-table td {
-    border: 1px solid #000;
-    padding: 10px;
+.scores th, .scores td {
+    border: 1px solid black;
+    padding: 8px;
     text-align: center;
 }
 
 .ratings {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
-.ratings ul {
-    list-style: none;
-    padding: 0;
-}
-
-.chart img {
-    width: 100%;
-}
-
-.signatures p {
-    font-weight: bold;
+.chart {
     text-align: center;
+    margin-top: 20px;
+}
+
+.bar-chart {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.bar {
+    width: 50px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
 }
 
 footer {
     text-align: center;
-    padding: 10px;
-    background: #000;
-    color: white;
+    margin-top: 20px;
     }
     
