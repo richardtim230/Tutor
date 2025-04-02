@@ -9,11 +9,11 @@
 <body>
 
     <div class="container">
-
+        
         <!-- Header Section -->
         <header>
-            <div class="school-logo">
-                <img src="school_logo.png" alt="School Logo">
+            <div class="logo-container">
+                <img src="school_logo.png" alt="School Logo" class="school-logo">
             </div>
             <div class="school-info">
                 <h1>OAU GLOBAL LEARNING NETWORK</h1>
@@ -21,60 +21,65 @@
                 <p>🌐 <a href="https://dbsife.schoolsfocus.net">dbsife.schoolsfocus.net</a> | 📞 09155127634 | ✉ info.dbsife@gmail.com</p>
                 <p><strong>Motto:</strong> Education Without Boundaries...</p>
             </div>
-            <div class="school-logo">
-                <img src="school_logo.png" alt="School Logo">
+            <div class="logo-container">
+                <img src="school_logo.png" alt="School Logo" class="school-logo">
             </div>
         </header>
 
-        <!-- Report Title -->
-        <section class="report-title">
-            <h2>FIRST SEMESTER, 2024-2025 (MID TERM REPORT)</h2>
-            <img src="student_photo.jpg" alt="Student Photo">
-        </section>
-
         <!-- Student Information -->
         <section class="student-info">
-            <p><strong>Name:</strong> KEHINDE MUHAMMAD EZE</p>
-            <p><strong>ID:</strong> SF0012323</p>
-            <p><strong>Age:</strong> 17</p>
-            <p><strong>Department:</strong> PHYSICS AND ENGINEERING PHYSICS 2</p>
-            <p><strong>Email:</strong> <a href="mailto:muheze@student.oau.edu.ng">muheze@student.oau.edu.ng</a></p>
+            <div class="student-photo">
+                <img src="student_photo.jpg" alt="Student Photo">
+            </div>
+            <div class="student-details">
+                <p><strong>Name:</strong> KEHINDE MUHAMMAD EZE</p>
+                <p><strong>Student ID:</strong> SF-2021-003</p>
+                <p><strong>Age:</strong> 17</p>
+                <p><strong>Department:</strong> PHYSICS AND ENGINEERING PHYSICS, 2L</p>
+                <p><strong>Email:</strong> muhammad.k@oau.edu.ng</p>
+            </div>
+            <div class="student-academic">
+                <p><strong>Programme:</strong> 1st Semester</p>
+                <p><strong>Level:</strong> 200</p>
+                <p><strong>Student Target Score:</strong> 90%</p>
+                <p><strong>Session:</strong> 2024-2025</p>
+            </div>
         </section>
 
-        <!-- Subjects & Scores Table -->
-        <section class="scores-table">
+        <!-- Table for Scores -->
+        <section class="scores">
             <table>
                 <thead>
                     <tr>
-                        <th>Subject</th>
-                        <th>Midterm</th>
-                        <th>Examination</th>
-                        <th>Total</th>
+                        <th>Course Code</th>
+                        <th>Mid-Term Assessment (40%)</th>
+                        <th>Examination (60%)</th>
+                        <th>Total (100%)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>CHM 101</td>
-                        <td>100</td>
-                        <td>100</td>
+                        <td>PHY 101</td>
+                        <td>40/40</td>
+                        <td>60/60</td>
                         <td>100</td>
                     </tr>
                     <tr>
                         <td>MTH 101</td>
-                        <td>100</td>
-                        <td>100</td>
-                        <td>100</td>
+                        <td>38/40</td>
+                        <td>60/60</td>
+                        <td>98</td>
                     </tr>
                     <tr>
-                        <td>PHY 101</td>
-                        <td>100</td>
-                        <td>100</td>
+                        <td>CHM 101</td>
+                        <td>35/40</td>
+                        <td>65/60</td>
                         <td>100</td>
                     </tr>
                     <tr>
                         <td>BIO 101</td>
-                        <td>100</td>
-                        <td>100</td>
+                        <td>36/40</td>
+                        <td>64/60</td>
                         <td>100</td>
                     </tr>
                 </tbody>
@@ -86,47 +91,42 @@
             <div class="affective">
                 <h3>Affective Skills Rating</h3>
                 <ul>
-                    <li>Neatness - 3</li>
-                    <li>Punctuality - 3</li>
-                    <li>Politeness - 3</li>
-                    <li>Leadership - 3</li>
-                    <li>Honesty - 3</li>
-                    <li>Initiative - 3</li>
-                    <li>Attentiveness - 3</li>
-                    <li>Relationship with Others - 3</li>
+                    <li>Honesty: 5</li>
+                    <li>Neatness: 5</li>
+                    <li>Punctuality: 5</li>
+                    <li>Politeness: 5</li>
+                    <li>Attentiveness: 5</li>
                 </ul>
             </div>
             <div class="psychomotor">
                 <h3>Psychomotor Skills Rating</h3>
                 <ul>
-                    <li>Handwriting - 3</li>
-                    <li>Drawing - 3</li>
-                    <li>Games - 3</li>
-                    <li>Handling of Materials - 3</li>
-                    <li>Verbal Fluency - 3</li>
+                    <li>Handwriting: 5</li>
+                    <li>Sportsmanship: 5</li>
+                    <li>Leadership: 5</li>
+                    <li>Creativity: 5</li>
                 </ul>
             </div>
         </section>
 
-        <!-- Performance Chart (Placeholder) -->
+        <!-- Performance Chart -->
         <section class="chart">
-            <h3>SUBJECTS PERFORMANCE CHART</h3>
-            <img src="chart.png" alt="Performance Chart">
+            <h3>Subjects Performance Chart</h3>
+            <div class="bar-chart">
+                <div class="bar" style="height: 100px; background: blue;">100</div>
+                <div class="bar" style="height: 98px; background: black;">98</div>
+                <div class="bar" style="height: 100px; background: green;">100</div>
+                <div class="bar" style="height: 100px; background: orange;">100</div>
+            </div>
         </section>
 
         <!-- Signatures -->
-        <section class="signatures">
-            <p><strong>Form Teacher:</strong> RICHARD</p>
-            <p><strong>Form Teacher's Signature:</strong> _______________</p>
-            <p><strong>Dean:</strong> SCHARO TIMOTHY</p>
-            <p><strong>Dean's Signature:</strong> _______________</p>
-        </section>
-
-        <!-- Footer -->
         <footer>
-            <p>Powered by: <a href="https://schoolsfocus.net">SchoolsFocus</a></p>
+            <p><strong>Form Teacher:</strong> RICHARD</p>
+            <p><strong>Form Teacher's Signature:</strong> ___________________</p>
+            <p><strong>Dean:</strong> SCHOLAR TIMOTHY</p>
+            <p><strong>Dean’s Signature:</strong> ___________________</p>
         </footer>
-
     </div>
 
 </body>
