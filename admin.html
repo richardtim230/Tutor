@@ -3,446 +3,573 @@
 <head>
   <meta charset="UTF-8">
   <title>CODECX Admin Dashboard</title>
-  <meta name="viewport" content="width=device-width,initial-scale=0.9">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
-    body { background: #f3f4f6; }
-    .card { background: #fff; border-radius: 1.3rem; box-shadow: 0 2px 18px #6366f122; }
-    .tab-active { border-bottom: 2.5px solid #6366f1; color: #6366f1; font-weight: bold; }
-    .tab { cursor: pointer; transition: color .2s; font-weight: 500; }
-    .tab:hover { color: #6366f1; }
-    .responsive-table { overflow-x: auto; }
-    @media (max-width: 900px) {
-      .grid-cols-4 { grid-template-columns: 1fr; }
+    body {
+      background: #f6f7fb;
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      min-width: 0;
     }
-    @media (max-width: 650px) {
-      .dashboard-header { flex-direction: column; gap: 1.3rem; }
-      .admin-profile { flex-direction: column; align-items: flex-start; }
-      .admin-profile img { margin-bottom: 1rem;}
-      .dashboard-header { min-width: 0; width: 100vw; }
+    main {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
     }
-    .student-folder-modal-bg { position: fixed; inset: 0; background: rgba(60,72,128,0.25); z-index: 9999; display: none; align-items: center; justify-content: center; }
-    .student-folder-modal-bg.show { display: flex; }
-    .student-folder-modal { background: white; border-radius: 1.4rem; box-shadow: 0 8px 32px #6366f133; max-width: 97vw; min-width: 320px; width: 100%; max-width: 470px; padding: 2.2rem 1.2rem 1.7rem 1.2rem; position: relative; text-align: left; animation: modalIn .5s; }
-    .student-folder-modal .close-modal { position: absolute; top: 15px; right: 19px; background: transparent; border: none; font-size: 1.6rem; color: #888; cursor: pointer; opacity: 0.7; }
-    .student-folder-modal .close-modal:hover { opacity: 1; }
-    @keyframes modalIn { from { opacity: 0; transform: scale(0.95);} to { opacity: 1; transform: scale(1);} }
-    .admin-action-btn { background: #6366f1; color: #fff; font-weight: bold; padding: .55rem 1.2rem; border-radius: 9px; margin-right: .5rem; transition: background .17s; }
-    .admin-action-btn:hover { background: #4338ca; }
-    .admin-action-btn.secondary { background: #e5e7eb; color: #312e81; border: 1.7px solid #6366f1; }
-    .admin-action-btn.danger { background: #dc2626; color: #fff; }
-    .admin-card-header { font-size: 1.16rem; font-weight: bold; color: #6366f1;}
-    /* Fix header region overflow */
-    .dashboard-header, nav { min-width: 0; width: 100%; max-width: 100vw; }
-    nav { overflow-x: auto; }
-    .dashboard-header { flex-wrap: wrap; }
+    .section {
+      background: #fff;
+      border-radius: 1.1rem;
+      box-shadow: 0 2px 12px #6366f117;
+      padding: 1.7rem 1.2rem;
+      margin-bottom: 2.2rem;
+      min-width: 0;
+      overflow-x: auto;
+    }
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 1rem;
+      background: #f9fafb;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 900px;
+      table-layout: auto;
+      font-size: 0.97rem;
+    }
+    th, td {
+      padding: 0.6rem 0.5rem;
+      border: 1px solid #e5e7eb;
+      word-break: break-word;
+      vertical-align: top;
+      min-width: 90px;
+      max-width: 320px;
+    }
+    th {
+      background: #eef2ff;
+      color: #312e81;
+      font-weight: 700;
+    }
+    td img {
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      border: 2px solid #e0e7ff;
+      object-fit: cover;
+      background: #f3f4f6;
+    }
+    .action-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 7px;
+      font-weight: 600;
+      font-size: 1rem;
+      margin: 0.15rem 0;
+      cursor: pointer;
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      transition: background 0.16s;
+    }
+    .action-btn.secondary {
+      background: #fbbf24;
+      color: #312e81;
+    }
+    .action-btn.danger {
+      background: #ef4444;
+      color: #fff;
+    }
+    .action-btn.green {
+      background: #22c55e;
+      color: #fff;
+    }
+    .action-btn.gray {
+      background: #e5e7eb;
+      color: #312e81;
+    }
+    .badge {
+      display: inline-block;
+      border-radius: 8px;
+      font-size: .91rem;
+      padding: .19rem .7rem;
+      margin: .05rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge.paid { background: #d1fae5; color: #15803d; }
+    .badge.unpaid { background: #fee2e2; color: #991b1b; }
+    .badge.present { background: #e0e7ff; color: #4338ca; }
+    .badge.absent { background: #fee2e2; color: #991b1b; }
+    .badge.submitted { background: #fbbf24; color: #312e81; }
+    .badge.not-submitted { background: #e5e7eb; color: #374151; }
+    .folder-modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(60,72,128,0.16);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+    }
+    .folder-modal-bg.show { display: flex; }
+    .folder-modal {
+      background: #fff;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px #6366f133;
+      max-width: 97vw;
+      min-width: 320px;
+      width: 100%;
+      max-width: 660px;
+      padding: 2rem 1.2rem 1.7rem 1.2rem;
+      position: relative;
+      text-align: left;
+      animation: modalIn .5s;
+      overflow-y: auto;
+      max-height: 88vh;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95);}
+      to { opacity: 1; transform: scale(1);}
+    }
+    .close-modal {
+      position: absolute;
+      top: 13px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 1.6rem;
+      color: #888;
+      cursor: pointer;
+      opacity: 0.8;
+      z-index: 9;
+    }
+    .close-modal:hover { opacity: 1; }
+    .folder-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .folder-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid #e0e7ff;
+      background: #f3f4f6;
+      object-fit: cover;
+    }
+    .folder-title { font-size: 1.22rem; font-weight: 700; color: #4338ca;}
+    .folder-label { font-weight: 600; color: #6366f1; font-size: 1.04rem;}
+    .folder-content {
+      margin-bottom: 1.4rem;
+    }
+    .folder-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+    @media (max-width: 800px) {
+      .folder-grid { grid-template-columns: 1fr; }
+      main { padding: 1rem 0.2rem; }
+      .section { padding: 0.5rem 0.2rem;}
+      table { min-width: 600px; }
+      th, td { padding: 0.45rem 0.12rem; font-size: 0.97rem;}
+    }
+    @media (max-width: 500px) {
+      .folder-modal { padding: 1rem 0.2rem 1rem 0.2rem;}
+      table { min-width: 450px;}
+    }
+    .broadcast-area {
+      background: #f8fafc;
+      border-radius: 1rem;
+      padding: 1rem;
+      margin-bottom: 1.1rem;
+      box-shadow: 0 2px 8px #6366f111;
+      min-width: 0;
+    }
+    .broadcast-area textarea {
+      width: 100%;
+      min-width: 0;
+      padding: 0.67rem 0.8rem;
+      font-size: 1rem;
+      border-radius: 7px;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 0.8rem;
+      background: #fff;
+    }
+    .quiz-control-area {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+      align-items: center;
+    }
+    .quiz-control-area select,
+    .quiz-control-area input[type="text"] {
+      padding: 0.5rem 0.7rem;
+      border-radius: 7px;
+      border: 1px solid #e5e7eb;
+      font-size: 1rem;
+      min-width: 120px;
+      background: #fff;
+    }
+    .student-feedback {
+      background: #f3f4f6;
+      border-radius: 0.6rem;
+      padding: 0.7rem;
+      font-size: 1rem;
+      color: #312e81;
+      margin-bottom: 0.7rem;
+      min-width: 0;
+    }
+    .profile-info span { display: block; font-size: 0.98rem; margin-bottom: 0.2rem;}
+    .profile-info .profile-label { font-weight: 700; color: #6366f1; font-size: 1.01rem;}
+    .folder-subsection { margin-bottom: 0.9rem;}
+    .folder-subsection-title {
+      font-weight: 700;
+      color: #312e81;
+      margin-bottom: 0.3rem;
+      font-size: 1.09rem;
+    }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header class="dashboard-header bg-white shadow px-5 py-4 flex items-center justify-between gap-4 min-w-0 w-full max-w-full">
-    <div class="flex items-center gap-4 admin-profile min-w-0">
-      <img src="https://ui-avatars.com/api/?name=Admin&background=6366f1&color=fff" class="w-12 h-12 rounded-full border" alt="Admin Avatar" />
-      <div>
-        <div class="font-bold text-xl text-indigo-800">Admin Panel</div>
-        <div class="text-sm text-gray-600">CODECX Masterclass</div>
-      </div>
-    </div>
+  <header class="bg-white shadow px-4 py-4 flex flex-wrap items-center justify-between gap-2 min-w-0">
+    <h1 class="text-2xl font-bold text-indigo-800 flex-1 min-w-0 truncate">
+      CODECX Admin Dashboard
+      <span class="feature-badge ml-2">Platform Management</span>
+    </h1>
     <div>
-      <button onclick="logout()" class="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-700">Logout</button>
+      <button class="action-btn danger" onclick="logout()">Logout</button>
     </div>
   </header>
-  <!-- TABS -->
-  <nav class="bg-white shadow flex gap-6 px-5 py-3 text-lg w-full max-w-full">
-    <div class="tab tab-active" id="tab-dashboard" onclick="showTab('dashboard')"><i class="bi bi-bar-chart-fill mr-1"></i> Dashboard</div>
-    <div class="tab" id="tab-students" onclick="showTab('students')"><i class="bi bi-people-fill mr-1"></i> Students</div>
-    <div class="tab" id="tab-attendance" onclick="showTab('attendance')"><i class="bi bi-calendar-check-fill mr-1"></i> Attendance</div>
-    <div class="tab" id="tab-payments" onclick="showTab('payments')"><i class="bi bi-credit-card-fill mr-1"></i> Payments</div>
-    <div class="tab" id="tab-assignments" onclick="showTab('assignments')"><i class="bi bi-journal-text mr-1"></i> Assignments</div>
-    <div class="tab" id="tab-activity" onclick="showTab('activity')"><i class="bi bi-clock-history mr-1"></i> Activities</div>
-    <div class="tab" id="tab-quiz" onclick="showTab('quiz')"><i class="bi bi-question-square-fill mr-1"></i> Daily Quiz</div>
-    <div class="tab" id="tab-admin" onclick="showTab('admin')"><i class="bi bi-gear-fill mr-1"></i> Admin Tools</div>
-  </nav>
-  <main class="max-w-7xl mx-auto py-6 px-2">
-    <!-- DASHBOARD OVERVIEW -->
-    <section id="section-dashboard">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="card p-5">
-          <div class="admin-card-header mb-2"><i class="bi bi-person-lines-fill mr-1"></i> Today's Students</div>
-          <div class="text-3xl font-bold text-indigo-800" id="todayStudentCount">—</div>
-        </div>
-        <div class="card p-5">
-          <div class="admin-card-header mb-2"><i class="bi bi-calendar-check mr-1"></i> Daily Attendance</div>
-          <div class="text-2xl font-bold text-green-600" id="markedAttendanceCount">—</div>
-          <div class="text-sm text-gray-500">Marked / Total: <span id="totalAttendanceCount">—</span></div>
-        </div>
-        <div class="card p-5">
-          <div class="admin-card-header mb-2"><i class="bi bi-person-add mr-1"></i> Total Registrations</div>
-          <div class="text-3xl font-bold text-indigo-800" id="totalRegistrationCount">—</div>
-        </div>
-        <div class="card p-5">
-          <div class="flex items-center justify-between">
-            <div>
-              <div class="admin-card-header mb-2"><i class="bi bi-cash-stack mr-1"></i> Paid/Unpaid</div>
-              <div class="text-xl font-bold text-green-600" id="paidCount">—</div>
-              <div class="text-xl font-bold text-red-600" id="unpaidCount">—</div>
-            </div>
-            <div>
-              <i class="bi bi-bar-chart-steps text-4xl text-indigo-300"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Quick Actions -->
-      <div class="card p-5 mb-8 flex flex-wrap gap-4 items-center">
-        <button class="admin-action-btn" onclick="downloadReport()"><i class="bi bi-download mr-1"></i> Download Report</button>
-        <button class="admin-action-btn secondary" onclick="sendBroadcast()"><i class="bi bi-megaphone mr-1"></i> Send Broadcast</button>
-        <button class="admin-action-btn" onclick="openAddStudentModal()"><i class="bi bi-person-plus mr-1"></i> Add Student</button>
-        <button class="admin-action-btn danger" onclick="purgeUnpaid()"><i class="bi bi-trash mr-1"></i> Purge Unpaid</button>
+  <main>
+    <!-- Broadcast Section -->
+    <section class="section">
+      <h2 class="text-xl font-semibold mb-4">Broadcast Message <i class="bi bi-megaphone"></i></h2>
+      <div class="broadcast-area">
+        <textarea id="broadcastText" rows="2" placeholder="Type broadcast message..."></textarea>
+        <button class="action-btn green" onclick="sendBroadcast()">Send Broadcast</button>
+        <span id="broadcastStatus" class="ml-4"></span>
       </div>
     </section>
 
-    <!-- STUDENTS SECTION -->
-    <section id="section-students" style="display:none;">
-      <div class="card p-5 mb-6">
-        <div class="admin-card-header mb-4"><i class="bi bi-people-fill mr-1"></i> Student List</div>
-        <div class="responsive-table">
-          <table class="min-w-full text-sm">
-            <thead>
-              <tr>
-                <th class="px-2 py-1 border">Name</th>
-                <th class="px-2 py-1 border">Email</th>
-                <th class="px-2 py-1 border">Phone</th>
-                <th class="px-2 py-1 border">Status</th>
-                <th class="px-2 py-1 border">Attendance</th>
-                <th class="px-2 py-1 border">Assignments</th>
-                <th class="px-2 py-1 border">Payment</th>
-                <th class="px-2 py-1 border">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="studentTable"></tbody>
-          </table>
-        </div>
+    <!-- Quiz Control Section -->
+    <section class="section">
+      <h2 class="text-xl font-semibold mb-4">Quiz Control <i class="bi bi-journal-check"></i></h2>
+      <div class="quiz-control-area">
+        <select id="quizDaySelect">
+          <option value="">--Select Day--</option>
+          <!-- Days 1-60 -->
+        </select>
+        <input id="quizTopicInput" type="text" placeholder="Topic (e.g. HTML)">
+        <button class="action-btn" onclick="loadQuiz()">Load Quiz</button>
+        <button class="action-btn secondary" onclick="unloadQuiz()">Unload Quiz</button>
+        <span id="quizStatus"></span>
       </div>
     </section>
-    <!-- ATTENDANCE SECTION -->
-    <section id="section-attendance" style="display:none;">
-      <div class="card p-5 mb-6">
-        <div class="admin-card-header mb-4"><i class="bi bi-calendar-check mr-1"></i> Attendance Tracker</div>
-        <div id="attendanceTableWrap" class="responsive-table"></div>
-      </div>
+
+    <!-- Create Student Account Section -->
+    <section class="section">
+      <h2 class="text-xl font-semibold mb-4">Create Student Account <i class="bi bi-person-plus"></i></h2>
+      <form id="createStudentForm" class="flex flex-wrap gap-3 mb-2 items-end">
+        <input type="text" id="studentName" placeholder="Full Name" required class="mb-2">
+        <input type="text" id="studentMatric" placeholder="Matric Number" required class="mb-2">
+        <input type="email" id="studentEmail" placeholder="Email" required class="mb-2">
+        <input type="text" id="studentPhone" placeholder="Phone" required class="mb-2">
+        <input type="file" id="studentPassport" class="mb-2">
+        <button type="submit" class="action-btn green">Create Account</button>
+        <span id="createStudentStatus" class="ml-5"></span>
+      </form>
     </section>
-    <!-- PAYMENTS SECTION -->
-    <section id="section-payments" style="display:none;">
-      <div class="card p-5 mb-6">
-        <div class="admin-card-header mb-4"><i class="bi bi-credit-card mr-1"></i> Payments</div>
-        <div id="paymentsTableWrap" class="responsive-table"></div>
-      </div>
-    </section>
-    <!-- ASSIGNMENTS SECTION -->
-    <section id="section-assignments" style="display:none;">
-      <div class="card p-5 mb-6">
-        <div class="admin-card-header mb-4"><i class="bi bi-journal-text mr-1"></i> Submitted Assignments</div>
-        <div id="assignmentsTableWrap" class="responsive-table"></div>
-      </div>
-    </section>
-    <!-- ACTIVITIES SECTION -->
-    <section id="section-activity" style="display:none;">
-      <div class="card p-5 mb-6">
-        <div class="admin-card-header mb-4"><i class="bi bi-clock-history mr-1"></i> Recent Activities</div>
-        <div id="activitiesTableWrap" class="responsive-table"></div>
-      </div>
-    </section>
-    <!-- DAILY QUIZ SECTION -->
-    <section id="section-quiz" style="display:none;">
-      <div class="card p-5 mb-6">
-        <div class="admin-card-header mb-4"><i class="bi bi-question-square-fill mr-1"></i> Daily Quiz Management</div>
-        <div id="quizListWrap"></div>
-        <button class="admin-action-btn mt-4" onclick="loadDailyQuizzes()"><i class="bi bi-arrow-clockwise mr-1"></i> Load Today's Quizzes</button>
-      </div>
-    </section>
-    <!-- ADMIN TOOLS SECTION -->
-    <section id="section-admin" style="display:none;">
-      <div class="card p-5 mb-6">
-        <div class="admin-card-header mb-4"><i class="bi bi-gear-fill mr-1"></i> Admin Power Tools</div>
-        <div class="flex flex-wrap gap-4">
-          <button class="admin-action-btn" onclick="exportAllFolders()"><i class="bi bi-folder-symlink mr-1"></i> Export All Folders</button>
-          <button class="admin-action-btn" onclick="updateAllStatuses()"><i class="bi bi-toggle2-on mr-1"></i> Bulk Status Update</button>
-          <button class="admin-action-btn" onclick="setAttendanceForAll()"><i class="bi bi-calendar2-check mr-1"></i> Mark All Attendance</button>
-          <button class="admin-action-btn secondary" onclick="sendReminder()"><i class="bi bi-bell mr-1"></i> Send Reminder</button>
-        </div>
+
+    <!-- Students Table Section -->
+    <section class="section">
+      <h2 class="text-xl font-semibold mb-4">Students <i class="bi bi-people"></i></h2>
+      <div class="table-responsive">
+        <table id="studentsTable">
+          <thead>
+            <tr>
+              <th>Profile</th>
+              <th>Full Name</th>
+              <th>Matric No</th>
+              <th>Email</th>
+              <th>Paid</th>
+              <th>Attendance</th>
+              <th>Assignment</th>
+              <th>Last Activity</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody"></tbody>
+        </table>
       </div>
     </section>
   </main>
-  <!-- STUDENT FOLDER MODAL -->
-  <div class="student-folder-modal-bg" id="studentFolderModalBg">
-    <div class="student-folder-modal" id="studentFolderModal">
-      <button class="close-modal" onclick="closeStudentFolderModal()">&times;</button>
+
+  <!-- Student Folder Modal -->
+  <div class="folder-modal-bg" id="studentFolderBg">
+    <div class="folder-modal" id="studentFolderModal">
+      <button class="close-modal" onclick="closeStudentFolder()">&times;</button>
       <div id="studentFolderContent"></div>
     </div>
   </div>
-  <!-- Toastify -->
-  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
   <script>
     const API_BASE = "https://examguide.onrender.com/api/codecxreg";
-    const adminToken = localStorage.getItem('codecx_admin_token') || "admin-demo-token";
-
     let students = [];
-    let quizzes = [];
+    let activeStudent = null;
 
-    function showToast(msg, type="info") {
-      Toastify({
-        text: msg,
-        duration: 3500,
-        gravity: "top",
-        position: "center",
-        backgroundColor: type === "success" ? "#16a34a" :
-                          type === "error" ? "#dc2626" : "#6366f1"
-      }).showToast();
-    }
     function logout() {
-      localStorage.removeItem('codecx_admin_token');
-      window.location.href = "admin-login.html";
+      window.location.href = "adminlogin.html";
     }
-    function showTab(tab) {
-      [ "dashboard", "students", "attendance", "payments", "assignments", "activity", "quiz", "admin" ].forEach(t => {
-        document.getElementById(`section-${t}`).style.display = (t === tab) ? "" : "none";
-        document.getElementById(`tab-${t}`).classList.toggle('tab-active', t === tab);
-      });
+
+    function showToast(msg, type = "info") {
+      alert(msg); // Replace with your toast solution if needed
     }
-    async function loadDashboard() {
-      try {
-        const resp = await fetch(API_BASE + "/admin/all", {
-          headers: { Authorization: "Bearer " + adminToken }
-        });
-        if (!resp.ok) throw new Error();
-        students = await resp.json();
-        renderDashboardOverview();
-        renderStudentTable();
-        renderAttendanceTable();
-        renderPaymentsTable();
-        renderAssignmentsTable();
-        renderActivitiesTable();
-      } catch (e) {
-        showToast("Error loading dashboard.", "error");
+
+    // Broadcast
+    async function sendBroadcast() {
+      const text = document.getElementById("broadcastText").value.trim();
+      if (!text) return showToast("Enter a broadcast message.", "error");
+      // For demo: just show status
+      document.getElementById("broadcastStatus").textContent = "Broadcast sent!";
+      setTimeout(() => document.getElementById("broadcastStatus").textContent = "", 2500);
+      // In real: POST to /broadcast endpoint, then notify all users
+    }
+
+    // Quiz Control
+    function fillQuizDaySelect() {
+      const sel = document.getElementById("quizDaySelect");
+      sel.innerHTML = '<option value="">--Select Day--</option>';
+      for (let i = 1; i <= 60; i++) {
+        sel.innerHTML += `<option value="${i}">Day ${i}</option>`;
       }
     }
-    function renderDashboardOverview() {
-      const today = new Date().toISOString().slice(0,10);
-      const todayStudents = students.filter(s => (s.createdAt || "").slice(0,10) === today);
-      document.getElementById("todayStudentCount").textContent = todayStudents.length;
-      let totalAttendance = 0, markedAttendance = 0;
-      students.forEach(s => {
-        const attToday = (s.activities || []).filter(a => a.activity && a.activity.toLowerCase().includes("attendance") && new Date(a.date).toISOString().slice(0,10) === today);
-        if (attToday.length) markedAttendance++;
-        totalAttendance++;
-      });
-      document.getElementById("markedAttendanceCount").textContent = markedAttendance;
-      document.getElementById("totalAttendanceCount").textContent = markedAttendance + " / " + students.length;
-      document.getElementById("totalRegistrationCount").textContent = students.length;
-      const paid = students.filter(s => s.hasPaid).length;
-      const unpaid = students.length - paid;
-      document.getElementById("paidCount").textContent = "Paid: " + paid;
-      document.getElementById("unpaidCount").textContent = "Unpaid: " + unpaid;
+    fillQuizDaySelect();
+
+    async function loadQuiz() {
+      const day = document.getElementById("quizDaySelect").value;
+      const topic = document.getElementById("quizTopicInput").value.trim();
+      if (!day || !topic) return showToast("Select day and enter topic.", "error");
+      // For demo purpose, we simulate success. In real: POST /quiz/:day with quiz data
+      document.getElementById("quizStatus").textContent = `Quiz loaded for Day ${day} (${topic})`;
+      setTimeout(() => document.getElementById("quizStatus").textContent = "", 2500);
     }
-    function renderStudentTable() {
-      const tbody = document.getElementById("studentTable");
-      tbody.innerHTML = "";
-      if (!students.length) {
-        tbody.innerHTML = `<tr><td colspan="8" class="text-gray-400 text-center">No students registered yet.</td></tr>`;
+    async function unloadQuiz() {
+      const day = document.getElementById("quizDaySelect").value;
+      if (!day) return showToast("Select day.", "error");
+      // For demo: simulate success. In real: DELETE /quiz/:day
+      document.getElementById("quizStatus").textContent = `Quiz unloaded for Day ${day}`;
+      setTimeout(() => document.getElementById("quizStatus").textContent = "", 2500);
+    }
+
+    // Create Student Account
+    document.getElementById("createStudentForm").onsubmit = async function(e) {
+      e.preventDefault();
+      const fullName = document.getElementById("studentName").value.trim();
+      const matricNumber = document.getElementById("studentMatric").value.trim();
+      const email = document.getElementById("studentEmail").value.trim();
+      const phone = document.getElementById("studentPhone").value.trim();
+      const passportInput = document.getElementById("studentPassport");
+      if (!fullName || !matricNumber || !email || !phone) {
+        showToast("Fill all fields!", "error");
         return;
       }
-      students.forEach(s => {
+      const formData = new FormData();
+      formData.append("fullName", fullName);
+      formData.append("matricNumber", matricNumber);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      if (passportInput.files[0]) {
+        formData.append("passport", passportInput.files[0]);
+      }
+      const resp = await fetch(API_BASE, { method: "POST", body: formData });
+      const data = await resp.json();
+      if (resp.ok) {
+        showToast("Student account created!", "success");
+        document.getElementById("createStudentStatus").textContent = "Account created!";
+        setTimeout(() => document.getElementById("createStudentStatus").textContent = "", 2500);
+        loadStudents();
+        this.reset();
+      } else {
+        showToast(data.message || "Failed to create student.", "error");
+      }
+    };
+
+    // Students Table
+    async function loadStudents() {
+      const resp = await fetch(API_BASE + "/admin/all");
+      students = await resp.json();
+      renderStudentsTable();
+    }
+    function renderStudentsTable() {
+      const tbody = document.getElementById("studentsTableBody");
+      tbody.innerHTML = "";
+      students.forEach(student => {
+        // Attendance summary
+        const markedAttendance = student.activities.filter(a => /^Attendance marked - Day \d+$/.test(a.activity)).length;
+        const totalExpectedAttendance = 60; // 2 months
+        // Assignment status (demo: count "Submitted assignment")
+        const assignments = student.activities.filter(a => a.activity === "Submitted assignment").length;
+        const lastActivity = student.activities.length
+          ? new Date(student.activities[student.activities.length-1].date).toLocaleDateString()
+          : "-";
         tbody.innerHTML += `
           <tr>
-            <td class="border px-2 py-1">${s.fullName}</td>
-            <td class="border px-2 py-1">${s.email}</td>
-            <td class="border px-2 py-1">${s.phone}</td>
-            <td class="border px-2 py-1">${s.hasPaid ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>' : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Unpaid</span>'}</td>
-            <td class="border px-2 py-1">${(s.activities || []).filter(a => a.activity && a.activity.toLowerCase().includes("attendance")).length}</td>
-            <td class="border px-2 py-1">${(s.assignments || []).length || 0}</td>
-            <td class="border px-2 py-1">${(s.payments || []).length || 0}</td>
-            <td class="border px-2 py-1 flex gap-1 flex-wrap">
-              <button class="admin-action-btn secondary" onclick="openStudentFolder('${s._id}')"><i class="bi bi-folder-fill"></i> View Folder</button>
-              <button class="admin-action-btn" onclick="updateStudentStatus('${s._id}', ${s.hasPaid ? 'false' : 'true'})">${s.hasPaid ? 'Mark Unpaid' : 'Mark Paid'}</button>
-              <button class="admin-action-btn danger" onclick="removeStudent('${s._id}')">Delete</button>
+            <td><img src="${student.passportBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(student.fullName || 'Student')}" alt="avatar"></td>
+            <td>${student.fullName || ""}</td>
+            <td>${student.matricNumber || ""}</td>
+            <td>${student.email || ""}</td>
+            <td>
+              <span class="badge ${student.hasPaid ? 'paid' : 'unpaid'}">${student.hasPaid ? 'Paid' : 'Unpaid'}</span>
+              <button class="action-btn gray" onclick="togglePayment('${student._id}', ${student.hasPaid})">${student.hasPaid ? 'Mark Unpaid' : 'Mark Paid'}</button>
+            </td>
+            <td>
+              <span class="badge present">Marked: ${markedAttendance}</span>
+              <span class="badge absent">Expected: ${totalExpectedAttendance}</span>
+            </td>
+            <td>
+              <span class="badge ${assignments ? 'submitted' : 'not-submitted'}">${assignments ? assignments + ' submitted' : 'None'}</span>
+            </td>
+            <td>${lastActivity}</td>
+            <td>
+              <button class="action-btn" onclick="openStudentFolder('${student._id}')">Open Folder</button>
             </td>
           </tr>
         `;
       });
     }
-    function openStudentFolder(studentId) {
+
+    // Toggle Paid/Unpaid
+    async function togglePayment(studentId, currentPaid) {
       const student = students.find(s => s._id === studentId);
-      if (!student) return showToast("Student not found", "error");
-      let html = `<div class="font-bold text-lg text-indigo-800 mb-2">${student.fullName}</div>
-        <div class="mb-2 text-sm text-gray-700"><b>Email:</b> ${student.email} &nbsp; <b>Phone:</b> ${student.phone}</div>
-        <div class="mb-3 text-sm">${student.hasPaid ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>' : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Unpaid</span>'}</div>
-        <hr class="mb-3"/>
-        <div class="mb-2"><b>Assignments:</b></div>
-        <ul class="mb-2">${(student.assignments || []).map(a => `<li class="mb-1">${a.title || "Assignment"} - <span class="text-xs text-gray-600">${a.date ? new Date(a.date).toLocaleDateString() : ""}</span></li>`).join('') || '<li class="text-gray-400">None</li>'}</ul>
-        <div class="mb-2"><b>Attendance:</b></div>
-        <ul class="mb-2">${(student.activities || []).filter(a => a.activity && a.activity.toLowerCase().includes("attendance")).map(a => `<li class="mb-1">${a.activity} - <span class="text-xs text-gray-600">${a.date ? new Date(a.date).toLocaleDateString() : ""}</span></li>`).join('') || '<li class="text-gray-400">None</li>'}</ul>
-        <div class="mb-2"><b>Payments:</b></div>
-        <ul class="mb-2">${(student.payments || []).map(p => `<li class="mb-1">₦${p.amount} (${p.status}) - Ref: ${p.ref}</li>`).join('') || '<li class="text-gray-400">None</li>'}</ul>
-        <div class="mb-2"><b>Recent Activity:</b></div>
-        <ul>${(student.activities || []).map(a => `<li class="mb-1">${a.activity} - <span class="text-xs text-gray-600">${a.date ? new Date(a.date).toLocaleDateString() : ""}</span></li>`).join('') || '<li class="text-gray-400">None</li>'}</ul>
-      `;
-      document.getElementById("studentFolderContent").innerHTML = html;
-      document.getElementById("studentFolderModalBg").classList.add("show");
+      if (!student) return;
+      if (!confirm(`Mark student as ${currentPaid ? 'Unpaid' : 'Paid'}?`)) return;
+      // For demo: just update locally
+      student.hasPaid = !currentPaid;
+      renderStudentsTable();
+      // In real: POST/PUT to /payments or patch student {hasPaid}
     }
-    function closeStudentFolderModal() {
-      document.getElementById("studentFolderModalBg").classList.remove("show");
+
+    // Student Folder
+    async function openStudentFolder(studentId) {
+      const student = students.find(s => s._id === studentId);
+      if (!student) return;
+      activeStudent = student;
+      renderStudentFolder(student);
+      document.getElementById("studentFolderBg").classList.add("show");
     }
-    async function updateStudentStatus(studentId, markPaid) {
-      try {
-        const resp = await fetch(API_BASE + "/admin/update-status", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: "Bearer " + adminToken },
-          body: JSON.stringify({ studentId, hasPaid: markPaid })
-        });
-        const data = await resp.json();
-        if (resp.ok) {
-          showToast("Status updated!", "success");
-          await loadDashboard();
-        } else {
-          showToast(data.message || "Failed to update status.", "error");
-        }
-      } catch {
-        showToast("Failed to update status.", "error");
-      }
+    function closeStudentFolder() {
+      document.getElementById("studentFolderBg").classList.remove("show");
+      document.getElementById("studentFolderContent").innerHTML = "";
+      activeStudent = null;
     }
-    async function removeStudent(studentId) {
-      if (!confirm("Delete this student permanently?")) return;
-      try {
-        const resp = await fetch(API_BASE + "/admin/remove-student", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: "Bearer " + adminToken },
-          body: JSON.stringify({ studentId })
-        });
-        const data = await resp.json();
-        if (resp.ok) {
-          showToast("Student removed!", "success");
-          await loadDashboard();
-        } else {
-          showToast(data.message || "Failed to remove student.", "error");
-        }
-      } catch {
-        showToast("Failed to remove student.", "error");
-      }
-    }
-    function renderAttendanceTable() {
-      let html = `<table class="min-w-full text-sm"><thead>
-        <tr>
-          <th class="px-2 py-1 border">Name</th>
-          <th class="px-2 py-1 border">Email</th>
-          <th class="px-2 py-1 border">Attendance Count</th>
-        </tr></thead><tbody>`;
-      students.forEach(s => {
-        html += `<tr>
-          <td class="border px-2 py-1">${s.fullName}</td>
-          <td class="border px-2 py-1">${s.email}</td>
-          <td class="border px-2 py-1">${(s.activities || []).filter(a => a.activity && a.activity.toLowerCase().includes("attendance")).length}</td>
-        </tr>`;
-      });
-      html += "</tbody></table>";
-      document.getElementById("attendanceTableWrap").innerHTML = html;
-    }
-    function renderPaymentsTable() {
-      let html = `<table class="min-w-full text-sm"><thead>
-        <tr>
-          <th class="px-2 py-1 border">Name</th>
-          <th class="px-2 py-1 border">Email</th>
-          <th class="px-2 py-1 border">Payments</th>
-        </tr></thead><tbody>`;
-      students.forEach(s => {
-        html += `<tr>
-          <td class="border px-2 py-1">${s.fullName}</td>
-          <td class="border px-2 py-1">${s.email}</td>
-          <td class="border px-2 py-1">${(s.payments || []).map(p => `₦${p.amount} (${p.status}) [${p.ref}]`).join('<br/>') || '<span class="text-gray-400">None</span>'}</td>
-        </tr>`;
-      });
-      html += "</tbody></table>";
-      document.getElementById("paymentsTableWrap").innerHTML = html;
-    }
-    function renderAssignmentsTable() {
-      let html = `<table class="min-w-full text-sm"><thead>
-        <tr>
-          <th class="px-2 py-1 border">Name</th>
-          <th class="px-2 py-1 border">Email</th>
-          <th class="px-2 py-1 border">Assignments</th>
-        </tr></thead><tbody>`;
-      students.forEach(s => {
-        html += `<tr>
-          <td class="border px-2 py-1">${s.fullName}</td>
-          <td class="border px-2 py-1">${s.email}</td>
-          <td class="border px-2 py-1">${(s.assignments || []).map(a => `${a.title || "Assignment"} (${a.date ? new Date(a.date).toLocaleDateString() : ""})`).join('<br/>') || '<span class="text-gray-400">None</span>'}</td>
-        </tr>`;
-      });
-      html += "</tbody></table>";
-      document.getElementById("assignmentsTableWrap").innerHTML = html;
-    }
-    function renderActivitiesTable() {
-      let html = `<table class="min-w-full text-sm"><thead>
-        <tr>
-          <th class="px-2 py-1 border">Name</th>
-          <th class="px-2 py-1 border">Email</th>
-          <th class="px-2 py-1 border">Activity Log</th>
-        </tr></thead><tbody>`;
-      students.forEach(s => {
-        html += `<tr>
-          <td class="border px-2 py-1">${s.fullName}</td>
-          <td class="border px-2 py-1">${s.email}</td>
-          <td class="border px-2 py-1">${(s.activities || []).map(a => `${a.activity} (${a.date ? new Date(a.date).toLocaleDateString() : ""})`).join('<br/>') || '<span class="text-gray-400">None</span>'}</td>
-        </tr>`;
-      });
-      html += "</tbody></table>";
-      document.getElementById("activitiesTableWrap").innerHTML = html;
-    }
-    // Daily Quiz loading feature
-    async function loadDailyQuizzes() {
-      try {
-        // Replace with your actual API endpoint for fetching daily quizzes
-        const resp = await fetch(API_BASE + "/admin/daily-quizzes", {
-          headers: { Authorization: "Bearer " + adminToken }
-        });
-        if (!resp.ok) throw new Error();
-        quizzes = await resp.json();
-        renderQuizList();
-        showToast("Daily quizzes loaded!", "success");
-      } catch {
-        showToast("Failed to load daily quizzes.", "error");
-      }
-    }
-    function renderQuizList() {
-      let html = `<div class="mb-4 font-semibold text-indigo-800">Today's Quizzes</div>`;
-      if (!quizzes.length) {
-        html += `<div class="text-gray-500 mb-2">No quizzes found for today.</div>`;
+    function renderStudentFolder(student) {
+      // Attendance/Quiz summary
+      const attendances = student.activities.filter(a => /^Attendance marked - Day \d+$/.test(a.activity));
+      const quizzes = student.activities.filter(a => /^Quiz completed - Day \d+$/.test(a.activity));
+      const assignments = student.activities.filter(a => a.activity === "Submitted assignment");
+      let activitiesHtml = "";
+      if (student.activities && student.activities.length) {
+        activitiesHtml = `<ul style="padding-left:1.1rem">` +
+          student.activities.slice(-30).reverse().map(a =>
+            `<li>${new Date(a.date).toLocaleString()} - ${a.activity} (${a.status})</li>`
+          ).join("") +
+          "</ul>";
       } else {
-        quizzes.forEach((q, idx) => {
-          html += `<div class="mb-3 card p-3">
-            <div class="font-bold text-lg mb-1">${idx + 1}. ${q.question}</div>
-            <div class="mb-1"><b>Options:</b> ${q.options.join(", ")}</div>
-            <div class="mb-1 text-green-700"><b>Answer:</b> ${q.answer}</div>
-          </div>`;
-        });
+        activitiesHtml = "<div>No activities yet.</div>";
       }
-      document.getElementById("quizListWrap").innerHTML = html;
+      // Feedback
+      let feedbackHtml = `<div class="student-feedback">${student.adminNote || "No feedback yet."}</div>`;
+      // Assignments
+      const assignmentsHtml = assignments.length
+        ? `<ul style="padding-left:1.1rem">${assignments.map(a =>
+            `<li>${new Date(a.date).toLocaleString()}</li>`).join("")}</ul>`
+        : "<div>No assignments submitted.</div>";
+
+      // Attendance
+      const attendanceHtml = attendances.length
+        ? `<ul style="padding-left:1.1rem">${attendances.map(a =>
+            `<li>${a.activity} (${new Date(a.date).toLocaleDateString()})</li>`).join("")}</ul>`
+        : "<div>No attendance marked.</div>";
+
+      // Quizzes
+      const quizzesHtml = quizzes.length
+        ? `<ul style="padding-left:1.1rem">${quizzes.map(a =>
+            `<li>${a.activity} (${new Date(a.date).toLocaleDateString()})</li>`).join("")}</ul>`
+        : "<div>No quizzes completed.</div>";
+
+      // Payments
+      const paymentsHtml = student.payments && student.payments.length
+        ? `<ul style="padding-left:1.1rem">${student.payments.map(p =>
+            `<li>₦${p.amount} (${p.status}) - Ref: ${p.ref} - ${new Date(p.date).toLocaleDateString()}</li>`).join("")}</ul>`
+        : "<div>No payments.</div>";
+
+      // Profile
+      const profileHtml = `
+        <div class="profile-info mb-3">
+          <span class="profile-label">Full Name:</span> <span>${student.fullName || ""}</span>
+          <span class="profile-label">Matric No:</span> <span>${student.matricNumber || ""}</span>
+          <span class="profile-label">Email:</span> <span>${student.email || ""}</span>
+          <span class="profile-label">Phone:</span> <span>${student.phone || ""}</span>
+        </div>
+      `;
+
+      document.getElementById("studentFolderContent").innerHTML = `
+        <div class="folder-header">
+          <img src="${student.passportBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(student.fullName || 'Student')}" class="folder-avatar">
+          <div>
+            <div class="folder-title">${student.fullName}</div>
+            <div>${student.matricNumber}</div>
+            <div>${student.email}</div>
+            <span class="badge ${student.hasPaid ? 'paid' : 'unpaid'}">${student.hasPaid ? 'Paid' : 'Unpaid'}</span>
+          </div>
+        </div>
+        <div class="folder-content">
+          <div class="folder-grid">
+            <div class="folder-subsection">
+              <div class="folder-subsection-title">Profile</div>
+              ${profileHtml}
+            </div>
+            <div class="folder-subsection">
+              <div class="folder-subsection-title">Personal Feedback</div>
+              ${feedbackHtml}
+            </div>
+          </div>
+          <div class="folder-grid">
+            <div class="folder-subsection">
+              <div class="folder-subsection-title">Attendance</div>
+              ${attendanceHtml}
+            </div>
+            <div class="folder-subsection">
+              <div class="folder-subsection-title">Quizzes</div>
+              ${quizzesHtml}
+            </div>
+          </div>
+          <div class="folder-grid">
+            <div class="folder-subsection">
+              <div class="folder-subsection-title">Assignments</div>
+              ${assignmentsHtml}
+            </div>
+            <div class="folder-subsection">
+              <div class="folder-subsection-title">Payments</div>
+              ${paymentsHtml}
+            </div>
+          </div>
+          <div class="folder-subsection">
+            <div class="folder-subsection-title">Recent Activities</div>
+            ${activitiesHtml}
+          </div>
+        </div>
+      `;
     }
-    // Dummy admin features
-    function downloadReport() { showToast("Report downloaded (demo)", "success"); }
-    function sendBroadcast() { showToast("Broadcast sent to all students (demo)", "success"); }
-    function openAddStudentModal() { showToast("Add student feature coming soon!", "info"); }
-    function purgeUnpaid() { if (!confirm("Are you sure to purge ALL unpaid students?")) return; showToast("Unpaid students purged (demo)", "success"); }
-    function exportAllFolders() { showToast("All student folders exported (demo)", "success"); }
-    function updateAllStatuses() { showToast("Bulk status update completed (demo)", "success"); }
-    function setAttendanceForAll() { showToast("Marked attendance for all students (demo)", "success"); }
-    function sendReminder() { showToast("Reminder sent to all unpaid students (demo)", "success"); }
-    window.onload = function() { showTab('dashboard'); loadDashboard(); };
-    document.getElementById("studentFolderModalBg").addEventListener("click", function(e) {
-      if (e.target === this) closeStudentFolderModal();
-    });
+
+    // Initial load
+    loadStudents();
   </script>
 </body>
 </html>
