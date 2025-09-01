@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CODECX Institute - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #6366f1 0%, #a7bfe8 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        .login-card {
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 6px 32px rgba(60, 72, 128, 0.10),
+                        0 1.5px 8px rgba(60, 72, 128, 0.08);
+            max-width: 400px;
+            width: 100%;
+            padding: 2.5rem 2rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            position: relative;
+        }
+        .login-card .logo-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .login-card .logo-img {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.13);
+        }
+        .login-card h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #312e81;
+            margin-bottom: 0.2rem;
+            letter-spacing: 0.5px;
+        }
+        .login-card p {
+            font-size: 1rem;
+            color: #52525b;
+            margin-bottom: 0.8rem;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group label {
+            font-weight: 600;
+            color: #6366f1;
+            margin-bottom: 0.2rem;
+            display: block;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border-radius: 9px;
+            border: 1.5px solid #e0e7ff;
+            font-size: 1rem;
+            outline: none;
+            transition: box-shadow 0.2s, border 0.2s;
+            background: #f5f6fa;
+        }
+        .input-group input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px #6366f140;
+        }
+        .submit-btn {
+            background: linear-gradient(90deg, #6366f1 65%, #4338ca);
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            padding: 0.9rem 0;
+            border: none;
+            border-radius: 9px;
+            font-size: 1.125rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.13);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: background 0.25s;
+        }
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .link-text {
+            color: #6366f1;
+            font-weight: 500;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .link-text:hover {
+            color: #312e81;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #6366f1;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+
+        .show-hide-btn {
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            color: #6366f1;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .input-group.password-group {
+            position: relative;
+        }
+
+        #login-message {
+            font-size: 1rem;
+            color: #ef4444;
+            background: #fbe9e7;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .login-extra {
+            font-size: 0.98rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+        @media (max-width: 640px) {
+            .login-card {
+                padding: 1.3rem 0.5rem;
+                max-width: 95vw;
+            }
+            .login-card h1 {
+                font-size: 1.1rem;
+            }
+            .login-card p {
+                font-size: 0.96rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="logo-wrap">
+            <img src="https://cdn-icons-png.flaticon.com/512/2721/2721296.png" alt="CODECX Logo" class="logo-img">
+            <h1>CODECX Institute</h1>
+        </div>
+        <p>Welcome! Please log in to access your dashboard.</p>
+        <form id="login-form" autocomplete="on">
+            <div class="input-group">
+                <label for="username">Username / Matric Number / Email</label>
+                <input type="text" id="username" name="username" required autocomplete="username" placeholder="Enter username, matric or email">
+            </div>
+            <div class="input-group password-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password" placeholder="Enter your password">
+                <button type="button" id="show-hide-btn" class="show-hide-btn" tabindex="-1" aria-label="Show/Hide password">
+                    <span id="eye-icon">👁️</span>
+                </button>
+            </div>
+            <button type="submit" id="login-btn" class="submit-btn">
+                <span id="btn-text">Login</span>
+            </button>
+            <div class="login-extra">
+                Forgot your password? <span class="link-text" id="forgot-link">Contact Admin</span>
+            </div>
+        </form>
+        <div id="login-message"></div>
+        <div class="login-extra" style="margin-top:1.1rem;">
+            Don’t have an account? <a href="/codecxreg.html" class="link-text">Register here</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        // Autofill using URL params
+        function getQueryParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name) || "";
+        }
+
+        document.getElementById('username').value = getQueryParam('username');
+        document.getElementById('password').value = getQueryParam('password');
+
+        // Show/hide password feature
+        const passwordInput = document.getElementById('password');
+        const showHideBtn = document.getElementById('show-hide-btn');
+        const eyeIcon = document.getElementById('eye-icon');
+        let isPasswordVisible = false;
+        showHideBtn.onclick = function() {
+            isPasswordVisible = !isPasswordVisible;
+            passwordInput.type = isPasswordVisible ? "text" : "password";
+            eyeIcon.textContent = isPasswordVisible ? "🙈" : "👁️";
+        };
+
+        // Forgot password link
+        document.getElementById('forgot-link').onclick = function () {
+            showToast('Please contact the admin to reset your password.', 'info');
+        };
+
+        const API_BASE = "https://examguide.onrender.com"; // Update to your backend
+
+        const loginForm = document.getElementById('login-form');
+        const loginBtn = document.getElementById('login-btn');
+        const btnText = document.getElementById('btn-text');
+        const loginMessage = document.getElementById('login-message');
+
+        function showToast(message, type = "success") {
+            let color = "linear-gradient(90deg,#6366f1,#4338ca)";
+            if(type === "error") color = "linear-gradient(90deg,#ef4444,#f87171)";
+            if(type === "info") color = "linear-gradient(90deg,#312e81,#6366f1)";
+            Toastify({
+                text: message,
+                duration: 3500,
+                gravity: "top",
+                position: "center",
+                backgroundColor: color,
+                stopOnFocus: true
+            }).showToast();
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loginBtn.disabled = true;
+            btnText.innerHTML = '<span class="spinner"></span>Logging in...';
+            loginMessage.style.display = "none";
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/codecxreg/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+                if (response.ok && data.token) {
+                    showToast("Login successful!", "success");
+                    localStorage.setItem("codecx_token", data.token);
+                    setTimeout(() => {
+                        window.location.href = "/dashboard.html"; // Change to your dashboard URL
+                    }, 1200);
+                } else {
+                    loginMessage.textContent = data.message || "Login failed";
+                    loginMessage.style.display = "block";
+                    showToast(data.message || "Login failed", "error");
+                }
+            } catch (error) {
+                loginMessage.textContent = "Network or server error. Please try again.";
+                loginMessage.style.display = "block";
+                showToast("Network or server error. Please try again.", "error");
+            } finally {
+                loginBtn.disabled = false;
+                btnText.innerHTML = "Login";
+            }
+        });
+    </script>
+</body>
+</html>
