@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.80">
+    <!-- Fixed viewport for proper desktop scaling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CODECX Institute - Web Development Class Registration</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -92,6 +93,15 @@
             font-weight: bold;
             color: #4338ca;
         }
+        /* Enable wider desktop view */
+        @media (min-width: 1024px) {
+            body {
+                align-items: flex-start;
+            }
+            .form-container, .success-container, .feedback-container {
+                margin: 2rem 0;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -121,26 +131,14 @@
                 <label for="passport" class="block text-gray-700 font-medium mb-2 required">Passport Photograph</label>
                 <input type="file" id="passport" name="passport" accept="image/*" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
             </div>
-            <div class="mb-5 flex items-center">
-                <input type="checkbox" id="nass-due" name="nass-due" class="mr-2 h-5 w-5 border-gray-300 rounded text-gray-600 focus:ring-gray-500">
-                <label for="nass-due" class="text-gray-700">I have paid my NASS DUE (optional, for documentation purposes)</label>
-            </div>
             <div class="mb-5">
                 <h3 class="text-lg font-semibold text-gray-800 mb-2">Payment Information</h3>
-                <p class="text-gray-700 mb-2">Please transfer to the following account:</p>
-                <ul class="list-disc list-inside text-gray-700 pl-4">
-                    <li>Account Name: CODECX Institute</li>
-                    <li>Account Number: 1234567890</li>
-                    <li>Bank: Zenith Bank</li>
-                </ul>
-            </div>
-            <div class="mb-5">
-                <label for="payment-receipt" class="block text-gray-700 font-medium mb-2 required">Upload Payment Receipt</label>
-                <input type="file" id="payment-receipt" name="payment-receipt" accept="image/*,application/pdf" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300" required>
-            </div>
-            <div class="mb-6">
-                <label for="nass-receipt" class="block text-gray-700 font-medium mb-2">Upload NASS Receipt (optional)</label>
-                <input type="file" id="nass-receipt" name="nass-receipt" accept="image/*,application/pdf" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300">
+                <p class="text-gray-700 mb-2">
+                    <strong>Payment to be made upon successful registration and login.</strong>
+                </p>
+                <p class="text-gray-700">
+                    You will receive payment instructions once your registration is approved.
+                </p>
             </div>
             <button type="submit" id="submit-btn" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold submit-btn flex items-center justify-center">
                 <span id="btn-text">Submit Registration</span>
@@ -155,6 +153,9 @@
         <p class="text-lg text-gray-700 mb-4">Your application has been received and is under review. We will contact you via email and SMS shortly.</p>
         <p class="text-gray-700">Please ensure your provided email and phone number are accurate for notifications.</p>
         <div id="login-details" class="login-details-container hidden"></div>
+        <div id="login-btn-container" style="display:none; margin-top: 16px; text-align:center;">
+            <!-- The login button will appear here -->
+        </div>
         <button id="feedback-btn" class="mt-6 bg-indigo-500 text-white px-5 py-2 rounded-lg font-semibold">Give Feedback</button>
     </div>
 
@@ -189,6 +190,7 @@
         const submitBtn = document.getElementById('submit-btn');
         const btnText = document.getElementById('btn-text');
         const loginDetailsDiv = document.getElementById('login-details');
+        const loginBtnContainer = document.getElementById('login-btn-container');
 
         const feedbackPage = document.getElementById('feedback-page');
         const feedbackBtn = document.getElementById('feedback-btn');
@@ -224,11 +226,6 @@
             formData.append('phone', document.getElementById('phone').value);
             formData.append('matricNumber', document.getElementById('matric-number').value);
             formData.append('passport', document.getElementById('passport').files[0]);
-            formData.append('nassDue', document.getElementById('nass-due').checked ? 'yes' : 'no');
-            formData.append('paymentReceipt', document.getElementById('payment-receipt').files[0]);
-            if (document.getElementById('nass-receipt').files.length) {
-                formData.append('nassReceipt', document.getElementById('nass-receipt').files[0]);
-            }
 
             // Call backend API
             try {
@@ -252,6 +249,14 @@
                             <p class="text-xs mt-2 text-gray-700">Please save these credentials securely. They are also saved in the backend for your future login.</p>
                         `;
                         loginDetailsDiv.classList.remove('hidden');
+                        // Show login button and pass credentials to login page
+                        const loginUrl = `/login.html?username=${encodeURIComponent(resJson.login.username)}&password=${encodeURIComponent(resJson.login.password)}`;
+                        loginBtnContainer.innerHTML = `
+                            <a href="${loginUrl}" id="goto-login" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold inline-block mt-3 shadow hover:bg-indigo-700 transition">
+                                Go to Login Page
+                            </a>
+                        `;
+                        loginBtnContainer.style.display = "block";
                     }
                 } else {
                     showToast("Registration failed: " + (resJson.message || "Server error"), "error");
