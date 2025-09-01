@@ -7,6 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
+    /* ... previous CSS unchanged ... */
     body {
       background: #f6f7fb;
       font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -71,6 +72,11 @@
       color: #fff;
       border: none;
       transition: background 0.16s;
+      position: relative;
+      min-width: 110px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .action-btn.secondary {
       background: #fbbf24;
@@ -87,6 +93,28 @@
     .action-btn.gray {
       background: #e5e7eb;
       color: #312e81;
+    }
+    .action-btn .spinner, .action-btn .spinner-sm {
+      display: inline-block;
+      margin-right: 7px;
+      vertical-align: middle;
+    }
+    .spinner, .spinner-sm {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #6366f1;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      animation: spin 0.7s linear infinite;
+    }
+    .spinner-sm {
+      width: 15px;
+      height: 15px;
+      border-width: 2px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
     }
     .badge {
       display: inline-block;
@@ -234,9 +262,35 @@
       margin-bottom: 0.3rem;
       font-size: 1.09rem;
     }
+    /* Loader overlay */
+    #pageLoader {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.7);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s;
+      opacity: 1;
+    }
+    #pageLoader.hide {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    #pageLoader .spinner {
+      width: 56px;
+      height: 56px;
+      border-width: 6px;
+      border-color: #f3f3f3 #6366f1 #6366f1 #f3f3f3;
+    }
   </style>
 </head>
 <body>
+  <div id="pageLoader">
+    <div class="spinner"></div>
+  </div>
   <header class="bg-white shadow px-4 py-4 flex flex-wrap items-center justify-between gap-2 min-w-0">
     <h1 class="text-2xl font-bold text-indigo-800 flex-1 min-w-0 truncate">
       CODECX Admin Dashboard
@@ -252,7 +306,10 @@
       <h2 class="text-xl font-semibold mb-4">Broadcast Message <i class="bi bi-megaphone"></i></h2>
       <div class="broadcast-area">
         <textarea id="broadcastText" rows="2" placeholder="Type broadcast message..."></textarea>
-        <button class="action-btn green" onclick="sendBroadcast()">Send Broadcast</button>
+        <button class="action-btn green" id="broadcastBtn" onclick="sendBroadcast()">
+          <span id="broadcastBtnSpinner" style="display:none" class="spinner-sm"></span>
+          Send Broadcast
+        </button>
         <span id="broadcastStatus" class="ml-4"></span>
       </div>
     </section>
@@ -261,13 +318,16 @@
     <section class="section">
       <h2 class="text-xl font-semibold mb-4">Quiz Control <i class="bi bi-journal-check"></i></h2>
       <div class="quiz-control-area">
-        <select id="quizDaySelect">
-          <option value="">--Select Day--</option>
-          <!-- Days 1-60 -->
-        </select>
+        <select id="quizDaySelect"></select>
         <input id="quizTopicInput" type="text" placeholder="Topic (e.g. HTML)">
-        <button class="action-btn" onclick="loadQuiz()">Load Quiz</button>
-        <button class="action-btn secondary" onclick="unloadQuiz()">Unload Quiz</button>
+        <button class="action-btn" id="loadQuizBtn" onclick="loadQuiz()">
+          <span id="loadQuizSpinner" style="display:none" class="spinner-sm"></span>
+          Load Quiz
+        </button>
+        <button class="action-btn secondary" id="unloadQuizBtn" onclick="unloadQuiz()">
+          <span id="unloadQuizSpinner" style="display:none" class="spinner-sm"></span>
+          Unload Quiz
+        </button>
         <span id="quizStatus"></span>
       </div>
     </section>
@@ -281,7 +341,10 @@
         <input type="email" id="studentEmail" placeholder="Email" required class="mb-2">
         <input type="text" id="studentPhone" placeholder="Phone" required class="mb-2">
         <input type="file" id="studentPassport" class="mb-2">
-        <button type="submit" class="action-btn green">Create Account</button>
+        <button type="submit" class="action-btn green" id="createStudentBtn">
+          <span id="createStudentSpinner" style="display:none" class="spinner-sm"></span>
+          Create Account
+        </button>
         <span id="createStudentStatus" class="ml-5"></span>
       </form>
     </section>
@@ -323,28 +386,49 @@
     let students = [];
     let activeStudent = null;
 
+    function showPageLoader(show) {
+      const loader = document.getElementById("pageLoader");
+      loader.className = show ? "" : "hide";
+    }
+    function showBtnSpinner(btnId, show) {
+      document.getElementById(btnId).style.display = show ? "" : "none";
+    }
+
     function logout() {
       window.location.href = "adminlogin.html";
     }
 
     function showToast(msg, type = "info") {
-      alert(msg); // Replace with your toast solution if needed
+      // For demo: use alert, but can swap for Toastify if available
+      alert(msg);
     }
 
     // Broadcast
     async function sendBroadcast() {
       const text = document.getElementById("broadcastText").value.trim();
       if (!text) return showToast("Enter a broadcast message.", "error");
-      // For demo: just show status
-      document.getElementById("broadcastStatus").textContent = "Broadcast sent!";
-      setTimeout(() => document.getElementById("broadcastStatus").textContent = "", 2500);
-      // In real: POST to /broadcast endpoint, then notify all users
+      const btn = document.getElementById("broadcastBtn");
+      showBtnSpinner("broadcastBtnSpinner", true);
+      btn.disabled = true;
+
+      // Example endpoint: POST /broadcast {text}
+      try {
+        // await fetch(API_BASE + "/broadcast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+        document.getElementById("broadcastStatus").textContent = "Broadcast sent!";
+      } catch {
+        showToast("Failed to send broadcast.", "error");
+      }
+      setTimeout(() => {
+        document.getElementById("broadcastStatus").textContent = "";
+        showBtnSpinner("broadcastBtnSpinner", false);
+        btn.disabled = false;
+      }, 1500);
     }
 
     // Quiz Control
     function fillQuizDaySelect() {
       const sel = document.getElementById("quizDaySelect");
-      sel.innerHTML = '<option value="">--Select Day--</option>';
+      sel.innerHTML = '';
       for (let i = 1; i <= 60; i++) {
         sel.innerHTML += `<option value="${i}">Day ${i}</option>`;
       }
@@ -354,17 +438,51 @@
     async function loadQuiz() {
       const day = document.getElementById("quizDaySelect").value;
       const topic = document.getElementById("quizTopicInput").value.trim();
-      if (!day || !topic) return showToast("Select day and enter topic.", "error");
-      // For demo purpose, we simulate success. In real: POST /quiz/:day with quiz data
-      document.getElementById("quizStatus").textContent = `Quiz loaded for Day ${day} (${topic})`;
-      setTimeout(() => document.getElementById("quizStatus").textContent = "", 2500);
+      const btn = document.getElementById("loadQuizBtn");
+      showBtnSpinner("loadQuizSpinner", true);
+      btn.disabled = true;
+      if (!day || !topic) {
+        showToast("Select day and enter topic.", "error");
+        showBtnSpinner("loadQuizSpinner", false);
+        btn.disabled = false;
+        return;
+      }
+      try {
+        // Example: POST /quiz/:day {topic}
+        // await fetch(API_BASE + `/quiz/${day}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ topic }) });
+        document.getElementById("quizStatus").textContent = `Quiz loaded for Day ${day} (${topic})`;
+      } catch {
+        showToast("Failed to load quiz.", "error");
+      }
+      setTimeout(() => {
+        document.getElementById("quizStatus").textContent = "";
+        showBtnSpinner("loadQuizSpinner", false);
+        btn.disabled = false;
+      }, 1500);
     }
     async function unloadQuiz() {
       const day = document.getElementById("quizDaySelect").value;
-      if (!day) return showToast("Select day.", "error");
-      // For demo: simulate success. In real: DELETE /quiz/:day
-      document.getElementById("quizStatus").textContent = `Quiz unloaded for Day ${day}`;
-      setTimeout(() => document.getElementById("quizStatus").textContent = "", 2500);
+      const btn = document.getElementById("unloadQuizBtn");
+      showBtnSpinner("unloadQuizSpinner", true);
+      btn.disabled = true;
+      if (!day) {
+        showToast("Select day.", "error");
+        showBtnSpinner("unloadQuizSpinner", false);
+        btn.disabled = false;
+        return;
+      }
+      try {
+        // Example: DELETE /quiz/:day
+        // await fetch(API_BASE + `/quiz/${day}`, { method: "DELETE" });
+        document.getElementById("quizStatus").textContent = `Quiz unloaded for Day ${day}`;
+      } catch {
+        showToast("Failed to unload quiz.", "error");
+      }
+      setTimeout(() => {
+        document.getElementById("quizStatus").textContent = "";
+        showBtnSpinner("unloadQuizSpinner", false);
+        btn.disabled = false;
+      }, 1500);
     }
 
     // Create Student Account
@@ -375,8 +493,13 @@
       const email = document.getElementById("studentEmail").value.trim();
       const phone = document.getElementById("studentPhone").value.trim();
       const passportInput = document.getElementById("studentPassport");
+      const btn = document.getElementById("createStudentBtn");
+      showBtnSpinner("createStudentSpinner", true);
+      btn.disabled = true;
       if (!fullName || !matricNumber || !email || !phone) {
         showToast("Fill all fields!", "error");
+        showBtnSpinner("createStudentSpinner", false);
+        btn.disabled = false;
         return;
       }
       const formData = new FormData();
@@ -387,33 +510,51 @@
       if (passportInput.files[0]) {
         formData.append("passport", passportInput.files[0]);
       }
-      const resp = await fetch(API_BASE, { method: "POST", body: formData });
-      const data = await resp.json();
-      if (resp.ok) {
-        showToast("Student account created!", "success");
-        document.getElementById("createStudentStatus").textContent = "Account created!";
-        setTimeout(() => document.getElementById("createStudentStatus").textContent = "", 2500);
-        loadStudents();
-        this.reset();
-      } else {
-        showToast(data.message || "Failed to create student.", "error");
+      try {
+        const resp = await fetch(API_BASE, { method: "POST", body: formData });
+        const data = await resp.json();
+        if (resp.ok) {
+          showToast("Student account created!", "success");
+          document.getElementById("createStudentStatus").textContent = "Account created!";
+          setTimeout(() => document.getElementById("createStudentStatus").textContent = "", 2500);
+          loadStudents();
+          this.reset();
+        } else {
+          showToast(data.message || "Failed to create student.", "error");
+        }
+      } catch {
+        showToast("Error creating student account.", "error");
       }
+      showBtnSpinner("createStudentSpinner", false);
+      btn.disabled = false;
     };
 
     // Students Table
     async function loadStudents() {
-      const resp = await fetch(API_BASE + "/admin/all");
-      students = await resp.json();
-      renderStudentsTable();
+      showPageLoader(true);
+      try {
+        const resp = await fetch(API_BASE + "/admin/all");
+        students = await resp.json();
+        renderStudentsTable();
+      } catch {
+        showToast("Error loading students.", "error");
+        students = [];
+        renderStudentsTable();
+      }
+      showPageLoader(false);
     }
     function renderStudentsTable() {
       const tbody = document.getElementById("studentsTableBody");
       tbody.innerHTML = "";
+      if (!students || !students.length) {
+        tbody.innerHTML = `<tr><td colspan="9" class="text-gray-400 text-center">No students found.</td></tr>`;
+        return;
+      }
       students.forEach(student => {
         // Attendance summary
         const markedAttendance = student.activities.filter(a => /^Attendance marked - Day \d+$/.test(a.activity)).length;
-        const totalExpectedAttendance = 60; // 2 months
-        // Assignment status (demo: count "Submitted assignment")
+        const totalExpectedAttendance = 60;
+        // Assignment status
         const assignments = student.activities.filter(a => a.activity === "Submitted assignment").length;
         const lastActivity = student.activities.length
           ? new Date(student.activities[student.activities.length-1].date).toLocaleDateString()
@@ -426,7 +567,10 @@
             <td>${student.email || ""}</td>
             <td>
               <span class="badge ${student.hasPaid ? 'paid' : 'unpaid'}">${student.hasPaid ? 'Paid' : 'Unpaid'}</span>
-              <button class="action-btn gray" onclick="togglePayment('${student._id}', ${student.hasPaid})">${student.hasPaid ? 'Mark Unpaid' : 'Mark Paid'}</button>
+              <button class="action-btn gray" id="payBtn-${student._id}" onclick="togglePayment('${student._id}', ${student.hasPaid})">
+                <span id="paySpinner-${student._id}" style="display:none;" class="spinner-sm"></span>
+                ${student.hasPaid ? 'Mark Unpaid' : 'Mark Paid'}
+              </button>
             </td>
             <td>
               <span class="badge present">Marked: ${markedAttendance}</span>
@@ -437,7 +581,10 @@
             </td>
             <td>${lastActivity}</td>
             <td>
-              <button class="action-btn" onclick="openStudentFolder('${student._id}')">Open Folder</button>
+              <button class="action-btn" id="folderBtn-${student._id}" onclick="openStudentFolder('${student._id}')">
+                <span id="folderSpinner-${student._id}" style="display:none;" class="spinner-sm"></span>
+                Open Folder
+              </button>
             </td>
           </tr>
         `;
@@ -446,22 +593,52 @@
 
     // Toggle Paid/Unpaid
     async function togglePayment(studentId, currentPaid) {
+      const btn = document.getElementById(`payBtn-${studentId}`);
+      showBtnSpinner(`paySpinner-${studentId}`, true);
+      btn.disabled = true;
       const student = students.find(s => s._id === studentId);
-      if (!student) return;
-      if (!confirm(`Mark student as ${currentPaid ? 'Unpaid' : 'Paid'}?`)) return;
-      // For demo: just update locally
-      student.hasPaid = !currentPaid;
-      renderStudentsTable();
-      // In real: POST/PUT to /payments or patch student {hasPaid}
+      if (!student) {
+        showBtnSpinner(`paySpinner-${studentId}`, false);
+        btn.disabled = false;
+        return;
+      }
+      if (!confirm(`Mark student as ${currentPaid ? 'Unpaid' : 'Paid'}?`)) {
+        showBtnSpinner(`paySpinner-${studentId}`, false);
+        btn.disabled = false;
+        return;
+      }
+      try {
+        // For demo: update locally
+        student.hasPaid = !currentPaid;
+        // In real: PATCH /admin/markpaid {studentId, paid: !currentPaid}
+        // await fetch(API_BASE + "/admin/markpaid", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ studentId, paid: !currentPaid }) });
+        renderStudentsTable();
+      } catch {
+        showToast("Error updating payment status.", "error");
+      }
+      showBtnSpinner(`paySpinner-${studentId}`, false);
+      btn.disabled = false;
     }
 
     // Student Folder
     async function openStudentFolder(studentId) {
+      const btn = document.getElementById(`folderBtn-${studentId}`);
+      showBtnSpinner(`folderSpinner-${studentId}`, true);
+      btn.disabled = true;
       const student = students.find(s => s._id === studentId);
-      if (!student) return;
+      if (!student) {
+        showBtnSpinner(`folderSpinner-${studentId}`, false);
+        btn.disabled = false;
+        return;
+      }
       activeStudent = student;
-      renderStudentFolder(student);
-      document.getElementById("studentFolderBg").classList.add("show");
+      // Simulate loading delay
+      setTimeout(() => {
+        renderStudentFolder(student);
+        document.getElementById("studentFolderBg").classList.add("show");
+        showBtnSpinner(`folderSpinner-${studentId}`, false);
+        btn.disabled = false;
+      }, 400);
     }
     function closeStudentFolder() {
       document.getElementById("studentFolderBg").classList.remove("show");
@@ -469,7 +646,6 @@
       activeStudent = null;
     }
     function renderStudentFolder(student) {
-      // Attendance/Quiz summary
       const attendances = student.activities.filter(a => /^Attendance marked - Day \d+$/.test(a.activity));
       const quizzes = student.activities.filter(a => /^Quiz completed - Day \d+$/.test(a.activity));
       const assignments = student.activities.filter(a => a.activity === "Submitted assignment");
@@ -483,33 +659,23 @@
       } else {
         activitiesHtml = "<div>No activities yet.</div>";
       }
-      // Feedback
       let feedbackHtml = `<div class="student-feedback">${student.adminNote || "No feedback yet."}</div>`;
-      // Assignments
       const assignmentsHtml = assignments.length
         ? `<ul style="padding-left:1.1rem">${assignments.map(a =>
             `<li>${new Date(a.date).toLocaleString()}</li>`).join("")}</ul>`
         : "<div>No assignments submitted.</div>";
-
-      // Attendance
       const attendanceHtml = attendances.length
         ? `<ul style="padding-left:1.1rem">${attendances.map(a =>
             `<li>${a.activity} (${new Date(a.date).toLocaleDateString()})</li>`).join("")}</ul>`
         : "<div>No attendance marked.</div>";
-
-      // Quizzes
       const quizzesHtml = quizzes.length
         ? `<ul style="padding-left:1.1rem">${quizzes.map(a =>
             `<li>${a.activity} (${new Date(a.date).toLocaleDateString()})</li>`).join("")}</ul>`
         : "<div>No quizzes completed.</div>";
-
-      // Payments
       const paymentsHtml = student.payments && student.payments.length
         ? `<ul style="padding-left:1.1rem">${student.payments.map(p =>
             `<li>₦${p.amount} (${p.status}) - Ref: ${p.ref} - ${new Date(p.date).toLocaleDateString()}</li>`).join("")}</ul>`
         : "<div>No payments.</div>";
-
-      // Profile
       const profileHtml = `
         <div class="profile-info mb-3">
           <span class="profile-label">Full Name:</span> <span>${student.fullName || ""}</span>
@@ -518,7 +684,6 @@
           <span class="profile-label">Phone:</span> <span>${student.phone || ""}</span>
         </div>
       `;
-
       document.getElementById("studentFolderContent").innerHTML = `
         <div class="folder-header">
           <img src="${student.passportBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(student.fullName || 'Student')}" class="folder-avatar">
@@ -569,7 +734,10 @@
     }
 
     // Initial load
-    loadStudents();
+    document.addEventListener("DOMContentLoaded", () => {
+      showPageLoader(true);
+      loadStudents();
+    });
   </script>
 </body>
 </html>
