@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Verification | CODECX Masterclass</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <style>
+    .verify-card {
+      background: #fff;
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 18px #6366f122;
+      padding: 2.2rem 1.5rem 2.1rem 1.5rem;
+      max-width: 380px;
+      margin: 6vh auto;
+      text-align: center;
+    }
+    .verify-title {
+      font-size: 1.3rem;
+      color: #6366f1;
+      font-weight: bold;
+      margin-bottom: .7rem;
+    }
+    .verify-icon {
+      font-size: 2.2rem;
+      color: #22c55e;
+      margin-bottom: .7rem;
+    }
+    .verify-loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: .8rem;
+    }
+    .verify-loader span {
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #6366f1;
+      margin: 0 3px;
+      animation: loaderAnim 1s infinite alternate;
+    }
+    .verify-loader span:nth-child(2) { animation-delay: .23s;}
+    .verify-loader span:nth-child(3) { animation-delay: .45s;}
+    @keyframes loaderAnim {
+      from { opacity: .5; transform: scale(1);}
+      to { opacity: 1; transform: scale(1.4);}
+    }
+    .verify-btn {
+      margin-top: 1.2rem;
+      padding: .7rem 1.2rem;
+      border-radius: 10px;
+      background: #6366f1;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.07rem;
+      border: none;
+      cursor: pointer;
+      transition: background .19s;
+    }
+    .verify-btn:hover {
+      background: #4338ca;
+    }
+    .verify-error {
+      color: #dc2626;
+      margin-top: .7rem;
+      font-weight: 500;
+    }
+    .verify-success {
+      color: #22c55e;
+      margin-top: .7rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="verify-card">
+    <div class="verify-title">Verifying Payment...</div>
+    <div class="verify-loader">
+      <span></span><span></span><span></span>
+    </div>
+    <div id="verifyStatus" class="text-gray-700 mb-2">Please wait while we confirm your payment.</div>
+    <button id="retryBtn" class="verify-btn" style="display:none;">Retry</button>
+    <button id="dashboardBtn" class="verify-btn" style="display:none;">Go to Dashboard</button>
+    <div id="verifyError" class="verify-error"></div>
+    <div id="verifySuccess" class="verify-success"></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script>
+    // Simulate payment verification by calling backend
+    const API_BASE = "https://examguide.onrender.com/api/codecxreg";
+    const token = localStorage.getItem('codecx_token');
+    async function verifyPayment() {
+      document.getElementById("verifyStatus").textContent = "Verifying payment with CODECX...";
+      document.getElementById("verifyError").textContent = "";
+      document.getElementById("verifySuccess").textContent = "";
+      document.getElementById("retryBtn").style.display = "none";
+      document.getElementById("dashboardBtn").style.display = "none";
+      try {
+        const resp = await fetch(API_BASE + "/me", {
+          headers: { Authorization: "Bearer " + token }
+        });
+        if (!resp.ok) throw new Error("Not logged in");
+        const student = await resp.json();
+        if (student.hasPaid) {
+          document.getElementById("verifyStatus").textContent = "Payment verified successfully!";
+          document.getElementById("verifySuccess").textContent = "Thank you for your payment.";
+          document.getElementById("dashboardBtn").style.display = "";
+        } else {
+          document.getElementById("verifyStatus").textContent = "Payment not yet confirmed.";
+          document.getElementById("verifyError").textContent = "We could not confirm your payment. Please try again in a few minutes.";
+          document.getElementById("retryBtn").style.display = "";
+        }
+      } catch(e) {
+        document.getElementById("verifyStatus").textContent = "Error verifying payment.";
+        document.getElementById("verifyError").textContent = "Please login and try again.";
+        document.getElementById("retryBtn").style.display = "";
+      }
+    }
+    document.getElementById("retryBtn").onclick = verifyPayment;
+    document.getElementById("dashboardBtn").onclick = function() {
+      window.location.href = "student-masterclass-dashboard.html";
+    };
+    window.onload = function() {
+      verifyPayment();
+    };
+  </script>
+</body>
+</html>
