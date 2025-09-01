@@ -3,11 +3,514 @@
 <head>
   <meta charset="UTF-8">
   <title>CODECX Masterclass Student Dashboard</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=0.8">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
+    /* Main Dashboard Styles */
+body {
+  background: #f6f7fb;
+  min-height: 100vh;
+  font-family: "Inter", "Segoe UI", "Arial", sans-serif;
+}
+header {
+  background: #fff;
+  box-shadow: 0 2px 8px #c7d2fe38;
+  padding: 1.1rem 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+}
+header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3f298a;
+  min-width: 0;
+  flex: 1 1 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+header .feature-badge {
+  background: #6366f1;
+  color: #fff;
+  font-size: .95rem;
+  border-radius: 8px;
+  padding: .15rem .5rem;
+  font-weight: 600;
+  margin-left: .7rem;
+  display: inline-block;
+  white-space: nowrap;
+}
+@media (max-width: 900px) {
+  main {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .grid-cols-2,
+  .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.1rem;
+    padding-right: 0;
+  }
+  header .feature-badge {
+    font-size: 0.85rem;
+    padding: .13rem .35rem;
+  }
+  #studentNameHeader {
+    max-width: 60px;
+  }
+  section {
+    padding: 1rem !important;
+  }
+  .resource-card {
+    padding: 0.7rem 0.6rem;
+  }
+  .scroll-area {
+    padding: 0.6rem;
+    font-size: 0.97rem;
+  }
+  main {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+.locked {
+  filter: grayscale(0.7) blur(1px);
+  position: relative;
+  pointer-events: none;
+  opacity: 0.7;
+}
+.locked::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.4);
+  border-radius: 1rem;
+  z-index: 1;
+}
+.padlock-icon {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  color: #6366f1;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.9;
+}
+.feature-section {
+  position: relative;
+  overflow: hidden;
+}
+.feature-section .padlock-icon {
+  pointer-events: none;
+}
+.feature-section.locked * {
+  pointer-events: none;
+}
+.feature-section.locked .padlock-icon {
+  display: block;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.2rem;
+}
+
+section {
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px #6366f117;
+  padding: 2rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.resource-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px #6366f11a;
+  padding: 1.1rem 1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.resource-card .title {
+  font-weight: 700;
+  color: #4338ca;
+  font-size: 1.07rem;
+  word-break: break-word;
+}
+.resource-card .desc {
+  color: #444;
+  font-size: 0.97rem;
+  word-break: break-word;
+}
+.resource-card .link {
+  color: #6366f1;
+  font-weight: 500;
+  text-decoration: underline;
+  font-size: 0.97rem;
+  margin-top: .5rem;
+  word-break: break-word;
+}
+
+#studentPassport {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #eef2ff;
+}
+
+#studentStatus span {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: 7px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  gap: 1.3rem;
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.scroll-area {
+  max-height: 280px;
+  overflow-y: auto;
+  border-radius: 1rem;
+  background: #f8fafc;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+/* Chat styles */
+.chat-message {
+  margin-bottom: 1.1rem;
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  word-break: break-word;
+}
+.chat-message .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e0e7ff;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.chat-message .bubble {
+  background: #f3f4f6;
+  color: #312e81;
+  border-radius: 1rem 1rem 1rem 0.6rem;
+  padding: 0.7rem 1.1rem;
+  font-size: 1rem;
+  max-width: 80vw;
+  box-shadow: 0 2px 8px #6366f111;
+  word-break: break-word;
+}
+.chat-message.me .bubble {
+  background: #6366f1;
+  color: #fff;
+  border-radius: 1rem 1rem 0.6rem 1rem;
+}
+.chat-message.me {
+  flex-direction: row-reverse;
+}
+
+/* Progress Section */
+#progressSection {
+  /* Already styled as section */
+}
+#progressSummary {
+  font-size: 1.09rem;
+  color: #4338ca;
+  margin-bottom: 1.1rem;
+  font-weight: 600;
+}
+#progressGrid {
+  margin-top: 0.7rem;
+}
+#progressGrid > div {
+  min-width: 0;
+  box-shadow: 0 2px 9px #6366f111;
+  border-width: 2px;
+  margin-bottom: 0;
+}
+.quiz-btn, .attendance-btn {
+  cursor: pointer;
+  box-shadow: 0 0px 2px #6366f122;
+  font-weight: 600;
+}
+.quiz-btn:hover, .attendance-btn:hover {
+  filter: brightness(1.07);
+  box-shadow: 0 2px 9px #6366f133;
+}
+
+@media (max-width: 900px) {
+  #progressGrid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 0.97rem;
+}
+th, td {
+  word-break: break-word;
+  padding: 0.65rem 0.4rem;
+  border: 1px solid #e0e4ed;
+}
+th {
+  background: #f3f4f6;
+  color: #6366f1;
+  font-weight: 600;
+}
+
+/* Modal styles */
+.custom-modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(60,72,128,0.22);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.custom-modal-bg.show {
+  display: flex;
+}
+.custom-modal {
+  background: white;
+  border-radius: 1.4rem;
+  box-shadow: 0 8px 32px #6366f133;
+  max-width: 97vw;
+  min-width: 300px;
+  width: 100%;
+  max-width: 390px;
+  padding: 2.2rem 1.2rem 1.7rem 1.2rem;
+  position: relative;
+  text-align: center;
+  animation: modalIn .5s;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95);}
+  to { opacity: 1; transform: scale(1);}
+}
+.custom-modal .modal-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #6366f1;
+}
+.custom-modal .modal-message {
+  font-size: 1.07rem;
+  margin-bottom: 1.1rem;
+  color: #1B428C;
+}
+.custom-modal .modal-quiz {
+  text-align: left;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1rem .7rem;
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+  border: 1px solid #e0e4ed;
+}
+.custom-modal .modal-actions {
+  margin-top: 1.3rem;
+  display: flex;
+  gap: .9rem;
+  justify-content: center;
+}
+.custom-modal .modal-btn {
+  padding: .67rem 1.2rem;
+  border-radius: 10px;
+  border: none;
+  background: #6366f1;
+  color: #fff;
+  font-size: 1.07rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-width: 110px;
+}
+.custom-modal .modal-btn.secondary {
+  background: #f5f7fa;
+  color: #003366;
+  border: 1.5px solid #6366f1;
+}
+.custom-modal .close-modal {
+  position: absolute;
+  top: 11px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.7rem;
+  color: #888;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.custom-modal .close-modal:hover {
+  opacity: 1;
+}
+.modal-quiz-options label {
+  display: block;
+  margin-bottom: .7rem;
+  cursor: pointer;
+  padding: .2rem .1rem;
+  border-radius: 7px;
+  transition: background .14s;
+}
+.modal-quiz-options input[type="radio"]:checked + span {
+  background: #6366f1;
+  color: #fff;
+  font-weight: 600;
+  padding: .2rem .5rem;
+}
+.modal-quiz-options input[type="radio"] {
+  margin-right: 0.4em;
+}
+
+input[type="text"], input[type="number"], input[type="file"], select {
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid #e0e4ed;
+  border-radius: 7px;
+  padding: 0.6rem 0.7rem;
+  margin-bottom: 0.4rem;
+  outline: none;
+  background: #f6f7fb;
+  box-sizing: border-box;
+}
+
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: background 0.13s;
+}
+button:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.bg-green-600 { background: #16a34a; }
+.bg-green-700 { background: #15803d; }
+.bg-indigo-600 { background: #6366f1; }
+.bg-indigo-700 { background: #4338ca; }
+.bg-yellow-400 { background: #facc15; }
+.bg-gray-200 { background: #e5e7eb; }
+.bg-gray-50 { background: #f9fafb; }
+.bg-white { background: #fff; }
+
+/* WhatsApp Group Button */
+#whatsappGroupBtn {
+  min-width: 190px;
+  box-shadow: 0 2px 9px #16a34a22;
+}
+#whatsappGroupBtn:hover {
+  background: #128c7e;
+}
+
+/* Misc */
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: bold; }
+.rounded { border-radius: 1rem; }
+.shadow { box-shadow: 0 2px 10px #6366f11a; }
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.text-xs { font-size: 0.85rem; }
+.text-sm { font-size: 0.97rem; }
+.text-lg { font-size: 1.19rem; }
+.text-xl { font-size: 1.37rem; }
+.text-green-800 { color: #166534; }
+.text-green-700 { color: #15803d; }
+.text-indigo-800 { color: #4338ca; }
+.text-gray-400 { color: #9ca3af; }
+.text-gray-500 { color: #6b7280; }
+.text-gray-600 { color: #4b5563; }
+.text-gray-700 { color: #374151; }
+.text-red-800 { color: #991b1b; }
+.text-red-100 { background: #fee2e2; }
+.text-green-100 { background: #d1fae5; }
+.bg-green-100 { background: #d1fae5; }
+.bg-red-100 { background: #fee2e2; }
+.bg-indigo-100 { background: #e0e7ff; }
+.bg-gray-100 { background: #f3f4f6; }
+.px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.ml-2 { margin-left: 0.5rem; }
+.ml-3 { margin-left: 0.75rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-5 { margin-top: 1.25rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-8 { margin-bottom: 2rem; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-6 { gap: 1.5rem; }
+.flex { display: flex; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.min-w-0 { min-width: 0; }
+.max-w-lg { max-width: 32rem; }
+.max-w-4xl { max-width: 56rem; }
+.w-full { width: 100%; }
+.w-10 { width: 2.5rem; }
+.h-10 { height: 2.5rem; }
+.rounded-full { border-radius: 9999px; }
+.border { border: 1px solid #e0e4ed; }
+.font-medium { font-weight: 500; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.inset-0 { top:0; right:0; bottom:0; left:0; }
+.z-30 { z-index: 30; }
+.z-9999 { z-index: 9999; }
+.hidden { display: none; }
+.show { display: flex !important; }
+.pointer-events-none { pointer-events: none; }
+.transition { transition: all 0.13s; }
+    
     .locked {
       filter: grayscale(0.7) blur(1px);
       position: relative;
@@ -32,30 +535,7 @@
       pointer-events: none;
       opacity: 0.9;
     }
-    .feature-badge {
-      background: #6366f1;
-      color: #fff;
-      font-size: .95rem;
-      border-radius: 8px;
-      padding: .22rem .65rem;
-      font-weight: 600;
-      margin-left: .7rem;
-      display: inline-block;
-      white-space: nowrap;
-    }
-    .feature-section {
-      position: relative;
-      overflow: hidden;
-    }
-    .feature-section .padlock-icon {
-      pointer-events: none;
-    }
-    .feature-section.locked * {
-      pointer-events: none;
-    }
-    .feature-section.locked .padlock-icon {
-      display: block;
-    }
+    /* ... rest of your styles ... */
     .chat-message {
       margin-bottom: 1.1rem;
       display: flex;
@@ -108,95 +588,7 @@
       gap: 0.5rem;
       min-width: 0;
     }
-    .resource-card .title {
-      font-weight: 700;
-      color: #4338ca;
-      font-size: 1.07rem;
-      word-break: break-word;
-    }
-    .resource-card .desc {
-      color: #444;
-      font-size: 0.97rem;
-      word-break: break-word;
-    }
-    .resource-card .link {
-      color: #6366f1;
-      font-weight: 500;
-      text-decoration: underline;
-      font-size: 0.97rem;
-      margin-top: .5rem;
-      word-break: break-word;
-    }
-    header {
-      min-width: 0;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    header h1 {
-      font-size: 2rem;
-      min-width: 0;
-      flex: 1 1 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    header .feature-badge {
-      font-size: .95rem;
-      padding: .15rem .5rem;
-      margin-left: 0.4rem;
-    }
-    header .flex {
-      gap: 1vw;
-    }
-    #studentNameHeader {
-      max-width: 110px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    @media (max-width: 900px) {
-      main {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
-      .grid-cols-2 {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.1rem;
-        padding-right: 0;
-      }
-      header .feature-badge {
-        font-size: 0.85rem;
-        padding: .13rem .35rem;
-      }
-      #studentNameHeader {
-        max-width: 60px;
-      }
-      section {
-        padding: 1rem !important;
-      }
-      .resource-card {
-        padding: 0.7rem 0.6rem;
-      }
-      .scroll-area {
-        padding: 0.6rem;
-        font-size: 0.97rem;
-      }
-      main {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
-    }
-    table {
-      width: 100%;
-      table-layout: fixed;
-    }
-    th, td {
-      word-break: break-word;
-    }
+    /* ... keep your original CSS ... */
     /* Modal styles */
     .custom-modal-bg {
       position: fixed;
@@ -363,6 +755,14 @@
       <div id="unlockMessage" class="mt-5 text-center text-indigo-700 font-semibold hidden">
         <i class="bi bi-lock-fill"></i> These features are locked. Please complete payment to unlock full access!
       </div>
+      <div class="mt-6 text-center">
+        <button id="whatsappGroupBtn"
+          class="px-4 py-2 rounded font-semibold bg-green-600 text-white shadow hover:bg-green-700 transition disabled:opacity-60 disabled:pointer-events-none"
+          style="min-width: 190px;">
+          <i class="bi bi-whatsapp mr-1"></i> Join WhatsApp Group
+        </button>
+        <div id="whatsappNote" class="text-xs text-gray-600 mt-1"></div>
+      </div>
     </section>
 
     <!-- Chat/Community -->
@@ -411,7 +811,6 @@
         <tbody id="activityTable"></tbody>
       </table>
       <div class="flex gap-2 mt-4">
-        <button id="attendanceBtn" class="px-3 py-1 bg-green-600 text-white rounded">Mark Attendance</button>
         <span id="attendanceStatus" class="ml-3 font-semibold"></span>
       </div>
       <div class="mt-3">
@@ -452,11 +851,11 @@
         <div class="mt-4 text-xs text-gray-500">After payment, you will be redirected for verification.</div>
       </div>
     </div>
-    <!-- Modal for Attendance Quiz -->
-    <div class="custom-modal-bg" id="attendanceQuizBg">
-      <div class="custom-modal" id="attendanceQuizModal">
-        <button class="close-modal" onclick="closeAttendanceQuiz()">&times;</button>
-        <div id="attendanceQuizContent"></div>
+    <!-- Modal for Day Quiz -->
+    <div class="custom-modal-bg" id="dayQuizModalBg" style="display:none">
+      <div class="custom-modal" id="dayQuizModal">
+        <button class="close-modal" onclick="closeDayQuizModal()">&times;</button>
+        <div id="dayQuizContent"></div>
       </div>
     </div>
     <!-- Modal for Receipt/Payment -->
@@ -466,9 +865,11 @@
         <div id="receiptModalContent"></div>
       </div>
     </div>
+    <!-- Progress Section -->
     <section class="bg-white rounded shadow p-6 mb-8" id="progressSection">
       <h2 class="text-xl font-semibold mb-4">Progress</h2>
-      <div id="progressContent"></div>
+      <div id="progressSummary" class="mb-4 font-semibold text-indigo-800"></div>
+      <div id="progressGrid" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
     </section>
     <section class="bg-white rounded shadow p-6" id="notesSection">
       <h2 class="text-xl font-semibold mb-4">Admin Notes</h2>
@@ -478,6 +879,11 @@
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script>
     const API_BASE = "https://examguide.onrender.com/api/codecxreg";
+    const WS_GROUP_LINK = "https://chat.whatsapp.com/closed-group-link";
+    let student = {};
+    let token = localStorage.getItem('codecx_token');
+    let chatPollInterval = null;
+
     function showToast(msg, type="info") {
       Toastify({
         text: msg,
@@ -512,138 +918,204 @@
       document.getElementById("paymentModalBg").classList.remove("show");
     }
 
-    // Attendance Quiz Modal
-    function openAttendanceQuizModal(quiz) {
-      document.getElementById("attendanceQuizBg").classList.add("show");
-      let html = "";
-      if (!quiz) {
-        html = `<div class="modal-title">Attendance</div>
-                <div class="modal-message">Attendance not opened yet. No quiz available.</div>
-                <div class="modal-actions">
-                  <button class="modal-btn" onclick="closeAttendanceQuiz()">Close</button>
-                </div>`;
+    // WhatsApp Group Button Logic
+    function updateWhatsAppBtn() {
+      const btn = document.getElementById("whatsappGroupBtn");
+      const note = document.getElementById("whatsappNote");
+      if (student.hasPaid) {
+        btn.disabled = false;
+        btn.onclick = () => window.open(WS_GROUP_LINK, "_blank");
+        note.textContent = "Access to the closed WhatsApp group is reserved for paid students.";
       } else {
-        html = `<div class="modal-title">Quiz of the Day</div>
-          <div class="modal-message">${quiz.question}</div>
-          <form id="quizForm" class="modal-quiz">
-            <div class="modal-quiz-options">` +
-            quiz.options.map((opt, idx) =>
-              `<label><input type="radio" name="quizOption" value="${opt}"><span>${opt}</span></label>`
-            ).join("") +
-            `</div>
-          </form>
-          <div class="modal-actions">
-            <button class="modal-btn" onclick="submitAttendanceQuiz('${quiz.answer.replace(/'/g,"&#39;")}')">Submit</button>
-            <button class="modal-btn secondary" onclick="closeAttendanceQuiz()">Cancel</button>
-          </div>`;
+        btn.disabled = true;
+        btn.onclick = null;
+        note.textContent = "Pay for the masterclass to access the exclusive WhatsApp group.";
       }
-      document.getElementById("attendanceQuizContent").innerHTML = html;
     }
-    function closeAttendanceQuiz() {
-      document.getElementById("attendanceQuizBg").classList.remove("show");
+
+    // Progress Data (static for now, can be loaded from backend if available)
+    const sessions = [];
+    for (let i = 1; i <= 60; i++) {
+      let topic = "";
+      if (i <= 20) topic = `HTML: Day ${i}`;
+      else if (i <= 40) topic = `CSS: Day ${i-20}`;
+      else topic = `JavaScript: Day ${i-40}`;
+      sessions.push({
+        day: i,
+        topic
+      });
     }
-    function submitAttendanceQuiz(correctAnswer) {
-      const quizForm = document.getElementById("quizForm");
-      if (!quizForm) return;
-      const selected = quizForm.querySelector('input[name="quizOption"]:checked');
-      if (!selected) {
-        showToast("Please select an answer.", "error");
+
+    function getQuizStatus(day) {
+      if (!student.activities) return {quiz: false, attendance: false};
+      const quizAct = student.activities.find(a => a.activity === `Quiz completed - Day ${day}`);
+      const attAct = student.activities.find(a => a.activity === `Attendance marked - Day ${day}`);
+      return {
+        quiz: !!quizAct,
+        attendance: !!attAct
+      };
+    }
+
+    function renderProgressSection() {
+      let completed = 0;
+      sessions.forEach((s, idx) => {
+        const status = getQuizStatus(s.day);
+        sessions[idx].quizCompleted = status.quiz;
+        sessions[idx].attendanceMarked = status.attendance;
+        if (status.quiz && status.attendance) completed++;
+      });
+      document.getElementById("progressSummary").textContent =
+        `Completed: ${completed} / ${sessions.length} days`;
+
+      const grid = document.getElementById("progressGrid");
+      grid.innerHTML = "";
+      sessions.forEach(s => {
+        let color = "border-gray-300";
+        if (s.day <= 20) color = "border-yellow-400";
+        else if (s.day <= 40) color = "border-blue-400";
+        else color = "border-green-400";
+        grid.innerHTML += `
+          <div class="border ${color} rounded-lg p-3 bg-gray-50 flex flex-col items-start relative min-w-0">
+            <div class="font-bold text-sm mb-1">${s.topic}</div>
+            <div class="text-xs text-gray-500 mb-2">Day ${s.day}</div>
+            <div class="flex items-center gap-2 mb-2">
+              ${s.quizCompleted
+                ? `<span class="text-green-700 flex items-center"><i class="bi bi-check-circle-fill mr-1"></i>Quiz Done</span>`
+                : `<button class="px-2 py-1 text-xs bg-indigo-600 text-white rounded quiz-btn" data-day="${s.day}">Take Quiz</button>`
+              }
+            </div>
+            <div class="flex items-center gap-2">
+              ${s.attendanceMarked
+                ? `<span class="text-green-700 flex items-center"><i class="bi bi-person-check-fill mr-1"></i>Attendance Marked</span>`
+                : s.quizCompleted
+                  ? `<button class="px-2 py-1 text-xs bg-green-600 text-white rounded attendance-btn" data-day="${s.day}">Mark Attendance</button>`
+                  : `<button class="px-2 py-1 text-xs bg-yellow-400 text-white rounded attendance-btn" data-day="${s.day}">Mark Attendance</button>`
+              }
+            </div>
+          </div>
+        `;
+      });
+
+      // Quiz button click event
+      document.querySelectorAll(".quiz-btn").forEach(btn => {
+        btn.onclick = function() {
+          const day = parseInt(this.getAttribute("data-day"));
+          showQuizModal(day);
+        };
+      });
+
+      // Attendance button click event
+      document.querySelectorAll(".attendance-btn").forEach(btn => {
+        btn.onclick = function() {
+          const day = parseInt(this.getAttribute("data-day"));
+          handleAttendance(day);
+        };
+      });
+    }
+
+    function showQuizModal(day) {
+      document.getElementById("dayQuizModalBg").style.display = "flex";
+      document.getElementById("dayQuizContent").innerHTML = `<div class="modal-title">Loading quiz...</div>`;
+      // Fetch quiz from backend
+      fetch(`${API_BASE}/quiz/${day}`, {
+        headers: { Authorization: "Bearer " + token }
+      })
+      .then(resp => resp.json())
+      .then(data => {
+        if (!data || !data.questions || !data.questions.length) {
+          document.getElementById("dayQuizContent").innerHTML =
+            `<div class="modal-title">Quiz Not Available</div>
+             <div class="modal-message">No quiz for Day ${day}.</div>
+             <div class="modal-actions">
+                <button class="modal-btn" onclick="closeDayQuizModal()">Close</button>
+             </div>`;
+          return;
+        }
+        let quizHtml = `<div class="modal-title">Day ${day} Quiz</div>
+          <form id="dayQuizForm" class="modal-quiz">`;
+        data.questions.forEach((q, idx) => {
+          quizHtml += `
+            <div class="mb-2">
+              <label class="font-medium">${idx+1}. ${q.question}</label>
+              <div class="modal-quiz-options">
+                ${q.options.map(opt =>
+                  `<label><input type="radio" name="q${idx}" value="${opt}"><span>${opt}</span></label>`
+                ).join("")}
+              </div>
+            </div>
+          `;
+        });
+        quizHtml += `
+          <div class="modal-actions mt-4">
+            <button type="submit" class="modal-btn">Submit Quiz</button>
+            <button type="button" class="modal-btn secondary" onclick="closeDayQuizModal()">Cancel</button>
+          </div>
+        </form>`;
+        document.getElementById("dayQuizContent").innerHTML = quizHtml;
+        document.getElementById("dayQuizForm").onsubmit = function(e) {
+          e.preventDefault();
+          // Check answers
+          let allCorrect = true;
+          data.questions.forEach((q, idx) => {
+            const ans = document.querySelector(`input[name="q${idx}"]:checked`);
+            if (!ans || ans.value !== q.answer) allCorrect = false;
+          });
+          if (allCorrect) {
+            fetch(API_BASE + "/activities", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+              body: JSON.stringify({ activity: `Quiz completed - Day ${day}`, status: "Success" })
+            })
+            .then(resp => {
+              if (resp.ok) {
+                showToast("Quiz completed!", "success");
+                closeDayQuizModal();
+                loadDashboard();
+              } else {
+                showToast("Failed to record quiz.", "error");
+              }
+            });
+          } else {
+            showToast("Incorrect answers. Try again!", "error");
+          }
+        };
+      }).catch(() => {
+        document.getElementById("dayQuizContent").innerHTML =
+          `<div class="modal-title">Quiz Error</div>
+           <div class="modal-message">Failed to load quiz. Try again.</div>
+           <div class="modal-actions">
+              <button class="modal-btn" onclick="closeDayQuizModal()">Close</button>
+           </div>`;
+      });
+    }
+    function closeDayQuizModal() {
+      document.getElementById("dayQuizModalBg").style.display = "none";
+      document.getElementById("dayQuizContent").innerHTML = "";
+    }
+
+    function handleAttendance(day) {
+      // If quiz not completed, open quiz modal instead
+      const status = getQuizStatus(day);
+      if (!status.quizCompleted) {
+        showQuizModal(day);
         return;
       }
-      if (selected.value === correctAnswer) {
-        closeAttendanceQuiz();
-        markAttendanceBackend();
-      } else {
-        showToast("Incorrect answer. Try again!", "error");
-      }
-    }
-
-    // Example quiz of the day (simulate API call)
-    function fetchQuizOfTheDay() {
-      // Simulate quiz fetch (replace with API if available)
-      // Return null if no quiz today
-      // Return quiz object if available
-      // For demo, alternate quiz/no quiz
-      const today = new Date().getDate();
-      if (today % 2 === 1) { // quiz available on odd days
-        return {
-          question: "What does HTML stand for?",
-          options: [
-            "HyperText Markup Language",
-            "HighlyTextual Modern Language",
-            "Hyperlink Transfer Mark Language",
-            "Home Tool Markup Language"
-          ],
-          answer: "HyperText Markup Language"
-        };
-      } else {
-        return null;
-      }
-    }
-
-    let student = {};
-    let token = localStorage.getItem('codecx_token');
-
-    async function loadDashboard() {
-      if (!token) return logout();
-      try {
-        const resp = await fetch(API_BASE + "/me", {
-          headers: { Authorization: "Bearer " + token }
-        });
-        if (!resp.ok) throw new Error();
-        student = await resp.json();
-        // Render profile
-        document.getElementById("studentAvatar").src =
-          student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName || "Student");
-        document.getElementById("studentNameHeader").textContent = student.fullName || "";
-        document.getElementById("studentPassport").src =
-          student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName || "Student");
-        document.getElementById("studentFullName").textContent = student.fullName || "";
-        // Matric number fix: try all possible fields
-        let matricNo = student.matricNumber || student.loginUsername || student.username || "";
-        document.getElementById("studentMatric").textContent = "Matric No: " + matricNo;
-        document.getElementById("studentEmail").textContent = student.email || "";
-        document.getElementById("studentPhone").textContent = student.phone || "";
-        document.getElementById("studentStatus").innerHTML =
-          student.hasPaid
-            ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
-            : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Unpaid</span>';
-        document.getElementById("adminNote").textContent = student.adminNote || "No feedback yet.";
-        // Masterclass Features Lock
-        const masterclassSection = document.getElementById("masterclassSection");
-        const unlockMessage = document.getElementById("unlockMessage");
-        if (!student.hasPaid) {
-          masterclassSection.classList.add("locked");
-          masterclassSection.querySelector(".padlock-icon").style.display = "block";
-          unlockMessage.classList.remove("hidden");
+      // Otherwise, mark attendance
+      fetch(API_BASE + "/activities", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        body: JSON.stringify({ activity: `Attendance marked - Day ${day}`, status: "Success" })
+      })
+      .then(resp => {
+        if (resp.ok) {
+          showToast("Attendance marked!", "success");
+          loadDashboard();
         } else {
-          masterclassSection.classList.remove("locked");
-          masterclassSection.querySelector(".padlock-icon").style.display = "none";
-          unlockMessage.classList.add("hidden");
+          showToast("Failed to mark attendance.", "error");
         }
-        // Example resource links (replace with real links)
-        document.getElementById("videoLibraryLink").href = student.hasPaid ? "https://codecx-masterclass-videos.com" : "javascript:void(0)";
-        document.getElementById("challengesLink").href = student.hasPaid ? "https://codecx-challenges.com" : "javascript:void(0)";
-        document.getElementById("resourcesLink").href = student.hasPaid ? "https://codecx-resources.com" : "javascript:void(0)";
-        document.getElementById("nextSession").textContent = "Sat, Sep 7, 5pm";
-        // Courses
-        renderCourses(student.courses || []);
-        // Activities
-        renderActivities(student.activities || []);
-        // Payments
-        renderPayments(student.payments || []);
-        document.getElementById("paymentStatus").innerHTML = student.hasPaid
-          ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
-          : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Unpaid</span>';
-        // Progress
-        renderProgress(student.progress || {});
-        // Chat/Community
-        renderChat(student.chatMessages || []);
-      } catch (e) {
-        showToast("Error loading dashboard, please login again.", "error");
-        return logout();
-      }
+      });
     }
+
     function renderCourses(courses) {
       const coursesList = document.getElementById("coursesList");
       coursesList.innerHTML = "";
@@ -719,29 +1191,6 @@
         `;
       });
     }
-    // Attendance button triggers quiz modal
-    document.getElementById("attendanceBtn").onclick = function() {
-      const quiz = fetchQuizOfTheDay();
-      openAttendanceQuizModal(quiz);
-    };
-    // Attendance marking after quiz
-    async function markAttendanceBackend() {
-      try {
-        const resp = await fetch(API_BASE + "/activities", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-          body: JSON.stringify({ activity: "Marked attendance", status: "Success" })
-        });
-        if (resp.ok) {
-          showToast("Attendance marked!", "success");
-          loadDashboard();
-        } else {
-          showToast("Failed to mark attendance.", "error");
-        }
-      } catch {
-        showToast("Failed to mark attendance.", "error");
-      }
-    }
     function renderPayments(payments) {
       const tbody = document.getElementById("paymentsTable");
       tbody.innerHTML = "";
@@ -761,37 +1210,6 @@
           </tr>
         `;
       });
-    }
-    function renderProgress(progress) {
-      document.getElementById("progressContent").innerHTML =
-        `<div><b>Completed:</b> ${progress.completed || 0} / ${progress.total || 0}</div>
-         <div><b>Current Grade:</b> ${progress.grade || "-"}</div>
-         <div class="mt-2 flex gap-2 flex-wrap">
-           <input id="progressCompleted" type="number" min="0" placeholder="Completed" class="px-2 py-1 border rounded" style="width:90px;">
-           <input id="progressTotal" type="number" min="0" placeholder="Total" class="px-2 py-1 border rounded" style="width:90px;">
-           <input id="progressGrade" type="text" placeholder="Grade" class="px-2 py-1 border rounded" style="width:90px;">
-           <button onclick="updateProgress()" class="px-3 py-1 bg-indigo-600 text-white rounded">Update</button>
-         </div>`;
-    }
-    async function updateProgress() {
-      const completed = document.getElementById("progressCompleted").value;
-      const total = document.getElementById("progressTotal").value;
-      const grade = document.getElementById("progressGrade").value;
-      try {
-        const resp = await fetch(API_BASE + "/progress", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
-          body: JSON.stringify({ completed, total, grade })
-        });
-        if (resp.ok) {
-          showToast("Progress updated!", "success");
-          loadDashboard();
-        } else {
-          showToast("Failed to update progress.", "error");
-        }
-      } catch {
-        showToast("Failed to update progress.", "error");
-      }
     }
     async function submitAssignment() {
       const fileInput = document.getElementById("assignmentInput");
@@ -816,6 +1234,22 @@
       }
       fileInput.value = "";
     }
+
+    // Real-time Community Chat
+    async function fetchChatMessages() {
+      try {
+        const resp = await fetch(API_BASE + "/chat", {
+          headers: { Authorization: "Bearer " + token }
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.chatMessages) {
+            renderChat(data.chatMessages);
+            student.chatMessages = data.chatMessages;
+          }
+        }
+      } catch {}
+    }
     function renderChat(messages) {
       const chatArea = document.getElementById("chatArea");
       chatArea.innerHTML = "";
@@ -838,16 +1272,87 @@
       const input = document.getElementById("chatInput");
       const text = input.value.trim();
       if (!text) return;
-      student.chatMessages = student.chatMessages || [];
-      student.chatMessages.push({
-        me: true,
-        sender: student.fullName,
-        avatar: student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName || "Student"),
-        text
-      });
-      renderChat(student.chatMessages);
-      input.value = "";
+      try {
+        const resp = await fetch(API_BASE + "/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+          body: JSON.stringify({ text })
+        });
+        if (resp.ok) {
+          fetchChatMessages();
+          input.value = "";
+        } else {
+          showToast("Failed to send message.", "error");
+        }
+      } catch {
+        showToast("Failed to send message.", "error");
+      }
     };
+
+    // Dashboard loader
+    async function loadDashboard() {
+      if (!token) return logout();
+      try {
+        const resp = await fetch(API_BASE + "/me", {
+          headers: { Authorization: "Bearer " + token }
+        });
+        if (!resp.ok) throw new Error();
+        student = await resp.json();
+        // Render profile
+        document.getElementById("studentAvatar").src =
+          student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName || "Student");
+        document.getElementById("studentNameHeader").textContent = student.fullName || "";
+        document.getElementById("studentPassport").src =
+          student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName || "Student");
+        document.getElementById("studentFullName").textContent = student.fullName || "";
+        let matricNo = student.matricNumber || student.loginUsername || student.username || "";
+        document.getElementById("studentMatric").textContent = "Matric No: " + matricNo;
+        document.getElementById("studentEmail").textContent = student.email || "";
+        document.getElementById("studentPhone").textContent = student.phone || "";
+        document.getElementById("studentStatus").innerHTML =
+          student.hasPaid
+            ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
+            : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Unpaid</span>';
+        document.getElementById("adminNote").textContent = student.adminNote || "No feedback yet.";
+        // Masterclass Features Lock
+        const masterclassSection = document.getElementById("masterclassSection");
+        const unlockMessage = document.getElementById("unlockMessage");
+        if (!student.hasPaid) {
+          masterclassSection.classList.add("locked");
+          masterclassSection.querySelector(".padlock-icon").style.display = "block";
+          unlockMessage.classList.remove("hidden");
+        } else {
+          masterclassSection.classList.remove("locked");
+          masterclassSection.querySelector(".padlock-icon").style.display = "none";
+          unlockMessage.classList.add("hidden");
+        }
+        document.getElementById("videoLibraryLink").href = student.hasPaid ? "https://codecx-masterclass-videos.com" : "javascript:void(0)";
+        document.getElementById("challengesLink").href = student.hasPaid ? "https://codecx-challenges.com" : "javascript:void(0)";
+        document.getElementById("resourcesLink").href = student.hasPaid ? "https://codecx-resources.com" : "javascript:void(0)";
+        document.getElementById("nextSession").textContent = "Sat, Sep 7, 5pm";
+        // Courses
+        renderCourses(student.courses || []);
+        // Activities
+        renderActivities(student.activities || []);
+        // Payments
+        renderPayments(student.payments || []);
+        document.getElementById("paymentStatus").innerHTML = student.hasPaid
+          ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Paid</span>'
+          : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">Unpaid</span>';
+        // Progress section
+        renderProgressSection();
+        // WhatsApp button
+        updateWhatsAppBtn();
+        // Chat
+        fetchChatMessages();
+        // Setup polling for real-time chat
+        if (chatPollInterval) clearInterval(chatPollInterval);
+        chatPollInterval = setInterval(fetchChatMessages, 4000);
+      } catch (e) {
+        showToast("Error loading dashboard, please login again.", "error");
+        return logout();
+      }
+    }
 
     window.onload = loadDashboard;
   </script>
