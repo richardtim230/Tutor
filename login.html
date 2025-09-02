@@ -181,6 +181,13 @@
             .login-panel h1 { font-size: 1.24rem;}
             .login-panel p { font-size: .99rem;}
         }
+        /* Modal styles */
+        #error-modal {
+            display: none;
+        }
+        #error-modal.show {
+            display: flex;
+        }
     </style>
 </head>
 <body>
@@ -216,6 +223,18 @@
             </div>
         </div>
     </div>
+    <!-- Error Modal for login failures -->
+    <div id="error-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+      <div class="bg-white rounded-lg shadow-lg px-6 py-7 max-w-md w-full text-center relative">
+        <button id="close-error-modal" class="absolute top-2 right-3 text-2xl text-gray-500 hover:text-indigo-700" aria-label="Close">&times;</button>
+        <div class="mb-4">
+          <div class="text-3xl text-red-600 mb-2"><i class="bi bi-exclamation-triangle-fill"></i></div>
+          <h2 class="text-xl font-bold mb-2 text-indigo-800">Login Error</h2>
+          <div id="error-modal-message" class="text-gray-700 text-base"></div>
+        </div>
+        <button id="close-modal-btn" class="mt-4 px-6 py-2 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700">OK</button>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
         // Autofill using URL params
@@ -237,6 +256,19 @@
                 ? '<i class="bi bi-eye-slash"></i>'
                 : '<i class="bi bi-eye"></i>';
         };
+
+        // Modal
+        function showErrorModal(message) {
+            document.getElementById('error-modal-message').textContent = message;
+            document.getElementById('error-modal').classList.remove('hidden');
+            document.getElementById('error-modal').classList.add('show');
+        }
+        function hideErrorModal() {
+            document.getElementById('error-modal').classList.add('hidden');
+            document.getElementById('error-modal').classList.remove('show');
+        }
+        document.getElementById('close-error-modal').onclick = hideErrorModal;
+        document.getElementById('close-modal-btn').onclick = hideErrorModal;
 
         // Forgot password link
         document.getElementById('forgot-link').onclick = function () {
@@ -287,28 +319,11 @@
                         window.location.href = "/dashboard.html"; // Change to your dashboard URL
                     }, 1200);
                 } else {
-                    loginMessage.textContent = data.message || "Login failed";
-                    loginMessage.style.display = "block";
-                    Toastify({
-                        text: data.message || "Login failed",
-                        duration: 3500,
-                        gravity: "top",
-                        position: "center",
-                        backgroundColor: "linear-gradient(90deg,#ef4444,#f87171)",
-                        stopOnFocus: true
-                    }).showToast();
+                    // Show modal for login error
+                    showErrorModal(data.message || "Login failed");
                 }
             } catch (error) {
-                loginMessage.textContent = "Network or server error. Please try again.";
-                loginMessage.style.display = "block";
-                Toastify({
-                    text: "Network or server error. Please try again.",
-                    duration: 3500,
-                    gravity: "top",
-                    position: "center",
-                    backgroundColor: "linear-gradient(90deg,#ef4444,#f87171)",
-                    stopOnFocus: true
-                }).showToast();
+                showErrorModal("Network or server error. Please try again.");
             } finally {
                 loginBtn.disabled = false;
                 btnText.innerHTML = "Login";
