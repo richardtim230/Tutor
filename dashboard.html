@@ -833,7 +833,15 @@ for (let i = 0; i < 60; i++) {
     date: formatDate(sessionDate)
   });
 }
-
+function getQuizStatus(day) {
+  if (!student.activities) return { quiz: false, attendance: false };
+  const quizAct = student.activities.find(a => a.activity.startsWith(`Quiz completed - Day ${day}`));
+  const attAct = student.activities.find(a => a.activity === `Attendance marked - Day ${day}`);
+  return {
+    quiz: !!quizAct,
+    attendance: !!attAct
+  };
+}
 // Render progress grid with time/date restrictions and quiz/attendance gating
 function renderProgressSection() {
   let completed = 0;
