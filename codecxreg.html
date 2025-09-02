@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -102,6 +103,13 @@
                 margin: 2rem 0;
             }
         }
+        /* Modal styles */
+        #error-modal {
+            display: none;
+        }
+        #error-modal.show {
+            display: flex;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -179,6 +187,19 @@
         </form>
     </div>
 
+    <!-- Error Modal for duplicate registration and other errors -->
+    <div id="error-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+      <div class="bg-white rounded-lg shadow-lg px-6 py-7 max-w-md w-full text-center relative">
+        <button id="close-error-modal" class="absolute top-2 right-3 text-2xl text-gray-500 hover:text-indigo-700" aria-label="Close">&times;</button>
+        <div class="mb-4">
+          <div class="text-3xl text-red-600 mb-2"><i class="bi bi-exclamation-triangle-fill"></i></div>
+          <h2 class="text-xl font-bold mb-2 text-indigo-800">Registration Error</h2>
+          <div id="error-modal-message" class="text-gray-700 text-base"></div>
+        </div>
+        <button id="close-modal-btn" class="mt-4 px-6 py-2 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700">OK</button>
+      </div>
+    </div>
+
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
         // Replace all fetch URLs with the full backend URL:
@@ -198,6 +219,19 @@
         const feedbackSubmitBtn = document.getElementById('feedback-submit-btn');
         const feedbackBtnText = document.getElementById('feedback-btn-text');
         const backToSuccess = document.getElementById('back-to-success');
+
+        // Modal
+        function showErrorModal(message) {
+            document.getElementById('error-modal-message').textContent = message;
+            document.getElementById('error-modal').classList.remove('hidden');
+            document.getElementById('error-modal').classList.add('show');
+        }
+        function hideErrorModal() {
+            document.getElementById('error-modal').classList.add('hidden');
+            document.getElementById('error-modal').classList.remove('show');
+        }
+        document.getElementById('close-error-modal').onclick = hideErrorModal;
+        document.getElementById('close-modal-btn').onclick = hideErrorModal;
 
         function showToast(message, type = "success") {
             Toastify({
@@ -258,6 +292,9 @@
                         `;
                         loginBtnContainer.style.display = "block";
                     }
+                } else if (response.status === 409) {
+                    // Duplicate registration error
+                    showErrorModal(resJson.message || "This email, phone, or matric number has already been used.");
                 } else {
                     showToast("Registration failed: " + (resJson.message || "Server error"), "error");
                 }
