@@ -244,20 +244,27 @@
 
     // Candidates & stats
     async function fetchCandidates() {
-      let token = localStorage.getItem('codecx_token');
-      const resp = await fetch(`${API_BASE}/admin/all`, { headers: { "Authorization": "Bearer " + token } });
-      if (!resp.ok) return;
-      const data = await resp.json();
-      candidates = data.students || [];
-      stats = data.stats || {};
-      renderStats();
-      renderCandidates();
-      renderPayments();
-      renderCourses();
-      renderActivity();
-      renderOverviewActivity();
-      renderProgressChart();
+  let token = localStorage.getItem('codecx_token');
+  try {
+    const resp = await fetch(`${API_BASE}/admin/all`, { headers: { "Authorization": "Bearer " + token } });
+    if (!resp.ok) {
+      alert("Failed to load candidates: " + resp.status);
+      return;
     }
+    const data = await resp.json();
+    candidates = data.students || [];
+    stats = data.stats || {};
+    renderStats();
+    renderCandidates();
+    renderPayments();
+    renderCourses();
+    renderActivity();
+    renderOverviewActivity();
+    renderProgressChart();
+  } catch (error) {
+    alert("Error loading candidates: " + error.message);
+  }
+}
 
     function renderStats() {
       document.getElementById("statTotal").textContent = stats.totalStudents || "-";
