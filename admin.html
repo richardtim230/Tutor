@@ -246,7 +246,7 @@
     async function fetchCandidates() {
   let token = localStorage.getItem('codecx_token');
   try {
-    const resp = await fetch(`${API_BASE}/admin/all`, { headers: { "Authorization": "Bearer " + token } });
+    const resp = await fetch(`${API_BASE}/admin`, { headers: { "Authorization": "Bearer " + token } });
     if (!resp.ok) {
       alert("Failed to load candidates: " + resp.status);
       return;
