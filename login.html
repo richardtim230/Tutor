@@ -172,7 +172,7 @@
             .login-panel p { font-size: .99rem;}
         }
         /* Modal styles */
-        #error-modal {
+        #notify-modal {
             position: fixed;
             inset: 0;
             z-index: 9999;
@@ -181,10 +181,10 @@
             align-items: center;
             justify-content: center;
         }
-        #error-modal.show {
+        #notify-modal.show {
             display: flex;
         }
-        #error-modal .modal-content {
+        #notify-modal .modal-content {
             background: white;
             border-radius: 1.3rem;
             box-shadow: 0 8px 32px #6366f133;
@@ -196,7 +196,7 @@
             position: relative;
             text-align: center;
         }
-        #error-modal .close-error-modal {
+        #notify-modal .close-modal {
             position: absolute;
             top: 11px;
             right: 15px;
@@ -207,27 +207,27 @@
             cursor: pointer;
             opacity: 0.7;
         }
-        #error-modal .close-error-modal:hover {
+        #notify-modal .close-modal:hover {
             opacity: 1;
         }
-        #error-modal .modal-title {
+        #notify-modal .modal-title {
             font-size: 1.18rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             color: #6366f1;
         }
-        #error-modal .modal-message {
+        #notify-modal .modal-message {
             font-size: 1.07rem;
             margin-bottom: 1.1rem;
             color: #1B428C;
         }
-        #error-modal .modal-actions {
+        #notify-modal .modal-actions {
             margin-top: 1.2rem;
             display: flex;
             gap: .9rem;
             justify-content: center;
         }
-        #error-modal .modal-btn {
+        #notify-modal .modal-btn {
             padding: .62rem 1.1rem;
             border-radius: 9px;
             border: none;
@@ -239,10 +239,14 @@
             transition: background 0.2s;
             min-width: 98px;
         }
-        #error-modal .modal-btn.secondary {
+        #notify-modal .modal-btn.secondary {
             background: #f5f7fa;
             color: #003366;
             border: 1.5px solid #6366f1;
+        }
+        #notify-modal .modal-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.2rem;
         }
     </style>
 </head>
@@ -278,17 +282,17 @@
             </div>
         </div>
     </div>
-    <!-- Error Modal for login failures -->
-    <div id="error-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+    <!-- Notify Modal for all notifications -->
+    <div id="notify-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
       <div class="modal-content">
-        <button class="close-error-modal" id="close-error-modal" aria-label="Close">&times;</button>
+        <button class="close-modal" id="close-notify-modal" aria-label="Close">&times;</button>
         <div class="mb-4">
-          <div class="text-3xl text-red-600 mb-2"><i class="bi bi-exclamation-triangle-fill"></i></div>
-          <div class="modal-title">Login Error</div>
-          <div id="error-modal-message" class="modal-message"></div>
+          <div id="notify-modal-icon" class="modal-icon"></div>
+          <div id="notify-modal-title" class="modal-title"></div>
+          <div id="notify-modal-message" class="modal-message"></div>
         </div>
-        <div class="modal-actions">
-          <button id="close-modal-btn" class="modal-btn">OK</button>
+        <div class="modal-actions" id="notify-modal-actions">
+          <button id="notify-modal-btn" class="modal-btn">OK</button>
         </div>
       </div>
     </div>
@@ -314,29 +318,37 @@
                 : '<i class="bi bi-eye"></i>';
         };
 
-        // Modal
-        function showErrorModal(message) {
-            document.getElementById('error-modal-message').textContent = message;
-            document.getElementById('error-modal').classList.remove('hidden');
-            document.getElementById('error-modal').classList.add('show');
+        // Modal logic
+        function showNotifyModal({icon, title, message, btnText, btnAction, showClose=true}) {
+            document.getElementById('notify-modal-icon').innerHTML = icon || '';
+            document.getElementById('notify-modal-title').textContent = title || '';
+            document.getElementById('notify-modal-message').textContent = message || '';
+            document.getElementById('notify-modal-btn').textContent = btnText || 'OK';
+            document.getElementById('notify-modal-actions').style.display = btnText ? "flex" : "none";
+            document.getElementById('close-notify-modal').style.display = showClose ? "" : "none";
+            document.getElementById('notify-modal').classList.remove('hidden');
+            document.getElementById('notify-modal').classList.add('show');
+            // Remove previous click listeners
+            let btn = document.getElementById('notify-modal-btn');
+            btn.onclick = function() {
+                hideNotifyModal();
+                if (btnAction) btnAction();
+            };
+            document.getElementById('close-notify-modal').onclick = hideNotifyModal;
         }
-        function hideErrorModal() {
-            document.getElementById('error-modal').classList.add('hidden');
-            document.getElementById('error-modal').classList.remove('show');
+        function hideNotifyModal() {
+            document.getElementById('notify-modal').classList.add('hidden');
+            document.getElementById('notify-modal').classList.remove('show');
         }
-        document.getElementById('close-error-modal').onclick = hideErrorModal;
-        document.getElementById('close-modal-btn').onclick = hideErrorModal;
 
         // Forgot password link
         document.getElementById('forgot-link').onclick = function () {
-            Toastify({
-                text: 'Please contact the admin to reset your password.',
-                duration: 3500,
-                gravity: "top",
-                position: "center",
-                backgroundColor: "linear-gradient(90deg,#6366f1,#4338ca)",
-                stopOnFocus: true
-            }).showToast();
+            showNotifyModal({
+                icon: '<i class="bi bi-info-circle-fill text-indigo-500"></i>',
+                title: 'Forgot Password',
+                message: 'Please contact the admin to reset your password.',
+                btnText: 'OK'
+            });
         };
 
         // Login handling
@@ -361,24 +373,33 @@
                 });
                 const data = await response.json();
                 if (response.ok && data.token) {
-                    Toastify({
-                        text: "Login successful!",
-                        duration: 3500,
-                        gravity: "top",
-                        position: "center",
-                        backgroundColor: "linear-gradient(90deg,#6366f1,#4338ca)",
-                        stopOnFocus: true
-                    }).showToast();
                     localStorage.setItem("codecx_token", data.token);
-                    setTimeout(() => {
-                        window.location.href = "/dashboard.html"; // Change to your dashboard URL
-                    }, 1200);
+                    showNotifyModal({
+                        icon: '<i class="bi bi-check-circle-fill text-green-600"></i>',
+                        title: 'Login Successful',
+                        message: 'You have successfully logged in. Click continue to access your dashboard.',
+                        btnText: 'Continue',
+                        btnAction: function() {
+                            window.location.href = "/dashboard.html";
+                        },
+                        showClose: false
+                    });
                 } else {
                     // Show modal for login error
-                    showErrorModal(data.message || "Login failed");
+                    showNotifyModal({
+                        icon: '<i class="bi bi-exclamation-triangle-fill text-red-600"></i>',
+                        title: 'Login Error',
+                        message: data.message || "Login failed",
+                        btnText: 'OK'
+                    });
                 }
             } catch (error) {
-                showErrorModal("Network or server error. Please try again.");
+                showNotifyModal({
+                    icon: '<i class="bi bi-exclamation-triangle-fill text-red-600"></i>',
+                    title: 'Network Error',
+                    message: "Network or server error. Please try again.",
+                    btnText: 'OK'
+                });
             } finally {
                 loginBtn.disabled = false;
                 btnText.innerHTML = "Login";
