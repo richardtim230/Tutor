@@ -4,136 +4,144 @@
   <meta charset="UTF-8">
   <title>CODECX Admin Dashboard</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Tailwind & Flowbite -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
-    body { background: #f8fafc; font-family: 'Poppins', 'Inter', sans-serif; }
-    .sidebar { min-width: 220px; background: #4338ca; color: #fff;}
-    .sidebar a { color: #fff; padding: 0.9rem 1.2rem; display: block; border-radius: 8px; margin: 0.4rem 0;}
-    .sidebar a.active, .sidebar a:hover { background: #6366f1; color: #fff;}
-    .topbar { background: #fff; box-shadow: 0 1px 8px #e0e7ff44; }
-    .stat-card { background: #fff; border-radius:1.1rem; box-shadow: 0 2px 12px #6366f110; padding: 1.3rem 1.2rem; }
-    .card { background: #fff; border-radius:1rem; box-shadow: 0 1.5px 8px #6366f115; padding: 1.1rem; }
-    .candidate-row:hover { background: #eef2ff;}
-    @media (max-width: 900px) {
-      .sidebar { min-width: 0; width: 100%; position: static;}
-      .main { margin-left: 0 !important;}
-    }
+    body { font-family: 'Poppins', 'Inter', sans-serif; }
+    .card { background: #fff; border-radius:1rem; box-shadow:0 2px 12px #6366f110; padding:1rem;}
+    .tab-active { background: #6366f1; color: #fff;}
+    .sidebar { min-width: 220px;}
   </style>
 </head>
-<body>
+<body class="bg-gray-50">
   <div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <nav class="sidebar flex flex-col gap-1 py-7 px-3 h-full hidden md:flex" id="sidebar">
-      <div class="font-bold text-xl text-white mb-8 ml-2">CODECX Admin</div>
-      <a href="#" class="active" data-section="overview"><i class="bi bi-house-door"></i> Overview</a>
-      <a href="#" data-section="candidates"><i class="bi bi-people"></i> Candidates</a>
-      <a href="#" data-section="payments"><i class="bi bi-credit-card"></i> Payments</a>
-      <a href="#" data-section="courses"><i class="bi bi-journal-code"></i> Courses</a>
-      <a href="#" data-section="activity"><i class="bi bi-clock-history"></i> Activity</a>
-      <a href="#" data-section="chat"><i class="bi bi-chat-dots"></i> Chat</a>
-      <a href="#" data-section="settings"><i class="bi bi-gear"></i> Settings</a>
-    </nav>
-    <!-- Sidebar mobile -->
-    <nav class="sidebar flex flex-row gap-1 py-3 px-2 md:hidden fixed bottom-0 left-0 w-full z-40" id="sidebar-mobile" style="background:#4338ca;">
-      <a href="#" class="active" data-section="overview"><i class="bi bi-house-door"></i></a>
-      <a href="#" data-section="candidates"><i class="bi bi-people"></i></a>
-      <a href="#" data-section="payments"><i class="bi bi-credit-card"></i></a>
-      <a href="#" data-section="courses"><i class="bi bi-journal-code"></i></a>
-      <a href="#" data-section="activity"><i class="bi bi-clock-history"></i></a>
-      <a href="#" data-section="chat"><i class="bi bi-chat-dots"></i></a>
-      <a href="#" data-section="settings"><i class="bi bi-gear"></i></a>
-    </nav>
-    <!-- Main Content -->
-    <div class="main flex-1 px-3 py-6 md:px-8 md:py-7" style="margin-left:220px;">
-      <!-- Topbar -->
-      <div class="topbar flex items-center justify-between px-4 py-3 rounded mb-6">
-        <div class="text-xl font-bold text-indigo-800">Admin Dashboard</div>
-        <div class="flex items-center gap-3">
-          <span id="adminName" class="font-semibold text-indigo-700"></span>
-          <img id="adminAvatar" src="" alt="avatar" class="w-9 h-9 rounded-full border">
-          <button onclick="logout()" class="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-700">Logout</button>
+    <!-- Sidebar using Flowbite -->
+    <aside id="default-sidebar" class="sidebar fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full md:translate-x-0" aria-label="Sidebar">
+      <div class="h-full px-3 py-6 overflow-y-auto bg-indigo-900 text-white flex flex-col">
+        <div class="text-2xl font-bold text-white mb-7">CODECX Admin</div>
+        <ul class="space-y-2">
+          <li><a href="#" class="flex items-center p-2 rounded-lg tab-active" data-tab="overview"><i class="bi bi-house-door mr-2"></i>Overview</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="candidates"><i class="bi bi-people mr-2"></i>Candidates</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="payments"><i class="bi bi-credit-card mr-2"></i>Payments</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="courses"><i class="bi bi-journal-code mr-2"></i>Courses</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="activity"><i class="bi bi-clock-history mr-2"></i>Activity</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="settings"><i class="bi bi-gear mr-2"></i>Settings</a></li>
+        </ul>
+        <div class="mt-auto pt-8">
+          <button onclick="logout()" class="w-full bg-red-600 text-white rounded-lg py-2 font-semibold hover:bg-red-700"><i class="bi bi-box-arrow-right mr-2"></i>Logout</button>
         </div>
       </div>
+    </aside>
+    <!-- Mobile sidebar toggle -->
+    <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="md:hidden fixed top-3 left-3 z-50 inline-flex items-center p-2 text-sm text-white bg-indigo-900 rounded-lg">
+      <span class="sr-only">Open sidebar</span>
+      <i class="bi bi-list text-xl"></i>
+    </button>
+    <!-- Main Content -->
+    <div class="main flex-1 md:ml-64 px-2 pt-6 pb-8">
+      <!-- Topbar -->
+      <nav class="flex flex-col md:flex-row items-center justify-between mb-7 bg-white rounded-lg shadow px-5 py-4">
+        <div class="text-2xl font-bold text-indigo-900">Admin Dashboard</div>
+        <div class="flex items-center gap-3 mt-3 md:mt-0">
+          <span id="adminName" class="font-semibold text-indigo-800"></span>
+          <img id="adminAvatar" src="" alt="avatar" class="w-10 h-10 rounded-full border">
+        </div>
+      </nav>
       <!-- Sections -->
-      <div id="section-overview" class="section">
-        <!-- Stats cards -->
+      <div id="tab-overview" class="tab">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-7">
-          <div class="stat-card">
-            <div class="text-xs text-gray-500 mb-1">Total Candidates</div>
+          <div class="card text-center">
+            <div class="text-sm text-gray-500">Total Candidates</div>
             <div class="text-2xl font-bold text-indigo-700" id="statTotal"></div>
           </div>
-          <div class="stat-card">
-            <div class="text-xs text-gray-500 mb-1">Paid</div>
+          <div class="card text-center">
+            <div class="text-sm text-gray-500">Paid</div>
             <div class="text-2xl font-bold text-green-700" id="statPaid"></div>
           </div>
-          <div class="stat-card">
-            <div class="text-xs text-gray-500 mb-1">Unpaid</div>
+          <div class="card text-center">
+            <div class="text-sm text-gray-500">Unpaid</div>
             <div class="text-2xl font-bold text-red-700" id="statUnpaid"></div>
           </div>
-          <div class="stat-card">
-            <div class="text-xs text-gray-500 mb-1">Assignments</div>
+          <div class="card text-center">
+            <div class="text-sm text-gray-500">Assignments</div>
             <div class="text-2xl font-bold text-yellow-700" id="statAssignments"></div>
           </div>
         </div>
-        <!-- Recent Activity Log -->
+        <!-- Recent Activity -->
         <div class="card mb-7">
-          <div class="font-bold text-lg mb-3 text-indigo-800">Recent Activity</div>
+          <div class="font-bold text-lg text-indigo-800 mb-2">Recent Activity</div>
           <div id="overviewActivity"></div>
         </div>
       </div>
-      <div id="section-candidates" class="section hidden">
-        <div class="flex items-center justify-between mb-4">
+      <div id="tab-candidates" class="tab hidden">
+        <div class="flex flex-col md:flex-row items-center md:justify-between mb-4 gap-2">
           <div class="font-bold text-lg text-indigo-800">Registered Candidates</div>
-          <input id="candidateSearch" type="text" placeholder="Search candidates..." class="px-3 py-2 border rounded w-48">
+          <input id="candidateSearch" type="text" placeholder="Search candidates..." class="px-3 py-2 border rounded-lg w-56">
         </div>
-        <div id="candidateList" class="w-full overflow-x-auto pb-2"></div>
+        <!-- Responsive Table using Flowbite -->
+        <div class="relative overflow-x-auto rounded-lg shadow mb-8">
+          <table class="w-full text-sm text-left text-gray-700">
+            <thead class="text-xs uppercase bg-indigo-100 text-indigo-900">
+              <tr>
+                <th scope="col" class="px-3 py-2">Name</th>
+                <th scope="col" class="px-3 py-2">Matric</th>
+                <th scope="col" class="px-3 py-2">Email</th>
+                <th scope="col" class="px-3 py-2">Phone</th>
+                <th scope="col" class="px-3 py-2">Paid</th>
+                <th scope="col" class="px-3 py-2">Courses</th>
+                <th scope="col" class="px-3 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="candidateTableBody"></tbody>
+          </table>
+        </div>
       </div>
-      <div id="section-payments" class="section hidden">
+      <div id="tab-payments" class="tab hidden">
         <div class="font-bold text-lg text-indigo-800 mb-3">Payments</div>
         <div id="paymentsList"></div>
       </div>
-      <div id="section-courses" class="section hidden">
+      <div id="tab-courses" class="tab hidden">
         <div class="font-bold text-lg text-indigo-800 mb-3">Courses & Enrollment</div>
         <div id="coursesList"></div>
       </div>
-      <div id="section-activity" class="section hidden">
+      <div id="tab-activity" class="tab hidden">
         <div class="font-bold text-lg text-indigo-800 mb-3">Platform Activity Log</div>
         <div id="activityLog"></div>
       </div>
-      <div id="section-chat" class="section hidden">
-        <div class="font-bold text-lg text-indigo-800 mb-3">Community Chat</div>
-        <div id="chatLog"></div>
-      </div>
-      <div id="section-settings" class="section hidden">
+      <div id="tab-settings" class="tab hidden">
         <div class="font-bold text-lg text-indigo-800 mb-3">Admin Settings</div>
         <div id="settingsPanel"></div>
       </div>
     </div>
   </div>
-  <!-- Modal for Candidate Details -->
-  <div id="candidateModal" class="fixed inset-0 z-50 bg-black bg-opacity-30 hidden flex items-center justify-center">
-    <div class="bg-white rounded-xl shadow-lg p-7 max-w-lg w-full relative">
-      <button class="absolute top-3 right-4 text-2xl text-gray-500 hover:text-indigo-700" onclick="closeCandidateModal()">&times;</button>
-      <div id="candidateModalContent"></div>
+  <!-- Modal for Candidate Details (Flowbite) -->
+  <div id="candidateModal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto h-modal h-full bg-black bg-opacity-40 flex items-center justify-center">
+    <div class="relative w-full max-w-lg max-h-full">
+      <div class="relative bg-white rounded-xl shadow-lg p-7">
+        <button type="button" class="absolute top-3 right-4 text-2xl text-gray-500 hover:text-indigo-700" onclick="closeCandidateModal()">&times;</button>
+        <div id="candidateModalContent"></div>
+      </div>
     </div>
   </div>
+  <!-- Flowbite JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <script>
     const API_BASE = "https://examguide.onrender.com/api/codecxreg";
     let admin = {};
     let candidates = [];
     let stats = {};
 
-    // --- Sidebar Navigation ---
-    document.querySelectorAll("#sidebar a, #sidebar-mobile a").forEach(tab => {
+    // Sidebar and tab navigation (Flowbite compatible)
+    document.querySelectorAll('.sidebar a').forEach(tab => {
       tab.onclick = function(e) {
         e.preventDefault();
-        document.querySelectorAll("#sidebar a, #sidebar-mobile a").forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
-        const section = tab.getAttribute("data-section");
-        document.querySelectorAll(".section").forEach(s => s.classList.add("hidden"));
-        document.getElementById("section-" + section).classList.remove("hidden");
-      };
+        document.querySelectorAll('.sidebar a').forEach(t => t.classList.remove('tab-active'));
+        tab.classList.add('tab-active');
+        document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
+        document.getElementById('tab-' + tab.getAttribute('data-tab')).classList.remove('hidden');
+      }
     });
 
     function logout() {
@@ -141,7 +149,7 @@
       window.location.href = "/login.html";
     }
 
-    // --- Fetch Admin Profile ---
+    // Admin profile
     async function fetchAdmin() {
       let token = localStorage.getItem('codecx_token');
       if (!token) return logout();
@@ -153,7 +161,7 @@
       document.getElementById("adminAvatar").src = admin.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(admin.fullName || "Admin");
     }
 
-    // --- Fetch All Candidates & Stats ---
+    // Candidates & stats
     async function fetchCandidates() {
       let token = localStorage.getItem('codecx_token');
       const resp = await fetch(`${API_BASE}/admin/all`, { headers: { "Authorization": "Bearer " + token } });
@@ -169,7 +177,6 @@
       renderOverviewActivity();
     }
 
-    // --- Render Stats ---
     function renderStats() {
       document.getElementById("statTotal").textContent = stats.totalStudents || "-";
       document.getElementById("statPaid").textContent = stats.paidCount || "-";
@@ -177,46 +184,34 @@
       document.getElementById("statAssignments").textContent = stats.assignmentCount || "-";
     }
 
-    // --- Render Candidates Table ---
+    // Responsive table (Flowbite style)
     function renderCandidates() {
-      let html = `<table class="min-w-full text-sm rounded overflow-hidden">
-        <thead>
-          <tr class="bg-indigo-100 text-indigo-800">
-            <th class="py-2 px-2 font-semibold">Name</th>
-            <th class="py-2 px-2">Matric</th>
-            <th class="py-2 px-2">Email</th>
-            <th class="py-2 px-2">Phone</th>
-            <th class="py-2 px-2">Paid</th>
-            <th class="py-2 px-2">Courses</th>
-            <th class="py-2 px-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>`;
       let search = document.getElementById("candidateSearch").value.trim().toLowerCase();
-      candidates.filter(c =>
+      let filtered = candidates.filter(c =>
         !search ||
         (c.fullName && c.fullName.toLowerCase().includes(search)) ||
         (c.email && c.email.toLowerCase().includes(search)) ||
         (c.matricNumber && c.matricNumber.toLowerCase().includes(search))
-      ).forEach(c => {
-        html += `<tr class="candidate-row">
-          <td class="py-2 px-2">${c.fullName}</td>
-          <td class="py-2 px-2">${c.matricNumber}</td>
-          <td class="py-2 px-2">${c.email}</td>
-          <td class="py-2 px-2">${c.phone}</td>
-          <td class="py-2 px-2">${c.hasPaid ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded">Yes</span>' : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded">No</span>'}</td>
-          <td class="py-2 px-2">${(c.courses || []).map(x => x.name).join(", ")}</td>
-          <td class="py-2 px-2">
-            <button class="px-2 py-1 bg-indigo-600 text-white rounded" onclick="showCandidateModal('${c._id}')"><i class="bi bi-eye"></i></button>
+      );
+      let html = "";
+      filtered.forEach(c => {
+        html += `<tr class="bg-white border-b hover:bg-indigo-50">
+          <td class="px-3 py-2">${c.fullName}</td>
+          <td class="px-3 py-2">${c.matricNumber}</td>
+          <td class="px-3 py-2">${c.email}</td>
+          <td class="px-3 py-2">${c.phone}</td>
+          <td class="px-3 py-2">${c.hasPaid ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded">Yes</span>' : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded">No</span>'}</td>
+          <td class="px-3 py-2">${(c.courses || []).map(x => x.name).join(", ")}</td>
+          <td class="px-3 py-2">
+            <button class="px-2 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700" onclick="showCandidateModal('${c._id}')"><i class="bi bi-eye"></i></button>
           </td>
         </tr>`;
       });
-      html += `</tbody></table>`;
-      document.getElementById("candidateList").innerHTML = html;
+      document.getElementById("candidateTableBody").innerHTML = html;
     }
     document.getElementById("candidateSearch").oninput = renderCandidates;
 
-    // --- Candidate Modal ---
+    // Candidate Modal (Flowbite style)
     function showCandidateModal(id) {
       let c = candidates.find(x => x._id === id);
       if (!c) return;
@@ -237,18 +232,18 @@
       </div>
       <div class="mb-2">
         <div class="font-semibold text-indigo-700 mb-1">Recent Activity</div>
-        <ul class="text-sm pl-2" style="max-height:120px;overflow-y:auto;">
+        <ul class="text-sm pl-2 max-h-32 overflow-y-auto">
           ${(c.activities || []).slice(-6).reverse().map(a => `<li>${formatDate(a.date)} - ${a.activity}</li>`).join("") || "<li>No activity</li>"}
         </ul>
       </div>
       <div class="mb-2">
         <div class="font-semibold text-indigo-700 mb-1">Payments</div>
-        <ul class="text-sm pl-2" style="max-height:100px;overflow-y:auto;">
+        <ul class="text-sm pl-2 max-h-24 overflow-y-auto">
           ${(c.payments || []).slice(-5).reverse().map(p => `<li>${formatDate(p.date)}: ₦${p.amount} (${p.status}) Ref:${p.ref}</li>`).join("") || "<li>No payment</li>"}
         </ul>
       </div>
       <div class="mt-3 flex gap-3">
-        <button class="px-3 py-1 bg-red-600 text-white rounded" onclick="deleteCandidate('${c._id}')"><i class="bi bi-trash"></i> Delete</button>
+        <button class="px-3 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700" onclick="deleteCandidate('${c._id}')"><i class="bi bi-trash"></i> Delete</button>
       </div>`;
       document.getElementById("candidateModalContent").innerHTML = html;
       document.getElementById("candidateModal").classList.remove("hidden");
@@ -259,7 +254,7 @@
     window.showCandidateModal = showCandidateModal;
     window.closeCandidateModal = closeCandidateModal;
 
-    // --- Delete Candidate (admin only) ---
+    // Delete candidate (admin only)
     async function deleteCandidate(id) {
       if (!confirm("Are you sure you want to delete this candidate?")) return;
       let token = localStorage.getItem('codecx_token');
@@ -275,27 +270,23 @@
     }
     window.deleteCandidate = deleteCandidate;
 
-    // --- Render Payments Section ---
+    // Payments
     function renderPayments() {
-      let html = `<table class="min-w-full text-sm rounded overflow-hidden">
-        <thead>
-          <tr class="bg-indigo-100 text-indigo-800">
-            <th class="py-2 px-2 font-semibold">Name</th>
-            <th class="py-2 px-2">Amount</th>
-            <th class="py-2 px-2">Date</th>
-            <th class="py-2 px-2">Status</th>
-            <th class="py-2 px-2">Ref</th>
-          </tr>
-        </thead>
-        <tbody>`;
+      let html = `<table class="w-full text-sm text-left text-gray-700"><thead><tr class="bg-indigo-100 text-indigo-900">
+            <th class="px-2 py-2 font-semibold">Name</th>
+            <th class="px-2 py-2">Amount</th>
+            <th class="px-2 py-2">Date</th>
+            <th class="px-2 py-2">Status</th>
+            <th class="px-2 py-2">Ref</th>
+          </tr></thead><tbody>`;
       candidates.filter(c => c.payments && c.payments.length).forEach(c => {
         (c.payments || []).forEach(p => {
           html += `<tr>
-            <td class="py-2 px-2">${c.fullName}</td>
-            <td class="py-2 px-2">₦${p.amount}</td>
-            <td class="py-2 px-2">${formatDate(p.date)}</td>
-            <td class="py-2 px-2">${p.status}</td>
-            <td class="py-2 px-2">${p.ref}</td>
+            <td class="px-2 py-2">${c.fullName}</td>
+            <td class="px-2 py-2">₦${p.amount}</td>
+            <td class="px-2 py-2">${formatDate(p.date)}</td>
+            <td class="px-2 py-2">${p.status}</td>
+            <td class="px-2 py-2">${p.ref}</td>
           </tr>`;
         });
       });
@@ -303,7 +294,7 @@
       document.getElementById("paymentsList").innerHTML = html;
     }
 
-    // --- Render Courses Section ---
+    // Courses
     function renderCourses() {
       let allCourses = {};
       candidates.forEach(c => (c.courses || []).forEach(course =>
@@ -320,14 +311,14 @@
       document.getElementById("coursesList").innerHTML = html;
     }
 
-    // --- Render Platform Activity ---
+    // Activity
     function renderActivity() {
       let allActs = [];
       candidates.forEach(c => (c.activities || []).forEach(a =>
         allActs.push({ ...a, user: c.fullName })
       ));
       allActs.sort((a, b) => new Date(b.date) - new Date(a.date));
-      let html = `<ul class="text-sm" style="max-height:340px;overflow-y:auto;">`;
+      let html = `<ul class="text-sm max-h-80 overflow-y-auto">`;
       allActs.slice(0,40).forEach(a => {
         html += `<li class="mb-1"><span class="font-semibold">${a.user}:</span> ${a.activity} <span class="text-xs text-gray-500">(${formatDate(a.date)})</span></li>`;
       });
@@ -335,14 +326,13 @@
       document.getElementById("activityLog").innerHTML = html;
     }
 
-    // --- Render Overview Activity (last 10) ---
     function renderOverviewActivity() {
       let allActs = [];
       candidates.forEach(c => (c.activities || []).forEach(a =>
         allActs.push({ ...a, user: c.fullName })
       ));
       allActs.sort((a, b) => new Date(b.date) - new Date(a.date));
-      let html = `<ul class="text-sm" style="max-height:120px;overflow-y:auto;">`;
+      let html = `<ul class="text-sm max-h-24 overflow-y-auto">`;
       allActs.slice(0,10).forEach(a => {
         html += `<li class="mb-1"><span class="font-semibold">${a.user}:</span> ${a.activity} <span class="text-xs text-gray-500">(${formatDate(a.date)})</span></li>`;
       });
@@ -350,28 +340,12 @@
       document.getElementById("overviewActivity").innerHTML = html;
     }
 
-    // --- Render Chat Log (demo only) ---
-    function renderChat() {
-      let html = `<div class="mb-2 text-sm text-gray-500">Community chat not shown in admin demo.</div>`;
-      document.getElementById("chatLog").innerHTML = html;
-    }
-    renderChat();
-
-    // --- Render Settings Panel (demo only) ---
-    function renderSettings() {
-      let html = `<div class="mb-2 text-sm text-gray-500">Settings panel not implemented yet.</div>`;
-      document.getElementById("settingsPanel").innerHTML = html;
-    }
-    renderSettings();
-
-    // --- Helper ---
     function formatDate(dt) {
       if (!dt) return "";
       let date = new Date(dt);
       return date.toLocaleString();
     }
 
-    // --- Initial Load ---
     window.onload = async function() {
       await fetchAdmin();
       await fetchCandidates();
