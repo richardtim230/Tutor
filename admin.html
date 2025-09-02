@@ -155,6 +155,108 @@
         </table>
       </div>
     </div>
+    
+  <!-- Enroll Student Tab -->
+  <div id="tab-enroll" class="tab hidden">
+    <div class="font-bold text-2xl text-indigo-700 mb-6"><i class="bi bi-person-plus mr-2"></i>Enroll New Student</div>
+    <form id="enrollForm" class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-7 rounded shadow max-w-2xl">
+      <div>
+        <label class="font-semibold mb-1 block">Full Name</label>
+        <input id="enrollFullName" type="text" required class="px-3 py-2 border rounded-lg w-full">
+      </div>
+      <div>
+        <label class="font-semibold mb-1 block">Email</label>
+        <input id="enrollEmail" type="email" required class="px-3 py-2 border rounded-lg w-full">
+      </div>
+      <div>
+        <label class="font-semibold mb-1 block">Phone</label>
+        <input id="enrollPhone" type="text" required class="px-3 py-2 border rounded-lg w-full">
+      </div>
+      <div>
+        <label class="font-semibold mb-1 block">Matric Number</label>
+        <input id="enrollMatric" type="text" required class="px-3 py-2 border rounded-lg w-full">
+      </div>
+      <div>
+        <label class="font-semibold mb-1 block">Passport Photo</label>
+        <input id="enrollPassport" type="file" accept="image/*" required>
+      </div>
+      <div class="col-span-2">
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg mt-3">Enroll Student</button>
+      </div>
+    </form>
+    <div id="enrollStatus" class="mt-6"></div>
+  </div>
+
+  <!-- Assignments Tab -->
+  <div id="tab-assignments" class="tab hidden">
+    <div class="font-bold text-2xl text-indigo-700 mb-6"><i class="bi bi-journal-code mr-2"></i>Submitted Assignments</div>
+    <div id="assignmentFilter" class="mb-4 flex gap-3">
+      <input id="assignSearch" type="text" placeholder="Search by name, matric, title" class="px-3 py-2 border rounded-lg w-64">
+    </div>
+    <div class="overflow-x-auto rounded shadow">
+      <table class="w-full text-sm text-left text-gray-700 min-w-[720px] bg-white">
+        <thead class="text-xs uppercase bg-indigo-100 text-indigo-900">
+          <tr>
+            <th class="px-3 py-2">Name</th>
+            <th class="px-3 py-2">Matric</th>
+            <th class="px-3 py-2">Title</th>
+            <th class="px-3 py-2">Date</th>
+            <th class="px-3 py-2">Mark</th>
+            <th class="px-3 py-2">View</th>
+          </tr>
+        </thead>
+        <tbody id="assignmentTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Assignment Code Modal -->
+  <div id="assignmentCodeModal" class="modal hidden">
+    <div class="modal-content w-full max-w-2xl relative">
+      <span class="close-modal" onclick="closeAssignmentCodeModal()">&times;</span>
+      <div id="assignmentCodeHeader" class="font-bold text-indigo-800 mb-3"></div>
+      <div id="assignmentCodeEditor" style="height:400px;"></div>
+      <div id="assignmentCodeActions" class="mt-3"></div>
+    </div>
+  </div>
+
+  <!-- Quizzes Tab -->
+  <div id="tab-quizzes" class="tab hidden">
+    <div class="font-bold text-2xl text-indigo-700 mb-6"><i class="bi bi-question-circle mr-2"></i>Quiz Questions & Topics</div>
+    <div id="quizFilter" class="mb-4 flex gap-3">
+      <input id="quizSearch" type="text" placeholder="Search by topic or question" class="px-3 py-2 border rounded-lg w-64">
+    </div>
+    <table class="w-full text-sm text-left text-gray-700 bg-white rounded shadow">
+      <thead class="text-xs uppercase bg-indigo-100 text-indigo-900">
+        <tr>
+          <th class="px-2 py-2">Day</th>
+          <th class="px-2 py-2">Topic</th>
+          <th class="px-2 py-2">Question</th>
+          <th class="px-2 py-2">Options</th>
+          <th class="px-2 py-2">Answer</th>
+        </tr>
+      </thead>
+      <tbody id="quizTableBody"></tbody>
+    </table>
+    <button class="mt-6 px-4 py-2 bg-indigo-600 text-white rounded" onclick="showAddQuizModal()"><i class="bi bi-plus"></i> Add Quiz Question</button>
+  </div>
+
+  <!-- Add Quiz Modal -->
+  <div id="addQuizModal" class="modal hidden">
+    <div class="modal-content w-full max-w-lg">
+      <span class="close-modal" onclick="closeAddQuizModal()">&times;</span>
+      <div class="font-bold text-lg text-indigo-700 mb-3">Add Quiz Question</div>
+      <form id="addQuizForm" class="flex flex-col gap-3">
+        <input type="number" min="1" max="60" id="addQuizDay" required placeholder="Day (1-60)" class="px-3 py-2 border rounded-lg w-full">
+        <input type="text" id="addQuizTopic" required placeholder="Topic" class="px-3 py-2 border rounded-lg w-full">
+        <textarea id="addQuizQuestion" required placeholder="Question" class="px-3 py-2 border rounded-lg w-full"></textarea>
+        <input type="text" id="addQuizOptions" required placeholder="Options (comma separated)" class="px-3 py-2 border rounded-lg w-full">
+        <input type="text" id="addQuizAnswer" required placeholder="Correct Answer" class="px-3 py-2 border rounded-lg w-full">
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Add</button>
+      </form>
+      <div id="addQuizStatus" class="mt-3"></div>
+    </div>
+  </div>
     <div id="tab-courses" class="tab hidden">
       <div class="flex items-center justify-between mb-2">
         <div class="font-bold text-lg text-indigo-800">Courses & Enrollment</div>
