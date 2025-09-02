@@ -525,24 +525,123 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">CODECX Institute</div>
-        <nav>
-            <div class="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
+<!-- ...existing HTML above... -->
+<header>
+    <div class="logo">CODECX Institute</div>
+    <nav>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#stats">Stats</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <!-- Login Dropdown Button -->
+        <div class="login-dropdown">
+            <button id="loginBtn" class="login-btn">Login &#x25BC;</button>
+            <div id="loginDropdownMenu" class="login-menu hidden">
+                <button onclick="window.location.href='admin-login.html'" class="login-menu-btn">Admin Login</button>
+                <button onclick="window.location.href='login.html'" class="login-menu-btn">Student Login</button>
             </div>
-            <ul>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#courses">Courses</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#stats">Stats</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+<!-- ...rest of HTML... -->
+<style>
+    /* Add these styles to your <style> block */
+    .login-dropdown {
+        position: relative;
+        margin-left: 24px;
+        display: inline-block;
+    }
+    .login-btn {
+        background: #2563eb;
+        color: #fff;
+        font-weight: 600;
+        font-size: 15px;
+        padding: 8px 22px;
+        border-radius: 7px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.18s;
+        box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+        outline: none;
+    }
+    .login-btn:hover, .login-btn:focus {
+        background: #3b82f6;
+    }
+    .login-menu {
+        position: absolute;
+        top: 110%;
+        right: 0;
+        background: #222a3b;
+        border: 1px solid #243b55;
+        border-radius: 10px;
+        min-width: 170px;
+        box-shadow: 0 8px 24px rgba(59,130,246,0.08);
+        z-index: 2000;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 0;
+        transition: opacity 0.14s;
+    }
+    .login-menu-btn {
+        background: none;
+        color: #e5e7eb;
+        border: none;
+        text-align: left;
+        padding: 12px 24px;
+        font-size: 15px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.14s;
+    }
+    .login-menu-btn:hover {
+        background: #243b55;
+        color: #3b82f6;
+    }
+    .hidden {
+        display: none !important;
+    }
+    @media (max-width: 768px) {
+        .login-dropdown {
+            margin-left: 0;
+            margin-top: 14px;
+        }
+        nav {
+            flex-direction: column;
+        }
+    }
+</style>
+<script>
+    // ...existing JS above...
+    // Login Dropdown Logic
+    const loginBtn = document.getElementById('loginBtn');
+    const loginMenu = document.getElementById('loginDropdownMenu');
+    loginBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        loginMenu.classList.toggle('hidden');
+    });
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!loginMenu.classList.contains('hidden')) {
+            if (!loginMenu.contains(e.target) && e.target !== loginBtn) {
+                loginMenu.classList.add('hidden');
+            }
+        }
+    });
+    // On resize/hamburger menu, close login dropdown
+    window.addEventListener('resize', function() {
+        loginMenu.classList.add('hidden');
+    });
+</script>
     <section class="hero">
         <div class="code-background"></div>
         <div class="hero-content">
