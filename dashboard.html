@@ -802,37 +802,57 @@ function updateWhatsAppBtn() {
   }
 }
 
-// Progress Data (static for now, can be loaded from backend if available)
+
+
+
+// @session-date-progress.js
+
+// Helper: Format date as YYYY-MM-DD
+function formatDate(date) {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+// Set program start date (Monday 8th September 2025)
+const PROGRAM_START_DATE = new Date('2025-09-08T00:00:00');
+
+// Generate session dates for 60 days
 const sessions = [];
-for (let i = 1; i <= 60; i++) {
+for (let i = 0; i < 60; i++) {
+  const sessionDate = new Date(PROGRAM_START_DATE);
+  sessionDate.setDate(sessionDate.getDate() + i);
   let topic = "";
-  if (i <= 20) topic = `HTML: Day ${i}`;
-  else if (i <= 40) topic = `CSS: Day ${i - 20}`;
-  else topic = `JavaScript: Day ${i - 40}`;
+  if (i < 20) topic = `HTML: Day ${i + 1}`;
+  else if (i < 40) topic = `CSS: Day ${i - 19}`;
+  else topic = `JavaScript: Day ${i - 39}`;
   sessions.push({
-    day: i,
-    topic
+    day: i + 1,
+    topic,
+    date: formatDate(sessionDate)
   });
 }
 
-function getQuizStatus(day) {
-  if (!student.activities) return { quiz: false, attendance: false };
-  const quizAct = student.activities.find(a => a.activity === `Quiz completed - Day ${day}`);
-  const attAct = student.activities.find(a => a.activity === `Attendance marked - Day ${day}`);
-  return {
-    quiz: !!quizAct,
-    attendance: !!attAct
-  };
-}
-
+// Render progress grid with time/date restrictions and quiz/attendance gating
 function renderProgressSection() {
   let completed = 0;
+  const now = new Date();
+
+  // Check time window (8pm to 11:59pm)
+  function isWithinWindow(sessionDate) {
+    if (formatDate(now) !== sessionDate) return false;
+    const hour = now.getHours();
+    return (hour >= 20 && hour <= 23);
+  }
+
   sessions.forEach((s, idx) => {
     const status = getQuizStatus(s.day);
     sessions[idx].quizCompleted = status.quiz;
     sessions[idx].attendanceMarked = status.attendance;
     if (status.quiz && status.attendance) completed++;
   });
+
   document.getElementById("progressSummary").textContent =
     `Completed: ${completed} / ${sessions.length} days`;
 
@@ -843,22 +863,28 @@ function renderProgressSection() {
     if (s.day <= 20) color = "border-yellow-400";
     else if (s.day <= 40) color = "border-blue-400";
     else color = "border-green-400";
+
+    // Determine quiz/attendance access
+    const canAccess = isWithinWindow(s.date);
+
     grid.innerHTML += `
       <div class="border ${color} rounded-lg p-3 bg-gray-50 flex flex-col items-start relative min-w-0">
         <div class="font-bold text-sm mb-1">${s.topic}</div>
-        <div class="text-xs text-gray-500 mb-2">Day ${s.day}</div>
+        <div class="text-xs text-gray-500 mb-2">Day ${s.day} | <span>${s.date}</span></div>
         <div class="flex items-center gap-2 mb-2">
           ${s.quizCompleted
         ? `<span class="text-green-700 flex items-center"><i class="bi bi-check-circle-fill mr-1"></i>Quiz Done</span>`
-        : `<button class="px-2 py-1 text-xs bg-indigo-600 text-white rounded quiz-btn" data-day="${s.day}">Take Quiz</button>`
+        : canAccess
+          ? `<button class="px-2 py-1 text-xs bg-indigo-600 text-white rounded quiz-btn" data-day="${s.day}">Take Quiz</button>`
+          : `<button class="px-2 py-1 text-xs bg-gray-400 text-white rounded quiz-btn" data-day="${s.day}" disabled title="Quiz opens ${s.date} between 8pm-11:59pm">Locked</button>`
       }
         </div>
         <div class="flex items-center gap-2">
           ${s.attendanceMarked
         ? `<span class="text-green-700 flex items-center"><i class="bi bi-person-check-fill mr-1"></i>Attendance Marked</span>`
-        : s.quizCompleted
+        : (s.quizCompleted && canAccess)
           ? `<button class="px-2 py-1 text-xs bg-green-600 text-white rounded attendance-btn" data-day="${s.day}">Mark Attendance</button>`
-          : `<button class="px-2 py-1 text-xs bg-yellow-400 text-white rounded attendance-btn" data-day="${s.day}">Mark Attendance</button>`
+          : `<button class="px-2 py-1 text-xs bg-gray-400 text-white rounded attendance-btn" data-day="${s.day}" disabled title="Attendance opens ${s.date} between 8pm-11:59pm">Locked</button>`
       }
         </div>
       </div>
@@ -866,7 +892,7 @@ function renderProgressSection() {
   });
 
   // Quiz button click event
-  document.querySelectorAll(".quiz-btn").forEach(btn => {
+  document.querySelectorAll(".quiz-btn:not([disabled])").forEach(btn => {
     btn.onclick = async function () {
       const day = btn.getAttribute("data-day");
       await showQuizModal(day);
@@ -874,7 +900,7 @@ function renderProgressSection() {
   });
 
   // Attendance button click event
-  document.querySelectorAll(".attendance-btn").forEach(btn => {
+  document.querySelectorAll(".attendance-btn:not([disabled])").forEach(btn => {
     btn.onclick = async function () {
       const day = btn.getAttribute("data-day");
       await markAttendance(day);
@@ -882,15 +908,20 @@ function renderProgressSection() {
   });
 }
 
+// ---- QUIZ MODAL LOGIC ----
+
+// Loads quiz from backend, handles spinner, scoring, attendance, dashboard reload.
 async function showQuizModal(day) {
   document.getElementById("dayQuizModalBg").style.display = "flex";
   document.getElementById("dayQuizContent").innerHTML = `<div>Loading quiz...</div>`;
+
   try {
     const resp = await fetch(`${API_BASE}/quiz/${day}`, {
       headers: { "Authorization": "Bearer " + token }
     });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.message || "Could not load quiz");
+
     let html = `<div class="modal-title">Day ${day} Quiz</div>
       <form id="quizForm">
         <div class="modal-quiz">`;
@@ -907,24 +938,80 @@ async function showQuizModal(day) {
     });
     html += `</div>
       <div class="modal-actions">
-        <button type="submit" class="modal-btn">Submit Quiz</button>
+        <button type="submit" class="modal-btn" id="submitQuizBtn"><span>Submit Quiz</span></button>
         <button type="button" class="modal-btn secondary" onclick="closeDayQuizModal()">Cancel</button>
       </div>
-      </form>`;
+      </form>
+      <div id="quizResult" style="margin-top:1.2rem"></div>`;
     document.getElementById("dayQuizContent").innerHTML = html;
+
     document.getElementById("quizForm").onsubmit = async function (e) {
       e.preventDefault();
-      await markQuizCompleted(day);
-      closeDayQuizModal();
+      // Show spinner
+      const submitBtn = document.getElementById("submitQuizBtn");
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner" style="display:inline-block;width:22px;height:22px;border:3px solid #6366f1;border-top:3px solid #fff;border-radius:50%;animation:spin 1s linear infinite;vertical-align:middle;margin-right:6px"></span> Submitting...';
+      // CSS for spinner
+      if (!document.getElementById('quizSpinnerStyle')) {
+        const style = document.createElement('style');
+        style.id = 'quizSpinnerStyle';
+        style.textContent = '@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}';
+        document.head.appendChild(style);
+      }
+      // Prepare answers
+      const answers = [...document.querySelectorAll('input[type="radio"]:checked')].map(input => input.value);
+
+      try {
+        // Submit answers & get score from backend
+        const scoreResp = await fetch(`${API_BASE}/quiz/score/${day}`, {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ answers })
+        });
+
+        const scoreData = await scoreResp.json();
+        if (!scoreResp.ok) throw new Error(scoreData.message || "Error grading quiz");
+
+        const score = scoreData.score;
+        const total = scoreData.total;
+        const percent = Math.round((score / total) * 100);
+
+        document.getElementById("quizResult").innerHTML =
+          `<div class="font-bold text-green-700 mb-2"><i class="bi bi-award"></i> Quiz Score: ${score} / ${total} (${percent}%)</div>`;
+
+        // Record quiz completion (with score)
+        await markQuizCompletedWithScore(day, score);
+
+        // Auto-mark attendance
+        await markAttendance(day, true);
+
+        // Success toast
+        showToast("Quiz submitted and attendance marked!", "success");
+
+        // Wait a bit for user to see score, then close modal & reload dashboard
+        setTimeout(() => {
+          closeDayQuizModal();
+          reloadDashboard();
+        }, 1800);
+
+      } catch (err) {
+        document.getElementById("quizResult").innerHTML =
+          `<div style="color:red;">${err.message}</div>`;
+        showToast("Quiz submission failed: " + err.message, "error");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Submit Quiz</span>';
+      }
     };
   } catch (err) {
     document.getElementById("dayQuizContent").innerHTML = `<div style="color:red;">${err.message}</div>`;
   }
 }
-function closeDayQuizModal() {
-  document.getElementById("dayQuizModalBg").style.display = "none";
-}
-async function markQuizCompleted(day) {
+
+// Helper: Record quiz completed activity WITH score
+async function markQuizCompletedWithScore(day, score) {
   try {
     const resp = await fetch(`${API_BASE}/activities`, {
       method: "POST",
@@ -932,16 +1019,45 @@ async function markQuizCompleted(day) {
         "Authorization": "Bearer " + token,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ activity: `Quiz completed - Day ${day}` })
+      body: JSON.stringify({ activity: `Quiz completed - Day ${day} (Score: ${score})` })
     });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.message);
-    await reloadDashboard();
-    showToast("Quiz marked completed!", "success");
+    return true;
   } catch (err) {
-    showToast(err.message, "error");
+    throw new Error("Failed to record quiz completion: " + err.message);
   }
 }
+
+// Helper: Mark attendance for day (optionally silent on error if auto)
+async function markAttendance(day, auto = false) {
+  try {
+    const resp = await fetch(`${API_BASE}/activities`, {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ activity: `Attendance marked - Day ${day}` })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.message);
+    return true;
+  } catch (err) {
+    if (!auto) showToast("Attendance marking failed: " + err.message, "error");
+    // If auto, don't throw; just log
+    if (auto) console.warn("Auto attendance failed:", err.message);
+    return false;
+  }
+}
+
+// Helper: Close quiz modal
+function closeDayQuizModal() {
+  document.getElementById("dayQuizModalBg").style.display = "none";
+}
+
+
+
 async function markAttendance(day) {
   try {
     const resp = await fetch(`${API_BASE}/activities`, {
