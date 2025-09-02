@@ -25,6 +25,10 @@
   transition: opacity 0.15s;
       z-index: 100;
     }
+    
+    .modal { position:fixed; z-index:1000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,.36); display:flex; align-items:center; justify-content:center;}
+    .modal-content { background:#fff; border-radius:1rem; box-shadow:0 2px 16px #6366f117; padding:2rem; min-width:320px; max-width:90vw; max-height:90vh; overflow:auto; position:relative;}
+    .close-modal { position:absolute; right:1rem; top:1rem; font-size:1.6rem; cursor:pointer; color:#666;}
   </style>
 </head>
 <body class="bg-gray-50">
@@ -295,6 +299,11 @@
     </div>
   </div>
   <!-- Flowbite JS & Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
