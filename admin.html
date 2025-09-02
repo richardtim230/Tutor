@@ -192,6 +192,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+
+    function showLoader() {
+  document.getElementById('pageLoader').style.display = 'flex';
+}
+function hideLoader() {
+  document.getElementById('pageLoader').style.display = 'none';
+}
 const API_BASE = "https://examguide.onrender.com/api/codecxreg";
 let admin = {};
 let candidates = [];
@@ -643,14 +650,7 @@ function toggleTheme() {
   document.body.classList.toggle("text-white");
   document.querySelectorAll(".card").forEach(x=>x.classList.toggle("bg-gray-800"));
 }
-function showLoader() {
-  document.getElementById('pageLoader').style.display = 'flex';
-}
-function hideLoader() {
-  document.getElementById('pageLoader').style.display = 'none';
-}
 
-// Example usage in your main loading function:
 window.onload = async function() {
   showLoader();
   try {
@@ -660,10 +660,7 @@ window.onload = async function() {
     hideLoader();
   }
 };
-window.onload = async function() {
-  await fetchAdmin();
-  await fetchCandidates();
-};
+
 </script>
 </body>
 </html>
