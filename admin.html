@@ -276,7 +276,6 @@ async function fetchCandidates() {
     const data = await resp.json();
     candidates = data.students || [];
     stats = data.stats || {};
-    await fetchAllDetails(token);
     renderStats();
     renderCandidates();
     renderPayments();
