@@ -50,7 +50,10 @@
         <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="payments"><i class="bi bi-credit-card mr-2"></i>Payments</a></li>
         <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="courses"><i class="bi bi-journal-code mr-2"></i>Courses</a></li>
         <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="activity"><i class="bi bi-clock-history mr-2"></i>Activity</a></li>
-        <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="settings"><i class="bi bi-gear mr-2"></i>Settings</a></li>
+        <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="settings"> <i class="bi bi-gear mr-2"></i>Settings</a></li>
+        <li><a href="#" class="flex items-center p-2 rounded-lg"  data-tab="enroll"> <i class="bi bi-gear mr-2"></i>Enroll Students</a></li>
+    <li><a href="#" class="flex items-center p-2 rounded-lg"  data-tab="assignments"> <i class="bi bi-gear mr-2"></i>Assignments</a></li>
+<li><a href="#" class="flex items-center p-2 rounded-lg"  data-tab="quizzes"> <i class="bi bi-gear mr-2"></i>Quizzes</a></li>
       </ul>
       <div class="mt-auto pt-8">
         <button onclick="logout()" class="w-full bg-red-600 text-white rounded-lg py-2 font-semibold hover:bg-red-700"><i class="bi bi-box-arrow-right mr-2"></i>Logout</button>
@@ -753,11 +756,235 @@ function toggleTheme() {
   document.querySelectorAll(".card").forEach(x=>x.classList.toggle("bg-gray-800"));
 }
 
+
+    // --- ENROLL STUDENT TAB ---
+    document.getElementById('enrollForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const fullName = document.getElementById('enrollFullName').value.trim();
+      const email = document.getElementById('enrollEmail').value.trim();
+      const phone = document.getElementById('enrollPhone').value.trim();
+      const matricNumber = document.getElementById('enrollMatric').value.trim();
+      const passportFile = document.getElementById('enrollPassport').files[0];
+      if (!fullName || !email || !phone || !matricNumber || !passportFile) {
+        document.getElementById('enrollStatus').textContent = 'Please fill all fields.';
+        return;
+      }
+      const formData = new FormData();
+      formData.append('fullName', fullName);
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('matricNumber', matricNumber);
+      formData.append('passport', passportFile);
+
+      document.getElementById('enrollStatus').textContent = 'Submitting...';
+      try {
+        const resp = await fetch('https://examguide.onrender.com/api/codecxreg/', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await resp.json();
+        if (resp.ok) {
+          document.getElementById('enrollStatus').innerHTML =
+            `<span class="text-green-700">Student enrolled!</span><br>` +
+            `<b>Login Username:</b> ${data.login?.username}<br><b>Password:</b> ${data.login?.password}`;
+          document.getElementById('enrollForm').reset();
+        } else {
+          document.getElementById('enrollStatus').innerHTML =
+            `<span class="text-red-700">Error: ${data.message || 'Unknown error.'}</span>`;
+        }
+      } catch (err) {
+        document.getElementById('enrollStatus').innerHTML =
+          `<span class="text-red-700">Error: ${err.message}</span>`;
+      }
+    };
+
+    // --- ASSIGNMENTS TAB ---
+    // Demo: Load assignments via API (you should replace this with actual backend)
+    let assignments = [];
+    async function loadAssignments() {
+      // This demo fetches all candidates, then collects assignments.
+      // Replace with optimized backend endpoint if needed.
+      const resp = await fetch('https://examguide.onrender.com/api/codecxreg/admin');
+      const data = await resp.json();
+      assignments = [];
+      for (const student of data.students || []) {
+        const id = student._id || student.id;
+        // Fetch full details for each candidate
+        const detailResp = await fetch(`https://examguide.onrender.com/api/codecxreg/student/${id}`);
+        if (detailResp.ok) {
+          const detail = await detailResp.json();
+          for (const a of detail.assignments || []) {
+            assignments.push({
+              candidate: detail.fullName,
+              matric: detail.matricNumber,
+              passport: detail.passportBase64,
+              assignment: a,
+              fileType: getFileType(a.url),
+              codeUrl: a.url
+            });
+          }
+        }
+      }
+      renderAssignmentTable();
+    }
+
+    function getFileType(url) {
+      if (!url) return '';
+      if (url.endsWith('.js')) return 'javascript';
+      if (url.endsWith('.css')) return 'css';
+      if (url.endsWith('.html')) return 'htmlmixed';
+      return '';
+    }
+
+    function renderAssignmentTable() {
+      const search = document.getElementById('assignSearch').value.trim().toLowerCase();
+      let filtered = assignments.filter(a =>
+        !search ||
+        (a.candidate && a.candidate.toLowerCase().includes(search)) ||
+        (a.matric && String(a.matric).toLowerCase().includes(search)) ||
+        (a.assignment.title && a.assignment.title.toLowerCase().includes(search))
+      );
+      let html = '';
+      for (const a of filtered) {
+        html += `<tr>
+          <td class="px-3 py-2">${a.candidate}</td>
+          <td class="px-3 py-2">${a.matric}</td>
+          <td class="px-3 py-2">${a.assignment.title || 'Assignment'}</td>
+          <td class="px-3 py-2">${formatDate(a.assignment.date)}</td>
+          <td class="px-3 py-2">${a.assignment.mark || '-'}</td>
+          <td class="px-3 py-2">
+            <button class="bg-indigo-600 text-white px-2 py-1 rounded" onclick="showAssignmentCodeModal('${a.codeUrl}','${a.assignment.title}','${a.fileType}','${a.candidate}','${a.matric}')">
+              <i class="bi bi-eye"></i> View
+            </button>
+          </td>
+        </tr>`;
+      }
+      document.getElementById('assignmentTableBody').innerHTML = html;
+    }
+    document.getElementById('assignSearch').oninput = renderAssignmentTable;
+
+    // --- Code Editor Modal ---
+    async function showAssignmentCodeModal(url, title, fileType, candidate, matric) {
+      document.getElementById('assignmentCodeModal').classList.remove('hidden');
+      document.getElementById('assignmentCodeHeader').innerHTML =
+        `<div class="mb-1"><b>${title}</b></div>` +
+        `<div class="text-xs text-gray-500">By: ${candidate} (${matric})</div>`;
+      try {
+        let code = '';
+        if (url) {
+          const resp = await fetch(url); code = await resp.text();
+        } else {
+          code = 'No file submitted.';
+        }
+        document.getElementById('assignmentCodeEditor').innerHTML = '';
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        ta.id = 'codeEditor';
+        document.getElementById('assignmentCodeEditor').appendChild(ta);
+        window.codeMirrorInstance = CodeMirror.fromTextArea(ta, {
+          mode: fileType || 'javascript',
+          lineNumbers: true,
+          readOnly: true
+        });
+      } catch (err) {
+        document.getElementById('assignmentCodeEditor').innerHTML =
+          `<span class="text-red-700">Error loading file.</span>`;
+      }
+    }
+    function closeAssignmentCodeModal() {
+      document.getElementById('assignmentCodeModal').classList.add('hidden');
+      if (window.codeMirrorInstance) window.codeMirrorInstance.toTextArea();
+    }
+    window.showAssignmentCodeModal = showAssignmentCodeModal;
+    window.closeAssignmentCodeModal = closeAssignmentCodeModal;
+
+    // --- QUIZZES TAB ---
+    // Demo: Load quizzes via API (replace with backend endpoint)
+    let quizQuestions = [];
+    async function loadQuizQuestions() {
+      // For demo, we'll generate sample quizzes for 3 days per topic.
+      quizQuestions = [];
+      const topics = ['HTML', 'CSS', 'JavaScript'];
+      for (let day = 1; day <= 9; day++) {
+        let topic = topics[Math.floor((day-1)/3)];
+        for (let qn = 1; qn <= 2; qn++) {
+          quizQuestions.push({
+            day,
+            topic,
+            question: `${topic} Sample Question ${qn} (Day ${day})`,
+            options: [`${topic} Option A`, `${topic} Option B`, `${topic} Option C`, `${topic} Option D`],
+            answer: `${topic} Option A`
+          });
+        }
+      }
+      renderQuizTable();
+    }
+    function renderQuizTable() {
+      const search = document.getElementById('quizSearch').value.trim().toLowerCase();
+      let filtered = quizQuestions.filter(q =>
+        !search ||
+        (q.topic && q.topic.toLowerCase().includes(search)) ||
+        (q.question && q.question.toLowerCase().includes(search))
+      );
+      let html = '';
+      for (const q of filtered) {
+        html += `<tr>
+          <td class="px-2 py-2">${q.day}</td>
+          <td class="px-2 py-2">${q.topic}</td>
+          <td class="px-2 py-2">${q.question}</td>
+          <td class="px-2 py-2">${q.options.join(', ')}</td>
+          <td class="px-2 py-2">${q.answer}</td>
+        </tr>`;
+      }
+      document.getElementById('quizTableBody').innerHTML = html;
+    }
+    document.getElementById('quizSearch').oninput = renderQuizTable;
+
+    // --- Add Quiz Modal ---
+    function showAddQuizModal() {
+      document.getElementById('addQuizModal').classList.remove('hidden');
+      document.getElementById('addQuizForm').reset();
+      document.getElementById('addQuizStatus').textContent = '';
+    }
+    function closeAddQuizModal() {
+      document.getElementById('addQuizModal').classList.add('hidden');
+    }
+    window.showAddQuizModal = showAddQuizModal;
+    window.closeAddQuizModal = closeAddQuizModal;
+
+    document.getElementById('addQuizForm').onsubmit = function(e) {
+      e.preventDefault();
+      const day = parseInt(document.getElementById('addQuizDay').value);
+      const topic = document.getElementById('addQuizTopic').value.trim();
+      const question = document.getElementById('addQuizQuestion').value.trim();
+      const options = document.getElementById('addQuizOptions').value.split(',').map(x => x.trim());
+      const answer = document.getElementById('addQuizAnswer').value.trim();
+      if (!day || !topic || !question || options.length < 2 || !answer) {
+        document.getElementById('addQuizStatus').textContent = 'Please fill all fields with valid data.';
+        return;
+      }
+      quizQuestions.push({ day, topic, question, options, answer });
+      renderQuizTable();
+      document.getElementById('addQuizStatus').innerHTML =
+        '<span class="text-green-700">Quiz added!</span>';
+      setTimeout(closeAddQuizModal, 800);
+    };
+
+    // --- Helper ---
+    function formatDate(dt) {
+      if (!dt) return '';
+      let date = new Date(dt);
+      return date.toLocaleString();
+    }
+
+    
 window.onload = async function() {
   showLoader();
   try {
     await fetchAdmin();
     await fetchCandidates();
+    await loadAssignments();
+      await loadQuizQuestions();
   } catch(e) {
     alert("Error: " + e.message);
     console.error(e);
