@@ -1318,7 +1318,7 @@ function renderActivity() {
     latestAttendance ? `Last attendance: ${formatDate(latestAttendance.date)}` : "No attendance marked yet.";
 }
 
-// Assignment upload
+
 async function submitAssignment() {
   const inp = document.getElementById("assignmentInput");
   if (!inp.files[0]) {
@@ -1357,8 +1357,16 @@ async function submitAssignment() {
       body: formData
     });
 
-    const data = await resp.json();
-    if (!resp.ok) throw new Error(data.message);
+    // Robust error handling for non-JSON response
+    let data;
+    try {
+      data = await resp.json();
+    } catch (e) {
+      const text = await resp.text();
+      throw new Error("Server error: " + text);
+    }
+
+    if (!resp.ok) throw new Error(data.message || "Assignment upload failed");
 
     document.getElementById("assignmentStatus").textContent = "Submitted!";
     inp.value = "";
