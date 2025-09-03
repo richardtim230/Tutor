@@ -811,7 +811,7 @@
   };
 })();
     
-setTimeout(hideToastModal, 5000);
+
     const API_BASE = "https://examguide.onrender.com/api/codecxreg";
 const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
 let student = {};
@@ -823,7 +823,7 @@ let ws = null, reconnectTimeout = null;
 function showToast(msg, type = "info") {
   Toastify({
     text: msg,
-    duration: 3500,
+    duration: 10000,
     gravity: "top",
     position: "center",
     backgroundColor: type === "success" ? "#16a34a" :
