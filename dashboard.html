@@ -1191,7 +1191,6 @@ function closeDayQuizModal() {
 }
 
 
-// Profile and Dashboard
 async function reloadDashboard() {
   if (!token) { logout(); return; }
   try {
@@ -1223,6 +1222,7 @@ async function reloadDashboard() {
     renderActivity();
     renderPayments();
     renderProgressSection();
+    renderAssignmentHistory(student.assignments || []);  // <---- PATCH: Add this line
     document.getElementById("adminNote").textContent = student.adminNote || "";
     fetchChatMessages();
   } catch (err) {
@@ -1231,7 +1231,6 @@ async function reloadDashboard() {
   }
 }
 document.addEventListener("DOMContentLoaded", reloadDashboard);
-
 // Courses
 function renderCourses() {
   const list = document.getElementById("coursesList");
