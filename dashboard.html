@@ -1199,7 +1199,9 @@ async function reloadDashboard() {
     });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.message);
-    student = data;
+    // After loading student data:
+student = data;
+localStorage.setItem("matricNumber", student.matricNumber);
     document.getElementById("studentAvatar").src = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
     document.getElementById("studentPassport").src = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
     document.getElementById("studentFullName").textContent = student.fullName;
@@ -1575,8 +1577,10 @@ async function submitAssignment() {
 
   try {
     let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
-    if (!matricNumber) throw new Error("Matric number not found.");
-
+if (!matricNumber) {
+  showToast("Matric number not found. Please reload the dashboard.", "error");
+  return;
+}
     // Replace slashes with dashes for URL safety
     const safeMatricNumber = matricNumber.replace(/\//g, '-');
 
