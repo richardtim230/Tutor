@@ -1231,7 +1231,17 @@ function renderCourses() {
 async function addCourse() {
   const select = document.getElementById("courseSelect");
   const courseName = select.value;
-  if (!courseName) return showToast("Select a course to add.", "error");
+  if (!courseName) {
+    if (window.showToastModal) {
+      showToastModal("Error", "Select a course to add.", "error");
+      setTimeout(hideToastModal, 2000);
+    } else {
+      showToast("Select a course to add.", "error");
+    }
+    return;
+  }
+  // Show loader modal if available
+  if (window.showToastModal) showToastModal("Adding Course...", "Please wait while we add your course.", "info", true);
   try {
     const resp = await fetch(`${API_BASE}/courses`, {
       method: "POST",
@@ -1244,12 +1254,24 @@ async function addCourse() {
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.message);
     await reloadDashboard();
-    showToast("Course added!", "success");
+    if (window.showToastModal) {
+      showToastModal("Course Added!", "Your course was added successfully.", "success");
+      setTimeout(hideToastModal, 2000);
+    } else {
+      showToast("Course added!", "success");
+    }
   } catch (err) {
-    showToast(err.message, "error");
+    if (window.showToastModal) {
+      showToastModal("Error", err.message, "error");
+      setTimeout(hideToastModal, 2000);
+    } else {
+      showToast(err.message, "error");
+    }
   }
 }
+
 async function removeCourse(courseName) {
+  if (window.showToastModal) showToastModal("Removing Course...", "Please wait while we remove your course.", "info", true);
   try {
     const resp = await fetch(`${API_BASE}/courses`, {
       method: "DELETE",
@@ -1262,12 +1284,21 @@ async function removeCourse(courseName) {
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.message);
     await reloadDashboard();
-    showToast("Course removed!", "success");
+    if (window.showToastModal) {
+      showToastModal("Course Removed!", "Your course was removed successfully.", "success");
+      setTimeout(hideToastModal, 2000);
+    } else {
+      showToast("Course removed!", "success");
+    }
   } catch (err) {
-    showToast(err.message, "error");
+    if (window.showToastModal) {
+      showToastModal("Error", err.message, "error");
+      setTimeout(hideToastModal, 2000);
+    } else {
+      showToast(err.message, "error");
+    }
   }
 }
-
 // Activity
 function renderActivity() {
   const table = document.getElementById("activityTable");
