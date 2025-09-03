@@ -449,7 +449,7 @@
     }
     /* Utility classes (unchanged) */
     .bg-green-600 { background: #16a34a; }
-    .bg-green-700 { background: #15803d; }
+    .bg-green-700 {  background: #15803d; }
     .bg-indigo-600 { background: #6366f1; }
     .bg-indigo-700 { background: #4338ca; }
     .bg-yellow-400 { background: #facc15; }
@@ -1338,7 +1338,7 @@ async function submitAssignment() {
   if (!inp.files[0]) {
     if (window.showToastModal) {
       showToastModal("Error", "Select an assignment file to upload.", "error");
-      setTimeout(hideToastModal, 2000);
+      setTimeout(hideToastModal, 10000);
     } else {
       showToast("Select an assignment file to upload.", "error");
     }
@@ -1388,14 +1388,14 @@ async function submitAssignment() {
 
     if (window.showToastModal) {
       showToastModal("Success!", "Assignment submitted successfully.", "success");
-      setTimeout(hideToastModal, 2000);
+      setTimeout(hideToastModal, 20000);
     } else {
       showToast("Assignment submitted!", "success");
     }
   } catch (err) {
     if (window.showToastModal) {
       showToastModal("Error", err.message, "error");
-      setTimeout(hideToastModal, 2000);
+      setTimeout(hideToastModal, 20000);
     } else {
       showToast(err.message, "error");
     }
