@@ -1338,7 +1338,7 @@ async function submitAssignment() {
   if (!inp.files[0]) {
     if (window.showToastModal) {
       showToastModal("Error", "Select an assignment file to upload.", "error");
-      setTimeout(hideToastModal, 10000);
+      setTimeout(hideToastModal, 2000);
     } else {
       showToast("Select an assignment file to upload.", "error");
     }
@@ -1371,12 +1371,13 @@ async function submitAssignment() {
       body: formData
     });
 
-    // Robust error handling for non-JSON response
+    // Read response as text first
+    const text = await resp.text();
     let data;
     try {
-      data = await resp.json();
+      data = JSON.parse(text);
     } catch (e) {
-      const text = await resp.text();
+      // Not JSON, treat as plain text error
       throw new Error("Server error: " + text);
     }
 
@@ -1388,14 +1389,14 @@ async function submitAssignment() {
 
     if (window.showToastModal) {
       showToastModal("Success!", "Assignment submitted successfully.", "success");
-      setTimeout(hideToastModal, 20000);
+      setTimeout(hideToastModal, 2000);
     } else {
       showToast("Assignment submitted!", "success");
     }
   } catch (err) {
     if (window.showToastModal) {
       showToastModal("Error", err.message, "error");
-      setTimeout(hideToastModal, 20000);
+      setTimeout(hideToastModal, 2000);
     } else {
       showToast(err.message, "error");
     }
