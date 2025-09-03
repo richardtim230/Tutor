@@ -1334,26 +1334,24 @@ async function submitAssignment() {
   if (window.showToastModal) showToastModal("Uploading Assignment...", "Please wait while we upload your assignment.", "info", true);
 
   try {
-    // Get student id from dashboard context or user info
-    // You may have it stored as "student._id" or similar
-    // For demo, try localStorage or window.student
-    let studentId = window.student?._id || localStorage.getItem("student_id");
-    if (!studentId) {
-      // Try to fetch profile if not present
+    // Get matric number from dashboard context or user info
+    let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
+    if (!matricNumber) {
+      // Fetch from profile if not present
       const profileResp = await fetch(`${API_BASE}/me`, {
         headers: { "Authorization": "Bearer " + token }
       });
       const profile = await profileResp.json();
-      if (profile && profile._id) studentId = profile._id;
+      if (profile && profile.matricNumber) matricNumber = profile.matricNumber;
     }
-    if (!studentId) throw new Error("Student ID not found.");
+    if (!matricNumber) throw new Error("Matric number not found.");
 
     const formData = new FormData();
     formData.append("assignment", inp.files[0]);
     formData.append("title", inp.files[0].name);
 
-    // Submit to backend
-    const resp = await fetch(`${API_BASE}/student/${studentId}/assignment`, {
+    // Submit to backend using matric number
+    const resp = await fetch(`${API_BASE}/student/matric/${matricNumber}/assignment`, {
       method: "POST",
       headers: { "Authorization": "Bearer " + token },
       body: formData
