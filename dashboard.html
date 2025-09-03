@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CODECX Masterclass Student Dashboard</title>
+  <title>CODECX Institute Student Dashboard</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
@@ -564,7 +564,7 @@
 <body class="bg-gray-50 min-h-screen">
   <header class="bg-white shadow px-4 py-4 flex flex-wrap items-center justify-between gap-2 min-w-0">
     <h1 class="text-2xl font-bold text-indigo-800 flex-1 min-w-0 truncate">
-      CODECX Masterclass Student Dashboard
+      CODECX INSTITUTE FOR DEVELOPERS Student Dashboard
       <span class="feature-badge ml-2">Web Developer Program</span>
     </h1>
     <div class="flex items-center gap-2 min-w-0 flex-shrink-0">
@@ -1199,9 +1199,7 @@ async function reloadDashboard() {
     });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.message);
-    // After loading student data:
-student = data;
-localStorage.setItem("matricNumber", student.matricNumber);
+    student = data;
     document.getElementById("studentAvatar").src = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
     document.getElementById("studentPassport").src = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
     document.getElementById("studentFullName").textContent = student.fullName;
@@ -1577,10 +1575,8 @@ async function submitAssignment() {
 
   try {
     let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
-if (!matricNumber) {
-  showToast("Matric number not found. Please reload the dashboard.", "error");
-  return;
-}
+    if (!matricNumber) throw new Error("Matric number not found.");
+
     // Replace slashes with dashes for URL safety
     const safeMatricNumber = matricNumber.replace(/\//g, '-');
 
