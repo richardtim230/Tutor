@@ -1332,7 +1332,6 @@ function renderActivity() {
     latestAttendance ? `Last attendance: ${formatDate(latestAttendance.date)}` : "No attendance marked yet.";
 }
 
-
 async function submitAssignment() {
   const inp = document.getElementById("assignmentInput");
   if (!inp.files[0]) {
@@ -1344,14 +1343,11 @@ async function submitAssignment() {
     }
     return;
   }
-  // Show loader modal if available
   if (window.showToastModal) showToastModal("Uploading Assignment...", "Please wait while we upload your assignment.", "info", true);
 
   try {
-    // Get matric number from dashboard context or user info
     let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
     if (!matricNumber) {
-      // Fetch from profile if not present
       const profileResp = await fetch(`${API_BASE}/me`, {
         headers: { "Authorization": "Bearer " + token }
       });
@@ -1360,24 +1356,24 @@ async function submitAssignment() {
     }
     if (!matricNumber) throw new Error("Matric number not found.");
 
+    // Replace slashes with dashes for URL safety
+    const safeMatricNumber = matricNumber.replace(/\//g, '-');
+
     const formData = new FormData();
     formData.append("assignment", inp.files[0]);
     formData.append("title", inp.files[0].name);
 
-    // Submit to backend using matric number
-    const resp = await fetch(`${API_BASE}/student/matric/${matricNumber}/assignment`, {
+    const resp = await fetch(`${API_BASE}/student/matric/${safeMatricNumber}/assignment`, {
       method: "POST",
       headers: { "Authorization": "Bearer " + token },
       body: formData
     });
 
-    // Read response as text first
     const text = await resp.text();
     let data;
     try {
       data = JSON.parse(text);
     } catch (e) {
-      // Not JSON, treat as plain text error
       throw new Error("Server error: " + text);
     }
 
