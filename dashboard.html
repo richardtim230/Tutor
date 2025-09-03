@@ -1213,6 +1213,7 @@ async function reloadDashboard() {
       : `<span class="bg-red-100 text-red-800">Unpaid (Limited Access)</span>`;
     updateWhatsAppBtn();
 
+    // Lock masterclass features if unpaid
     const locked = !student.hasPaid;
     document.getElementById("masterclassSection").classList.toggle("locked", locked);
     document.querySelector("#masterclassSection .padlock-icon").style.display = locked ? "block" : "none";
@@ -1222,8 +1223,6 @@ async function reloadDashboard() {
     renderActivity();
     renderPayments();
     renderProgressSection();
-    renderAssignmentHistory(window.student?.assignments || []);
-    // Lock masterclass features if unpaid
     document.getElementById("adminNote").textContent = student.adminNote || "";
     fetchChatMessages();
   } catch (err) {
@@ -1564,76 +1563,6 @@ chatForm.addEventListener("submit", async function (e) {
   await sendChatMessage(text);
   fetchChatMessages();
 });
-
-
-// Update assignment upload flow to call reloadDashboard after successful submission
-async function submitAssignment() {
-  const inp = document.getElementById("assignmentInput");
-  if (!inp.files[0]) {
-    showToast("Select an assignment file to upload.", "error");
-    return;
-  }
-  showToastModal("Uploading Assignment...", "Please wait while we upload your assignment.", "info", true);
-
-  try {
-    let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
-    if (!matricNumber) throw new Error("Matric number not found.");
-
-    // Replace slashes with dashes for URL safety
-    const safeMatricNumber = matricNumber.replace(/\//g, '-');
-
-    const formData = new FormData();
-    formData.append("assignment", inp.files[0]);
-    formData.append("title", inp.files[0].name);
-
-    const resp = await fetch(`${API_BASE}/student/matric/${safeMatricNumber}/assignment`, {
-      method: "POST",
-      headers: { "Authorization": "Bearer " + token },
-      body: formData
-    });
-
-    const text = await resp.text();
-    let data;
-    try { data = JSON.parse(text); } catch (e) { throw new Error("Server error: " + text); }
-    if (!resp.ok) throw new Error(data.message || "Assignment upload failed");
-
-    document.getElementById("assignmentStatus").textContent = "Submitted!";
-    inp.value = "";
-    await reloadDashboard();
-
-    showToastModal("Success!", "Assignment submitted successfully.", "success");
-    setTimeout(hideToastModal, 2000);
-  } catch (err) {
-    showToastModal("Error", err.message, "error");
-    setTimeout(hideToastModal, 2000);
-  }
-}
-
-// Update assignment delete flow to reload dashboard after deletion
-async function deleteAssignment(index) {
-  if (!confirm("Delete this assignment? This action cannot be undone.")) return;
-  showToastModal("Deleting...", "Please wait...", "info", true);
-  try {
-    let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
-    if (!matricNumber) throw new Error("Matric number not found.");
-    const safeMatricNumber = matricNumber.replace(/\//g, '-');
-    const resp = await fetch(`${API_BASE}/student/matric/${safeMatricNumber}/assignment/${index}`, {
-      method: "DELETE",
-      headers: { "Authorization": "Bearer " + token }
-    });
-    let data;
-    try { data = await resp.json(); } catch (e) { data = {}; }
-    if (!resp.ok) throw new Error(data.message || "Delete failed");
-    await reloadDashboard();
-    showToastModal("Deleted!", "Assignment deleted.", "success");
-    setTimeout(hideToastModal, 1500);
-  } catch (err) {
-    showToastModal("Error", err.message, "error");
-    setTimeout(hideToastModal, 2000);
-  }
-}
-
-// Render assignment history from window.student.assignments
 function renderAssignmentHistory(assignments) {
   const history = document.getElementById("assignmentHistory");
   if (!assignments || !assignments.length) {
@@ -1659,12 +1588,13 @@ function renderAssignmentHistory(assignments) {
       </div>
     </div>
   `).join("");
-}
-
-// Assignment preview logic (unchanged)
-function previewAssignment(index) {
+    }
+    function previewAssignment(index) {
+  // Get assignments from your global student object or fetch
   const assignment = (window.student?.assignments || [])[index];
   if (!assignment) return;
+
+  // If fileData exists, preview as text or download, else show info
   let html = `<div style="text-align:center;">
     <h2 style="font-size:1.2rem;color:#6366f1;font-weight:700;">${assignment.title || assignment.fileName}</h2>
     <div style="margin:1rem 0;">Submitted: ${assignment.date ? new Date(assignment.date).toLocaleString() : ""}</div>
@@ -1677,8 +1607,30 @@ function previewAssignment(index) {
   showToastModal("Assignment Preview", html, "info");
 }
 
-// On page load, fetch and render dashboard
-window.addEventListener('DOMContentLoaded', reloadDashboard);
+async function deleteAssignment(index) {
+  if (!confirm("Delete this assignment? This action cannot be undone.")) return;
+  showToastModal("Deleting...", "Please wait...", "info", true);
+  try {
+    // Get matric number
+    let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
+    if (!matricNumber) throw new Error("Matric number not found.");
+    // Call backend to delete assignment by index
+    const resp = await fetch(`${API_BASE}/student/matric/${matricNumber}/assignment/${index}`, {
+      method: "DELETE",
+      headers: { "Authorization": "Bearer " + token }
+    });
+    let data;
+    try { data = await resp.json(); } catch (e) { data = {}; }
+    if (!resp.ok) throw new Error(data.message || "Delete failed");
+    await reloadDashboard();
+    showToastModal("Deleted!", "Assignment deleted.", "success");
+    setTimeout(hideToastModal, 1500);
+  } catch (err) {
+    showToastModal("Error", err.message, "error");
+    setTimeout(hideToastModal, 2000);
+  }
+    }
+    renderAssignmentHistory(window.student?.assignments || []);
 // --- Optionally: expose initChat for manual reload ---
 window.reloadChat = initChat;
 window.addCourse = addCourse;
