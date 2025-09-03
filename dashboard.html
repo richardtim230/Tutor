@@ -1321,25 +1321,64 @@ function renderActivity() {
 // Assignment upload
 async function submitAssignment() {
   const inp = document.getElementById("assignmentInput");
-  if (!inp.files[0]) return showToast("Select an assignment file to upload.", "error");
-  const formData = new FormData();
-  formData.append("assignment", inp.files[0]);
+  if (!inp.files[0]) {
+    if (window.showToastModal) {
+      showToastModal("Error", "Select an assignment file to upload.", "error");
+      setTimeout(hideToastModal, 2000);
+    } else {
+      showToast("Select an assignment file to upload.", "error");
+    }
+    return;
+  }
+  // Show loader modal if available
+  if (window.showToastModal) showToastModal("Uploading Assignment...", "Please wait while we upload your assignment.", "info", true);
+
   try {
-    // You may need a dedicated endpoint for assignment upload
-    // Here, we just mark the activity
-    const resp = await fetch(`${API_BASE}/activities`, {
+    // Get student id from dashboard context or user info
+    // You may have it stored as "student._id" or similar
+    // For demo, try localStorage or window.student
+    let studentId = window.student?._id || localStorage.getItem("student_id");
+    if (!studentId) {
+      // Try to fetch profile if not present
+      const profileResp = await fetch(`${API_BASE}/me`, {
+        headers: { "Authorization": "Bearer " + token }
+      });
+      const profile = await profileResp.json();
+      if (profile && profile._id) studentId = profile._id;
+    }
+    if (!studentId) throw new Error("Student ID not found.");
+
+    const formData = new FormData();
+    formData.append("assignment", inp.files[0]);
+    formData.append("title", inp.files[0].name);
+
+    // Submit to backend
+    const resp = await fetch(`${API_BASE}/student/${studentId}/assignment`, {
       method: "POST",
       headers: { "Authorization": "Bearer " + token },
-      body: JSON.stringify({ activity: "Submitted assignment" })
+      body: formData
     });
+
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.message);
+
     document.getElementById("assignmentStatus").textContent = "Submitted!";
     inp.value = "";
     await reloadDashboard();
-    showToast("Assignment submitted!", "success");
+
+    if (window.showToastModal) {
+      showToastModal("Success!", "Assignment submitted successfully.", "success");
+      setTimeout(hideToastModal, 2000);
+    } else {
+      showToast("Assignment submitted!", "success");
+    }
   } catch (err) {
-    showToast(err.message, "error");
+    if (window.showToastModal) {
+      showToastModal("Error", err.message, "error");
+      setTimeout(hideToastModal, 2000);
+    } else {
+      showToast(err.message, "error");
+    }
   }
 }
 
