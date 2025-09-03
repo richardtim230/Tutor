@@ -1338,7 +1338,7 @@ async function submitAssignment() {
   if (!inp.files[0]) {
     if (window.showToastModal) {
       showToastModal("Error", "Select an assignment file to upload.", "error");
-      setTimeout(hideToastModal, 2000);
+      setTimeout(hideToastModal, 20000);
     } else {
       showToast("Select an assignment file to upload.", "error");
     }
@@ -1389,14 +1389,14 @@ async function submitAssignment() {
 
     if (window.showToastModal) {
       showToastModal("Success!", "Assignment submitted successfully.", "success");
-      setTimeout(hideToastModal, 2000);
+      setTimeout(hideToastModal, 20000);
     } else {
       showToast("Assignment submitted!", "success");
     }
   } catch (err) {
     if (window.showToastModal) {
       showToastModal("Error", err.message, "error");
-      setTimeout(hideToastModal, 2000);
+      setTimeout(hideToastModal, 20000);
     } else {
       showToast(err.message, "error");
     }
