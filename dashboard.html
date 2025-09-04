@@ -1220,11 +1220,14 @@ async function reloadDashboard() {
     document.querySelector("#masterclassSection .padlock-icon").style.display = locked ? "block" : "none";
     document.getElementById("unlockMessage").classList.toggle("hidden", !locked);
 
+
+    renderAssignmentHistory(data.assignmentHistory || []);
+  
     renderCourses();
     renderActivity();
     renderPayments();
     renderProgressSection();
-    renderAssignmentHistory(student.assignments || []);  // <---- PATCH: Add this line
+    
     document.getElementById("adminNote").textContent = student.adminNote || "";
     fetchChatMessages();
   } catch (err) {
@@ -1496,45 +1499,45 @@ async function deleteAssignment(index) {
 }
 
 // Render assignment history from window.student.assignments
-function renderAssignmentHistory(assignments) {
+// Render assignment history from window.student.assignmentHistory
+function renderAssignmentHistory(assignmentHistory) {
   const history = document.getElementById("assignmentHistory");
-  if (!assignments || !assignments.length) {
+  if (!assignmentHistory || !assignmentHistory.length) {
     history.innerHTML = `<div class="text-gray-400 text-center">No assignments submitted yet.</div>`;
     return;
   }
-  history.innerHTML = assignments.map((a, idx) => `
+  history.innerHTML = assignmentHistory.map((a, idx) => `
     <div class="flex flex-col md:flex-row items-center bg-gray-50 rounded-lg shadow-sm px-4 py-3 gap-4">
       <div class="flex-1 min-w-0">
         <div class="font-semibold text-indigo-700">${a.title || a.fileName || "Assignment"}</div>
-        <div class="text-xs text-gray-500">Submitted: ${a.date ? new Date(a.date).toLocaleString() : ""}</div>
+        <div class="text-xs text-gray-500">Submitted: ${a.historyDate ? new Date(a.historyDate).toLocaleString() : (a.date ? new Date(a.date).toLocaleString() : "")}</div>
         ${a.mark ? `<div class="text-xs text-green-700">Mark: ${a.mark}</div>` : ""}
+        ${a.status ? `<div class="text-xs text-indigo-700">Status: ${a.status}</div>` : ""}
       </div>
       <div class="flex gap-2 mt-2 md:mt-0">
         <button class="px-3 py-1 bg-gray-200 text-indigo-700 rounded font-semibold hover:bg-indigo-100"
-          onclick="previewAssignment(${idx})">
+          onclick="previewAssignmentHistory(${idx})">
           <i class="bi bi-eye-fill mr-1"></i> Preview
-        </button>
-        <button class="px-3 py-1 bg-red-100 text-red-700 rounded font-semibold hover:bg-red-200"
-          onclick="deleteAssignment(${idx})">
-          <i class="bi bi-trash-fill mr-1"></i> Delete
         </button>
       </div>
     </div>
   `).join("");
 }
 
-// Assignment preview logic (unchanged)
-function previewAssignment(index) {
-  const assignment = (window.student?.assignments || [])[index];
+// Assignment preview logic for history
+function previewAssignmentHistory(index) {
+  const assignment = (window.student?.assignmentHistory || [])[index];
   if (!assignment) return;
   let html = `<div style="text-align:center;">
     <h2 style="font-size:1.2rem;color:#6366f1;font-weight:700;">${assignment.title || assignment.fileName}</h2>
-    <div style="margin:1rem 0;">Submitted: ${assignment.date ? new Date(assignment.date).toLocaleString() : ""}</div>
+    <div style="margin:1rem 0;">Submitted: ${assignment.historyDate ? new Date(assignment.historyDate).toLocaleString() : (assignment.date ? new Date(assignment.date).toLocaleString() : "")}</div>
     ${assignment.fileData ? 
       `<a href="data:${assignment.fileType};base64,${assignment.fileData}" download="${assignment.fileName}" target="_blank"
         style="color:#6366f1;font-weight:bold;text-decoration:underline;">Download File</a>` :
       `<div class="text-gray-500">No preview available.</div>`
     }
+    ${assignment.mark ? `<div>Mark: <b>${assignment.mark}</b></div>` : ""}
+    ${assignment.status ? `<div>Status: <b>${assignment.status}</b></div>` : ""}
   </div>`;
   showToastModal("Assignment Preview", html, "info");
 }
