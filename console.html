@@ -22,7 +22,7 @@
   </div>
   <!-- Browser View -->
   <div class="bg-gray-800 border border-gray-700 rounded overflow-hidden mb-5" style="height: 380px;">
-    <iframe id="browser-frame" src="https://flowbite.com/" class="w-full h-full" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+    <iframe id="browser-frame" src="https://codecx.examguard.com.ng/" class="w-full h-full" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
   </div>
   <!-- Tabs -->
   <div class="mb-6 border-b border-gray-700">
@@ -88,17 +88,29 @@ document.getElementById('ai-ask').onclick = function() {
   const prompt = getPrompt(feature, context, question);
   document.getElementById('ai-response').textContent = 'Thinking...';
   fetch('/api/ai', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt })
-  })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('ai-response').textContent = data.response || 'No answer';
-  })
-  .catch(e => {
-    document.getElementById('ai-response').textContent = 'Error: ' + e.message;
-  });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ prompt })
+})
+.then(async res => {
+  const contentType = res.headers.get('content-type');
+  const raw = await res.text();
+  let txt;
+  if(contentType && contentType.includes('application/json')) {
+    try {
+      txt = JSON.stringify(JSON.parse(raw), null, 2);
+    } catch (e) {
+      txt = raw; // fallback to raw text if not valid JSON
+    }
+  } else {
+    txt = raw;
+  }
+  document.getElementById('ai-response').textContent = txt;
+})
+.catch(e => {
+  document.getElementById('ai-response').textContent = 'Error: ' + e.message;
+});
+  
 };
 </script>
   <div id="console-tabs-content">
