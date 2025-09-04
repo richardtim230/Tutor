@@ -671,11 +671,8 @@
             <th class="px-2 py-1 border">Status</th>
           </tr>
         </thead>
-        
         <tbody id="activityTable"></tbody>
-</table>
-<div id="activityPagination" class="flex gap-2 mt-2 justify-center"></div>
-      
+      </table>
       <div class="flex gap-2 mt-4">
         <span id="attendanceStatus" class="ml-3 font-semibold"></span>
       </div>
@@ -813,8 +810,7 @@
     document.getElementById('toastModalBg').classList.add('hidden');
   };
 })();
-    let activityPage = 1;
-const activityPageSize = 10;
+    
 
     const API_BASE = "https://examguide.onrender.com/api/codecxreg";
 const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
@@ -1316,48 +1312,19 @@ async function removeCourse(courseName) {
     }
   }
 }
-function renderActivities() {
+// Activity
+function renderActivity() {
   const table = document.getElementById("activityTable");
   table.innerHTML = "";
-
-  const activities = student.activities || [];
-  const totalPages = Math.ceil(activities.length / activityPageSize);
-
-  const start = (activityPage - 1) * activityPageSize;
-  const end = start + activityPageSize;
-  const pageActivities = activities.slice(start, end);
-
-  pageActivities.forEach(act => {
+  (student.activities || []).slice(-12).reverse().forEach(act => {
     table.innerHTML += `
       <tr>
-        <td>${act.date}</td>
-        <td>${act.activity}</td>
-        <td>${act.status}</td>
+        <td class="border px-2 py-1">${formatDate(act.date)}</td>
+        <td class="border px-2 py-1">${act.activity}</td>
+        <td class="border px-2 py-1">${act.status}</td>
       </tr>
     `;
   });
-
-  renderActivityPagination(totalPages);
-}
-
-function renderActivityPagination(totalPages) {
-  const container = document.getElementById("activityPagination");
-  container.innerHTML = "";
-
-  if (totalPages <= 1) return;
-
-  container.innerHTML += `<button ${activityPage === 1 ? 'disabled' : ''} onclick="changeActivityPage(activityPage-1)">Prev</button>`;
-  for (let i = 1; i <= totalPages; i++) {
-    container.innerHTML += `<button class="${i === activityPage ? 'font-bold underline' : ''}" onclick="changeActivityPage(${i})">${i}</button>`;
-  }
-  container.innerHTML += `<button ${activityPage === totalPages ? 'disabled' : ''} onclick="changeActivityPage(activityPage+1)">Next</button>`;
-}
-
-function changeActivityPage(page) {
-  activityPage = page;
-  renderActivities();
-}   
-
   // Attendance Status
   let latestAttendance = (student.activities || []).filter(a => /^Attendance marked - Day \d+$/.test(a.activity)).slice(-1)[0];
   document.getElementById("attendanceStatus").textContent =
