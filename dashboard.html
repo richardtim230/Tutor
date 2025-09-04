@@ -662,41 +662,61 @@
       </div>
     </section>
     <section class="bg-white rounded shadow p-6 mb-8" id="activitySection">
-      <h2 class="text-xl font-semibold mb-4">Activity</h2>
-      <table class="min-w-full text-sm mb-2">
-        <thead>
-          <tr>
-            <th class="px-2 py-1 border">Date</th>
-            <th class="px-2 py-1 border">Activity</th>
-            <th class="px-2 py-1 border">Status</th>
-          </tr>
-        </thead>
-        <tbody id="activityTable"></tbody>
-      </table>
-      <div class="flex gap-2 mt-4">
-        <span id="attendanceStatus" class="ml-3 font-semibold"></span>
-      </div>
-      <section class="bg-white rounded-xl shadow p-6 mb-8" id="assignmentSection">
-  <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-    <i class="bi bi-upload mr-2 text-indigo-600"></i> Assignment Submission
-  </h2>
-  <form id="assignmentForm" class="flex flex-wrap gap-3 items-center mb-5">
-    <input id="assignmentInput" type="file" class="block rounded border p-2 bg-gray-50 flex-1" />
-    <button type="button" onclick="submitAssignment()" class="px-4 py-2 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700 flex-shrink-0">
-      <i class="bi bi-cloud-arrow-up mr-1"></i> Submit Assignment
-    </button>
-    <span id="assignmentStatus" class="ml-2 text-green-700 font-semibold"></span>
-  </form>
-  <div class="mt-2">
-    <h3 class="text-lg font-semibold mb-3 text-gray-700 flex items-center gap-1">
-      <i class="bi bi-clock-history mr-1 text-indigo-400"></i> Submission History
-    </h3>
-    <div id="assignmentHistory" class="space-y-4">
-      <!-- Assignment items will be rendered here -->
-    </div>
+<!--
+This is a partial file. It stops at the Activity section. 
+To correctly add pagination to the "Activity" table, 
+you should include pagination controls after the <tbody id="activityTable"></tbody> element,
+and update the JavaScript that populates #activityTable to handle pagination.
+
+Below is the updated Activity section with pagination controls.
+-->
+
+<section class="bg-white rounded shadow p-6 mb-8" id="activitySection">
+  <h2 class="text-xl font-semibold mb-4">Activity</h2>
+  <table class="min-w-full text-sm mb-2">
+    <thead>
+      <tr>
+        <th class="px-2 py-1 border">Date</th>
+        <th class="px-2 py-1 border">Activity</th>
+        <th class="px-2 py-1 border">Status</th>
+      </tr>
+    </thead>
+    <tbody id="activityTable"></tbody>
+  </table>
+  <!-- Pagination Controls -->
+  <div class="pagination" id="activityPagination"></div>
+  <div class="flex gap-2 mt-4">
+    <span id="attendanceStatus" class="ml-3 font-semibold"></span>
   </div>
+  <section class="bg-white rounded-xl shadow p-6 mb-8" id="assignmentSection">
+    <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+      <i class="bi bi-upload mr-2 text-indigo-600"></i> Assignment Submission
+    </h2>
+    <form id="assignmentForm" class="flex flex-wrap gap-3 items-center mb-5">
+      <input id="assignmentInput" type="file" class="block rounded border p-2 bg-gray-50 flex-1" />
+      <button type="button" onclick="submitAssignment()" class="px-4 py-2 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700 flex-shrink-0">
+        <i class="bi bi-cloud-arrow-up mr-1"></i> Submit Assignment
+      </button>
+      <span id="assignmentStatus" class="ml-2 text-green-700 font-semibold"></span>
+    </form>
+    <div class="mt-2">
+      <h3 class="text-lg font-semibold mb-3 text-gray-700 flex items-center gap-1">
+        <i class="bi bi-clock-history mr-1 text-indigo-400"></i> Submission History
+      </h3>
+      <div id="assignmentHistory" class="space-y-4">
+        <!-- Assignment items will be rendered here -->
+      </div>
+    </div>
+  </section>
 </section>
-    </section>
+
+
+
+
+
+// Call renderActivityTable() when student.activities is loaded
+// Example: after fetching student, do 
+
     <section class="bg-white rounded shadow p-6 mb-8" id="paymentsSection">
       <h2 class="text-xl font-semibold mb-4">Payments</h2>
       <div id="paymentStatus" class="mb-2"></div>
@@ -1221,6 +1241,7 @@ async function reloadDashboard() {
     renderCourses();
     renderActivity();
     renderPayments();
+    renderActivityTable();
     renderProgressSection();
     renderAssignmentHistory(student.assignments || []);  // <---- PATCH: Add this line
     document.getElementById("adminNote").textContent = student.adminNote || "";
@@ -1312,24 +1333,83 @@ async function removeCourse(courseName) {
     }
   }
 }
-// Activity
-function renderActivity() {
-  const table = document.getElementById("activityTable");
-  table.innerHTML = "";
-  (student.activities || []).slice(-12).reverse().forEach(act => {
-    table.innerHTML += `
-      <tr>
-        <td class="border px-2 py-1">${formatDate(act.date)}</td>
-        <td class="border px-2 py-1">${act.activity}</td>
-        <td class="border px-2 py-1">${act.status}</td>
-      </tr>
-    `;
-  });
-  // Attendance Status
+const ACTIVITIES_PER_PAGE = 8;
+let activityPage = 1;
+
+function renderActivityTable() {
+  const activities = student.activities || [];
+  const start = (activityPage - 1) * ACTIVITIES_PER_PAGE;
+  const end = start + ACTIVITIES_PER_PAGE;
+  const pagedActivities = activities.slice(start, end);
+
+  const table = document.getElementById('activityTable');
+  table.innerHTML = pagedActivities.map(act =>
+    `<tr>
+      <td class="px-2 py-1 border">${act.date || ''}</td>
+      <td class="px-2 py-1 border">${act.activity || ''}</td>
+      <td class="px-2 py-1 border">${act.status || ''}</td>
+    </tr>`
+  ).join('');
+
+  renderActivityPagination(activities.length);
+    // Attendance Status
   let latestAttendance = (student.activities || []).filter(a => /^Attendance marked - Day \d+$/.test(a.activity)).slice(-1)[0];
   document.getElementById("attendanceStatus").textContent =
     latestAttendance ? `Last attendance: ${formatDate(latestAttendance.date)}` : "No attendance marked yet.";
 }
+
+function renderActivityPagination(total) {
+  const totalPages = Math.ceil(total / ACTIVITIES_PER_PAGE);
+  const pagDiv = document.getElementById('activityPagination');
+  pagDiv.innerHTML = '';
+  if (totalPages <= 1) return;
+
+  // Previous button
+  const prevBtn = document.createElement('button');
+  prevBtn.className = 'pagination-btn';
+  prevBtn.textContent = 'Prev';
+  prevBtn.disabled = activityPage === 1;
+  prevBtn.onclick = () => { activityPage--; renderActivityTable(); };
+  pagDiv.appendChild(prevBtn);
+
+  // Page numbers (show max 5: first, last, current +/-1)
+  let pages = [];
+  if (totalPages <= 5) {
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+  } else {
+    if (activityPage <= 3) {
+      pages = [1,2,3,4,'...',totalPages];
+    } else if (activityPage >= totalPages-2) {
+      pages = [1,'...',totalPages-3,totalPages-2,totalPages-1,totalPages];
+    } else {
+      pages = [1,'...',activityPage-1,activityPage,activityPage+1,'...',totalPages];
+    }
+  }
+  pages.forEach(p => {
+    if (p === '...') {
+      const span = document.createElement('span');
+      span.textContent = '...';
+      span.style = "padding: 0.4em 0.7em;";
+      pagDiv.appendChild(span);
+    } else {
+      const btn = document.createElement('button');
+      btn.className = 'pagination-btn' + (p === activityPage ? ' selected' : '');
+      btn.textContent = p;
+      btn.disabled = p === activityPage;
+      btn.onclick = () => { activityPage = p; renderActivityTable(); };
+      pagDiv.appendChild(btn);
+    }
+  });
+
+  // Next button
+  const nextBtn = document.createElement('button');
+  nextBtn.className = 'pagination-btn';
+  nextBtn.textContent = 'Next';
+  nextBtn.disabled = activityPage === totalPages;
+  nextBtn.onclick = () => { activityPage++; renderActivityTable(); };
+  pagDiv.appendChild(nextBtn);
+}    
+
 
 async function submitAssignment() {
   const inp = document.getElementById("assignmentInput");
