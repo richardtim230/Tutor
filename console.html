@@ -93,16 +93,12 @@ document.getElementById('ai-ask').onclick = function() {
   body: JSON.stringify({ prompt })
 })
 .then(async res => {
-  const contentType = res.headers.get('content-type');
   const raw = await res.text();
   let txt;
-  if(contentType && contentType.includes('application/json')) {
-    try {
-      txt = JSON.stringify(JSON.parse(raw), null, 2);
-    } catch (e) {
-      txt = raw; // fallback to raw text if not valid JSON
-    }
-  } else {
+  try {
+    const j = JSON.parse(raw);
+    txt = j.response || j.error || raw;
+  } catch (e) {
     txt = raw;
   }
   document.getElementById('ai-response').textContent = txt;
