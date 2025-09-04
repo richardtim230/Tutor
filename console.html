@@ -37,6 +37,70 @@
       <li class="mr-2"><button class="inline-block p-4 rounded-t-lg border-b-2" id="api-tester-tab" data-tabs-target="#api-tester" type="button" role="tab" aria-controls="api-tester" aria-selected="false">API Tester</button></li>
     </ul>
   </div>
+  <div class="p-4 bg-gray-800 rounded shadow-lg">
+  <h2 class="text-xl font-bold text-blue-400 mb-4">AI Toolbox</h2>
+  <div class="mb-3">
+    <label for="ai-feature" class="mb-1 block text-sm">Choose AI Feature:</label>
+    <select id="ai-feature" class="bg-gray-900 text-gray-200 p-2 rounded w-full">
+      <option value="explain">Code Explanation</option>
+      <option value="bugfinder">Bug Finder</option>
+      <option value="accessibility">Accessibility Review</option>
+      <option value="testgen">Test Generator</option>
+      <option value="apidoc">API Documentation</option>
+      <option value="chat">AI Chatbot (General)</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label for="ai-context" class="mb-1 block text-sm">Context (auto-filled from selection):</label>
+    <textarea id="ai-context" class="w-full bg-gray-900 text-gray-200 p-2 rounded mb-2" rows="5"
+      placeholder="Select code, DOM, or network data to fill this automatically."></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="ai-question" class="mb-1 block text-sm">Extra Instructions / Question (optional):</label>
+    <input id="ai-question" class="w-full bg-gray-900 text-gray-200 p-2 rounded" placeholder="e.g. 'How can I improve accessibility?'">
+  </div>
+  <button id="ai-ask" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Run AI Tool</button>
+  <div id="ai-response" class="mt-4 bg-gray-900 text-green-300 p-4 rounded"></div>
+</div>
+<script>
+// Example code: auto-fill context from selection (expand for real use)
+window.fillAIContext = function(context) {
+  document.getElementById('ai-context').value = context;
+};
+// You'd call fillAIContext from your dev console tabs (e.g., when code is selected).
+
+function getPrompt(feature, context, question) {
+  const prompts = {
+    explain: `Explain the following code in detail:\n\n${context}\n\n${question}`,
+    bugfinder: `Analyze this code and find possible bugs or anti-patterns:\n\n${context}\n\n${question}`,
+    accessibility: `Review the following DOM/code for accessibility issues and suggest improvements:\n\n${context}\n\n${question}`,
+    testgen: `Generate unit/integration tests for the following code or API data:\n\n${context}\n\n${question}`,
+    apidoc: `Generate API documentation and explain the following network/API response:\n\n${context}\n\n${question}`,
+    chat: `${question}\n\n(Reference context: ${context})`
+  };
+  return prompts[feature] || `${question}\n\nContext: ${context}`;
+}
+
+document.getElementById('ai-ask').onclick = function() {
+  const feature = document.getElementById('ai-feature').value;
+  const context = document.getElementById('ai-context').value;
+  const question = document.getElementById('ai-question').value;
+  const prompt = getPrompt(feature, context, question);
+  document.getElementById('ai-response').textContent = 'Thinking...';
+  fetch('/api/ai', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('ai-response').textContent = data.response || 'No answer';
+  })
+  .catch(e => {
+    document.getElementById('ai-response').textContent = 'Error: ' + e.message;
+  });
+};
+</script>
   <div id="console-tabs-content">
     <div class="hidden" id="logs" role="tabpanel" aria-labelledby="logs-tab"></div>
     <div class="hidden" id="network" role="tabpanel" aria-labelledby="network-tab"></div>
