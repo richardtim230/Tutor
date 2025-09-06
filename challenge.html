@@ -254,7 +254,7 @@
     async function fetchChallengeComments(challengeId) {
       try {
         const res = await fetch(`${API_BASE}/challenge/${challengeId}/comments`, {
-          headers: { "Authorization": "Bearer " + token } : {}
+          headers: token ? { "Authorization": token } : {}
         });
         if (!res.ok) return [];
         const data = await res.json();
@@ -322,9 +322,9 @@
         const res = await fetch(`${API_BASE}/challenge/${backendId}/comments`, {
           method: "POST",
           headers: {
-  "Content-Type": "application/json",
-  "Authorization": "Bearer " + token
-},
+            "Content-Type": "application/json",
+            "Authorization": token
+          },
           body: JSON.stringify({ text: val })
         });
         if (!res.ok) {
