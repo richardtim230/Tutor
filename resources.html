@@ -98,10 +98,10 @@
     </div>
     <!-- Candidate Details -->
     <div class="candidate-details mt-3">
-      <img id="profileAvatar" src="https://ui-avatars.com/api/?name=Richarddtimm230&background=6366f1&color=fff" alt="User Avatar" class="w-12 h-12 rounded-full border-2 object-cover flex-shrink-0">
+      <img id="profileAvatar" src="https://ui-avatars.com/api/?name=Student&background=6366f1&color=fff" alt="User Avatar" class="w-12 h-12 rounded-full border-2 object-cover flex-shrink-0">
       <div class="profile-details">
-        <div class="name" id="profileName">Richarddtimm230</div>
-        <div class="email" id="profileEmail">richarddtimm230@codecxinstitute.edu</div>
+        <div class="name" id="profileName">Student Name</div>
+        <div class="email" id="profileEmail">student@email.com</div>
         <div class="extra">Student, Web Development Track</div>
         <div class="role">Logged in | <span class="text-xs font-mono bg-indigo-900 px-2 py-0.5 rounded text-indigo-100">CODECX INSTITUTE</span></div>
       </div>
@@ -119,6 +119,7 @@
       <div class="mt-8">
         <span class="block text-xs font-semibold text-gray-400 mb-2 tracking-wide">LINKS</span>
         <a href="https://github.com/Richarddtimm230" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex gap-2 items-center"><i class="bi bi-github"></i> My GitHub</a>
+        <a href="dashboard.html" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex gap-2 items-center"><i class="bi bi-house"></i> Dashboard</a>
       </div>
     </aside>
     <!-- Main Content -->
@@ -127,7 +128,7 @@
       <div class="mb-8">
         <label for="resourceSearch" class="block text-base font-semibold mb-2 text-indigo-700">Find a resource</label>
         <div class="flex items-center gap-2">
-          <input type="text" id="resourceSearch" placeholder="Search topics, e.g. Flexbox, APIs..." class="w-full px-4 py-2 rounded border border-indigo-200 focus:ring-indigo-500 focus:border-indigo-500 transition text-base bg-white shadow-sm">
+          <input type="text" id="resourceSearch" placeholder="Search topics, e.g. Flexbox, APIs..." class="w-full px-4 py-2 rounded border border-indigo-200 focus:ring-indigo-500 focus:border-indigo-500" />
           <button class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-bold flex items-center gap-1">
             <i class="bi bi-search"></i> Search
           </button>
@@ -145,9 +146,9 @@
           <div id="accordion-html" data-accordion="collapse">
             <!-- HTML Basics -->
             <h3 id="html-heading-1">
-              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-indigo-700 bg-indigo-50 hover:bg-indigo-100 focus:ring-2 focus:ring-indigo-200" data-accordion-target="#html-body-1" aria-expanded="false" aria-controls="html-body-1">
+              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-indigo-700 bg-indigo-50 hover:bg-indigo-100 focus:ring-2 focus:ring-indigo-200">
                 <span><i class="bi bi-file-earmark-code mr-2"></i>HTML Basics</span>
-                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </button>
             </h3>
             <div id="html-body-1" class="hidden" aria-labelledby="html-heading-1">
@@ -157,22 +158,28 @@
                   <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-file-earmark-richtext"></i>Semantic HTML</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-ui-checks"></i>Forms & Validation</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-table"></i>Tables & Lists</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-window"></i>Meta Tags & SEO Basics</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-box-arrow-in-up-right"></i>Links & Navigation</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-image"></i>Images & Media Embeds</a></li>
                 </ul>
               </div>
             </div>
             <!-- Advanced HTML -->
             <h3 id="html-heading-2">
-              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-indigo-700 bg-indigo-50 hover:bg-indigo-100 focus:ring-2 focus:ring-indigo-200" data-accordion-target="#html-body-2" aria-expanded="false" aria-controls="html-body-2">
+              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-indigo-700 bg-indigo-50 hover:bg-indigo-100 focus:ring-2 focus:ring-indigo-200">
                 <span><i class="bi bi-layout-text-window mr-2"></i>Advanced HTML</span>
-                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </button>
             </h3>
             <div id="html-body-2" class="hidden" aria-labelledby="html-heading-2">
               <div class="px-4 py-3 bg-white border-b border-indigo-100">
                 <ul class="space-y-3">
-                  <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-cast"></i>HTML5 APIs</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-cast"></i>HTML5 APIs (Canvas, Geolocation, Storage)</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-universal-access"></i>Accessibility & ARIA</a></li>
-                  <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-play-btn"></i>Multimedia Elements</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-play-btn"></i>Audio & Video Elements</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-file-earmark-lock"></i>Custom Data Attributes</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-cloud-upload"></i>File Uploads</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-indigo-600 hover:underline font-semibold"><i class="bi bi-puzzle"></i>Microdata & Structured Data</a></li>
                 </ul>
               </div>
             </div>
@@ -191,9 +198,9 @@
           <div id="accordion-css" data-accordion="collapse">
             <!-- CSS Fundamentals -->
             <h3 id="css-heading-1">
-              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-green-700 bg-green-50 hover:bg-green-100 focus:ring-2 focus:ring-green-200" data-accordion-target="#css-body-1" aria-expanded="false" aria-controls="css-body-1">
+              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-green-700 bg-green-50 hover:bg-green-100 focus:ring-2 focus:ring-green-200">
                 <span><i class="bi bi-palette mr-2"></i>CSS Fundamentals</span>
-                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </button>
             </h3>
             <div id="css-body-1" class="hidden" aria-labelledby="css-heading-1">
@@ -203,14 +210,17 @@
                   <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-box"></i>Box Model & Layout</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-grid-3x3-gap"></i>Flexbox & Grid</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-phone"></i>Responsive Design</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-type"></i>Typography & Web Fonts</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-palette-fill"></i>Colors & Gradients</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-image"></i>Backgrounds & Borders</a></li>
                 </ul>
               </div>
             </div>
             <!-- Advanced CSS -->
             <h3 id="css-heading-2">
-              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-green-700 bg-green-50 hover:bg-green-100 focus:ring-2 focus:ring-green-200" data-accordion-target="#css-body-2" aria-expanded="false" aria-controls="css-body-2">
+              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-green-700 bg-green-50 hover:bg-green-100 focus:ring-2 focus:ring-green-200">
                 <span><i class="bi bi-brush mr-2"></i>Advanced CSS</span>
-                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </button>
             </h3>
             <div id="css-body-2" class="hidden" aria-labelledby="css-heading-2">
@@ -219,6 +229,10 @@
                   <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-lightning"></i>Animations & Transitions</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-sliders"></i>Custom Properties (CSS Variables)</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-file-earmark-code"></i>Sass & Preprocessors</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-display"></i>Media Queries & Print Styles</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-sliders"></i>CSS Functions (calc, clamp)</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-bar-chart"></i>CSS Grid Advanced Patterns</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-semibold"><i class="bi bi-shield-check"></i>Accessibility with CSS</a></li>
                 </ul>
               </div>
             </div>
@@ -237,9 +251,9 @@
           <div id="accordion-js" data-accordion="collapse">
             <!-- JS Essentials -->
             <h3 id="js-heading-1">
-              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-yellow-700 bg-yellow-50 hover:bg-yellow-100 focus:ring-2 focus:ring-yellow-200" data-accordion-target="#js-body-1" aria-expanded="false" aria-controls="js-body-1">
+              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-yellow-700 bg-yellow-50 hover:bg-yellow-100 focus:ring-2 focus:ring-yellow-200">
                 <span><i class="bi bi-code-slash mr-2"></i>JavaScript Essentials</span>
-                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </button>
             </h3>
             <div id="js-body-1" class="hidden" aria-labelledby="js-heading-1">
@@ -249,23 +263,29 @@
                   <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-diagram-2"></i>Functions & Scope</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-window-stack"></i>DOM Manipulation</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-lightning"></i>Events & Listeners</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-arrow-left-right"></i>Operators & Expressions</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-repeat"></i>Loops & Iteration</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-check2-circle"></i>Conditionals & Logic</a></li>
                 </ul>
               </div>
             </div>
             <!-- Advanced JS -->
             <h3 id="js-heading-2">
-              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-yellow-700 bg-yellow-50 hover:bg-yellow-100 focus:ring-2 focus:ring-yellow-200" data-accordion-target="#js-body-2" aria-expanded="false" aria-controls="js-body-2">
+              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-yellow-700 bg-yellow-50 hover:bg-yellow-100 focus:ring-2 focus:ring-yellow-200">
                 <span><i class="bi bi-terminal mr-2"></i>Advanced JavaScript</span>
-                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </button>
             </h3>
             <div id="js-body-2" class="hidden" aria-labelledby="js-heading-2">
               <div class="px-4 py-3 bg-white border-b border-yellow-100">
                 <ul class="space-y-3">
-                  <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-boxes"></i>ES6+ Features</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-boxes"></i>ES6+ Features (let, const, arrow functions)</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-arrow-repeat"></i>Async JavaScript (Promises, Async/Await)</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-plug"></i>APIs & Fetch</a></li>
-                  <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-cup-hot"></i>Frameworks Overview</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-cup-hot"></i>Frameworks Overview (React, Vue, Angular)</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-shield-lock"></i>Error Handling & Debugging</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-cloud"></i>Local Storage & Session Storage</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-yellow-700 hover:underline font-semibold"><i class="bi bi-graph-up"></i>Data Visualization (Chart.js, D3)</a></li>
                 </ul>
               </div>
             </div>
@@ -283,9 +303,9 @@
         <div class="glass-card p-4">
           <div id="accordion-other" data-accordion="collapse">
             <h3 id="other-heading-1">
-              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-gray-700 bg-gray-50 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200" data-accordion-target="#other-body-1" aria-expanded="false" aria-controls="other-body-1">
+              <button type="button" class="flex items-center justify-between w-full px-4 py-3 font-medium text-left text-gray-700 bg-gray-50 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200">
                 <span><i class="bi bi-book mr-2"></i>General Web Development</span>
-                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg data-accordion-icon class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
               </button>
             </h3>
             <div id="other-body-1" class="hidden" aria-labelledby="other-heading-1">
@@ -295,6 +315,9 @@
                   <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:underline font-semibold"><i class="bi bi-terminal"></i>Command Line Basics</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:underline font-semibold"><i class="bi bi-cloud-arrow-up"></i>Deployment & Hosting</a></li>
                   <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:underline font-semibold"><i class="bi bi-person-badge"></i>Career & Portfolio Tips</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:underline font-semibold"><i class="bi bi-shield-check"></i>Web Security Basics</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:underline font-semibold"><i class="bi bi-diagram-3"></i>Design Principles & UI/UX</a></li>
+                  <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:underline font-semibold"><i class="bi bi-globe"></i>SEO & Web Performance</a></li>
                 </ul>
               </div>
             </div>
@@ -307,6 +330,48 @@
       </footer>
     </section>
   </main>
-  <!-- Optionally add script to dynamically fetch user profile if needed -->
+  <!-- Profile Logic & Redirect -->
+  <script>
+    const API_PROFILE_ENDPOINT = "https://examguide.onrender.com/api/codecxreg/me";
+    const LOGIN_PAGE = "login.html";
+    const token = localStorage.getItem('codecx_token');
+
+    // Helper: Get default avatar
+    function getAvatarUrl(name) {
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || "Student")}&background=6366f1&color=fff`;
+    }
+
+    async function loadStudentProfile() {
+      try {
+        if (!token) throw new Error("No login token");
+        const res = await fetch(API_PROFILE_ENDPOINT, {
+          headers: { "Authorization": token }
+        });
+        if (!res.ok) throw new Error("Not logged in");
+        const student = await res.json();
+
+        document.getElementById("profileAvatar").src =
+          student.passportUrl && student.passportUrl.length > 10
+            ? student.passportUrl
+            : getAvatarUrl(student.fullName || student.username || student.matricNumber || "Student");
+
+        document.getElementById("profileName").textContent =
+          student.fullName || student.username || "Student";
+
+        document.getElementById("profileEmail").textContent =
+          student.email || "No email";
+
+        document.querySelector(".candidate-details .extra").textContent =
+          student.track ? `${student.track} Track` : "Student";
+
+        document.querySelector(".candidate-details .role").innerHTML =
+          `Logged in | <span class="text-xs font-mono bg-indigo-900 px-2 py-0.5 rounded text-indigo-100">CODECX INSTITUTE</span>`;
+
+      } catch (err) {
+        window.location.href = LOGIN_PAGE;
+      }
+    }
+    window.addEventListener("DOMContentLoaded", loadStudentProfile);
+  </script>
 </body>
 </html>
