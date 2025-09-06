@@ -1235,7 +1235,7 @@ async function reloadDashboard() {
     renderProgressSection();
     
     document.getElementById("adminNote").textContent = student.adminNote || "";
-    fetchChatMessages();
+    
   } catch (err) {
     showToast("Error loading dashboard: " + err.message, "error");
     logout();
