@@ -1230,7 +1230,7 @@ async function reloadDashboard() {
     document.getElementById("unlockMessage").classList.toggle("hidden", !locked);
 
 
-    renderAssignmentHistory(data.assignmentHistory || []);
+    renderAssignmentHistory(student.assignmentHistory || []);
   
     renderCourses();
     renderActivity();
