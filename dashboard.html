@@ -1206,7 +1206,8 @@ async function reloadDashboard() {
     if (!resp.ok) throw new Error(data.message);
     student = data;
 
-    // <-- Always save the correct matric number to localStorage
+window.student = student; // <-- Add this line!
+
     localStorage.setItem('matricNumber', student.matricNumber);
 
     document.getElementById("studentAvatar").src = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
