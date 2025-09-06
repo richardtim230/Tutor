@@ -1205,6 +1205,10 @@ async function reloadDashboard() {
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.message);
     student = data;
+
+    // <-- Always save the correct matric number to localStorage
+    localStorage.setItem('matricNumber', student.matricNumber);
+
     document.getElementById("studentAvatar").src = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
     document.getElementById("studentPassport").src = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
     document.getElementById("studentFullName").textContent = student.fullName;
@@ -1216,6 +1220,8 @@ async function reloadDashboard() {
       ? `<span class="bg-green-100 text-green-800">Paid & Active</span>`
       : `<span class="bg-red-100 text-red-800">Unpaid (Limited Access)</span>`;
     updateWhatsAppBtn();
+
+    
 
     // Lock masterclass features if unpaid
     const locked = !student.hasPaid;
