@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CODECX INSTITUTE - Challenge of the Week</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.9">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Join the CODECX Institute Challenge of the Week! Tackle beginner-friendly HTML and CSS challenges. Submit your work via your dashboard and engage in lively discussions.">
+  <meta name="keywords" content="CODECX Institute, coding challenge, web development, HTML, CSS, student challenge, assignment submission">
+  <meta name="author" content="CODECX Institute">
+  <meta property="og:title" content="CODECX INSTITUTE - Challenge of the Week">
+  <meta property="og:description" content="Join this week's HTML & CSS focused challenges. Submit your work through your dashboard and share your progress in the comments!">
+  <meta property="og:image" content="https://ui-avatars.com/api/?name=CODECX&background=6366f1&color=fff">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://github.com/richardtim230/Tutor/blob/main/challenge-of-the-week.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CODECX INSTITUTE - Challenge of the Week">
+  <meta name="twitter:description" content="Join this week's HTML & CSS focused challenges. Submit your work through your dashboard and share your progress in the comments!">
+  <meta name="twitter:image" content="https://ui-avatars.com/api/?name=CODECX&background=6366f1&color=fff">
+  <!-- Tailwind & Flowbite CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+  <!-- Bootstrap Icons CDN for icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    .glass-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 8px 32px rgba(99,102,241,.11), 0 1.5px 10px rgba(0,0,0,.07);
+      border-radius: 1rem;
+      border: 1px solid #e0e7ff;
+    }
+    .sidebar-nav {
+      position: sticky;
+      top: 6rem;
+      z-index: 40;
+    }
+    @media (max-width: 900px) {
+      .sidebar-nav {
+        position: static;
+        margin-bottom: 1rem;
+      }
+    }
+    .candidate-details {
+      background: linear-gradient(90deg, #6366f1 60%, #4338ca 100%);
+      color: #fff;
+      border-radius: 0.8rem;
+      box-shadow: 0 2px 12px #6366f122;
+      padding: 1rem 1.7rem;
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      margin: 0.8rem 0 1.9rem 0;
+      max-width: 500px;
+    }
+    .challenge-card {
+      transition: box-shadow .2s, transform .2s;
+    }
+    .challenge-card:hover {
+      box-shadow: 0 4px 28px #6366f122, 0 2px 16px #6366f118;
+      transform: translateY(-2px) scale(1.01);
+    }
+    .comment-list {
+      max-height: 220px;
+      overflow-y: auto;
+      margin-bottom: 0.7rem;
+    }
+    .comment {
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.7rem;
+      background: #f3f4f6;
+      margin-bottom: 0.4rem;
+      font-size: 0.97rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+    .comment .avatar {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      object-fit: cover;
+      background: #e0e7ff;
+      box-shadow: 0 1px 6px #6366f122;
+      flex-shrink: 0;
+    }
+    .comment-meta {
+      font-size: 0.80rem;
+      color: #8b5cf6;
+      margin-bottom: 0.15rem;
+    }
+    .challenge-joined {
+      background: #d1fae5;
+      color: #047857;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      padding: 0.13rem 0.7rem;
+      font-size: 0.93rem;
+      display: inline-block;
+      margin-left: 0.5rem;
+    }
+    .tag-html {
+      background: #f3e8ff;
+      color: #a21caf;
+    }
+    .tag-css {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+    .tag-bonus {
+      background: #fef9c3;
+      color: #b45309;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+  <!-- Sticky Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <svg class="w-9 h-9 text-indigo-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <h1 class="text-2xl font-extrabold text-indigo-800 tracking-tight">
+        CODECX INSTITUTE - Challenge of the Week
+      </h1>
+    </div>
+    <!-- Candidate Details -->
+    <div class="candidate-details mt-3">
+      <img id="profileAvatar" src="https://ui-avatars.com/api/?name=Student&background=6366f1&color=fff" alt="User Avatar" class="w-12 h-12 rounded-full border-2 object-cover flex-shrink-0">
+      <div class="profile-details">
+        <div class="name" id="profileName">Student Name</div>
+        <div class="email" id="profileEmail">student@email.com</div>
+        <div class="extra">Student, Web Development Track</div>
+        <div class="role">Logged in | <span class="text-xs font-mono bg-indigo-900 px-2 py-0.5 rounded text-indigo-100">CODECX INSTITUTE</span></div>
+      </div>
+    </div>
+  </header>
+  <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-10 gap-8 pt-7 pb-16 px-3">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar-nav lg:col-span-2 flex flex-col gap-4 bg-white shadow p-4 glass-card mb-5">
+      <nav class="flex flex-col gap-2">
+        <a href="resource.html" class="px-3 py-2 rounded bg-indigo-50 text-indigo-700 font-bold hover:bg-indigo-100 transition flex items-center gap-2"><i class="bi bi-file-earmark-code"></i> Resources</a>
+        <a href="video-resources.html" class="px-3 py-2 rounded bg-red-50 text-red-700 font-bold hover:bg-red-100 transition flex items-center gap-2"><i class="bi bi-play-btn"></i> Videos</a>
+        <a href="dashboard.html" class="px-3 py-2 rounded bg-gray-50 text-gray-700 font-bold hover:bg-gray-100 transition flex items-center gap-2"><i class="bi bi-house"></i> Dashboard</a>
+        <a href="challenge-of-the-week.html" class="px-3 py-2 rounded bg-green-50 text-green-700 font-bold hover:bg-green-100 transition flex items-center gap-2"><i class="bi bi-star"></i> Challenges</a>
+      </nav>
+      <div class="mt-8">
+        <span class="block text-xs font-semibold text-gray-400 mb-2 tracking-wide">LINKS</span>
+        <a href="https://github.com/Richarddtimm230" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex gap-2 items-center"><i class="bi bi-github"></i> My GitHub</a>
+        <a href="dashboard.html" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex gap-2 items-center"><i class="bi bi-house"></i> Dashboard</a>
+      </div>
+    </aside>
+    <!-- Main Content -->
+    <section class="lg:col-span-8">
+      <div class="mb-10">
+        <h2 class="text-2xl font-bold text-indigo-700 mb-2 flex items-center gap-2">
+          <i class="bi bi-trophy text-yellow-500"></i>
+          Challenge of the Week
+        </h2>
+        <p class="text-gray-600">
+          Ready to flex your HTML and CSS superpowers? This week's challenges are all about creativity and styling magic! Pick one (or more!), build something you're proud of, and submit your masterpiece through the <b>assignment submission section</b> on your dashboard.<br>
+          Don't forget to chat, share ideas, and ask questions in the comments below each challenge. Let's make learning fun, together!
+        </p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <span class="px-3 py-1 rounded-full text-xs bg-indigo-100 text-indigo-700 font-semibold"><i class="bi bi-calendar-event"></i> Week of September 6–13, 2025</span>
+          <span class="px-3 py-1 rounded-full text-xs bg-green-100 text-green-700 font-semibold"><i class="bi bi-palette"></i> Focus: HTML & CSS Only</span>
+        </div>
+      </div>
+      <div id="challengeList" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Challenge cards will be rendered here -->
+      </div>
+      <!-- Footer -->
+      <footer class="text-center py-7 text-sm text-gray-500 bg-white border-t mt-7 glass-card">
+        <span>© 2025 CODECX INSTITUTE. All rights reserved.</span>
+      </footer>
+    </section>
+  </main>
+  <script>
+    // === CONFIG ===
+    const API_BASE = "https://examguide.onrender.com/api/codecxreg";
+    const token = localStorage.getItem('codecx_token');
+    const LOGIN_PAGE = "login.html";
+    const PROFILE_ENDPOINT = `${API_BASE}/me`;
+
+    // If you have unique IDs from backend, use them here. For now, we use string numbers "1", "2", "3".
+    const weekChallenges = [
+      {
+        id: 1,
+        backendId: "1",
+        title: "My Favorite Recipe Card",
+        description:
+          `Design a stylish recipe card page using only HTML and CSS. Pick any dish you love (maybe jollof rice or pancakes!), and showcase the recipe with a beautiful layout, images, and clean typography. <br><span class='tag-html px-2 py-0.5 rounded mr-1'>HTML</span> <span class='tag-css px-2 py-0.5 rounded mr-1'>CSS</span> <span class='tag-bonus px-2 py-0.5 rounded'>Bonus: Try a card flip effect or add a hover animation!</span><br><b>Submission should be done on your individual dashboard via the assignment submission section.</b>`,
+        difficulty: "Beginner",
+        tags: ["HTML", "CSS", "Card Layout"]
+      },
+      {
+        id: 2,
+        backendId: "2",
+        title: "Responsive Profile Page",
+        description:
+          `Create a responsive profile page for yourself or a fictional character. Your page should have an avatar, bio, and links. Make sure it looks great on both desktop and mobile – bonus points for creativity!<br><span class='tag-html px-2 py-0.5 rounded mr-1'>HTML</span> <span class='tag-css px-2 py-0.5 rounded mr-1'>CSS</span> <span class='tag-bonus px-2 py-0.5 rounded'>Bonus: Add a dark mode toggle (CSS only!)</span><br><b>Submission should be done on your individual dashboard via the assignment submission section.</b>`,
+        difficulty: "Beginner",
+        tags: ["HTML", "CSS", "Responsive Design"]
+      },
+      {
+        id: 3,
+        backendId: "3",
+        title: "Simple Landing Page",
+        description:
+          `Build a single-page landing site for a fictional product, service, or event. Use catchy headlines, call-to-action buttons, and a clean section layout. No JavaScript, just pure HTML and CSS magic. <br><span class='tag-html px-2 py-0.5 rounded mr-1'>HTML</span> <span class='tag-css px-2 py-0.5 rounded mr-1'>CSS</span> <span class='tag-bonus px-2 py-0.5 rounded'>Bonus: Use gradients and icons for extra flair!</span><br><b>Submission should be done on your individual dashboard via the assignment submission section.</b>`,
+        difficulty: "Beginner",
+        tags: ["HTML", "CSS", "Landing Page"]
+      }
+    ];
+
+    // === PROFILE LOADING ===
+    let studentProfile = null;
+    async function loadStudentProfile() {
+      try {
+        if (!token) throw new Error("No login token");
+        const res = await fetch(PROFILE_ENDPOINT, { headers: { "Authorization": token } });
+        if (!res.ok) throw new Error("Not logged in");
+        const student = await res.json();
+        studentProfile = student;
+        document.getElementById("profileAvatar").src =
+          student.passportBase64 && student.passportBase64.length > 10
+            ? student.passportBase64
+            : `https://ui-avatars.com/api/?name=${encodeURIComponent(student.fullName || student.username || student.matricNumber || "Student")}&background=6366f1&color=fff`;
+        document.getElementById("profileName").textContent =
+          student.fullName || student.username || "Student";
+        document.getElementById("profileEmail").textContent =
+          student.email || "No email";
+        document.querySelector(".candidate-details .extra").textContent =
+          student.track ? `${student.track} Track` : "Student";
+        document.querySelector(".candidate-details .role").innerHTML =
+          `Logged in | <span class="text-xs font-mono bg-indigo-900 px-2 py-0.5 rounded text-indigo-100">CODECX INSTITUTE</span>`;
+      } catch (err) {
+        window.location.href = LOGIN_PAGE;
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", loadStudentProfile);
+
+    // === COMMENTS LOADING ===
+    const challengeCommentsCache = {}; // { backendId: [comment, ...] }
+
+    async function loadAllChallengeComments() {
+      await Promise.all(weekChallenges.map(async (c) => {
+        challengeCommentsCache[c.backendId] = await fetchChallengeComments(c.backendId);
+      }));
+    }
+
+    async function fetchChallengeComments(challengeId) {
+      try {
+        const res = await fetch(`${API_BASE}/challenge/${challengeId}/comments`, {
+          headers: token ? { "Authorization": token } : {}
+        });
+        if (!res.ok) return [];
+        const data = await res.json();
+        return Array.isArray(data.comments) ? data.comments : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    // === RENDER CHALLENGES ===
+    async function renderChallenges() {
+      await loadAllChallengeComments();
+      const list = document.getElementById('challengeList');
+      list.innerHTML = '';
+      weekChallenges.forEach((c) => {
+        const comments = challengeCommentsCache[c.backendId] || [];
+        list.innerHTML += `
+          <div class="glass-card p-6 mb-7 challenge-card">
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">${c.difficulty}</span>
+              <div>
+                ${c.tags.map(tag => `<span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded mr-1">${tag}</span>`).join('')}
+              </div>
+            </div>
+            <h3 class="text-xl font-extrabold text-indigo-800 mb-2">${c.title}</h3>
+            <p class="text-gray-700 mb-4">${c.description}</p>
+            <!-- Comments Section -->
+            <div class="border-t pt-3">
+              <h4 class="text-base font-bold text-gray-700 mb-2 flex items-center gap-1"><i class="bi bi-chat-dots"></i> Comments</h4>
+              <div class="comment-list mb-2" id="commentList${c.backendId}">
+                ${comments.length === 0 ? `<p class="text-xs text-gray-400 text-center py-4">No comments yet. Be the first to comment!</p>` :
+                  comments.map(cm => `
+                    <div class="comment">
+                      <img class="avatar" src="${cm.avatar && cm.avatar.length > 10 ? cm.avatar : `https://ui-avatars.com/api/?name=${encodeURIComponent(cm.user || "Anonymous")}&background=6366f1&color=fff`}" alt="${cm.user || "Anonymous"}">
+                      <div>
+                        <div class="comment-meta">${cm.user || "Anonymous"} <span class="text-gray-400">• ${timeAgo(new Date(cm.date))}</span></div>
+                        <div>${cm.text}</div>
+                      </div>
+                    </div>
+                  `).join('')}
+              </div>
+              <form class="flex items-center gap-2" onsubmit="return postComment(event, '${c.backendId}')">
+                <input type="text" class="flex-1 px-3 py-2 rounded border border-gray-200 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                  placeholder="Add a comment..." id="commentInput${c.backendId}" maxlength="200" required>
+                <button type="submit" class="px-3 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-bold"><i class="bi bi-send"></i></button>
+              </form>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // === POST COMMENT ===
+    window.postComment = async function(e, backendId) {
+      e.preventDefault();
+      const inp = document.getElementById(`commentInput${backendId}`);
+      const val = inp.value.trim();
+      if (!val) return false;
+      if (!token) {
+        alert("You must be logged in to comment.");
+        return false;
+      }
+      inp.disabled = true;
+      try {
+        const res = await fetch(`${API_BASE}/challenge/${backendId}/comments`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+          },
+          body: JSON.stringify({ text: val })
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(err.message || "Failed to post comment.");
+          inp.disabled = false;
+          return false;
+        }
+        inp.value = "";
+        challengeCommentsCache[backendId] = await fetchChallengeComments(backendId);
+        renderChallenges();
+      } catch (err) {
+        alert("Could not post comment. Please try again.");
+      } finally {
+        inp.disabled = false;
+      }
+      return false;
+    }
+
+    // === TIME AGO formatting ===
+    function timeAgo(date) {
+      if (!date) return "";
+      const now = new Date();
+      const seconds = Math.floor((now - date) / 1000);
+      if (seconds < 60) return "Just now";
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) return `${hours} hr${hours > 1 ? "s" : ""} ago`;
+      const days = Math.floor(hours / 24);
+      return `${days} day${days > 1 ? "s" : ""} ago`;
+    }
+
+    // === INITIAL LOAD ===
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadStudentProfile();
+      await renderChallenges();
+    });
+  </script>
+</body>
+</html>
