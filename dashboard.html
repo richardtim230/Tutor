@@ -811,15 +811,12 @@ function hideStudentLoader() {
 
 showStudentLoader(); 
 
-Promise.all([
-  fetchStudentData(),
-  fetchAssignmentHistory(),
-  fetchPayments()
-]).then(() => {
-  renderAssignmentHistoryTable();
-  renderPayments();
+setTimeout(() => {
+  // Student data loaded here (e.g. window.student = {...})
   hideStudentLoader();
-});
+  renderAssignmentHistoryTable(); // or any other render function
+}, 3000);
+
 
 // --- End of loader code ---
 // Drop-in Toast Modal & Loader System
