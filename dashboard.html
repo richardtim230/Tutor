@@ -591,34 +591,92 @@
         </div>
       </div>
     </section>
-    <!-- Masterclass Features (locked if unpaid) -->
-    <section id="masterclassSection" class="feature-section bg-white rounded shadow p-6 mb-8">
-      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-        Masterclass Features
-        <span class="feature-badge">Premium</span>
-      </h2>
-      <div class="grid grid-cols-2 gap-6">
-        <div class="resource-card">
-          <div class="title"><i class="bi bi-camera-video mr-2"></i> Live Coding Sessions</div>
-          <div class="desc">Join weekly live interactive coding classes with top instructors. Participate, ask questions, and build projects together.</div>
-          <div class="link">Next session: <span id="nextSession"></span></div>
-        </div>
-        <div class="resource-card">
-          <div class="title"><i class="bi bi-collection-play mr-2"></i> Video Library</div>
-          <div class="desc">Access a library of recorded masterclass lessons & practical walk-throughs, available 24/7.</div>
-          <a href="#" class="link" id="videoLibraryLink" target="_blank">Browse videos</a>
-        </div>
-        <div class="resource-card">
-          <div class="title"><i class="bi bi-code-slash mr-2"></i> Challenge & Projects</div>
-          <div class="desc">Take part in exclusive coding challenges, hackathons, and practical projects for certificates and portfolio.</div>
-          <a href="#" class="link" id="challengesLink" target="_blank">See current challenge</a>
-        </div>
-        <div class="resource-card">
-          <div class="title"><i class="bi bi-journal-richtext mr-2"></i> Masterclass Notes & Resources</div>
-          <div class="desc">Download handouts, cheatsheets, and curated learning resources from top instructors, tailored for web devs.</div>
-          <a href="#" class="link" id="resourcesLink" target="_blank">Download resources</a>
-        </div>
+    <!-- Flowbite and Tailwind CSS CDN (add these to your <head> if not already present) -->
+<link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
+<!-- Standout Resource Section using Flowbite -->
+<section class="bg-white rounded-xl shadow-lg p-8 mb-8" id="resourceSection">
+  <div class="flex items-center gap-3 mb-6">
+    <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8 17l4 4 4-4m0-5v9m-4-4V3m0 0A9 9 0 003 12a9 9 0 009 9 9 9 0 009-9 9 9 0 00-9-9z" />
+    </svg>
+    <h2 class="text-2xl font-bold text-indigo-800">Masterclass Resources</h2>
+    <span class="ml-3 px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full font-semibold text-sm">Premium</span>
+  </div>
+  <p class="text-gray-600 mb-8">Unlock curated resources, handouts, cheat-sheets, and session recordings from top instructors.</p>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- Resource Card Example 1 -->
+    <div class="bg-indigo-50 rounded-xl shadow-md hover:shadow-xl transition border border-indigo-100 p-6 flex flex-col items-start group">
+      <div class="flex items-center mb-3">
+        <svg class="w-7 h-7 text-indigo-600 group-hover:text-indigo-700 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553 2.276A2 2 0 0121 14.07v1.86A2 2 0 0119.553 18.2L15 20.5M9 10l-4.553 2.276A2 2 0 003 14.07v1.86A2 2 0 004.447 18.2L9 20.5M9 4v16m6-16v16" />
+        </svg>
+        <div class="ml-3 text-lg font-bold text-indigo-800">Live Coding Sessions</div>
       </div>
+      <div class="text-gray-700 mb-4">Weekly interactive classes. Join, ask questions, and build projects together.</div>
+      <a href="#" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition text-sm">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+        Join Next Session
+      </a>
+    </div>
+
+    <!-- Resource Card Example 2 -->
+    <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition border border-gray-100 p-6 flex flex-col items-start group">
+      <div class="flex items-center mb-3">
+        <svg class="w-7 h-7 text-yellow-500 group-hover:text-yellow-600 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+        </svg>
+        <div class="ml-3 text-lg font-bold text-yellow-700">Video Library</div>
+      </div>
+      <div class="text-gray-700 mb-4">Access recorded masterclass lessons & practical walk-throughs anytime.</div>
+      <a href="#" class="inline-flex items-center px-4 py-2 bg-yellow-400 text-white rounded-lg font-semibold hover:bg-yellow-500 transition text-sm">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+        Browse Videos
+      </a>
+    </div>
+
+    <!-- Resource Card Example 3 -->
+    <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition border border-green-100 p-6 flex flex-col items-start group">
+      <div class="flex items-center mb-3">
+        <svg class="w-7 h-7 text-green-600 group-hover:text-green-700 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div class="ml-3 text-lg font-bold text-green-700">Challenges & Projects</div>
+      </div>
+      <div class="text-gray-700 mb-4">Take part in exclusive coding challenges and practical projects for certificates.</div>
+      <a href="#" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition text-sm">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+        View Challenges
+      </a>
+    </div>
+
+    <!-- Resource Card Example 4 -->
+    <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition border border-indigo-100 p-6 flex flex-col items-start group">
+      <div class="flex items-center mb-3">
+        <svg class="w-7 h-7 text-indigo-400 group-hover:text-indigo-600 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 20l9-5-9-5-9 5 9 5zm0 0V10" />
+        </svg>
+        <div class="ml-3 text-lg font-bold text-indigo-700">Notes & Resources</div>
+      </div>
+      <div class="text-gray-700 mb-4">Download handouts, cheat-sheets, and curated learning resources.</div>
+      <a href="#" class="inline-flex items-center px-4 py-2 bg-indigo-400 text-white rounded-lg font-semibold hover:bg-indigo-500 transition text-sm">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+        Download Notes
+      </a>
+    </div>
+  </div>
+
       <i class="bi bi-lock-fill padlock-icon" style="display:none"></i>
       <div id="unlockMessage" class="mt-5 text-center text-indigo-700 font-semibold hidden">
         <i class="bi bi-lock-fill"></i> These features are locked. Please complete payment to unlock full access!
