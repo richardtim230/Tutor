@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CODECX INSTITUTE VIDEO RESOURCES</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.9">
+  <!-- Tailwind & Flowbite CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+  <!-- Bootstrap Icons CDN for icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    .glass-card {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 8px 32px rgba(99,102,241,.11), 0 1.5px 10px rgba(0,0,0,.05);
+      border-radius: 1rem;
+      border: 1px solid #e0e7ff;
+    }
+    .sidebar-nav {
+      position: sticky;
+      top: 6rem;
+      z-index: 40;
+    }
+    @media (max-width: 900px) {
+      .sidebar-nav {
+        position: static;
+        margin-bottom: 1rem;
+      }
+    }
+    .candidate-details {
+      background: linear-gradient(90deg, #6366f1 60%, #4338ca 100%);
+      color: #fff;
+      border-radius: 0.8rem;
+      box-shadow: 0 2px 12px #6366f122;
+      padding: 1rem 1.7rem;
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      margin: 0.8rem 0 1.9rem 0;
+      max-width: 500px;
+    }
+    .candidate-details img {
+      box-shadow: 0 1px 6px #6366f122;
+      border: 2px solid #fff;
+    }
+    .candidate-details .profile-details {
+      min-width: 0;
+      flex: 1;
+    }
+    .candidate-details .profile-details .name {
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: -.5px;
+      margin-bottom: 0.18rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .candidate-details .profile-details .email, 
+    .candidate-details .profile-details .extra {
+      font-size: 0.97rem;
+      color: #e0e7ff;
+      margin-bottom: 0.09rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .candidate-details .profile-details .role {
+      font-size: 0.93rem;
+      color: #c7d2fe;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    @media (max-width: 600px) {
+      .candidate-details {
+        padding: 0.7rem 1rem;
+        gap: 0.6rem;
+      }
+      .candidate-details img {
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+      }
+    }
+    .video-iframe {
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 14px #6366f118;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+  <!-- Sticky Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <svg class="w-9 h-9 text-indigo-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <h1 class="text-2xl font-extrabold text-indigo-800 tracking-tight">
+        CODECX INSTITUTE VIDEO RESOURCES
+      </h1>
+    </div>
+    <!-- Candidate Details -->
+    <div class="candidate-details mt-3">
+      <img id="profileAvatar" src="https://ui-avatars.com/api/?name=Student&background=6366f1&color=fff" alt="User Avatar" class="w-12 h-12 rounded-full border-2 object-cover flex-shrink-0">
+      <div class="profile-details">
+        <div class="name" id="profileName">Student Name</div>
+        <div class="email" id="profileEmail">student@email.com</div>
+        <div class="extra">Student, Web Development Track</div>
+        <div class="role">Logged in | <span class="text-xs font-mono bg-indigo-900 px-2 py-0.5 rounded text-indigo-100">CODECX INSTITUTE</span></div>
+      </div>
+    </div>
+  </header>
+  <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-10 gap-8 pt-7 pb-16 px-3">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar-nav lg:col-span-2 flex flex-col gap-4 bg-white shadow p-4 glass-card mb-5">
+      <nav class="flex flex-col gap-2">
+        <a href="resource.html" class="px-3 py-2 rounded bg-indigo-50 text-indigo-700 font-bold hover:bg-indigo-100 transition flex items-center gap-2"><i class="bi bi-file-earmark-code"></i> Resources</a>
+        <a href="video-resources.html" class="px-3 py-2 rounded bg-red-50 text-red-700 font-bold hover:bg-red-100 transition flex items-center gap-2"><i class="bi bi-play-btn"></i> Videos</a>
+        <a href="dashboard.html" class="px-3 py-2 rounded bg-gray-50 text-gray-700 font-bold hover:bg-gray-100 transition flex items-center gap-2"><i class="bi bi-house"></i> Dashboard</a>
+      </nav>
+      <div class="mt-8">
+        <span class="block text-xs font-semibold text-gray-400 mb-2 tracking-wide">LINKS</span>
+        <a href="https://github.com/Richarddtimm230" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex gap-2 items-center"><i class="bi bi-github"></i> My GitHub</a>
+      </div>
+    </aside>
+    <!-- Main Content -->
+    <section class="lg:col-span-8">
+      <!-- Search Bar -->
+      <div class="mb-8">
+        <label for="videoSearch" class="block text-base font-semibold mb-2 text-indigo-700">Find a video resource</label>
+        <div class="flex items-center gap-2">
+          <input type="text" id="videoSearch" placeholder="Search videos, e.g. Flexbox, JavaScript, APIs..." class="w-full px-4 py-2 rounded border border-indigo-200 focus:ring-indigo-500 focus:border-indigo-500 outline-none" />
+          <button class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-bold flex items-center gap-1">
+            <i class="bi bi-search"></i> Search
+          </button>
+        </div>
+      </div>
+      <!-- Video Grid -->
+      <section class="mb-8">
+        <div class="flex items-center gap-3 mb-5">
+          <svg class="w-7 h-7 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553 2.276A2 2 0 0120 14.105V17a2 2 0 01-2 2H6a2 2 0 01-2-2v-2.895a2 2 0 01.447-1.329L9 10m6 0V9a3 3 0 10-6 0v1m6 0H9" />
+          </svg>
+          <h2 class="text-xl font-bold text-red-600">Video Resources</h2>
+        </div>
+        <div class="glass-card p-4">
+          <!-- Responsive Video Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7" id="videosGrid">
+            <!-- Video Card Example -->
+            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
+              <div class="overflow-hidden rounded-lg mb-3">
+                <iframe class="video-iframe" src="https://www.youtube.com/embed/kUMe1FH4CHE" title="HTML Crash Course for Beginners" allowfullscreen></iframe>
+              </div>
+              <div class="flex-1">
+                <div class="font-bold text-base text-gray-800 group-hover:text-indigo-700 mb-1">HTML Crash Course for Beginners</div>
+                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
+                <div class="text-xs text-gray-400">Learn the basics of HTML in 1 hour. Great for new web developers.</div>
+              </div>
+            </div>
+            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
+              <div class="overflow-hidden rounded-lg mb-3">
+                <iframe class="video-iframe" src="https://www.youtube.com/embed/1Rs2ND1ryYc" title="CSS Crash Course for Beginners" allowfullscreen></iframe>
+              </div>
+              <div class="flex-1">
+                <div class="font-bold text-base text-gray-800 group-hover:text-green-700 mb-1">CSS Crash Course for Beginners</div>
+                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
+                <div class="text-xs text-gray-400">Covers CSS fundamentals, selectors, layouts, and responsive design.</div>
+              </div>
+            </div>
+            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
+              <div class="overflow-hidden rounded-lg mb-3">
+                <iframe class="video-iframe" src="https://www.youtube.com/embed/PkZNo7MFNFg" title="JavaScript Tutorial for Beginners" allowfullscreen></iframe>
+              </div>
+              <div class="flex-1">
+                <div class="font-bold text-base text-gray-800 group-hover:text-yellow-600 mb-1">JavaScript Tutorial for Beginners</div>
+                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
+                <div class="text-xs text-gray-400">Comprehensive JavaScript introduction with hands-on code examples.</div>
+              </div>
+            </div>
+            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
+              <div class="overflow-hidden rounded-lg mb-3">
+                <iframe class="video-iframe" src="https://www.youtube.com/embed/jS4aFq5-91M" title="What Is Flexbox?" allowfullscreen></iframe>
+              </div>
+              <div class="flex-1">
+                <div class="font-bold text-base text-gray-800 group-hover:text-green-600 mb-1">Flexbox in CSS Explained</div>
+                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
+                <div class="text-xs text-gray-400">Visual guide to Flexbox: layout, alignment, and common patterns.</div>
+              </div>
+            </div>
+            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
+              <div class="overflow-hidden rounded-lg mb-3">
+                <iframe class="video-iframe" src="https://www.youtube.com/embed/Ke90Tje7VS0" title="React JS Crash Course" allowfullscreen></iframe>
+              </div>
+              <div class="flex-1">
+                <div class="font-bold text-base text-gray-800 group-hover:text-blue-600 mb-1">React JS Crash Course</div>
+                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
+                <div class="text-xs text-gray-400">Get started with React for building interactive UIs.</div>
+              </div>
+            </div>
+            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
+              <div class="overflow-hidden rounded-lg mb-3">
+                <iframe class="video-iframe" src="https://www.youtube.com/embed/3PHXvlpOkf4" title="Node.js Crash Course" allowfullscreen></iframe>
+              </div>
+              <div class="flex-1">
+                <div class="font-bold text-base text-gray-800 group-hover:text-green-600 mb-1">Node.js Crash Course</div>
+                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
+                <div class="text-xs text-gray-400">Intro to Node.js, server-side JavaScript, and API building.</div>
+              </div>
+            </div>
+            <!-- Add more videos as needed -->
+          </div>
+        </div>
+      </section>
+      <!-- Footer -->
+      <footer class="text-center py-7 text-sm text-gray-500 bg-white border-t mt-7 glass-card">
+        <span>© 2025 CODECX INSTITUTE. All rights reserved.</span>
+      </footer>
+    </section>
+  </main>
+  <!-- Profile Logic & Redirect -->
+  <script>
+    const API_PROFILE_ENDPOINT = "https://examguide.onrender.com/api/codecxreg/me";
+    const LOGIN_PAGE = "login.html";
+    const token = localStorage.getItem('codecx_token');
+
+    // Helper: Get default avatar
+    function getAvatarUrl(name) {
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || "Student")}&background=6366f1&color=fff`;
+    }
+
+    async function loadStudentProfile() {
+      try {
+        if (!token) throw new Error("No login token");
+        const res = await fetch(API_PROFILE_ENDPOINT, {
+          headers: { "Authorization": token }
+        });
+        if (!res.ok) throw new Error("Not logged in");
+        const student = await res.json();
+
+        document.getElementById("profileAvatar").src =
+          student.passportUrl && student.passportUrl.length > 10
+            ? student.passportUrl
+            : getAvatarUrl(student.fullName || student.username || student.matricNumber || "Student");
+
+        document.getElementById("profileName").textContent =
+          student.fullName || student.username || "Student";
+
+        document.getElementById("profileEmail").textContent =
+          student.email || "No email";
+
+        document.querySelector(".candidate-details .extra").textContent =
+          student.track ? `${student.track} Track` : "Student";
+
+        document.querySelector(".candidate-details .role").innerHTML =
+          `Logged in | <span class="text-xs font-mono bg-indigo-900 px-2 py-0.5 rounded text-indigo-100">CODECX INSTITUTE</span>`;
+
+      } catch (err) {
+        window.location.href = LOGIN_PAGE;
+      }
+    }
+    window.addEventListener("DOMContentLoaded", loadStudentProfile);
+
+    // Optional: Basic search filter for video cards
+    document.getElementById("videoSearch").addEventListener("input", function(e) {
+      const query = e.target.value.toLowerCase();
+      document.querySelectorAll("#videosGrid > div").forEach(card => {
+        const title = card.querySelector(".font-bold").textContent.toLowerCase();
+        card.style.display = title.includes(query) ? "" : "none";
+      });
+    });
+  </script>
+</body>
+</html>
