@@ -834,8 +834,13 @@ function showToast(msg, type = "info") {
 }
 function logout() {
   localStorage.removeItem('codecx_token');
+  localStorage.removeItem('matric_number');
   window.location.href = "login.html";
 }
+
+    
+  const matricNumber = localStorage.getItem('matric_number');
+document.getElementById('studentMatric').textContent = matricNumber || '';     // Example: after successful login and receiving user data
 
 // Receipt Modal
 function showReceiptModal(html) {
