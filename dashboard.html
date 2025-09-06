@@ -763,6 +763,62 @@
   </main>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script>
+    // Add this script to your page (e.g., student dashboard) to show a neat loader/spinner while student data loads.
+
+// --- Loader HTML ---
+function showStudentLoader() {
+  // Prevent duplicate loader
+  if (document.getElementById('studentDataLoader')) return;
+
+  // Spinner styles
+  const loaderHtml = `
+    <div id="studentDataLoader" style="
+      position:fixed;
+      top:0;left:0;width:100vw;height:100vh;
+      background:rgba(245,247,255,0.87);
+      z-index:9999;display:flex;
+      align-items:center;justify-content:center;
+      transition:opacity 0.3s;
+    ">
+      <div style="text-align:center;">
+        <div style="display:inline-block; margin-bottom:18px;">
+          <svg width="64" height="64" viewBox="0 0 50 50" style="animation:spin 1.3s linear infinite;">
+            <circle cx="25" cy="25" r="20" fill="none" stroke="#6366f1" stroke-width="6" stroke-linecap="round" stroke-dasharray="90,150">
+              <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1.3s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+        <div style="font-size:1.1rem;color:#6366f1;font-weight:600;">Loading your dashboard...</div>
+        <div style="color:#64748b;font-size:0.93rem;margin-top:8px;">Please wait while we fetch your data.</div>
+      </div>
+    </div>
+    <style>
+      @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+  `;
+  document.body.insertAdjacentHTML('beforeend', loaderHtml);
+}
+
+// Hide the loader when data is ready
+function hideStudentLoader() {
+  const loader = document.getElementById('studentDataLoader');
+  if (loader) {
+    loader.style.opacity = '0';
+    setTimeout(() => loader.remove(), 350);
+  }
+}
+
+
+showStudentLoader(); 
+
+setTimeout(() => {
+  // Student data loaded here (e.g. window.student = {...})
+  hideStudentLoader();
+  renderAssignmentHistoryTable(); // or any other render function
+}, 2000);
+
+
+// --- End of loader code ---
 // Drop-in Toast Modal & Loader System
 (function() {
   // Inject toast modal HTML if not present
