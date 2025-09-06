@@ -84,11 +84,17 @@
       }
     }
     .video-iframe {
-      border-radius: 0.75rem;
-      box-shadow: 0 2px 14px #6366f118;
+      border-radius: 1rem;
+      box-shadow: 0 2px 16px #6366f118;
       width: 100%;
+      min-height: 370px;
       aspect-ratio: 16 / 9;
       background: #000;
+    }
+    @media (min-width: 900px) {
+      .video-iframe {
+        min-height: 430px;
+      }
     }
   </style>
 </head>
@@ -148,71 +154,10 @@
           <h2 class="text-xl font-bold text-red-600">Video Resources</h2>
         </div>
         <div class="glass-card p-4">
-          <!-- Responsive Video Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7" id="videosGrid">
-            <!-- Video Card Example -->
-            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
-              <div class="overflow-hidden rounded-lg mb-3">
-                <iframe class="video-iframe" src="https://www.youtube.com/embed/kUMe1FH4CHE" title="HTML Crash Course for Beginners" allowfullscreen></iframe>
-              </div>
-              <div class="flex-1">
-                <div class="font-bold text-base text-gray-800 group-hover:text-indigo-700 mb-1">HTML Crash Course for Beginners</div>
-                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
-                <div class="text-xs text-gray-400">Learn the basics of HTML in 1 hour. Great for new web developers.</div>
-              </div>
-            </div>
-            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
-              <div class="overflow-hidden rounded-lg mb-3">
-                <iframe class="video-iframe" src="https://www.youtube.com/embed/1Rs2ND1ryYc" title="CSS Crash Course for Beginners" allowfullscreen></iframe>
-              </div>
-              <div class="flex-1">
-                <div class="font-bold text-base text-gray-800 group-hover:text-green-700 mb-1">CSS Crash Course for Beginners</div>
-                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
-                <div class="text-xs text-gray-400">Covers CSS fundamentals, selectors, layouts, and responsive design.</div>
-              </div>
-            </div>
-            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
-              <div class="overflow-hidden rounded-lg mb-3">
-                <iframe class="video-iframe" src="https://www.youtube.com/embed/PkZNo7MFNFg" title="JavaScript Tutorial for Beginners" allowfullscreen></iframe>
-              </div>
-              <div class="flex-1">
-                <div class="font-bold text-base text-gray-800 group-hover:text-yellow-600 mb-1">JavaScript Tutorial for Beginners</div>
-                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
-                <div class="text-xs text-gray-400">Comprehensive JavaScript introduction with hands-on code examples.</div>
-              </div>
-            </div>
-            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
-              <div class="overflow-hidden rounded-lg mb-3">
-                <iframe class="video-iframe" src="https://www.youtube.com/embed/jS4aFq5-91M" title="What Is Flexbox?" allowfullscreen></iframe>
-              </div>
-              <div class="flex-1">
-                <div class="font-bold text-base text-gray-800 group-hover:text-green-600 mb-1">Flexbox in CSS Explained</div>
-                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
-                <div class="text-xs text-gray-400">Visual guide to Flexbox: layout, alignment, and common patterns.</div>
-              </div>
-            </div>
-            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
-              <div class="overflow-hidden rounded-lg mb-3">
-                <iframe class="video-iframe" src="https://www.youtube.com/embed/Ke90Tje7VS0" title="React JS Crash Course" allowfullscreen></iframe>
-              </div>
-              <div class="flex-1">
-                <div class="font-bold text-base text-gray-800 group-hover:text-blue-600 mb-1">React JS Crash Course</div>
-                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
-                <div class="text-xs text-gray-400">Get started with React for building interactive UIs.</div>
-              </div>
-            </div>
-            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
-              <div class="overflow-hidden rounded-lg mb-3">
-                <iframe class="video-iframe" src="https://www.youtube.com/embed/3PHXvlpOkf4" title="Node.js Crash Course" allowfullscreen></iframe>
-              </div>
-              <div class="flex-1">
-                <div class="font-bold text-base text-gray-800 group-hover:text-green-600 mb-1">Node.js Crash Course</div>
-                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1"><i class="bi bi-youtube text-red-600"></i>YouTube</div>
-                <div class="text-xs text-gray-400">Intro to Node.js, server-side JavaScript, and API building.</div>
-              </div>
-            </div>
-            <!-- Add more videos as needed -->
-          </div>
+          <!-- Responsive Video Grid with Pagination -->
+          <div id="videosGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-7"></div>
+          <!-- Pagination Controls -->
+          <div class="flex justify-center mt-7 gap-2" id="paginationControls"></div>
         </div>
       </section>
       <!-- Footer -->
@@ -221,7 +166,7 @@
       </footer>
     </section>
   </main>
-  <!-- Profile Logic & Redirect -->
+  <!-- Profile Logic & Redirect & Video Pagination -->
   <script>
     const API_PROFILE_ENDPOINT = "https://examguide.onrender.com/api/codecxreg/me";
     const LOGIN_PAGE = "login.html";
@@ -264,12 +209,193 @@
     }
     window.addEventListener("DOMContentLoaded", loadStudentProfile);
 
-    // Optional: Basic search filter for video cards
-    document.getElementById("videoSearch").addEventListener("input", function(e) {
-      const query = e.target.value.toLowerCase();
-      document.querySelectorAll("#videosGrid > div").forEach(card => {
-        const title = card.querySelector(".font-bold").textContent.toLowerCase();
-        card.style.display = title.includes(query) ? "" : "none";
+    // Video Data Array (add more as needed)
+    const videos = [
+      {
+        src: "https://www.youtube.com/embed/kUMe1FH4CHE",
+        title: "HTML Crash Course for Beginners",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Learn the basics of HTML in 1 hour. Great for new web developers."
+      },
+      {
+        src: "https://www.youtube.com/embed/1Rs2ND1ryYc",
+        title: "CSS Crash Course for Beginners",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Covers CSS fundamentals, selectors, layouts, and responsive design."
+      },
+      {
+        src: "https://www.youtube.com/embed/PkZNo7MFNFg",
+        title: "JavaScript Tutorial for Beginners",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Comprehensive JavaScript introduction with hands-on code examples."
+      },
+      {
+        src: "https://www.youtube.com/embed/jS4aFq5-91M",
+        title: "Flexbox in CSS Explained",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Visual guide to Flexbox: layout, alignment, and common patterns."
+      },
+      {
+        src: "https://www.youtube.com/embed/Ke90Tje7VS0",
+        title: "React JS Crash Course",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Get started with React for building interactive UIs."
+      },
+      {
+        src: "https://www.youtube.com/embed/3PHXvlpOkf4",
+        title: "Node.js Crash Course",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Intro to Node.js, server-side JavaScript, and API building."
+      },
+      {
+        src: "https://www.youtube.com/embed/Oe421EPjeBE",
+        title: "Responsive Web Design Tutorial",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Learn how to make your website responsive for all devices."
+      },
+      {
+        src: "https://www.youtube.com/embed/SBmSRK3feww",
+        title: "CSS Grid Layout Crash Course",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Master CSS Grid with real examples and patterns."
+      },
+      {
+        src: "https://www.youtube.com/embed/dGcsHMXbSOA",
+        title: "Vue JS Crash Course",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "A beginner friendly introduction to Vue.js framework."
+      },
+      {
+        src: "https://www.youtube.com/embed/gnkrDse9QKc",
+        title: "APIs for Beginners",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Learn how to use APIs in your web projects."
+      },
+      {
+        src: "https://www.youtube.com/embed/8AZ8GqW5iak",
+        title: "Bootstrap 5 Crash Course",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Get started quickly with Bootstrap 5 for beautiful UI."
+      },
+      {
+        src: "https://www.youtube.com/embed/2Ji-clqUYnA",
+        title: "Git & GitHub Crash Course",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Learn git basics and collaborating with GitHub."
+      },
+      {
+        src: "https://www.youtube.com/embed/VlPiVmYuoqw",
+        title: "Python for Beginners",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "A beginner course for Python programming."
+      },
+      {
+        src: "https://www.youtube.com/embed/DLX62G4lc44",
+        title: "JavaScript ES6 Tutorial",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Covering modern ES6 syntax and features."
+      },
+      {
+        src: "https://www.youtube.com/embed/w7ejDZ8SWv8",
+        title: "React Hooks Tutorial",
+        platform: "YouTube",
+        icon: "bi-youtube text-red-600",
+        desc: "Learn how to use React Hooks for state and lifecycle."
+      }
+      // Add more video objects here as needed
+    ];
+
+    const VIDEOS_PER_PAGE = 5;
+    let currentPage = 1;
+    let filteredVideos = videos.slice();
+
+    // Render video cards for current page
+    function renderVideos(page = 1, searchQuery = "") {
+      const grid = document.getElementById("videosGrid");
+      grid.innerHTML = "";
+      let displayVideos = filteredVideos;
+
+      // Pagination
+      const start = (page - 1) * VIDEOS_PER_PAGE;
+      const end = start + VIDEOS_PER_PAGE;
+      displayVideos = displayVideos.slice(start, end);
+
+      if (displayVideos.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">No videos found.</div>`;
+      } else {
+        displayVideos.forEach(video => {
+          grid.innerHTML += `
+            <div class="flex flex-col bg-white rounded-xl shadow p-3 hover:shadow-lg transition group">
+              <div class="overflow-hidden rounded-lg mb-3">
+                <iframe class="video-iframe" src="${video.src}" title="${video.title}" allowfullscreen></iframe>
+              </div>
+              <div class="flex-1">
+                <div class="font-bold text-lg text-gray-800 group-hover:text-indigo-700 mb-1">${video.title}</div>
+                <div class="text-sm text-gray-500 mb-1 flex items-center gap-1">
+                  <i class="bi ${video.icon}"></i>${video.platform}
+                </div>
+                <div class="text-xs text-gray-400">${video.desc}</div>
+              </div>
+            </div>
+          `;
+        });
+      }
+      renderPagination(page, Math.ceil(filteredVideos.length / VIDEOS_PER_PAGE));
+    }
+
+    // Render pagination controls
+    function renderPagination(current, total) {
+      const controls = document.getElementById("paginationControls");
+      controls.innerHTML = "";
+      if (total <= 1) return;
+
+      // Prev button
+      controls.innerHTML += `<button ${current === 1 ? "disabled" : ""} class="px-3 py-1 rounded bg-indigo-100 text-indigo-700 font-bold hover:bg-indigo-200 disabled:opacity-50" onclick="goToPage(${current-1})"><i class="bi bi-arrow-left"></i></button>`;
+      // Numbered buttons
+      for (let i = 1; i <= total; i++) {
+        controls.innerHTML += `
+          <button class="px-3 py-1 mx-0.5 rounded ${i === current ? 'bg-indigo-600 text-white' : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'} font-bold"
+            onclick="goToPage(${i})">${i}</button>
+        `;
+      }
+      // Next button
+      controls.innerHTML += `<button ${current === total ? "disabled" : ""} class="px-3 py-1 rounded bg-indigo-100 text-indigo-700 font-bold hover:bg-indigo-200 disabled:opacity-50" onclick="goToPage(${current+1})"><i class="bi bi-arrow-right"></i></button>`;
+    }
+
+    // Go to a specific page
+    window.goToPage = function(page) {
+      if (page < 1) page = 1;
+      if (page > Math.ceil(filteredVideos.length / VIDEOS_PER_PAGE)) page = Math.ceil(filteredVideos.length / VIDEOS_PER_PAGE);
+      currentPage = page;
+      renderVideos(page);
+    }
+
+    // Search/filter videos
+    function filterVideos(query) {
+      filteredVideos = videos.filter(v => v.title.toLowerCase().includes(query.toLowerCase()) || v.desc.toLowerCase().includes(query.toLowerCase()));
+      currentPage = 1;
+      renderVideos(currentPage);
+    }
+
+    // Setup search event listeners
+    document.addEventListener("DOMContentLoaded", function() {
+      renderVideos(currentPage);
+      document.getElementById("videoSearch").addEventListener("input", function(e) {
+        filterVideos(e.target.value);
       });
     });
   </script>
