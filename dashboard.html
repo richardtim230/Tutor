@@ -801,14 +801,13 @@
   // Expose global functions
   window.showToastModal = function(title, message, type = "info", showSpinner = false) {
     document.getElementById('toastTitle').textContent = title || '';
-    document.getElementById('toastMessage').textContent = message || '';
+    document.getElementById('toastMessage').innerHTML = message || ''; // <-- Use innerHTML here!
     document.getElementById('toastSpinner').style.display = showSpinner ? 'block' : 'none';
     document.getElementById('toastModalBg').classList.remove('hidden');
-    // Color by type
     document.getElementById('toastTitle').style.color =
       type === 'success' ? '#16a34a' :
       type === 'error' ? '#dc2626' : '#6366f1';
-  };
+};
   window.hideToastModal = function() {
     document.getElementById('toastModalBg').classList.add('hidden');
   };
