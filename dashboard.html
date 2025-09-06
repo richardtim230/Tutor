@@ -835,7 +835,7 @@ function showToast(msg, type = "info") {
 }
 function logout() {
   localStorage.removeItem('codecx_token');
-  localStorage.removeItem('matric_number');
+  localStorage.removeItem('matricNumber');
   window.location.href = "login.html";
 }
 
@@ -1403,16 +1403,16 @@ async function submitAssignment() {
       showToast("Assignment submitted!", "success");
     }
   } catch (err) {
-    if (window.showToastModal) {
-      showToastModal("Error", err.message, "error");
-      setTimeout(hideToastModal, 20000);
-    } else {
-      showToast(err.message, "error");
-    }
+  if (err.message === "Failed to fetch") {
+    showToastModal("Network Error", "Could not connect to server. Try again later.", "error");
+    setTimeout(hideToastModal, 20000);
+  } else {
+    showToastModal("Error", err.message, "error");
+    setTimeout(hideToastModal, 20000);
   }
 }
+}
 
-// Payments
 function renderPayments() {
   const tb = document.getElementById("paymentsTable");
   tb.innerHTML = "";
