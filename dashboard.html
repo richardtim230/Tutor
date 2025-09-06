@@ -1578,10 +1578,7 @@ function renderAssignmentHistoryTable() {
   const total = sortedAssignments.length;
   const totalPages = Math.ceil(total / assignmentPageSize);
 
-  // Clamp page number
   assignmentPage = Math.max(1, Math.min(assignmentPage, totalPages || 1));
-
-  // Get slice for current page
   const startIdx = (assignmentPage - 1) * assignmentPageSize;
   const pageAssignments = sortedAssignments.slice(startIdx, startIdx + assignmentPageSize);
 
@@ -1590,7 +1587,6 @@ function renderAssignmentHistoryTable() {
     return;
   }
 
-  // Build table rows
   let html = `<table style="width:100%;border-collapse:collapse;">
     <thead>
       <tr style="background:#e0e7ff;">
@@ -1616,7 +1612,6 @@ function renderAssignmentHistoryTable() {
     </tbody>
   </table>`;
 
-  // Pagination controls
   html += `
     <div class="pagination-controls" style="margin-top:1em;display:flex;justify-content:center;align-items:center;gap:1em;">
       <button ${assignmentPage === 1 ? 'disabled' : ''} onclick="goToAssignmentPage(${assignmentPage - 1})" style="padding:5px 14px;border-radius:5px;border:none;background:#6366f1;color:#fff;cursor:pointer;">Previous</button>
@@ -1634,8 +1629,8 @@ function goToAssignmentPage(page) {
 }
 
 // PREVIEW FUNCTION WITH SYNTAX HIGHLIGHTING (Prism.js)
-function previewAssignmentHistory(index) {
-  const assignment = getSortedAssignmentHistory()[index];
+function previewAssignmentHistory(sortedIndex) {
+  const assignment = getSortedAssignmentHistory()[sortedIndex];
   if (!assignment) return;
 
   const downloadLink = assignment.fileData
