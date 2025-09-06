@@ -72,6 +72,100 @@
       margin-top: .7rem;
       font-weight: 500;
     }
+    .whatsapp-forward-box {
+      margin: 2.2rem auto 0 auto;
+      max-width: 410px;
+      background: linear-gradient(90deg, #f0f5ff 60%, #e0f2fe 100%);
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 18px #6366f113;
+      padding: 1.5rem 1.2rem 1.7rem 1.2rem;
+      text-align: center;
+      font-size: 1.07rem;
+      position: relative;
+      display: none;
+    }
+    .whatsapp-forward-box .wa-icon {
+      font-size: 2.1rem;
+      color: #25d366;
+      margin-bottom: .3rem;
+      vertical-align: middle;
+    }
+    .whatsapp-forward-box strong {
+      color: #0f172a;
+    }
+    .whatsapp-forward-box .wa-btn {
+      margin-top: 1.1rem;
+      display: inline-block;
+      background: #25d366;
+      color: #fff;
+      font-weight: bold;
+      padding: .6rem 1.35rem;
+      border-radius: 9px;
+      font-size: 1.09rem;
+      transition: background .18s;
+      text-decoration: none;
+      box-shadow: 0 2px 10px #25d36638;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+    }
+    .whatsapp-forward-box .wa-btn:hover {
+      background: #128c7e;
+      color: #fff;
+    }
+    .wa-details-label {
+      color: #6366f1;
+      font-weight: 600;
+      font-size: .99rem;
+      margin-bottom: 0.15rem;
+      display: block;
+      text-align: left;
+    }
+    .wa-details-input {
+      width: 100%;
+      border: 1.5px solid #6366f1;
+      border-radius: 7px;
+      padding: 0.62rem 0.8rem;
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+      outline: none;
+      background: #f8fafc;
+      color: #1e293b;
+      transition: border .13s;
+    }
+    .wa-details-input:focus {
+      border-color: #4338ca;
+    }
+    .wa-btn .wa-tooltip {
+      display: none;
+      position: absolute;
+      left: 50%;
+      bottom: 115%;
+      transform: translateX(-50%);
+      background: #23272b;
+      color: #fff;
+      font-size: .98rem;
+      padding: .45rem 1.1rem;
+      border-radius: 7px;
+      white-space: nowrap;
+      z-index: 10;
+      box-shadow: 0 2px 8px #23272b22;
+    }
+    .wa-btn:hover .wa-tooltip,
+    .wa-btn:focus .wa-tooltip {
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .whatsapp-forward-box {
+        padding: 1.1rem 0.4rem 1.2rem 0.4rem;
+        font-size: 0.98rem;
+      }
+      .whatsapp-forward-box .wa-btn {
+        font-size: 1rem;
+        padding: .5rem 1rem;
+      }
+    }
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -86,17 +180,47 @@
     <div id="verifyError" class="verify-error"></div>
     <div id="verifySuccess" class="verify-success"></div>
   </div>
+
+  <!-- WhatsApp forwarding box: Only shown after payment is verified/paid -->
+  <div class="whatsapp-forward-box" id="waForwardBox">
+    <span class="wa-icon"><svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#25d366"/><path fill="#fff" d="M22.5 9.5a7.6 7.6 0 0 0-12.9 8.1l-1 3.5 3.6-1a7.5 7.5 0 0 0 4.2 1.2c4.2 0 7.6-3.4 7.6-7.6a7.5 7.5 0 0 0-1.5-4.2ZM16 23.1a6.1 6.1 0 0 1-3-0.8l-0.2-0.1-2.1 0.6 0.6-2.1-0.1-0.2A6.1 6.1 0 1 1 22.1 16 6.1 6.1 0 0 1 16 23.1Zm3.2-4.6c-0.2-0.1-1.1-0.5-1.2-0.6s-0.3-0.1-0.4 0.1-0.5 0.6-0.6 0.7-0.2 0.1-0.4 0s-0.8-0.3-1.5-1a5.6 5.6 0 0 1-1-1.5c-0.1-0.3 0.1-0.3 0.2-0.5 0.1-0.1 0.2-0.2 0.3-0.3s0.1-0.2 0.2-0.3a0.3 0.3 0 0 0 0-0.3c0-0.1-0.4-1-0.6-1.3s-0.3-0.3-0.4-0.3a1.2 1.2 0 0 0-0.4 0 0.9 0.9 0 0 0-0.6 0.3c-0.2 0.2-0.8 0.8-0.8 2s0.8 2.4 0.9 2.6 1.5 2.3 3.7 3c0.5 0.1 0.8 0.2 1.1 0.2a2.7 2.7 0 0 0 1.7-0.8c0.2-0.2 0.3-0.4 0.2-0.7s-0.2-0.4-0.4-0.5Z"/></svg></span>
+    <div>
+      <strong>For record purposes, please forward your payment receipt and details to WhatsApp:</strong>
+    </div>
+    <form id="waForm" style="margin:1rem 0 0.4rem 0;">
+      <label class="wa-details-label" for="waFullName">Full Name</label>
+      <input class="wa-details-input" id="waFullName" name="waFullName" type="text" placeholder="Your full name" autocomplete="name" required />
+      <label class="wa-details-label" for="waMatric">Matric Number</label>
+      <input class="wa-details-input" id="waMatric" name="waMatric" type="text" placeholder="Matric number" autocomplete="off" required />
+      <label class="wa-details-label" for="waDept">Department</label>
+      <input class="wa-details-input" id="waDept" name="waDept" type="text" placeholder="Your department" autocomplete="organization" required />
+      <button type="submit" class="wa-btn" id="waSendBtn">
+        <span style="display:inline-flex;align-items:center;gap:.5em;">
+          <svg width="22" height="22" viewBox="0 0 32 32" style="vertical-align:middle;"><circle cx="16" cy="16" r="16" fill="#25d366"/><path fill="#fff" d="M22.5 9.5a7.6 7.6 0 0 0-12.9 8.1l-1 3.5 3.6-1a7.5 7.5 0 0 0 4.2 1.2c4.2 0 7.6-3.4 7.6-7.6a7.5 7.5 0 0 0-1.5-4.2ZM16 23.1a6.1 6.1 0 0 1-3-0.8l-0.2-0.1-2.1 0.6 0.6-2.1-0.1-0.2A6.1 6.1 0 1 1 22.1 16 6.1 6.1 0 0 1 16 23.1Zm3.2-4.6c-0.2-0.1-1.1-0.5-1.2-0.6s-0.3-0.1-0.4 0.1-0.5 0.6-0.6 0.7-0.2 0.1-0.4 0s-0.8-0.3-1.5-1a5.6 5.6 0 0 1-1-1.5c-0.1-0.3 0.1-0.3 0.2-0.5 0.1-0.1 0.2-0.2 0.3-0.3s0.1-0.2 0.2-0.3a0.3 0.3 0 0 0 0-0.3c0-0.1-0.4-1-0.6-1.3s-0.3-0.3-0.4-0.3a1.2 1.2 0 0 0-0.4 0 0.9 0.9 0 0 0-0.6 0.3c-0.2 0.2-0.8 0.8-0.8 2s0.8 2.4 0.9 2.6 1.5 2.3 3.7 3c0.5 0.1 0.8 0.2 1.1 0.2a2.7 2.7 0 0 0 1.7-0.8c0.2-0.2 0.3-0.4 0.2-0.7s-0.2-0.4-0.4-0.5Z"/></svg>
+          <span>Send Details via WhatsApp</span>
+          <span class="wa-tooltip">Opens WhatsApp chat</span>
+        </span>
+      </button>
+    </form>
+    <div style="color:#334155;font-size:0.97rem;margin-top:.7rem;">
+      Include your <strong>full name</strong>, <strong>matric number</strong>, <strong>department</strong>, and a <strong>clear image of your payment receipt</strong>.<br>
+      <span style="color:#6366f1;font-weight:500;">This is <u>for record purposes only</u>.</span>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script>
     // Simulate payment verification by calling backend
     const API_BASE = "https://examguide.onrender.com/api/codecxreg";
     const token = localStorage.getItem('codecx_token');
+    let paymentSuccess = false;
     async function verifyPayment() {
       document.getElementById("verifyStatus").textContent = "Verifying payment with CODECX...";
       document.getElementById("verifyError").textContent = "";
       document.getElementById("verifySuccess").textContent = "";
       document.getElementById("retryBtn").style.display = "none";
       document.getElementById("dashboardBtn").style.display = "none";
+      paymentSuccess = false;
       try {
         const resp = await fetch(API_BASE + "/me", {
           headers: { Authorization: "Bearer " + token }
@@ -107,23 +231,62 @@
           document.getElementById("verifyStatus").textContent = "Payment verified successfully!";
           document.getElementById("verifySuccess").textContent = "Thank you for your payment.";
           document.getElementById("dashboardBtn").style.display = "";
+          paymentSuccess = true;
+          showWhatsAppForward();
         } else {
           document.getElementById("verifyStatus").textContent = "Payment not yet confirmed.";
           document.getElementById("verifyError").textContent = "We could not confirm your payment. Please try again in a few minutes.";
           document.getElementById("retryBtn").style.display = "";
+          hideWhatsAppForward();
         }
       } catch(e) {
         document.getElementById("verifyStatus").textContent = "Error verifying payment.";
         document.getElementById("verifyError").textContent = "Please login and try again.";
         document.getElementById("retryBtn").style.display = "";
+        hideWhatsAppForward();
       }
     }
     document.getElementById("retryBtn").onclick = verifyPayment;
     document.getElementById("dashboardBtn").onclick = function() {
       window.location.href = "student-masterclass-dashboard.html";
     };
+
+    function showWhatsAppForward() {
+      document.getElementById('waForwardBox').style.display = '';
+      // Optionally prefill
+      const fullName = localStorage.getItem("codecx_fullName") || "";
+      const matricNumber = localStorage.getItem("matricNumber") || "";
+      document.getElementById("waFullName").value = fullName;
+      document.getElementById("waMatric").value = matricNumber;
+    }
+    function hideWhatsAppForward() {
+      document.getElementById('waForwardBox').style.display = 'none';
+    }
+
     window.onload = function() {
       verifyPayment();
+    };
+
+    // WhatsApp number is hidden (not written out in page), only in code:
+    const WA_NUMBER = "2348104364502";
+
+    // WhatsApp form logic
+    document.getElementById('waForm').onsubmit = function(e) {
+      e.preventDefault();
+      const name = document.getElementById('waFullName').value.trim();
+      const matric = document.getElementById('waMatric').value.trim();
+      const dept = document.getElementById('waDept').value.trim();
+      if(!name || !matric || !dept) {
+        Toastify({text: "Please fill all details!", backgroundColor: "#dc2626"}).showToast();
+        return;
+      }
+      // Store for future prefill
+      localStorage.setItem("codecx_fullName", name);
+      localStorage.setItem("matricNumber", matric);
+
+      const msg = `Hello, I have completed payment for CODECX Masterclass. For your records, here are my details:%0AFull name: ${encodeURIComponent(name)}%0AMatric number: ${encodeURIComponent(matric)}%0ADepartment: ${encodeURIComponent(dept)}%0A%0A(Receipt image attached)`;
+      const waLink = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+      window.open(waLink, "_blank");
     };
   </script>
 </body>
