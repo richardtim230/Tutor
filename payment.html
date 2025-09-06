@@ -250,18 +250,18 @@
     document.getElementById("dashboardBtn").onclick = function() {
       window.location.href = "dashboard.html";
     };
-
-    function showWhatsAppForward() {
-      document.getElementById('waForwardBox').style.display = '';
-      // Optionally prefill
-      const fullName = localStorage.getItem("codecx_fullName") || "";
-      const matricNumber = localStorage.getItem("matricNumber") || "";
-      document.getElementById("waFullName").value = fullName;
-      document.getElementById("waMatric").value = matricNumber;
-    }
-    function hideWhatsAppForward() {
-      document.getElementById('waForwardBox').style.display = 'none';
-    }
+function showWhatsAppForward() {
+  document.getElementById('waForwardBox').style.display = 'block'; // or 'flex'
+  // Optionally prefill
+  const fullName = localStorage.getItem("codecx_fullName") || "";
+  const matricNumber = localStorage.getItem("matricNumber") || "";
+  document.getElementById("waFullName").value = fullName;
+  document.getElementById("waMatric").value = matricNumber;
+}
+function hideWhatsAppForward() {
+  document.getElementById('waForwardBox').style.display = 'none';
+}
+    
 
     window.onload = function() {
       verifyPayment();
