@@ -164,8 +164,7 @@
       </div>
     </div>
     
-  <!-- Enroll Student Tab -->
-  <div id="tab-enroll" class="tab hidden">
+
 <div id="tab-enroll" class="tab hidden">
   <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
     <div class="font-bold text-2xl text-indigo-700 flex items-center gap-2">
@@ -241,42 +240,78 @@
   </div>
 
   <!-- Quizzes Tab -->
-  <div id="tab-quizzes" class="tab hidden">
-    <div class="font-bold text-2xl text-indigo-700 mb-6"><i class="bi bi-question-circle mr-2"></i>Quiz Questions & Topics</div>
-    <div id="quizFilter" class="mb-4 flex gap-3">
-      <input id="quizSearch" type="text" placeholder="Search by topic or question" class="px-3 py-2 border rounded-lg w-64">
-    </div>
-    <table class="w-full text-sm text-left text-gray-700 bg-white rounded shadow">
+<!-- Quizzes Tab -->
+<div id="tab-quizzes" class="tab hidden">
+  <div class="font-bold text-2xl text-indigo-700 mb-6 flex items-center gap-2">
+    <i class="bi bi-question-circle"></i> Quiz Questions & Topics
+  </div>
+  <div id="quizFilter" class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+    <input id="quizSearch" type="text" placeholder="Search by topic or question"
+      class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition w-full md:w-80 bg-white shadow-sm"
+    >
+    <button class="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition mt-2 md:mt-0"
+      onclick="showAddQuizModal()">
+      <i class="bi bi-plus"></i> Add Quiz Question
+    </button>
+  </div>
+  <div class="bg-white rounded-2xl shadow overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-800 min-w-[760px]">
       <thead class="text-xs uppercase bg-indigo-100 text-indigo-900">
         <tr>
-          <th class="px-2 py-2">Day</th>
-          <th class="px-2 py-2">Topic</th>
-          <th class="px-2 py-2">Question</th>
-          <th class="px-2 py-2">Options</th>
-          <th class="px-2 py-2">Answer</th>
+          <th class="px-4 py-3">Day</th>
+          <th class="px-4 py-3">Topic</th>
+          <th class="px-4 py-3">Question</th>
+          <th class="px-4 py-3">Options</th>
+          <th class="px-4 py-3">Answer</th>
+          <th class="px-4 py-3 text-center">Actions</th>
         </tr>
       </thead>
-      <tbody id="quizTableBody"></tbody>
+      <tbody id="quizTableBody">
+        
+      </tbody>
     </table>
-    <button class="mt-6 px-4 py-2 bg-indigo-600 text-white rounded" onclick="showAddQuizModal()"><i class="bi bi-plus"></i> Add Quiz Question</button>
   </div>
+</div>
 
-  <!-- Add Quiz Modal -->
-  <div id="addQuizModal" class="modal hidden">
-    <div class="modal-content w-full max-w-lg">
-      <span class="close-modal" onclick="closeAddQuizModal()">&times;</span>
-      <div class="font-bold text-lg text-indigo-700 mb-3">Add Quiz Question</div>
-      <form id="addQuizForm" class="flex flex-col gap-3">
-        <input type="number" min="1" max="60" id="addQuizDay" required placeholder="Day (1-60)" class="px-3 py-2 border rounded-lg w-full">
-        <input type="text" id="addQuizTopic" required placeholder="Topic" class="px-3 py-2 border rounded-lg w-full">
-        <textarea id="addQuizQuestion" required placeholder="Question" class="px-3 py-2 border rounded-lg w-full"></textarea>
-        <input type="text" id="addQuizOptions" required placeholder="Options (comma separated)" class="px-3 py-2 border rounded-lg w-full">
-        <input type="text" id="addQuizAnswer" required placeholder="Correct Answer" class="px-3 py-2 border rounded-lg w-full">
-        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Add</button>
-      </form>
-      <div id="addQuizStatus" class="mt-3"></div>
-    </div>
+<!-- Add Quiz Modal -->
+<div id="addQuizModal" class="modal hidden">
+  <div class="modal-content w-full max-w-lg">
+    <span class="close-modal" onclick="closeAddQuizModal()">&times;</span>
+    <div class="font-bold text-lg text-indigo-700 mb-3">Add Quiz Question</div>
+    <form id="addQuizForm" class="flex flex-col gap-4">
+      <div>
+        <label class="block font-semibold text-gray-700 mb-1">Day</label>
+        <input type="number" min="1" max="60" id="addQuizDay" required placeholder="Day (1-60)"
+          class="px-3 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-1">Topic</label>
+        <input type="text" id="addQuizTopic" required placeholder="Topic"
+          class="px-3 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-1">Question</label>
+        <textarea id="addQuizQuestion" required placeholder="Question"
+          class="px-3 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"></textarea>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-1">Options <span class="text-xs text-gray-400">(comma separated)</span></label>
+        <input type="text" id="addQuizOptions" required placeholder="Option 1, Option 2, Option 3"
+          class="px-3 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-1">Correct Answer</label>
+        <input type="text" id="addQuizAnswer" required placeholder="Correct Answer"
+          class="px-3 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+      </div>
+      <button type="submit"
+        class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition mt-2">
+        Add Quiz
+      </button>
+    </form>
+    <div id="addQuizStatus" class="mt-4"></div>
   </div>
+</div>
     <div id="tab-courses" class="tab hidden">
       <div class="flex items-center justify-between mb-2">
         <div class="font-bold text-lg text-indigo-800">Courses & Enrollment</div>
