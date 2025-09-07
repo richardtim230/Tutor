@@ -1075,77 +1075,142 @@ function toggleTheme() {
     window.closeAssignmentCodeModal = closeAssignmentCodeModal;
 
     // --- QUIZZES TAB ---
-    // Demo: Load quizzes via API (replace with backend endpoint)
-    let quizQuestions = [];
-    async function loadQuizQuestions() {
-      // For demo, we'll generate sample quizzes for 3 days per topic.
-      quizQuestions = [];
-      const topics = ['HTML', 'CSS', 'JavaScript'];
-      for (let day = 1; day <= 9; day++) {
-        let topic = topics[Math.floor((day-1)/3)];
-        for (let qn = 1; qn <= 2; qn++) {
-          quizQuestions.push({
-            day,
-            topic,
-            question: `${topic} Sample Question ${qn} (Day ${day})`,
-            options: [`${topic} Option A`, `${topic} Option B`, `${topic} Option C`, `${topic} Option D`],
-            answer: `${topic} Option A`
-          });
-        }
-      }
-      renderQuizTable();
-    }
-    function renderQuizTable() {
-      const search = document.getElementById('quizSearch').value.trim().toLowerCase();
-      let filtered = quizQuestions.filter(q =>
-        !search ||
-        (q.topic && q.topic.toLowerCase().includes(search)) ||
-        (q.question && q.question.toLowerCase().includes(search))
-      );
-      let html = '';
-      for (const q of filtered) {
-        html += `<tr>
-          <td class="px-2 py-2">${q.day}</td>
-          <td class="px-2 py-2">${q.topic}</td>
-          <td class="px-2 py-2">${q.question}</td>
-          <td class="px-2 py-2">${q.options.join(', ')}</td>
-          <td class="px-2 py-2">${q.answer}</td>
-        </tr>`;
-      }
-      document.getElementById('quizTableBody').innerHTML = html;
-    }
-    document.getElementById('quizSearch').oninput = renderQuizTable;
+    // API base URL for backend endpoints
+const API_BASE = "https://examguide.onrender.com/api/codecxreg";
+let quizQuestions = [];
 
-    // --- Add Quiz Modal ---
-    function showAddQuizModal() {
-      document.getElementById('addQuizModal').classList.remove('hidden');
-      document.getElementById('addQuizForm').reset();
-      document.getElementById('addQuizStatus').textContent = '';
+// Load all quiz questions from backend
+async function loadQuizQuestions() {
+  let token = localStorage.getItem('codecx_token');
+  quizQuestions = [];
+  try {
+    const resp = await fetch(`${API_BASE}/admin/quizzes`, {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!resp.ok) {
+      document.getElementById('quizTableBody').innerHTML = `<tr><td colspan="6" class="text-center text-red-600 py-4">Failed to load quizzes</td></tr>`;
+      return;
     }
-    function closeAddQuizModal() {
-      document.getElementById('addQuizModal').classList.add('hidden');
+    const data = await resp.json();
+    // Flatten questions with day/topic
+    quizQuestions = [];
+    for (const quiz of data.quizzes || []) {
+      (quiz.questions || []).forEach((q, idx) => {
+        quizQuestions.push({
+          ...q,
+          day: quiz.day,
+          topic: quiz.topic,
+          qIndex: idx  // For deletion
+        });
+      });
     }
-    window.showAddQuizModal = showAddQuizModal;
-    window.closeAddQuizModal = closeAddQuizModal;
+    renderQuizTable();
+  } catch (err) {
+    document.getElementById('quizTableBody').innerHTML = `<tr><td colspan="6" class="text-center text-red-600 py-4">Error: ${err.message}</td></tr>`;
+  }
+}
 
-    document.getElementById('addQuizForm').onsubmit = function(e) {
-      e.preventDefault();
-      const day = parseInt(document.getElementById('addQuizDay').value);
-      const topic = document.getElementById('addQuizTopic').value.trim();
-      const question = document.getElementById('addQuizQuestion').value.trim();
-      const options = document.getElementById('addQuizOptions').value.split(',').map(x => x.trim());
-      const answer = document.getElementById('addQuizAnswer').value.trim();
-      if (!day || !topic || !question || options.length < 2 || !answer) {
-        document.getElementById('addQuizStatus').textContent = 'Please fill all fields with valid data.';
-        return;
-      }
-      quizQuestions.push({ day, topic, question, options, answer });
-      renderQuizTable();
-      document.getElementById('addQuizStatus').innerHTML =
-        '<span class="text-green-700">Quiz added!</span>';
+// Render table with delete button
+function renderQuizTable() {
+  const search = document.getElementById('quizSearch').value.trim().toLowerCase();
+  let filtered = quizQuestions.filter(q =>
+    !search ||
+    (q.topic && q.topic.toLowerCase().includes(search)) ||
+    (q.question && q.question.toLowerCase().includes(search))
+  );
+  let html = '';
+  for (const q of filtered) {
+    html += `<tr>
+      <td class="px-4 py-3 font-semibold">${q.day}</td>
+      <td class="px-4 py-3">${q.topic}</td>
+      <td class="px-4 py-3">${q.question}</td>
+      <td class="px-4 py-3">${Array.isArray(q.options) ? q.options.join(', ') : q.options}</td>
+      <td class="px-4 py-3 font-semibold text-indigo-700">${q.answer}</td>
+      <td class="px-4 py-3 text-center">
+        <button class="bg-red-50 text-red-700 hover:bg-red-100 px-3 py-1 rounded-md border border-red-100 font-semibold transition"
+          onclick="deleteQuizQuestion('${q.day}', '${q.qIndex}')">
+          <i class="bi bi-trash"></i> Delete
+        </button>
+      </td>
+    </tr>`;
+  }
+  if (!filtered.length) {
+    html = `<tr><td colspan="6" class="text-center text-gray-400 py-4">No quizzes found.</td></tr>`;
+  }
+  document.getElementById('quizTableBody').innerHTML = html;
+}
+document.getElementById('quizSearch').oninput = renderQuizTable;
+
+// Show/close modal
+function showAddQuizModal() {
+  document.getElementById('addQuizModal').classList.remove('hidden');
+  document.getElementById('addQuizForm').reset();
+  document.getElementById('addQuizStatus').textContent = '';
+}
+function closeAddQuizModal() {
+  document.getElementById('addQuizModal').classList.add('hidden');
+}
+window.showAddQuizModal = showAddQuizModal;
+window.closeAddQuizModal = closeAddQuizModal;
+
+// Add quiz question via backend
+document.getElementById('addQuizForm').onsubmit = async function(e) {
+  e.preventDefault();
+  let token = localStorage.getItem('codecx_token');
+  const day = parseInt(document.getElementById('addQuizDay').value);
+  const topic = document.getElementById('addQuizTopic').value.trim();
+  const question = document.getElementById('addQuizQuestion').value.trim();
+  const options = document.getElementById('addQuizOptions').value.split(',').map(x => x.trim()).filter(x => x);
+  const answer = document.getElementById('addQuizAnswer').value.trim();
+  if (!day || !topic || !question || options.length < 2 || !answer) {
+    document.getElementById('addQuizStatus').textContent = 'Please fill all fields with valid data.';
+    return;
+  }
+  try {
+    const resp = await fetch(`${API_BASE}/admin/quiz/${day}/question`, {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ topic, question, options, answer })
+    });
+    const data = await resp.json();
+    if (resp.ok) {
+      document.getElementById('addQuizStatus').innerHTML = '<span class="text-green-700">Quiz added!</span>';
+      await loadQuizQuestions();
       setTimeout(closeAddQuizModal, 800);
-    };
+    } else {
+      document.getElementById('addQuizStatus').innerHTML = `<span class="text-red-700">Error: ${data.message || 'Failed to add quiz.'}</span>`;
+    }
+  } catch (err) {
+    document.getElementById('addQuizStatus').innerHTML = `<span class="text-red-700">Error: ${err.message}</span>`;
+  }
+};
 
+// Delete quiz question via backend
+async function deleteQuizQuestion(day, qIdx) {
+  let token = localStorage.getItem('codecx_token');
+  if (!confirm('Delete this quiz question?')) return;
+  try {
+    const resp = await fetch(`${API_BASE}/admin/quiz/${day}/question/${qIdx}`, {
+      method: "DELETE",
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const data = await resp.json();
+    if (resp.ok) {
+      await loadQuizQuestions();
+    } else {
+      alert('Delete failed: ' + (data.message || resp.status));
+    }
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+}
+window.deleteQuizQuestion = deleteQuizQuestion;
+
+// Initial load
+loadQuizQuestions();
     // --- Helper ---
     function formatDate(dt) {
       if (!dt) return '';
