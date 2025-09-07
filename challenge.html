@@ -252,17 +252,15 @@
     }
 
     async function fetchChallengeComments(challengeId) {
-      try {
-        const res = await fetch(`${API_BASE}/challenge/${challengeId}/comments`, {
-          headers: { "Authorization": "Bearer " + token }
-        });
-        if (!res.ok) return [];
-        const data = await res.json();
-        return Array.isArray(data.comments) ? data.comments : [];
-      } catch (e) {
-        return [];
-      }
-    }
+  try {
+    const res = await fetch(`${API_BASE}/challenge/${challengeId}/comments`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data.comments) ? data.comments : [];
+  } catch (e) {
+    return [];
+  }
+}
 
     // === RENDER CHALLENGES ===
     async function renderChallenges() {
