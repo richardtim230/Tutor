@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML Basics – CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <!-- Tailwind CSS, PrismJS for syntax highlighting, Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    .glass-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-radius: 1rem;
+      border: 1px solid #e0e7ff;
+      box-shadow: 0 8px 32px rgba(99,102,241,.08), 0 1.5px 10px rgba(0,0,0,.04);
+    }
+    pre[class*="language-"] {
+      border-radius: 0.7rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    code {
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-file-earmark-code text-3xl text-indigo-700"></i>
+      <h1 class="text-2xl font-extrabold text-indigo-800 tracking-tight">
+        HTML Basics
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm">
+      <a href="resource.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    </nav>
+  </header>
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-4">
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-xl font-bold text-indigo-700 mb-3 flex items-center gap-2"><i class="bi bi-diagram-3"></i>What is HTML?</h2>
+      <p class="mb-4 text-gray-700">
+        <b>HTML</b> stands for <b>HyperText Markup Language</b>. It is the backbone of every website you visit. HTML is not a programming language; rather, it is a markup language used to structure and describe the content of web pages. The browser reads HTML files and displays them as formatted text, images, links, forms, tables, and more.
+      </p>
+      <p class="mb-4 text-gray-700">
+        <b>HyperText</b> means text that contains links to other texts or resources. <b>Markup</b> refers to the tags you use to “mark up” elements in your page (for example, making text bold or creating a heading).
+      </p>
+      <p class="mb-4 text-gray-700">
+        When you open a website, your browser fetches HTML files and interprets them, painting the page you see. HTML works hand-in-hand with CSS (for styling) and JavaScript (for interactivity), but HTML always comes first.
+      </p>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-file-earmark-code"></i>Basic Structure of an HTML Document</h2>
+      <p class="mb-3 text-gray-700">
+        Every HTML document follows a standard structure. This structure helps browsers understand your page, and it makes your code easier to read and maintain. Here’s the skeleton of a simple HTML file:
+      </p>
+      <pre class="language-html"><code class="language-html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My First Webpage&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, World!&lt;/h1&gt;
+    &lt;p&gt;Welcome to my website.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+      </code></pre>
+      <ul class="list-disc ml-7 mt-2 text-gray-700">
+        <li><b>&lt;!DOCTYPE html&gt;</b> tells the browser to expect HTML5. Always include this at the very top.</li>
+        <li><b>&lt;html&gt;</b> is the root element that wraps the entire content of your page.</li>
+        <li><b>&lt;head&gt;</b> contains meta-information, such as the page title, character encoding, and links to stylesheets or scripts. The contents of <code>&lt;head&gt;</code> are not directly shown on the page.</li>
+        <li><b>&lt;title&gt;</b> sets the text shown in the browser tab.</li>
+        <li><b>&lt;body&gt;</b> contains all the visible content, such as headings, paragraphs, images, links, etc.</li>
+      </ul>
+      <div class="mt-4">
+        <p class="mb-2 text-gray-700"><b>Try changing the content within the <code>&lt;body&gt;</code> tag to see how the page updates.</b></p>
+      </div>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-tags"></i>HTML Elements & Tags</h2>
+      <p class="text-gray-700 mb-3">
+        HTML is written using <b>elements</b>, which are made up of <b>tags</b>. Tags are keywords wrapped in angle brackets. Most elements have an opening tag, some content, and a closing tag:
+      </p>
+      <pre class="language-html"><code class="language-html">
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+      </code></pre>
+      <ul class="list-disc ml-7 text-gray-700">
+        <li><b>Opening tag:</b> <code>&lt;p&gt;</code></li>
+        <li><b>Content:</b> The text (or other elements) inside the tag</li>
+        <li><b>Closing tag:</b> <code>&lt;/p&gt;</code></li>
+      </ul>
+      <p class="mt-3 text-gray-700">
+        Some elements are <b>self-closing</b> and don’t need a closing tag. For example, the image tag:
+      </p>
+      <pre class="language-html"><code class="language-html">
+&lt;img src="logo.png" alt="Logo"&gt;
+      </code></pre>
+      <p class="mt-3 text-gray-700">
+        Here, <code>src</code> specifies the image file, and <code>alt</code> provides alternative text if the image can’t be displayed (or for screen readers).
+      </p>
+      <div class="mt-4">
+        <p class="mb-1 text-gray-700 font-medium">Example: Nesting Elements</p>
+        <pre class="language-html"><code class="language-html">
+&lt;p&gt;This is a &lt;strong&gt;bold&lt;/strong&gt; word inside a paragraph.&lt;/p&gt;
+        </code></pre>
+        <p class="text-gray-700">You can place tags within other tags to combine formatting and structure.</p>
+      </div>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-list-ul"></i>Common HTML Tags & Their Uses</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm border border-indigo-100 mb-4">
+          <thead>
+            <tr class="bg-indigo-50 text-indigo-800">
+              <th class="p-2 text-left">Tag</th>
+              <th class="p-2 text-left">Purpose</th>
+              <th class="p-2 text-left">Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-2"><code>&lt;h1&gt;–&lt;h6&gt;</code></td>
+              <td class="p-2">Headings (largest to smallest)</td>
+              <td class="p-2"><code>&lt;h2&gt;Chapter Title&lt;/h2&gt;</code></td>
+            </tr>
+            <tr class="bg-indigo-50">
+              <td class="p-2"><code>&lt;p&gt;</code></td>
+              <td class="p-2">Paragraph of text</td>
+              <td class="p-2"><code>&lt;p&gt;This is a paragraph.&lt;/p&gt;</code></td>
+            </tr>
+            <tr>
+              <td class="p-2"><code>&lt;a&gt;</code></td>
+              <td class="p-2">Hyperlink to another page or site</td>
+              <td class="p-2"><code>&lt;a href="https://www.codecademy.com"&gt;Learn&lt;/a&gt;</code></td>
+            </tr>
+            <tr class="bg-indigo-50">
+              <td class="p-2"><code>&lt;img&gt;</code></td>
+              <td class="p-2">Display an image</td>
+              <td class="p-2"><code>&lt;img src="banner.png" alt="Banner"&gt;</code></td>
+            </tr>
+            <tr>
+              <td class="p-2"><code>&lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;</code></td>
+              <td class="p-2">Unordered (bulleted) and ordered (numbered) lists</td>
+              <td class="p-2"><code>&lt;ul&gt;&lt;li&gt;Apple&lt;/li&gt;&lt;li&gt;Banana&lt;/li&gt;&lt;/ul&gt;</code></td>
+            </tr>
+            <tr class="bg-indigo-50">
+              <td class="p-2"><code>&lt;strong&gt;</code></td>
+              <td class="p-2">Bold text for emphasis</td>
+              <td class="p-2"><code>&lt;strong&gt;Warning!&lt;/strong&gt;</code></td>
+            </tr>
+            <tr>
+              <td class="p-2"><code>&lt;em&gt;</code></td>
+              <td class="p-2">Italicized text</td>
+              <td class="p-2"><code>&lt;em&gt;Important&lt;/em&gt;</code></td>
+            </tr>
+            <tr class="bg-indigo-50">
+              <td class="p-2"><code>&lt;div&gt;</code></td>
+              <td class="p-2">Generic container for grouping content</td>
+              <td class="p-2"><code>&lt;div&gt;Group of elements&lt;/div&gt;</code></td>
+            </tr>
+            <tr>
+              <td class="p-2"><code>&lt;span&gt;</code></td>
+              <td class="p-2">Inline container for styling small parts</td>
+              <td class="p-2"><code>&lt;span&gt;highlight&lt;/span&gt;</code></td>
+            </tr>
+            <tr class="bg-indigo-50">
+              <td class="p-2"><code>&lt;br&gt;</code></td>
+              <td class="p-2">Line break</td>
+              <td class="p-2"><code>Hello&lt;br&gt;World</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4">
+        <p class="text-gray-700 font-medium mb-2">Example: Using Headings and Lists</p>
+        <pre class="language-html"><code class="language-html">
+&lt;h1&gt;Grocery List&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Rice&lt;/li&gt;
+  &lt;li&gt;Beans&lt;/li&gt;
+  &lt;li&gt;Yam&lt;/li&gt;
+&lt;/ul&gt;
+        </code></pre>
+        <p class="text-gray-700">This produces a large heading and a bulleted list below it.</p>
+      </div>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-window"></i>Attributes in HTML</h2>
+      <p class="mb-3 text-gray-700">
+        <b>Attributes</b> provide extra information about HTML elements. They appear inside the opening tag, after the element’s name, and usually come in a <b>name="value"</b> pair.
+      </p>
+      <pre class="language-html"><code class="language-html">
+&lt;a href="https://www.codecaminstitute.com" target="_blank"&gt;Visit CODECX&lt;/a&gt;
+      </code></pre>
+      <ul class="list-disc ml-7 text-gray-700">
+        <li><b>href</b> (for links): Sets the destination URL.</li>
+        <li><b>target="_blank"</b>: Opens the link in a new browser tab.</li>
+        <li><b>alt</b> (for images): Describes the image for screen readers and if the image can't load.</li>
+        <li><b>src</b> (for images): The source file for the image.</li>
+      </ul>
+      <div class="mt-4">
+        <p class="mb-1 text-gray-700 font-medium">Example: Adding Images</p>
+        <pre class="language-html"><code class="language-html">
+&lt;img src="cat.jpg" alt="A cute cat"&gt;
+        </code></pre>
+      </div>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-box"></i>Block vs Inline Elements</h2>
+      <p class="mb-3 text-gray-700">
+        HTML elements behave either as <b>block</b> elements or <b>inline</b> elements.
+      </p>
+      <ul class="list-disc ml-7 text-gray-700">
+        <li><b>Block elements</b> always start on a new line and take up the full width available. Examples: <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>.</li>
+        <li><b>Inline elements</b> flow along with the text and only take up as much width as necessary. Examples: <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code>.</li>
+      </ul>
+      <div class="mt-4">
+        <p class="font-medium text-gray-700">Example:</p>
+        <pre class="language-html"><code class="language-html">
+&lt;p&gt;This is a &lt;strong&gt;bold&lt;/strong&gt; word inside a paragraph.&lt;/p&gt;
+        </code></pre>
+        <p class="text-gray-700">The <code>&lt;p&gt;</code> is a block element, while <code>&lt;strong&gt;</code> is inline.</p>
+      </div>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-shield-check"></i>Tips for Writing Good HTML</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-1">
+        <li>Always close your tags properly. This makes your code easier to read and avoids browser quirks.</li>
+        <li>Use <b>alt</b> attributes for images to improve accessibility and SEO.</li>
+        <li>Organize your document with headings (<code>&lt;h1&gt;–&lt;h6&gt;</code>) for clear structure.</li>
+        <li>Indent your code so it's easy to follow, especially for nested elements.</li>
+        <li>Keep your content inside the <code>&lt;body&gt;</code> tag.</li>
+        <li>Use meaningful tag names. For example, use <code>&lt;nav&gt;</code> for navigation, <code>&lt;main&gt;</code> for the main content, and <code>&lt;footer&gt;</code> for the page footer. This is called <b>semantic HTML</b>, and it helps both browsers and humans understand your page.</li>
+      </ul>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Practice: Build Your First HTML Page</h2>
+      <p class="mb-2 text-gray-700">Try out this example. You can copy and paste it into a new file, save it as <code>index.html</code>, and open it in your browser:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Practice Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Welcome to My Practice Page&lt;/h1&gt;
+    &lt;p&gt;This is my first HTML file.&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;I am learning HTML&lt;/li&gt;
+      &lt;li&gt;HTML is fun!&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;a href="https://www.codecaminstitute.com" target="_blank"&gt;Learn More&lt;/a&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+      </code></pre>
+      <div class="mt-2 text-gray-700">
+        <p>Feel free to experiment! Change the heading, add more list items, or try adding an image with the <code>&lt;img&gt;</code> tag.</p>
+      </div>
+    </section>
+
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script>
+</body>
+</html>
