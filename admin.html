@@ -104,10 +104,11 @@
           <div class="font-bold text-lg text-indigo-800 mb-2">Candidates Progress Chart</div>
           <canvas id="progressChart" height="150"></canvas>
         </div>
-        <div class="card">
-          <div class="font-bold text-lg text-indigo-800 mb-2">Recent Activity</div>
-          <div id="overviewActivity"></div>
-        </div>
+        <!-- Overview Tab: Replace the 'Recent Activity' section with this -->
+<div class="card">
+  <div class="font-bold text-lg text-indigo-800 mb-2">Recent Activity</div>
+  <div id="overviewActivityFeed" class="flex flex-col gap-3"></div>
+  </div>
       </div>
     </div>
     <div id="tab-candidates" class="tab hidden">
@@ -813,24 +814,45 @@ function timeAgo(date) {
 
 
 function renderOverviewActivity() {
+  // Gather all activities with user info
   let allActs = [];
   candidates.forEach(c => (c.activities || []).forEach(a =>
-    allActs.push({ ...a, user: c.fullName })
+    allActs.push({ ...a, user: c.fullName, avatar: c.passportBase64 })
   ));
   allActs.sort((a, b) => new Date(b.date) - new Date(a.date));
-  let html = `<ul class="text-sm max-h-24 overflow-y-auto">`;
-  allActs.slice(0,10).forEach(a => {
-    html += `<li class="mb-1"><span class="font-semibold">${a.user}:</span> ${a.activity} <span class="text-xs text-gray-500">(${formatDate(a.date)})</span></li>`;
+  let html = "";
+  allActs.slice(0, 7).forEach(a => {
+    html += `
+    <div class="bg-white rounded-xl shadow flex gap-3 items-start px-4 py-3 relative">
+      <img src="${a.avatar ? a.avatar : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(a.user)}"
+          class="w-10 h-10 rounded-full border flex-shrink-0 mt-1" />
+      <div class="flex-1 min-w-0">
+        <div class="text-sm text-gray-800 leading-tight">
+          <span class="font-semibold">${a.user}</span>
+          <span class="text-gray-600">${a.activity}</span>
+        </div>
+        <div class="text-xs text-gray-400 mt-1">${timeAgo(new Date(a.date))}</div>
+      </div>
+    </div>
+    `;
   });
-  html += `</ul>`;
-  document.getElementById("overviewActivity").innerHTML = html;
+  document.getElementById("overviewActivityFeed").innerHTML = html;
 }
 
-function formatDate(dt) {
-  if (!dt) return "";
-  let date = new Date(dt);
-  return date.toLocaleString();
+// Helper for relative time
+function timeAgo(date) {
+  if (!date) return "";
+  const now = new Date();
+  const seconds = Math.floor((now - date) / 1000);
+  if (seconds < 60) return "Just now";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hr${hours > 1 ? "s" : ""} ago`;
+  const days = Math.floor(hours / 24);
+  return `${days} day${days > 1 ? "s" : ""} ago`;
 }
+
 
 // Chart.js demo
 function renderProgressChart() {
