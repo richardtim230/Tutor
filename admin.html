@@ -426,7 +426,28 @@ async function fetchAllDetails(token) {
     } catch(e) {}
   }
 }
-
+async function waivePayment(id) {
+  if (!confirm("Are you sure you want to waive payment for this student?")) return;
+  let token = localStorage.getItem('codecx_token');
+  if (!token) return logout();
+  try {
+    const resp = await fetch(`${API_BASE}/admin/candidate/${id}/waive-payment`, {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const data = await resp.json();
+    if (resp.ok) {
+      alert("Payment waived successfully.");
+      await fetchCandidates();
+      closeCandidateModal();
+    } else {
+      alert("Waive failed: " + (data.message || resp.status));
+    }
+  } catch (e) {
+    alert("Error waiving payment: " + e.message);
+  }
+}
+window.waivePayment = waivePayment;
 function renderStats() {
   document.getElementById("statTotal").textContent = stats.totalStudents || "-";
   document.getElementById("statPaid").textContent = stats.paidCount || "-";
