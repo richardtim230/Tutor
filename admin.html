@@ -431,11 +431,19 @@ async function waivePayment(id) {
   let token = localStorage.getItem('codecx_token');
   if (!token) return logout();
   try {
-    const resp = await fetch(`${API_BASE}/admin/candidate/${id}/waive-payment`, {
+    const resp = await fetch(`https://examguide.onrender.com/api/codecxreg/admin/candidate/${id}/waive-payment`, {
       method: "POST",
       headers: { "Authorization": "Bearer " + token }
     });
-    const data = await resp.json();
+    let data;
+    const contentType = resp.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      data = await resp.json();
+    } else {
+      const text = await resp.text();
+      alert("Server returned an unexpected response:\n" + text.slice(0, 120));
+      return;
+    }
     if (resp.ok) {
       alert("Payment waived successfully.");
       await fetchCandidates();
