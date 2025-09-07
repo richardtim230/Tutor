@@ -1277,14 +1277,15 @@ window.onload = async function() {
   try {
     await fetchAdmin();
     await fetchCandidates();
-    hideLoader();
     
+    await loadAssignments();
       await loadQuizQuestions();
   } catch(e) {
     alert("Error: " + e.message);
     console.error(e);
   } finally {
-    loadAssignments();
+    
+    hideLoader();
   }
 };
 
