@@ -841,10 +841,10 @@ function renderProgressChart() {
   window.progressChartInstance = new Chart(chart, {
     type: 'doughnut',
     data: {
-      labels: ['Paid', 'Waived', 'Unpaid'],
+      labels: ['Paid', 'Unpaid'],
       datasets: [{
         label: 'Candidates',
-        data: [paid, waived, unpaid],
+        data: [paid, unpaid],
         backgroundColor: ['#22c55e', blue, '#ef4444'],
         borderWidth: 1
       }]
