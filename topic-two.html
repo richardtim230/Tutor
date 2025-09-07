@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Semantic HTML – CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.8">
+  <!-- Tailwind CSS, PrismJS, Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    .glass-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-radius: 1rem;
+      border: 1px solid #e0e7ff;
+      box-shadow: 0 8px 32px rgba(99,102,241,.08), 0 1.5px 10px rgba(0,0,0,.04);
+    }
+    pre[class*="language-"] {
+      border-radius: 0.7rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    code {
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-file-earmark-richtext text-3xl text-indigo-700"></i>
+      <h1 class="text-2xl font-extrabold text-indigo-800 tracking-tight">
+        Semantic HTML
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm">
+      <a href="resource.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="html-basics.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-box-arrow-left"></i> Previous: HTML Basics</a>
+    </nav>
+  </header>
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-4">
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-xl font-bold text-indigo-700 mb-3 flex items-center gap-2"><i class="bi bi-file-earmark-richtext"></i>What is Semantic HTML?</h2>
+      <p class="mb-4 text-gray-700">
+        <b>Semantic HTML</b> means writing HTML using tags that describe the meaning and role of the content inside them. Instead of using generic containers like <code>&lt;div&gt;</code> for everything, semantic tags communicate the structure and purpose of each part of your page—both to browsers and to people reading your code.
+      </p>
+      <p class="mb-4 text-gray-700">
+        For example, <code>&lt;nav&gt;</code> is used for navigation menus, <code>&lt;header&gt;</code> for page or section headers, and <code>&lt;main&gt;</code> for the main content area. Semantic HTML improves accessibility, SEO, and code readability.
+      </p>
+      <p class="mb-4 text-gray-700">
+        Browsers, search engines, and assistive technologies (like screen readers) can understand your page better when you use semantic elements. This leads to a better experience for all visitors—including those using accessibility tools.
+      </p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-diagram-3"></i>Why Use Semantic HTML?</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-2">
+        <li><b>Accessibility:</b> Semantic elements help screen readers and other assistive technologies understand your page, making it navigable for people with disabilities.</li>
+        <li><b>SEO (Search Engine Optimization):</b> Search engines can better index and rank your content when they know what each section means.</li>
+        <li><b>Maintainability:</b> Semantic code is easier to read, update, and hand off to other developers.</li>
+        <li><b>Consistency:</b> Browsers apply default behaviors and styles to semantic elements, giving a better base for your CSS.</li>
+      </ul>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-ui-checks"></i>Common Semantic HTML Elements</h2>
+      <p class="mb-3 text-gray-700">
+        Here are some of the most important semantic tags you should know and use:
+      </p>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm border border-indigo-100 mb-4">
+          <thead>
+            <tr class="bg-indigo-50 text-indigo-800">
+              <th class="p-2 text-left">Element</th>
+              <th class="p-2 text-left">Purpose</th>
+              <th class="p-2 text-left">Typical Content</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-2"><code>&lt;header&gt;</code></td>
+              <td class="p-2">Container for introductory content or navigation</td>
+              <td class="p-2">Logo, heading, nav menu</td>
+            </tr>
+            <tr class="bg-indigo-50">
+              <td class="p-2"><code>&lt;nav&gt;</code></td>
+              <td class="p-2">Primary navigation links</td>
+              <td class="p-2">Menu, links to other sections/pages</td>
+            </tr>
+            <tr>
+              <td class="p-2"><code>&lt;main&gt;</code></td>
+              <td class="p-2">Main content unique to the page</td>
+              <td class="p-2">Articles, sections, forms, etc.</td>
+            </tr>
+            <tr class="bg-indigo-50">
+              <td class="p-2"><code>&lt;section&gt;</code></td>
+              <td class="p-2">Thematic grouping of content (with heading)</td>
+              <td class="p-2">About, Features, Contact, etc.</td>
+            </tr>
+            <tr>
+              <td class="p-2"><code>&lt;article&gt;</code></td>
+              <td class="p-2">Independent, self-contained content</td>
+              <td class="p-2">Blog post, news item, forum post</td>
+            </tr>
+            <tr class="bg-indigo-50">
+              <td class="p-2"><code>&lt;aside&gt;</code></td>
+              <td class="p-2">Content related to the main content, but not central</td>
+              <td class="p-2">Sidebar, tips, ads, related links</td>
+            </tr>
+            <tr>
+              <td class="p-2"><code>&lt;footer&gt;</code></td>
+              <td class="p-2">Footer for a page or section</td>
+              <td class="p-2">Copyright, contact info, links</td>
+            </tr>
+            <tr class="bg-indigo-50">
+              <td class="p-2"><code>&lt;figure&gt;</code> &amp; <code>&lt;figcaption&gt;</code></td>
+              <td class="p-2">Image/media with a caption</td>
+              <td class="p-2">Image, chart, code sample</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-journal-richtext"></i>Examples: Semantic vs Non-Semantic HTML</h2>
+      <p class="text-gray-700 mb-2">Non-semantic HTML (not recommended):</p>
+      <pre class="language-html"><code class="language-html">
+&lt;div id="header"&gt;
+  &lt;h1&gt;My Blog&lt;/h1&gt;
+&lt;/div&gt;
+&lt;div id="nav"&gt;
+  &lt;a href="#home"&gt;Home&lt;/a&gt; |
+  &lt;a href="#about"&gt;About&lt;/a&gt;
+&lt;/div&gt;
+&lt;div id="main"&gt;
+  &lt;h2&gt;Welcome!&lt;/h2&gt;
+  &lt;p&gt;Thanks for visiting.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="footer"&gt;
+  &lt;p&gt;Copyright 2025&lt;/p&gt;
+&lt;/div&gt;
+      </code></pre>
+      <p class="text-gray-700 mb-2">Semantic HTML (recommended):</p>
+      <pre class="language-html"><code class="language-html">
+&lt;header&gt;
+  &lt;h1&gt;My Blog&lt;/h1&gt;
+&lt;/header&gt;
+&lt;nav&gt;
+  &lt;a href="#home"&gt;Home&lt;/a&gt; |
+  &lt;a href="#about"&gt;About&lt;/a&gt;
+&lt;/nav&gt;
+&lt;main&gt;
+  &lt;h2&gt;Welcome!&lt;/h2&gt;
+  &lt;p&gt;Thanks for visiting.&lt;/p&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;p&gt;Copyright 2025&lt;/p&gt;
+&lt;/footer&gt;
+      </code></pre>
+      <p class="text-gray-700 mt-2">The semantic version is easier to understand, both for people and computers.</p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-diagram-2"></i>More Real-World Semantic HTML Examples</h2>
+      <p class="mb-2 text-gray-700 font-medium">A blog post layout using semantic tags:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;article&gt;
+  &lt;header&gt;
+    &lt;h2&gt;How I Started Coding&lt;/h2&gt;
+    &lt;p&gt;Posted on &lt;time datetime="2025-09-07"&gt;September 7, 2025&lt;/time&gt;&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;section&gt;
+    &lt;p&gt;I began learning to code because...&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;footer&gt;
+    &lt;p&gt;Written by Amida Richy&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/article&gt;
+      </code></pre>
+      <p class="mb-4 text-gray-700">Notice how <code>&lt;header&gt;</code> and <code>&lt;footer&gt;</code> are used inside the <code>&lt;article&gt;</code> for extra clarity.</p>
+      <p class="mb-2 text-gray-700 font-medium">Image with caption:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;figure&gt;
+  &lt;img src="team.jpg" alt="The CODECX web dev team"&gt;
+  &lt;figcaption&gt;Our web development team at CODECX Institute.&lt;/figcaption&gt;
+&lt;/figure&gt;
+      </code></pre>
+      <p class="mb-4 text-gray-700">The <code>&lt;figcaption&gt;</code> gives extra information about the image.</p>
+      <p class="mb-2 text-gray-700 font-medium">Sidebar using <code>&lt;aside&gt;</code>:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;aside&gt;
+  &lt;h4&gt;Related Posts&lt;/h4&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Learning HTML&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;CSS Tips&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/aside&gt;
+      </code></pre>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-bookmark-star"></i>Best Practices for Semantic HTML</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>Use semantic tags wherever possible. Only use <code>&lt;div&gt;</code> or <code>&lt;span&gt;</code> when there is no existing tag that fits the content.</li>
+        <li>Keep your heading structure logical. Start with <code>&lt;h1&gt;</code> for your page title, then use <code>&lt;h2&gt;</code> for sections, <code>&lt;h3&gt;</code> for subsections, and so on.</li>
+        <li>There should be only one <code>&lt;main&gt;</code> element per page, and it should wrap the main content unique to that page.</li>
+        <li>Use <code>&lt;nav&gt;</code> for navigation menus, and <code>&lt;footer&gt;</code> for bottom-of-page or section content.</li>
+        <li>Group related content using <code>&lt;section&gt;</code> or <code>&lt;article&gt;</code> for clarity and accessibility.</li>
+        <li>Make use of <code>&lt;figure&gt;</code> and <code>&lt;figcaption&gt;</code> for images, diagrams, or code samples that need a caption or description.</li>
+        <li>If a region of your page is not central to the main content (like a sidebar, ad, or related links), use <code>&lt;aside&gt;</code>.</li>
+      </ul>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Practice: Build a Semantic Webpage</h2>
+      <p class="mb-2 text-gray-700">Try creating this simple, fully-semantic webpage layout. Save it as <code>semantic-demo.html</code> and open in your browser:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Semantic HTML Demo&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;header&gt;
+      &lt;h1&gt;CODECX Institute News&lt;/h1&gt;
+      &lt;nav&gt;
+        &lt;a href="#news"&gt;News&lt;/a&gt; |
+        &lt;a href="#about"&gt;About&lt;/a&gt; |
+        &lt;a href="#contact"&gt;Contact&lt;/a&gt;
+      &lt;/nav&gt;
+    &lt;/header&gt;
+    &lt;main&gt;
+      &lt;article&gt;
+        &lt;header&gt;
+          &lt;h2&gt;New Bootcamp Announced!&lt;/h2&gt;
+          &lt;p&gt;Published on &lt;time datetime="2025-09-07"&gt;September 7, 2025&lt;/time&gt;&lt;/p&gt;
+        &lt;/header&gt;
+        &lt;section&gt;
+          &lt;p&gt;CODECX Institute is launching a new web development bootcamp this October.&lt;/p&gt;
+        &lt;/section&gt;
+        &lt;footer&gt;
+          &lt;p&gt;By Jane Doe&lt;/p&gt;
+        &lt;/footer&gt;
+      &lt;/article&gt;
+      &lt;aside&gt;
+        &lt;h4&gt;Upcoming Events&lt;/h4&gt;
+        &lt;ul&gt;
+          &lt;li&gt;HTML &amp; CSS Workshop&lt;/li&gt;
+          &lt;li&gt;JavaScript Hackathon&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/aside&gt;
+    &lt;/main&gt;
+    &lt;footer&gt;
+      &lt;p&gt;&copy; 2025 CODECX Institute&lt;/p&gt;
+    &lt;/footer&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+      </code></pre>
+      <div class="mt-2 text-gray-700">
+        <p>
+          Explore by changing the headings, adding more <code>&lt;section&gt;</code> elements, or inserting <code>&lt;figure&gt;</code> with images and captions!
+        </p>
+      </div>
+    </section>
+    
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script>
+</body>
+</html>
