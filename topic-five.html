@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meta Tags & SEO Basics – CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.9">
+  <!-- Tailwind CSS, Bootstrap Icons, PrismJS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    .glass-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-radius: 1rem;
+      border: 1px solid #e0e7ff;
+      box-shadow: 0 8px 32px rgba(99,102,241,.08), 0 1.5px 10px rgba(0,0,0,.04);
+    }
+    pre[class*="language-"] {
+      border-radius: 0.7rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    code {
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-window text-3xl text-indigo-700"></i>
+      <h1 class="text-2xl font-extrabold text-indigo-800 tracking-tight">
+        Meta Tags & SEO Basics
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm">
+      <a href="resource.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="topic-four.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-box-arrow-left"></i> Previous: Tables & Lists</a>
+    </nav>
+  </header>
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-4">
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-xl font-bold text-indigo-700 mb-3 flex items-center gap-2"><i class="bi bi-window"></i>What are Meta Tags?</h2>
+      <p class="mb-4 text-gray-700">
+        <strong>Meta tags</strong> are snippets of text that describe a webpage’s content. They don’t appear visually on the page, but live inside the <code>&lt;head&gt;</code> section of your HTML. Meta tags provide information to browsers, search engines, and social platforms about your page, helping with everything from search engine optimization (SEO) to responsive design and social sharing.
+      </p>
+      <p class="mb-4 text-gray-700">
+        Common meta tags specify character encoding, viewport settings for mobile, page descriptions, and keywords. They are a key tool for making your site more discoverable and user-friendly.
+      </p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-search"></i>SEO Basics: Why Meta Tags Matter</h2>
+      <p class="mb-4 text-gray-700">
+        <strong>SEO (Search Engine Optimization)</strong> is the practice of improving your website so it ranks higher in search engine results. Meta tags play a crucial role in telling search engines what your page is about, helping them display relevant information to users.
+      </p>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-2">
+        <li>
+          <strong>Title tag:</strong> Sets the page’s title shown in browser tabs and search results. Should be unique, concise, and descriptive.
+        </li>
+        <li>
+          <strong>Description tag:</strong> Gives a summary of your page content. Appears in search results and influences click-through rates.
+        </li>
+        <li>
+          <strong>Viewport tag:</strong> Helps your site look good on mobile devices by controlling layout and scaling.
+        </li>
+        <li>
+          <strong>Keywords tag:</strong> Used to specify relevant search terms, but is less influential today due to search engine algorithm changes.
+        </li>
+        <li>
+          <strong>Robots tag:</strong> Tells search engines whether to index the page or follow its links.
+        </li>
+      </ul>
+      <p class="mt-2 text-gray-700">Well-chosen meta tags help attract the right visitors to your site and provide a better experience for everyone.</p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-tags"></i>Common Meta Tags & Example Usage</h2>
+      <pre class="language-html"><code class="language-html">
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width,initial-scale=1.0"&gt;
+  &lt;title&gt;CODECX Web Bootcamp&lt;/title&gt;
+  &lt;meta name="description" content="Join the CODECX Bootcamp to learn web development, HTML, CSS, and JavaScript."&gt;
+  &lt;meta name="keywords" content="web development, HTML, CSS, JavaScript, CODECX"&gt;
+  &lt;meta name="robots" content="index,follow"&gt;
+&lt;/head&gt;
+      </code></pre>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-4">
+        <li>
+          <code>charset</code>: Declares the character set (UTF-8 is standard for global sites).
+        </li>
+        <li>
+          <code>viewport</code>: Ensures responsiveness on mobile and tablets.
+        </li>
+        <li>
+          <code>title</code>: Sets the page’s title.
+        </li>
+        <li>
+          <code>description</code>: Summarizes the page for search engines and social sharing.
+        </li>
+        <li>
+          <code>keywords</code>: Lists relevant topics (less important but still used by some platforms).
+        </li>
+        <li>
+          <code>robots</code>: Controls indexing and crawling.
+        </li>
+      </ul>
+      <p class="mb-2 text-gray-700">
+        Place all meta tags inside the <code>&lt;head&gt;</code> section at the top of your HTML file.
+      </p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-share"></i>Open Graph & Social Meta Tags</h2>
+      <p class="mb-4 text-gray-700">
+        <strong>Open Graph</strong> tags are meta tags designed for social media sharing, especially Facebook, LinkedIn, and WhatsApp. Twitter uses a similar format called Twitter Cards. These tags control how your page looks when shared—such as the title, description, and preview image.
+      </p>
+      <pre class="language-html"><code class="language-html">
+&lt;meta property="og:title" content="CODECX Bootcamp"&gt;
+&lt;meta property="og:description" content="Learn web development with experts at CODECX."&gt;
+&lt;meta property="og:image" content="https://codecxinstitute.com/images/bootcamp-banner.jpg"&gt;
+&lt;meta property="og:url" content="https://codecxinstitute.com/bootcamp"&gt;
+      </code></pre>
+      <p class="mb-2 text-gray-700">
+        Adding these tags improves your site’s appearance when shared on social platforms and can boost engagement.
+      </p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-layout-text-window-reverse"></i>Things to Consider: Meta Tags & SEO</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>
+          Make each page’s <code>&lt;title&gt;</code> and <code>description</code> unique and relevant for better search rankings.
+        </li>
+        <li>
+          Use concise, clear language—avoid keyword stuffing and misleading descriptions.
+        </li>
+        <li>
+          Keep important content (like titles and descriptions) near the top of your HTML <code>&lt;head&gt;</code>.
+        </li>
+        <li>
+          Preview your site on multiple devices and platforms to ensure meta tags work as intended.
+        </li>
+        <li>
+          Update meta tags when site content changes, so search engines and users always see accurate information.
+        </li>
+        <li>
+          Use Open Graph and Twitter Card tags to optimize social sharing previews.
+        </li>
+        <li>
+          Don’t rely solely on meta tags—good content and clear site structure are just as important for SEO.
+        </li>
+      </ul>
+      <p class="mt-3 text-gray-700">
+        Effective use of meta tags supports both discoverability and user experience, whether people find your site via search engines or social media.
+      </p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-journal-richtext"></i>More Examples: Meta Tags in Practice</h2>
+      <p class="mb-2 text-gray-700 font-medium">Meta tags for a product page:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;head&gt;
+  &lt;title&gt;CODECX Institute – Web Bootcamp Course&lt;/title&gt;
+  &lt;meta name="description" content="Enroll in our Web Bootcamp to master HTML, CSS, and JavaScript.">
+  &lt;meta name="keywords" content="web bootcamp, HTML, CSS, JavaScript, CODECX Institute">
+  &lt;meta property="og:title" content="Join the CODECX Web Bootcamp">
+  &lt;meta property="og:description" content="Start your journey in web development with experts.">
+  &lt;meta property="og:image" content="https://codecxinstitute.com/images/web-bootcamp.jpg">
+&lt;/head&gt;
+      </code></pre>
+      <p class="mb-4 text-gray-700">Notice the use of both SEO and social tags for wider reach and better previews.</p>
+      <p class="mb-2 text-gray-700 font-medium">Viewport tag for mobile responsiveness:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;meta name="viewport" content="width=device-width,initial-scale=1.0"&gt;
+      </code></pre>
+      <p class="mb-4 text-gray-700">
+        This tag helps your site adapt smoothly to screens of all sizes, improving usability for mobile users.
+      </p>
+      <p class="mb-2 text-gray-700 font-medium">Robots tag for search control:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;meta name="robots" content="noindex,nofollow"&gt;
+      </code></pre>
+      <p class="mb-4 text-gray-700">
+        This tag tells search engines not to index the page or follow its links—useful for private or unfinished content.
+      </p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-bookmark-star"></i>Best Practices for Meta Tags & SEO</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>
+          Keep titles 50–60 characters, and descriptions under 160 characters for best display in search results.
+        </li>
+        <li>
+          Avoid duplicate titles and descriptions; each page should be distinct.
+        </li>
+        <li>
+          Include your brand or site name in titles for recognition.
+        </li>
+        <li>
+          Refresh meta tags regularly as your content evolves.
+        </li>
+        <li>
+          Test your pages with tools like Google Search Console and social media preview tools.
+        </li>
+        <li>
+          Focus on helpful, relevant content—meta tags support good content, but can't replace it.
+        </li>
+      </ul>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Practice: Add Meta Tags to Your Page</h2>
+      <p class="mb-2 text-gray-700">Try adding these meta tags to your project’s <code>&lt;head&gt;</code> section:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width,initial-scale=1.0"&gt;
+&lt;title&gt;My Portfolio – Frontend Developer&lt;/title&gt;
+&lt;meta name="description" content="Explore my frontend development portfolio and contact me for projects."&gt;
+&lt;meta property="og:title" content="My Frontend Portfolio"&gt;
+&lt;meta property="og:description" content="See my work and connect with me for collaboration."&gt;
+&lt;meta property="og:image" content="https://myportfolio.com/images/preview.jpg"&gt;
+      </code></pre>
+      <div class="mt-2 text-gray-700">
+        <p>
+          Check your site’s appearance in search results and on social media to see how your meta tags work. Experiment with different titles, descriptions, and images for best results.
+        </p>
+      </div>
+    </section>
+    
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script>
+</body>
+</html>
