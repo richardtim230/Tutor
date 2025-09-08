@@ -506,7 +506,7 @@ document.getElementById('forgotPasswordStep1').onsubmit = async function(e) {
 
   try {
     // Backend endpoint to verify student exists
-    const res = await fetch(`${API_BASE}/admin`, { method: 'GET' });
+    const res = await fetch(`https://examguide.onrender.com/api/codecxreg/admin`, { method: 'GET' });
     const data = await res.json();
     if (!res.ok || !data.students) throw new Error('Network error');
 
@@ -558,7 +558,7 @@ document.getElementById('forgotPasswordStep2').onsubmit = async function(e) {
   try {
     // Backend endpoint to update password (admin privilege)
     // You will need to implement this endpoint on your backend!
-    const res = await fetch(`${API_BASE}/admin/candidate/${window._fpStudentId}/reset-password`, {
+    const res = await fetch(`${API_BASE}/api/codecxreg/admin/candidate/${window._fpStudentId}/reset-password`, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newPassword })
