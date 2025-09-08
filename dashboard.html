@@ -806,8 +806,6 @@ function loadDashboardData(token) {
   showStudentLoader();
   Promise.all([
     
-    fetchAssignments(token),
-    fetchPayments(token)
   ])
   .then(([profile, assignments, payments]) => {
     try {
