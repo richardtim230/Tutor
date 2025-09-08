@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Images & Media Embeds – CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.9">
+  <!-- Tailwind CSS, Bootstrap Icons, PrismJS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    .glass-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-radius: 1rem;
+      border: 1px solid #e0e7ff;
+      box-shadow: 0 8px 32px rgba(99,102,241,.08), 0 1.5px 10px rgba(0,0,0,.04);
+    }
+    pre[class*="language-"] {
+      border-radius: 0.7rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    code {
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-image text-3xl text-indigo-700"></i>
+      <h1 class="text-2xl font-extrabold text-indigo-800 tracking-tight">
+        Images & Media Embeds in HTML
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm">
+      <a href="resource.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="topic-seven.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-box-arrow-left"></i> Previous: Links & Navigation</a>
+    </nav>
+  </header>
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-4">
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-xl font-bold text-indigo-700 mb-3 flex items-center gap-2"><i class="bi bi-image"></i>How to Use Images in HTML</h2>
+      <p class="mb-4 text-gray-700">
+        Images help communicate ideas, illustrate concepts, and make web pages more engaging. In HTML, an image is added to a page with the <code>&lt;img&gt;</code> tag. This tag does not have a closing tag because it is a self-closing element.
+      </p>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-2">
+        <li>
+          <strong><code>&lt;img&gt;</code>:</strong> This is the image element. It displays an image on the page. You must use the <code>src</code> attribute to specify the location of the image file.
+        </li>
+        <li>
+          <strong><code>src</code> (source):</strong> This attribute provides the path or URL to the image file you want to display.
+        </li>
+        <li>
+          <strong><code>alt</code> (alternative text):</strong> This attribute gives a description of the image. If the image fails to load, this description appears in its place. It is also read by screen readers to help users who cannot see the image.
+        </li>
+        <li>
+          <strong><code>width</code> and <code>height</code>:</strong> These optional attributes set the size of the image in pixels.
+        </li>
+      </ul>
+      <pre class="language-html"><code class="language-html">
+&lt;img src="logo.png" alt="CODECX Institute Logo" width="200" height="70"&gt;
+      </code></pre>
+      <p class="mt-2 text-gray-700">
+        The example above displays the image file named <code>logo.png</code> with a width of 200 pixels and a height of 70 pixels. The alt text describes the image for anyone who cannot view it.
+      </p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-play-btn"></i>Adding Audio & Video in HTML</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-2">
+        <li>
+          <strong><code>&lt;audio&gt;</code>:</strong> This element lets you add sound or music to your page. Use the <code>controls</code> attribute to show play, pause, and volume buttons.
+        </li>
+        <li>
+          <strong><code>&lt;video&gt;</code>:</strong> This element allows you to play videos directly on a web page. You can use <code>width</code> and <code>height</code> attributes to set the size, and <code>controls</code> to show playback buttons.
+        </li>
+        <li>
+          <strong><code>&lt;source&gt;</code>:</strong> This tag is placed inside <code>&lt;audio&gt;</code> or <code>&lt;video&gt;</code> to specify the media file and its format. You can add multiple sources so the browser can choose the one it supports.
+        </li>
+        <li>
+          <strong>Fallback text:</strong> Any text placed between the opening and closing <code>&lt;audio&gt;</code> or <code>&lt;video&gt;</code> tags will be shown if the browser does not support those elements.
+        </li>
+      </ul>
+      <pre class="language-html"><code class="language-html">
+&lt;audio controls&gt;
+  &lt;source src="bootcamp-intro.mp3" type="audio/mpeg"&gt;
+  Your browser does not support the audio element.
+&lt;/audio&gt;
+
+&lt;video width="400" height="260" controls&gt;
+  &lt;source src="interview.mp4" type="video/mp4"&gt;
+  Your browser does not support the video tag.
+&lt;/video&gt;
+      </code></pre>
+      <p class="mt-2 text-gray-700">
+        These examples show how to add audio and video files that users can play, pause, or control the volume. Always provide fallback text for older browsers.
+      </p>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-journal-richtext"></i>More Examples: Figures, Responsive Images, and Embeds</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-2">
+        <li>
+          <strong><code>&lt;figure&gt;</code>:</strong> This tag groups media (like an image) with a caption.
+        </li>
+        <li>
+          <strong><code>&lt;figcaption&gt;</code>:</strong> The caption for a figure, placed inside <code>&lt;figure&gt;</code>.
+        </li>
+        <li>
+          <strong><code>srcset</code> and <code>sizes</code>:</strong> These attributes in the <code>&lt;img&gt;</code> tag help display different image files based on the device screen size. This makes images load faster and look better on all devices.
+        </li>
+        <li>
+          <strong><code>&lt;iframe&gt;</code>:</strong> This tag embeds another web page or content, such as a video, Google Map, or social media post, inside your webpage.
+        </li>
+        <li>
+          <strong><code>allowfullscreen</code>:</strong> This attribute in <code>&lt;iframe&gt;</code> lets the embedded content be viewed in full screen.
+        </li>
+        <li>
+          <strong><code>title</code>:</strong> This attribute in <code>&lt;iframe&gt;</code> describes the embedded content for screen readers.
+        </li>
+      </ul>
+      <pre class="language-html"><code class="language-html">
+&lt;figure&gt;
+  &lt;img src="students.jpg" alt="Students presenting projects"&gt;
+  &lt;figcaption&gt;CODECX students during their project showcase.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;img
+  src="banner-small.jpg"
+  srcset="banner-large.jpg 1024w, banner-medium.jpg 640w"
+  sizes="(max-width: 600px) 100vw, 1024px"
+  alt="Bootcamp Banner"&gt;
+
+&lt;iframe
+  src="https://www.youtube.com/embed/abc123xyz"
+  width="560"
+  height="315"
+  title="CODECX Bootcamp Introduction"
+  frameborder="0"
+  allowfullscreen&gt;&lt;/iframe&gt;
+      </code></pre>
+      <p class="mt-2 text-gray-700">
+        The examples above show how to group an image with a caption, serve different image sizes for different screens, and embed a video from YouTube.
+      </p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-layout-text-window-reverse"></i>Things to Consider: Images & Media Embeds</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>
+          Always use meaningful <code>alt</code> text for images, so everyone understands your content.
+        </li>
+        <li>
+          Use <code>width</code> and <code>height</code> to help web browsers display images smoothly and avoid layout shifts.
+        </li>
+        <li>
+          Compress image and video files to make your site load faster.
+        </li>
+        <li>
+          Make media accessible by adding captions (<code>&lt;figcaption&gt;</code> or subtitles in video), and transcripts for audio.
+        </li>
+        <li>
+          Test your page on different devices to check how images and media look and work.
+        </li>
+        <li>
+          Use <code>srcset</code> and <code>sizes</code> for images that need to be responsive.
+        </li>
+        <li>
+          For third-party embeds like <code>&lt;iframe&gt;</code>, only use trusted sources and always describe the content with the <code>title</code> attribute.
+        </li>
+        <li>
+          Avoid autoplay for video and audio unless truly necessary; let users choose when to play media.
+        </li>
+      </ul>
+      <p class="mt-3 text-gray-700">
+        Good use of images and media helps both beginners and experienced users understand and enjoy your site.
+      </p>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-bookmark-star"></i>Best Practices for Images & Media Embeds</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>
+          Organize images in folders and use clear filenames so you can easily find and update them.
+        </li>
+        <li>
+          Use the <code>loading="lazy"</code> attribute in <code>&lt;img&gt;</code> tags to delay image loading until they are needed, which improves page speed.
+        </li>
+        <li>
+          Always check for broken image links and keep your media files up to date.
+        </li>
+        <li>
+          Use SVG for icons and graphics that need to scale without losing quality.
+        </li>
+        <li>
+          Make sure your media does not distract from your main content.
+        </li>
+        <li>
+          Provide alternatives for users who cannot see or hear your media.
+        </li>
+      </ul>
+    </section>
+    
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Practice: Add Images and Media</h2>
+      <p class="mb-2 text-gray-700">
+        Try using the tags and attributes described above to add images, audio, and video to your own HTML page:
+      </p>
+      <pre class="language-html"><code class="language-html">
+&lt;img src="participant.jpg" alt="Bootcamp participant" width="250"&gt;
+
+&lt;audio controls&gt;
+  &lt;source src="welcome.mp3" type="audio/mpeg"&gt;
+&lt;/audio&gt;
+
+&lt;video width="320" height="240" controls&gt;
+  &lt;source src="demo.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+
+&lt;iframe src="https://www.youtube.com/embed/xyz123abc" width="560" height="315" title="Demo Video" allowfullscreen&gt;&lt;/iframe&gt;
+      </code></pre>
+      <div class="mt-2 text-gray-700">
+        <p>
+          Try changing image sizes, adding captions, or using responsive image techniques. Practice describing your images clearly with the <code>alt</code> attribute.
+        </p>
+      </div>
+    </section>
+    
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script>
+</body>
+</html>
