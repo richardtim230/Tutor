@@ -805,7 +805,7 @@ function hideStudentLoader() {
 function loadDashboardData(token) {
   showStudentLoader();
   Promise.all([
-    renderActivity();
+    
     
   ])
   .then(([profile, assignments, payments]) => {
