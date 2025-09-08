@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deprecated & Obsolete HTML Elements – CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.9">
+  <!-- Tailwind CSS, Bootstrap Icons, PrismJS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    .glass-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-radius: 1rem;
+      border: 1px solid #e0e7ff;
+      box-shadow: 0 8px 32px rgba(99,102,241,.08), 0 1.5px 10px rgba(0,0,0,.04);
+    }
+    pre[class*="language-"] {
+      border-radius: 0.7rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    code {
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    }
+    .highlight {
+      background: #e0e7ff;
+      border-radius: 0.3rem;
+      padding: 0.1em 0.3em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-exclamation-triangle text-3xl text-indigo-700"></i>
+      <h1 class="text-2xl font-extrabold text-indigo-800 tracking-tight">
+        Deprecated & Obsolete HTML Elements
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm">
+      <a href="resource.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="topic-eight.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-box-arrow-left"></i> Previous: Embedding External Content</a>
+    </nav>
+  </header>
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-4">
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-xl font-bold text-indigo-700 mb-3 flex items-center gap-2"><i class="bi bi-exclamation-triangle"></i>What Are Deprecated & Obsolete Elements?</h2>
+      <p class="mb-4 text-gray-700">
+        <span class="highlight">Deprecated elements</span> are tags or attributes in HTML that are no longer recommended for use. They are kept for backward compatibility, meaning older web pages might still work, but you should avoid them in new projects. Instead, use modern alternatives that follow current web standards.
+      </p>
+      <p class="mb-4 text-gray-700">
+        <span class="highlight">Obsolete elements</span> are tags and attributes that have been removed from the HTML standard. Browsers may ignore these tags or display them incorrectly, and they can make your code harder to maintain or understand.
+      </p>
+      <p class="mb-4 text-gray-700">
+        Modern HTML encourages a clear separation between content (HTML), presentation (CSS), and behavior (JavaScript). This makes your pages easier to design, update, and make accessible to all users.
+      </p>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-x-circle"></i>Common Deprecated HTML Elements & Attributes</h2>
+      <p class="mb-4 text-gray-700">
+        Let's look at some examples of deprecated tags, what they do, and how to use the correct modern approach instead:
+      </p>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-4">
+        <li>
+          <strong><code>&lt;font&gt;</code></strong>: Used to set text color, size, and font face. Modern HTML uses CSS for all text styling. Example:
+          <pre class="language-html"><code class="language-html">
+&lt;font color="blue" size="6" face="Arial"&gt;Hello World&lt;/font&gt;
+          </code></pre>
+          <span class="highlight">Modern way:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;span style="color: blue; font-size: 2em; font-family: Arial, sans-serif;"&gt;Hello World&lt;/span&gt;
+          </code></pre>
+        </li>
+        <li>
+          <strong><code>&lt;center&gt;</code></strong>: Centers content. Use CSS instead:
+          <pre class="language-html"><code class="language-html">
+&lt;center&gt;This text is centered&lt;/center&gt;
+          </code></pre>
+          <span class="highlight">Modern way:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;div style="text-align: center;"&gt;This text is centered&lt;/div&gt;
+          </code></pre>
+        </li>
+        <li>
+          <strong><code>&lt;u&gt;</code></strong>: Underlines text. CSS is preferred:
+          <pre class="language-html"><code class="language-html">
+&lt;u&gt;Important&lt;/u&gt;
+          </code></pre>
+          <span class="highlight">Modern way:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;span style="text-decoration: underline;"&gt;Important&lt;/span&gt;
+          </code></pre>
+        </li>
+        <li>
+          <strong><code>&lt;big&gt;</code> and <code>&lt;small&gt;</code></strong>: These change font size, but using CSS is better:
+          <pre class="language-html"><code class="language-html">
+&lt;big&gt;Large&lt;/big&gt; &lt;small&gt;Small&lt;/small&gt;
+          </code></pre>
+          <span class="highlight">Modern way:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;span style="font-size: 1.5em;"&gt;Large&lt;/span&gt; &lt;span style="font-size: 0.7em;"&gt;Small&lt;/span&gt;
+          </code></pre>
+        </li>
+        <li>
+          <strong>Table attributes like <code>bgcolor</code>, <code>border</code>, and <code>align</code></strong>:
+          <pre class="language-html"><code class="language-html">
+&lt;table border="1" bgcolor="#f0f0f0" align="center"&gt;
+  &lt;tr&gt;&lt;td&gt;Cell&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+          </code></pre>
+          <span class="highlight">Modern way:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;table style="border: 1px solid #333; background: #f0f0f0; margin: 0 auto;"&gt;
+  &lt;tr&gt;&lt;td&gt;Cell&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+          </code></pre>
+        </li>
+      </ul>
+      <p class="mt-4 text-gray-700">
+        The modern method (using CSS) is more flexible, readable, and works better on all devices.
+      </p>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-x-octagon"></i>Obsolete HTML Elements (Never Use)</h2>
+      <p class="mb-4 text-gray-700">
+        These tags have been completely removed from HTML standards. New browsers will ignore them, and their behavior is unpredictable.
+      </p>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-4">
+        <li>
+          <strong><code>&lt;applet&gt;</code></strong>: Used to run Java programs inside the browser. Java applets are no longer supported. Use JavaScript libraries such as <a href="https://threejs.org/" class="text-indigo-600 hover:underline">Three.js</a> or <a href="https://p5js.org/" class="text-indigo-600 hover:underline">p5.js</a> for interactive graphics and applications.
+        </li>
+        <li>
+          <strong><code>&lt;isindex&gt;</code></strong>: Provided a text search box. Modern HTML uses the <code>&lt;input&gt;</code> tag inside forms for all user input:
+          <pre class="language-html"><code class="language-html">
+&lt;form&gt;
+  &lt;input type="search" placeholder="Type to search"&gt;
+&lt;/form&gt;
+          </code></pre>
+        </li>
+        <li>
+          <strong><code>&lt;basefont&gt;</code></strong>: Set the base font for a page. Use CSS to style fonts globally:
+          <pre class="language-html"><code class="language-html">
+&lt;style&gt;
+  body { font-family: Verdana, sans-serif; }
+&lt;/style&gt;
+          </code></pre>
+        </li>
+        <li>
+          <strong><code>&lt;frame&gt;</code>, <code>&lt;frameset&gt;</code>, <code>&lt;noframes&gt;</code></strong>: Used to split the browser window into sections. Modern layouts use CSS <code>flexbox</code> or <code>grid</code> for multi-column and multi-row layouts. Example using flexbox:
+          <pre class="language-html"><code class="language-html">
+&lt;div style="display: flex;"&gt;
+  &lt;nav&gt;Sidebar&lt;/nav&gt;
+  &lt;main&gt;Main Content&lt;/main&gt;
+&lt;/div&gt;
+          </code></pre>
+        </li>
+        <li>
+          <strong><code>&lt;marquee&gt;</code></strong>: Made text scroll across the screen. Modern effects use CSS animations:
+          <pre class="language-html"><code class="language-html">
+&lt;div style="animation: scroll 5s linear infinite;"&gt;Scrolling text&lt;/div&gt;
+&lt;style&gt;
+@keyframes scroll {
+  0% { transform: translateX(100%);}
+  100% { transform: translateX(-100%);}
+}
+&lt;/style&gt;
+          </code></pre>
+        </li>
+        <li>
+          <strong><code>&lt;blink&gt;</code></strong>: Made text blink. Not supported; use CSS if you need blinking effects:
+          <pre class="language-html"><code class="language-html">
+&lt;span style="animation: blink 1s steps(2, start) infinite;"&gt;Blink!&lt;/span&gt;
+&lt;style&gt;
+@keyframes blink {
+  to { visibility: hidden; }
+}
+&lt;/style&gt;
+          </code></pre>
+        </li>
+      </ul>
+      <p class="mt-4 text-gray-700">
+        Always choose modern tags and CSS for layouts and effects. Libraries like Bootstrap, Tailwind CSS, and Bulma offer ready-made styles and layouts for beginners and advanced users.
+      </p>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-tools"></i>Understanding Modern Alternatives & Tools</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-2">
+        <li>
+          <strong>CSS (Cascading Style Sheets):</strong> The language for styling and layout. Instead of using old HTML tags for presentation, write CSS rules in a <code>&lt;style&gt;</code> block, an external <code>.css</code> file, or as inline <code>style</code> attributes.
+        </li>
+        <li>
+          <strong>Flexbox & Grid:</strong> These are modern layout techniques in CSS. <code>display: flex;</code> and <code>display: grid;</code> let you build responsive, multi-column or multi-row layouts without frames or tables.
+        </li>
+        <li>
+          <strong>CSS Libraries:</strong> Collections of ready-made styles. <a href="https://getbootstrap.com/" class="text-indigo-600 hover:underline">Bootstrap</a>, <a href="https://tailwindcss.com/" class="text-indigo-600 hover:underline">Tailwind CSS</a>, and <a href="https://bulma.io/" class="text-indigo-600 hover:underline">Bulma</a> make it easier to build attractive, responsive pages without writing much CSS yourself.
+        </li>
+        <li>
+          <strong>HTML Validators:</strong> Tools like <a href="https://validator.w3.org/" class="text-indigo-600 hover:underline">W3C Validator</a> help you check your code for errors, deprecated, or obsolete tags.
+        </li>
+      </ul>
+      <p class="mt-3 text-gray-700">
+        These tools and libraries are now the standard for professional web development. Beginners should get comfortable with CSS and try using a CSS framework to see how modern pages are built.
+      </p>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-journal-richtext"></i>More Examples: Refactoring Legacy HTML</h2>
+      <p class="mb-2 text-gray-700 font-medium">Original code using deprecated tags:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;font face="Verdana" color="red"&gt;Welcome to CODECX&lt;/font&gt;
+&lt;center&gt;
+  &lt;table border="2"&gt;
+    &lt;tr bgcolor="#eee"&gt;
+      &lt;td&gt;Old cell&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/center&gt;
+      </code></pre>
+      <p class="mb-2 text-gray-700 font-medium">Refactored code using CSS and semantic HTML:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;span style="font-family: Verdana, sans-serif; color: red;"&gt;Welcome to CODECX&lt;/span&gt;
+&lt;div style="text-align: center;"&gt;
+  &lt;table style="border: 2px solid #333;"&gt;
+    &lt;tr style="background: #eee;"&gt;
+      &lt;td&gt;Old cell&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+      </code></pre>
+      <p class="mb-4 text-gray-700">
+        Notice how the styling is moved to CSS, which makes it easier to update and maintain.
+      </p>
+      <p class="mb-2 text-gray-700 font-medium">Using a library for button styles (Bootstrap example):</p>
+      <pre class="language-html"><code class="language-html">
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"&gt;
+&lt;button class="btn btn-primary"&gt;Click Me&lt;/button&gt;
+      </code></pre>
+      <p class="mb-4 text-gray-700">
+        Modern libraries provide consistent, attractive components like buttons, forms, and layouts. You don’t need to use outdated tags or write complex CSS yourself.
+      </p>
+      <p class="mb-2 text-gray-700 font-medium">Using Flexbox for layout instead of frames:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;div style="display: flex;"&gt;
+  &lt;aside style="width: 200px;"&gt;Sidebar&lt;/aside&gt;
+  &lt;section style="flex: 1;"&gt;Main Content&lt;/section&gt;
+&lt;/div&gt;
+      </code></pre>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-layout-text-window-reverse"></i>Things to Consider: Deprecated & Obsolete HTML</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>
+          Replace old tags and attributes with modern HTML and CSS in all new code.
+        </li>
+        <li>
+          If you inherit legacy code, refactor it gradually using semantic tags and stylesheets.
+        </li>
+        <li>
+          Use validator tools to catch deprecated or obsolete markup.
+        </li>
+        <li>
+          Modernize your layouts with Flexbox or Grid, not tables or frames.
+        </li>
+        <li>
+          Try using CSS libraries to save time and maintain consistency.
+        </li>
+        <li>
+          Avoid mixing markup and styling. Keep your HTML clean and your styles in CSS.
+        </li>
+        <li>
+          Learn to recognize outdated tags so you can maintain and upgrade any web project confidently.
+        </li>
+      </ul>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-bookmark-star"></i>Best Practices for Modern HTML</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>
+          Use semantic HTML elements (<code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>) for structure.
+        </li>
+        <li>
+          Handle all visual presentation with CSS, not HTML attributes or tags.
+        </li>
+        <li>
+          Test your pages on different browsers, devices, and screen sizes.
+        </li>
+        <li>
+          Stay up to date with the latest HTML and CSS standards.
+        </li>
+        <li>
+          Use external stylesheets or libraries for scalable, maintainable designs.
+        </li>
+        <li>
+          Validate your code regularly and remove any deprecated or obsolete elements.
+        </li>
+      </ul>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Practice: Refactor and Modernize HTML</h2>
+      <p class="mb-2 text-gray-700">
+        Take a sample of old HTML and rewrite it using modern techniques:
+      </p>
+      <pre class="language-html"><code class="language-html">
+&lt;font color="blue"&gt;Hello World!&lt;/font&gt;
+&lt;center&gt;Welcome to CODECX&lt;/center&gt;
+&lt;marquee&gt;Events coming up!&lt;/marquee&gt;
+      </code></pre>
+      <p class="mb-2 text-gray-700">
+        Refactored version:
+      </p>
+      <pre class="language-html"><code class="language-html">
+&lt;span style="color: blue;"&gt;Hello World!&lt;/span&gt;
+&lt;div style="text-align: center;"&gt;Welcome to CODECX&lt;/div&gt;
+&lt;div class="scroll-text"&gt;Events coming up!&lt;/div&gt;
+&lt;style&gt;
+.scroll-text {
+  animation: scroll 5s linear infinite;
+}
+@keyframes scroll {
+  0% { transform: translateX(100%);}
+  100% { transform: translateX(-100%);}
+}
+&lt;/style&gt;
+      </code></pre>
+      <div class="mt-2 text-gray-700">
+        <p>
+          Try using a CSS library for buttons, cards, or layouts in your own projects. Practice spotting and updating deprecated code you might find online or in older tutorials.
+        </p>
+      </div>
+    </section>
+
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script>
+</body>
+</html>
