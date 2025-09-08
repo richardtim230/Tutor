@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Embedding External Content (iframe, embed, object) – CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.9">
+  <!-- Tailwind CSS, Bootstrap Icons, PrismJS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    .glass-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-radius: 1rem;
+      border: 1px solid #e0e7ff;
+      box-shadow: 0 8px 32px rgba(99,102,241,.08), 0 1.5px 10px rgba(0,0,0,.04);
+    }
+    pre[class*="language-"] {
+      border-radius: 0.7rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    code {
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-file-earmark-image text-3xl text-indigo-700"></i>
+      <h1 class="text-2xl font-extrabold text-indigo-800 tracking-tight">
+        Embedding External Content (iframe, embed, object)
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm">
+      <a href="resource.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="topic-seven.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-box-arrow-left"></i> Previous: Images & Media Embeds</a>
+    </nav>
+  </header>
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-4">
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-xl font-bold text-indigo-700 mb-3 flex items-center gap-2"><i class="bi bi-file-earmark-image"></i>Embedding External Content in HTML</h2>
+      <p class="mb-4 text-gray-700">
+        Sometimes, you may want to display content from other websites or sources inside your own webpage. This could be a YouTube video, a Google Map, a PDF file, or even another webpage. HTML provides several elements that allow you to embed this kind of content: <code>&lt;iframe&gt;</code>, <code>&lt;embed&gt;</code>, and <code>&lt;object&gt;</code>. Each has its own use cases and attributes.
+      </p>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-2">
+        <li>
+          <strong><code>&lt;iframe&gt;</code>:</strong> This element displays another web page inside a rectangular area on your site. It is often used for videos, maps, or widgets. The <code>src</code> attribute sets the URL of the page to show.
+        </li>
+        <li>
+          <strong><code>&lt;embed&gt;</code>:</strong> This tag is used to embed interactive content, such as PDFs or Flash files (though Flash is no longer widely supported). The <code>src</code> attribute sets the file to display.
+        </li>
+        <li>
+          <strong><code>&lt;object&gt;</code>:</strong> This element can embed different types of media and documents, such as images, PDFs, or even web pages. It uses the <code>data</code> attribute to set the source file and the <code>type</code> attribute to specify the file type.
+        </li>
+      </ul>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-window"></i>Common Attributes Explained</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-2">
+        <li>
+          <strong><code>src</code>:</strong> Sets the address (URL or file path) of the content to embed. Used with <code>&lt;iframe&gt;</code> and <code>&lt;embed&gt;</code>.
+        </li>
+        <li>
+          <strong><code>data</code>:</strong> Used in <code>&lt;object&gt;</code>, specifies the file or page to display.
+        </li>
+        <li>
+          <strong><code>width</code> and <code>height</code>:</strong> Set the size (in pixels) of the embedded content.
+        </li>
+        <li>
+          <strong><code>type</code>:</strong> Used in <code>&lt;object&gt;</code> to specify the kind of file (like <code>application/pdf</code> for PDFs).
+        </li>
+        <li>
+          <strong><code>title</code>:</strong> Adds a description for accessibility, especially for screen readers.
+        </li>
+        <li>
+          <strong><code>allowfullscreen</code>:</strong> Lets content, such as videos, be viewed in full screen.
+        </li>
+        <li>
+          <strong><code>frameborder</code>:</strong> Used with <code>&lt;iframe&gt;</code> to control the border around the frame (deprecated in HTML5).
+        </li>
+      </ul>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-journal-richtext"></i>More Examples: Using iframe, embed, and object</h2>
+      <p class="mb-2 text-gray-700 font-medium">Embedding a YouTube video with <code>&lt;iframe&gt;</code>:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;iframe src="https://www.youtube.com/embed/xyz123abc"
+  width="560"
+  height="315"
+  title="Bootcamp Introduction"
+  allowfullscreen&gt;&lt;/iframe&gt;
+      </code></pre>
+      <p class="mb-4 text-gray-700">
+        In this example, <code>&lt;iframe&gt;</code> loads a YouTube video. The <code>title</code> describes the content for accessibility, and <code>allowfullscreen</code> lets viewers expand the video.
+      </p>
+      <p class="mb-2 text-gray-700 font-medium">Embedding a PDF with <code>&lt;embed&gt;</code>:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;embed src="syllabus.pdf" width="700" height="500" type="application/pdf"&gt;
+      </code></pre>
+      <p class="mb-4 text-gray-700">
+        The <code>&lt;embed&gt;</code> element displays a PDF file directly on the page. The <code>type</code> attribute tells the browser what kind of document is being shown.
+      </p>
+      <p class="mb-2 text-gray-700 font-medium">Embedding content with <code>&lt;object&gt;</code>:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;object data="syllabus.pdf" type="application/pdf" width="700" height="500"&gt;
+  &lt;p&gt;Your browser does not support PDFs. &lt;a href="syllabus.pdf"&gt;Download the file.&lt;/a&gt;&lt;/p&gt;
+&lt;/object&gt;
+      </code></pre>
+      <p class="mb-4 text-gray-700">
+        The <code>&lt;object&gt;</code> tag lets you embed files and provide fallback content if the browser cannot display the file. The fallback is shown inside the element.
+      </p>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-layout-text-window-reverse"></i>Things to Consider: Embedding External Content</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>
+          Only use external content from trusted sources, especially with <code>&lt;iframe&gt;</code>, to avoid security risks.
+        </li>
+        <li>
+          Always provide descriptive <code>title</code> attributes for accessibility.
+        </li>
+        <li>
+          Some browsers may block certain embeds for security reasons; always test your pages.
+        </li>
+        <li>
+          If the embedded content is important, provide fallback text or download links for users with unsupported browsers.
+        </li>
+        <li>
+          Use <code>width</code> and <code>height</code> to organize layout and avoid layout shifts.
+        </li>
+        <li>
+          Avoid using deprecated attributes like <code>frameborder</code> and prefer modern HTML5 attributes.
+        </li>
+      </ul>
+      <p class="mt-3 text-gray-700">
+        Clear explanations, good descriptions, and tested embeds help both new and experienced users work with external content confidently.
+      </p>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-bookmark-star"></i>Best Practices for Embedding Content</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>
+          Prefer <code>&lt;iframe&gt;</code> for embedding interactive web content like videos or maps.
+        </li>
+        <li>
+          Use <code>&lt;embed&gt;</code> or <code>&lt;object&gt;</code> for documents, and always test for browser support.
+        </li>
+        <li>
+          Always provide fallback content for users with limited browser capabilities.
+        </li>
+        <li>
+          Keep embedded content sized appropriately for both desktop and mobile views.
+        </li>
+        <li>
+          Avoid loading unnecessary external content that could slow down your page.
+        </li>
+        <li>
+          Update or check embedded links periodically to prevent broken or outdated content.
+        </li>
+      </ul>
+    </section>
+
+    <section class="glass-card p-6 mb-10">
+      <h2 class="text-lg font-semibold text-indigo-700 mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Practice: Embed Different Types of Content</h2>
+      <p class="mb-2 text-gray-700">
+        Try adding these examples to your webpage and see how each embed works:
+      </p>
+      <pre class="language-html"><code class="language-html">
+&lt;iframe src="https://www.youtube.com/embed/xyz123abc" width="560" height="315" title="Demo Video" allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;embed src="document.pdf" width="600" height="400" type="application/pdf"&gt;
+
+&lt;object data="presentation.pdf" type="application/pdf" width="700" height="500"&gt;
+  &lt;p&gt;Your browser does not support PDF viewing. &lt;a href="presentation.pdf"&gt;Download here.&lt;/a&gt;&lt;/p&gt;
+&lt;/object&gt;
+      </code></pre>
+      <div class="mt-2 text-gray-700">
+        <p>
+          Try different file types, sizes, and fallback options. Test your page in several browsers to see how embeds behave for different users.
+        </p>
+      </div>
+    </section>
+
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script>
+</body>
+</html>
