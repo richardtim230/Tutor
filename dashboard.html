@@ -802,27 +802,30 @@ function hideStudentLoader() {
   }
 }
 
-// Example: Call your API/data loading here
 function loadDashboardData(token) {
   showStudentLoader();
   Promise.all([
-    fetchStudentProfile(token), // replace with your actual fetch
-    fetchAssignments(token),    // replace with your actual fetch
-    fetchPayments(token)        // replace with your actual fetch
+    
+    fetchAssignments(token),
+    fetchPayments(token)
   ])
   .then(([profile, assignments, payments]) => {
-    // populate the dashboard UI here
-    window.student = profile;
-    window.assignments = assignments;
-    window.payments = payments;
-    renderAssignmentHistory(student.assignmentHistory || []);
-  
-    renderCourses();
-    renderActivity();
-    renderPayments();
-    renderProgressSection();
+    try {
+      window.student = profile;
+      window.assignments = assignments;
+      window.payments = payments;
+      renderAssignmentHistory(student.assignmentHistory || []);
+      renderCourses();
+      renderActivity();
+      renderPayments();
+      renderProgressSection();
+    } catch (err) {
+      console.error('Render error:', err);
+      showToast('Failed to render dashboard: ' + err, 'error');
+    }
   })
   .catch(err => {
+    console.error('Error loading dashboard:', err);
     showToast('Failed to load dashboard: ' + err, 'error');
   })
   .finally(() => {
