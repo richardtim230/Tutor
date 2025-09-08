@@ -805,7 +805,7 @@ function hideStudentLoader() {
 function loadDashboardData(token) {
   showStudentLoader();
   Promise.all([
-    fetchActivity()
+    renderActivity();
     
   ])
   .then(([profile, assignments, payments]) => {
@@ -815,7 +815,7 @@ function loadDashboardData(token) {
       window.payments = payments;
       renderAssignmentHistory(student.assignmentHistory || []);
       renderCourses();
-      renderActivity();
+      
       renderPayments();
       renderProgressSection();
     } catch (err) {
