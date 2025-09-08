@@ -806,19 +806,21 @@ function hideStudentLoader() {
 function loadDashboardData(token) {
   showStudentLoader();
   Promise.all([
-    renderAssignmentHistory(student.assignmentHistory || []);
-  
-    renderCourses();
-    renderActivity();
-    renderPayments();
-    renderProgressSection();
+    fetchStudentProfile(token), // replace with your actual fetch
+    fetchAssignments(token),    // replace with your actual fetch
+    fetchPayments(token)        // replace with your actual fetch
   ])
   .then(([profile, assignments, payments]) => {
     // populate the dashboard UI here
     window.student = profile;
     window.assignments = assignments;
     window.payments = payments;
-    renderDashboard(); // your rendering function
+    renderAssignmentHistory(student.assignmentHistory || []);
+  
+    renderCourses();
+    renderActivity();
+    renderPayments();
+    renderProgressSection();
   })
   .catch(err => {
     showToast('Failed to load dashboard: ' + err, 'error');
