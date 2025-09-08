@@ -763,14 +763,9 @@
   </main>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script>
-    // Add this script to your page (e.g., student dashboard) to show a neat loader/spinner while student data loads.
-
-// --- Loader HTML ---
+// Loader functions
 function showStudentLoader() {
-  // Prevent duplicate loader
   if (document.getElementById('studentDataLoader')) return;
-
-  // Spinner styles
   const loaderHtml = `
     <div id="studentDataLoader" style="
       position:fixed;
@@ -799,7 +794,6 @@ function showStudentLoader() {
   document.body.insertAdjacentHTML('beforeend', loaderHtml);
 }
 
-// Hide the loader when data is ready
 function hideStudentLoader() {
   const loader = document.getElementById('studentDataLoader');
   if (loader) {
@@ -808,14 +802,38 @@ function hideStudentLoader() {
   }
 }
 
+// Example: Call your API/data loading here
+function loadDashboardData(token) {
+  showStudentLoader();
+  Promise.all([
+    fetchStudentProfile(token), // replace with your actual fetch
+    fetchAssignments(token),    // replace with your actual fetch
+    fetchPayments(token)        // replace with your actual fetch
+  ])
+  .then(([profile, assignments, payments]) => {
+    // populate the dashboard UI here
+    window.student = profile;
+    window.assignments = assignments;
+    window.payments = payments;
+    renderDashboard(); // your rendering function
+  })
+  .catch(err => {
+    showToast('Failed to load dashboard: ' + err, 'error');
+  })
+  .finally(() => {
+    hideStudentLoader();
+  });
+}
 
-showStudentLoader(); 
-
-setTimeout(() => {
-  // Student data loaded here (e.g. window.student = {...})
-  hideStudentLoader();
-  renderAssignmentHistoryTable(); // or any other render function
-}, 5000);
+// Usage example (run after DOMContentLoaded):
+document.addEventListener("DOMContentLoaded", function() {
+  const token = localStorage.getItem('codecx_token');
+  if (token) {
+    loadDashboardData(token);
+  } else {
+    window.location.href = "login.html";
+  }
+});
 
 
 // --- End of loader code ---
