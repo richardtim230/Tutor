@@ -471,18 +471,17 @@
                 btnText.innerHTML = "Login";
             }
         });
-        // Add this script after your main <script> in login.html
-
-// --- Open/Close Modal ---
+// Place after your main <script>
 document.getElementById('forgot-link').onclick = function () {
   openForgotPasswordModal();
 };
+
 function openForgotPasswordModal() {
   document.getElementById('forgot-password-modal').classList.remove('hidden');
   document.getElementById('forgotPasswordStep1').reset();
   document.getElementById('forgotPasswordStep2').reset();
   document.getElementById('forgotPasswordStep1').style.display = '';
-  document.getElementById('forgotPasswordStep2').style.display = 'none';
+  document.getElementById('forgotPasswordStep2').style.display = 'none'; // hide password step
   document.getElementById('fpStep1Error').textContent = '';
   document.getElementById('fpStep2Error').textContent = '';
   document.getElementById('fpSuccessMsg').classList.add('hidden');
@@ -491,7 +490,7 @@ function closeForgotPasswordModal() {
   document.getElementById('forgot-password-modal').classList.add('hidden');
 }
 
-// --- Step 1: Verify Identity ---
+// STEP 1: Identity verification
 document.getElementById('forgotPasswordStep1').onsubmit = async function(e) {
   e.preventDefault();
   let btn = document.getElementById('fpVerifyBtn');
@@ -505,12 +504,10 @@ document.getElementById('forgotPasswordStep1').onsubmit = async function(e) {
   const matricNumber = document.getElementById('fpMatric').value.trim();
 
   try {
-    // Backend endpoint to verify student exists
-    const res = await fetch(`https://examguide.onrender.com/api/codecxreg/admin`, { method: 'GET' });
+    const res = await fetch(`${API_BASE}/api/codecxreg/admin`, { method: 'GET' });
     const data = await res.json();
     if (!res.ok || !data.students) throw new Error('Network error');
-
-    // Try to find exact match
+    // Find exact match
     const found = data.students.find(s =>
       s.email.trim().toLowerCase() === email.toLowerCase() &&
       s.fullName.trim().toLowerCase() === fullName.toLowerCase() &&
@@ -521,11 +518,10 @@ document.getElementById('forgotPasswordStep1').onsubmit = async function(e) {
       btn.disabled = false; spinner.classList.add('hidden'); btnText.textContent = 'Verify';
       return;
     }
-    // Move to Step 2
+    // Show password step
     document.getElementById('forgotPasswordStep1').style.display = 'none';
     document.getElementById('forgotPasswordStep2').style.display = '';
-    document.getElementById('fpStep1Error').textContent = '';
-    window._fpStudentId = found._id; // Save for reset
+    window._fpStudentId = found._id;
   } catch (err) {
     document.getElementById('fpStep1Error').textContent = "Network error. Please try again.";
   } finally {
@@ -533,7 +529,7 @@ document.getElementById('forgotPasswordStep1').onsubmit = async function(e) {
   }
 };
 
-// --- Step 2: Set New Password ---
+// STEP 2: Reset password
 document.getElementById('forgotPasswordStep2').onsubmit = async function(e) {
   e.preventDefault();
   let btn = document.getElementById('fpResetBtn');
@@ -556,8 +552,6 @@ document.getElementById('forgotPasswordStep2').onsubmit = async function(e) {
     return;
   }
   try {
-    // Backend endpoint to update password (admin privilege)
-    // You will need to implement this endpoint on your backend!
     const res = await fetch(`${API_BASE}/api/codecxreg/admin/candidate/${window._fpStudentId}/reset-password`, {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
