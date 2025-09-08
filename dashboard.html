@@ -1037,7 +1037,7 @@ function renderProgressSection() {
   function isWithinWindow(sessionDate) {
     if (formatDate(now) !== sessionDate) return false;
     const hour = now.getHours();
-    return (hour >= 20 && hour <= 23);
+    return (hour >= 16 && hour <= 23);
   }
   document.getElementById("progressSummary").textContent = "";
   const grid = document.getElementById("progressGrid");
