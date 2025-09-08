@@ -763,6 +763,8 @@
   </main>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script>
+    const API_BASE = "https://examguide.onrender.com/api/codecxreg";
+
 // Loader functions
 function showStudentLoader() {
   if (document.getElementById('studentDataLoader')) return;
@@ -802,20 +804,45 @@ function hideStudentLoader() {
   }
 }
 
+
+// Fetch student profile (includes assignments and payments)
+function fetchStudentProfile(token) {
+  return fetch(`${API_BASE}/me`, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  .then(res => {
+    if (!res.ok) throw new Error('Failed to fetch profile');
+    return res.json();
+  });
+}
+
+// Get assignments from profile
+function fetchAssignments(token) {
+  return fetchStudentProfile(token)
+    .then(profile => profile.assignmentHistory || []);
+}
+
+// Get payments from profile
+function fetchPayments(token) {
+  return fetchStudentProfile(token)
+    .then(profile => profile.payments || []);
+}
+
+// Usage in loadDashboardData:
 function loadDashboardData(token) {
   showStudentLoader();
   Promise.all([
-    
-    
+    fetchStudentProfile(token),
+    fetchAssignments(token),
+    fetchPayments(token)
   ])
   .then(([profile, assignments, payments]) => {
     try {
       window.student = profile;
       window.assignments = assignments;
       window.payments = payments;
-      renderAssignmentHistory(student.assignmentHistory || []);
+      renderAssignmentHistory(assignments);
       renderCourses();
-      
       renderPayments();
       renderProgressSection();
     } catch (err) {
@@ -898,8 +925,7 @@ document.addEventListener("DOMContentLoaded", function() {
 })();
     
 
-    const API_BASE = "https://examguide.onrender.com/api/codecxreg";
-const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
+    const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
 let student = {};
 let token = localStorage.getItem('codecx_token');
 let chatPollingInterval = null;
