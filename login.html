@@ -296,6 +296,29 @@
         </div>
       </div>
     </div>
+    <!-- Forgot Password Modal -->
+<div id="forgot-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+  <div class="modal-content">
+    <button class="close-modal" id="close-forgot-modal" aria-label="Close">&times;</button>
+    <div id="forgot-step1">
+      <div class="modal-title">Forgot Password</div>
+      <div class="modal-message">Enter your details below to reset your password.</div>
+      <form id="forgot-form">
+        <input type="text" id="forgot-fullname" class="input-group" placeholder="Full Name" required>
+        <input type="email" id="forgot-email" class="input-group" placeholder="Email" required>
+        <input type="text" id="forgot-matric" class="input-group" placeholder="Matric Number" required>
+        <button type="submit" class="modal-btn w-full mt-2">Verify Details</button>
+      </form>
+    </div>
+    <div id="forgot-step2" style="display:none;">
+      <div class="modal-title">Set New Password</div>
+      <form id="reset-form">
+        <input type="password" id="forgot-newpassword" class="input-group" placeholder="New Password" required minlength="6">
+        <button type="submit" class="modal-btn w-full mt-2">Reset Password</button>
+      </form>
+    </div>
+  </div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
         // Autofill using URL params
@@ -408,6 +431,68 @@
                 btnText.innerHTML = "Login";
             }
         });
+        const forgotModal = document.getElementById('forgot-modal');
+const closeForgotModal = document.getElementById('close-forgot-modal');
+document.getElementById('forgot-link').onclick = function () {
+    forgotModal.classList.remove('hidden');
+    forgotModal.classList.add('show');
+    document.getElementById('forgot-step1').style.display = "";
+    document.getElementById('forgot-step2').style.display = "none";
+};
+closeForgotModal.onclick = function() {
+    forgotModal.classList.add('hidden');
+    forgotModal.classList.remove('show');
+};
+
+// Step 1: Verify user
+let forgotUserId = null;
+document.getElementById('forgot-form').onsubmit = async function(e) {
+    e.preventDefault();
+    const fullName = document.getElementById('forgot-fullname').value.trim();
+    const email = document.getElementById('forgot-email').value.trim();
+    const matric = document.getElementById('forgot-matric').value.trim();
+    try {
+        const resp = await fetch(`${API_BASE}/api/codecxreg/forgot-password/verify`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fullName, email, matricNumber: matric })
+        });
+        const data = await resp.json();
+        if (resp.ok && data.success) {
+            forgotUserId = data.userId;
+            // Show step 2
+            document.getElementById('forgot-step1').style.display = "none";
+            document.getElementById('forgot-step2').style.display = "";
+        } else {
+            alert(data.message || "No user found.");
+        }
+    } catch (err) {
+        alert("Network error.");
+    }
+};
+
+// Step 2: Reset password
+document.getElementById('reset-form').onsubmit = async function(e) {
+    e.preventDefault();
+    const newPassword = document.getElementById('forgot-newpassword').value;
+    try {
+        const resp = await fetch(`${API_BASE}/api/codecxreg/forgot-password/reset`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId: forgotUserId, newPassword })
+        });
+        const data = await resp.json();
+        if (resp.ok && data.success) {
+            alert("Password reset successfully!");
+            forgotModal.classList.add('hidden');
+            forgotModal.classList.remove('show');
+        } else {
+            alert(data.message || "Error resetting password.");
+        }
+    } catch (err) {
+        alert("Network error.");
+    }
+};
     </script>
 </body>
 </html>
