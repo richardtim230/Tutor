@@ -270,7 +270,7 @@
                 </div>
                 <div class="actions-row">
                     <label><input type="checkbox" id="rememberMe"> Remember me</label>
-                    <span class="link-text" id="forgot-link">Forgot password?</span>
+                    <a href="reset-password.html" class="link-text" id="forgot-link">Forgot password?</a>
                 </div>
                 <button type="submit" id="login-btn" class="submit-btn mt-2">
                     <span id="btn-text">Login</span>
@@ -342,16 +342,6 @@
             document.getElementById('notify-modal').classList.remove('show');
         }
 
-        // Forgot password link
-        document.getElementById('forgot-link').onclick = function () {
-            showNotifyModal({
-                icon: '<i class="bi bi-info-circle-fill text-indigo-500"></i>',
-                title: 'Forgot Password',
-                message: 'Please contact the admin to reset your password.',
-                btnText: 'OK'
-            });
-        };
-
         // Login handling
         const API_BASE = "https://examguide.onrender.com"; // Update to your backend
         const loginForm = document.getElementById('login-form');
@@ -374,19 +364,19 @@
                 });
                 const data = await response.json();
                 if (response.ok && data.token) {
-    localStorage.setItem("codecx_token", data.token);
-    localStorage.setItem('matricNumber', data.matric || data.matricNumber);
+                    localStorage.setItem("codecx_token", data.token);
+                    localStorage.setItem('matricNumber', data.matric || data.matricNumber);
 
-    showNotifyModal({
-        icon: '<i class="bi bi-check-circle-fill text-green-600"></i>',
-        title: 'Login Successful',
-        message: 'You have successfully logged in. Click continue to access your dashboard.',
-        btnText: 'Continue',
-        btnAction: function() {
-            window.location.href = "/dashboard.html";
-        },
-        showClose: false
-    });
+                    showNotifyModal({
+                        icon: '<i class="bi bi-check-circle-fill text-green-600"></i>',
+                        title: 'Login Successful',
+                        message: 'You have successfully logged in. Click continue to access your dashboard.',
+                        btnText: 'Continue',
+                        btnAction: function() {
+                            window.location.href = "/dashboard.html";
+                        },
+                        showClose: false
+                    });
 
                 } else {
                     // Show modal for login error
