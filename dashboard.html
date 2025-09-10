@@ -1079,71 +1079,61 @@ function getQuizStatus(day) {
   };
 }
 
-
-  function isQuizOrAttendanceOpenForToday(startDate, dayNumber) {
-    // Calculate the date for this day
-    const dayDate = new Date(startDate);
-    dayDate.setDate(dayDate.getDate() + (dayNumber - 1));
-    const now = new Date();
-
-    // Check if today matches this day's date
-    const isToday =
-      now.getFullYear() === dayDate.getFullYear() &&
-      now.getMonth() === dayDate.getMonth() &&
-      now.getDate() === dayDate.getDate();
-
-    if (!isToday) return false;
-
-    // Check if current time is between 4:00am and 12:00pm
-    const currentMinutes = now.getHours() * 60 + now.getMinutes();
-    const openTime = 4 * 60;    // 4:00am = 240 minutes
-    const closeTime = 12 * 60;  // 12:00pm = 720 minutes
-
-    return currentMinutes >= openTime && currentMinutes < closeTime;
+// Render progress grid with time/date restrictions and quiz/attendance gating
+function renderProgressSection() {
+  let completed = 0;
+  const now = new Date();
+  const allowedTopics = getAllowedTopics(student.courses);
+  // Check time window (8pm to 11:59pm)
+  function isWithinWindow(sessionDate) {
+    if (formatDate(now) !== sessionDate) return false;
+    const hour = now.getHours();
+    return (hour >= 16 && hour <= 23);
   }
+  document.getElementById("progressSummary").textContent = "";
+  const grid = document.getElementById("progressGrid");
+  grid.innerHTML = "";
+  let visibleSessions = 0;
+  let visibleCompleted = 0;
 
-  /**
-   * Renders the progress section with quiz and attendance buttons, unlocked only 4:00am-12:00pm for the current day.
-   */
-  function renderProgressSection() {
-    const hasPaid = student.hasPaid;
-    const progressGrid = document.getElementById('progressGrid');
-    progressGrid.innerHTML = "";
+  sessions.forEach(s => {
+    // Only show session if topic is allowed
+    if (!allowedTopics[s.topicKey]) return;
 
-    const totalDays = 60; // Or set your course length
-    const startDate = new Date("2025-09-01"); // <-- Set your actual course start date!
-    const today = new Date();
+    visibleSessions++;
+    const status = getQuizStatus(s.day);
+    if (status.quiz && status.attendance) visibleCompleted++;
+    let color = "border-gray-300";
+    if (s.day <= 20) color = "border-yellow-400";
+    else if (s.day <= 40) color = "border-blue-400";
+    else color = "border-green-400";
 
-    for (let day = 1; day <= totalDays; day++) {
-      // Find out if quiz/attendance are done for this day
-      const quizDone = student.quizzes && student.quizzes.some(q => parseInt(q.day) === day);
-      const attendanceDone = student.attendance && student.attendance.some(a => {
-        const attDate = new Date(a.date);
-        const attDay = Math.floor((attDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-        return attDay === day;
-      });
+    // Determine quiz/attendance access
+    const canAccess = isWithinWindow(s.date);
 
-      // Only unlock if paid and today is the matching day and in the time window
-      const unlockToday = hasPaid && isQuizOrAttendanceOpenForToday(startDate, day);
-
-      progressGrid.innerHTML += `
-        <div class="flex flex-col gap-2 items-start justify-start relative ${!unlockToday ? 'locked' : ''}">
-          <div class="font-bold mb-1">Day ${day}</div>
-          <button class="quiz-btn ${quizDone || !unlockToday ? 'opacity-50 pointer-events-none' : 'bg-indigo-600 text-white'}"
-            ${quizDone || !unlockToday ? 'disabled' : ''}
-            onclick="startQuiz(${day})">
-            ${quizDone ? 'Quiz Done' : 'Take Quiz'}
-          </button>
-          <button class="attendance-btn ${attendanceDone || !unlockToday ? 'opacity-50 pointer-events-none' : 'bg-green-600 text-white'}"
-            ${attendanceDone || !unlockToday ? 'disabled' : ''}
-            onclick="markAttendance(${day})">
-            ${attendanceDone ? 'Attendance Marked' : 'Mark Attendance'}
-          </button>
+    grid.innerHTML += `
+      <div class="border ${color} rounded-lg p-3 bg-gray-50 flex flex-col items-start relative min-w-0">
+        <div class="font-bold text-sm mb-1">${s.topic}</div>
+        <div class="text-xs text-gray-500 mb-2">Day ${s.day} | <span>${s.date}</span></div>
+        <div class="flex items-center gap-2 mb-2">
+          ${status.quiz
+        ? `<span class="text-green-700 flex items-center"><i class="bi bi-check-circle-fill mr-1"></i>Quiz Done</span>`
+        : canAccess
+          ? `<button class="px-2 py-1 text-xs bg-indigo-600 text-white rounded quiz-btn" data-day="${s.day}">Take Quiz</button>`
+          : `<button class="px-2 py-1 text-xs bg-gray-400 text-white rounded quiz-btn" data-day="${s.day}" disabled title="Quiz opens ${s.date} between 8pm-11:59pm">Locked</button>`
+      }
         </div>
-      `;
-    }
-  }
-
+        <div class="flex items-center gap-2">
+          ${status.attendance
+        ? `<span class="text-green-700 flex items-center"><i class="bi bi-person-check-fill mr-1"></i>Attendance Marked</span>`
+        : (status.quiz && canAccess)
+          ? `<button class="px-2 py-1 text-xs bg-green-600 text-white rounded attendance-btn" data-day="${s.day}">Mark Attendance</button>`
+          : `<button class="px-2 py-1 text-xs bg-gray-400 text-white rounded attendance-btn" data-day="${s.day}" disabled title="Attendance opens ${s.date} between 8pm-11:59pm">Locked</button>`
+      }
+        </div>
+      </div>
+    `;
+  });
 
   document.getElementById("progressSummary").textContent =
     `Completed: ${visibleCompleted} / ${visibleSessions} days`;
