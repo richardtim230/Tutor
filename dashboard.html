@@ -1084,12 +1084,16 @@ function renderProgressSection() {
   let completed = 0;
   const now = new Date();
   const allowedTopics = getAllowedTopics(student.courses);
-  // Check time window (8pm to 11:59pm)
+
+  // Check time window (4:00am to 12:00pm)
   function isWithinWindow(sessionDate) {
     if (formatDate(now) !== sessionDate) return false;
     const hour = now.getHours();
-    return (hour >= 16 && hour <= 23);
+    const minute = now.getMinutes();
+    const mins = hour * 60 + minute;
+    return (mins >= 4 * 60 && mins < 12 * 60); // 4:00am <= now < 12:00pm
   }
+
   document.getElementById("progressSummary").textContent = "";
   const grid = document.getElementById("progressGrid");
   grid.innerHTML = "";
@@ -1120,7 +1124,7 @@ function renderProgressSection() {
         ? `<span class="text-green-700 flex items-center"><i class="bi bi-check-circle-fill mr-1"></i>Quiz Done</span>`
         : canAccess
           ? `<button class="px-2 py-1 text-xs bg-indigo-600 text-white rounded quiz-btn" data-day="${s.day}">Take Quiz</button>`
-          : `<button class="px-2 py-1 text-xs bg-gray-400 text-white rounded quiz-btn" data-day="${s.day}" disabled title="Quiz opens ${s.date} between 8pm-11:59pm">Locked</button>`
+          : `<button class="px-2 py-1 text-xs bg-gray-400 text-white rounded quiz-btn" data-day="${s.day}" disabled title="Quiz opens ${s.date} between 4:00am-12:00pm">Locked</button>`
       }
         </div>
         <div class="flex items-center gap-2">
@@ -1128,7 +1132,7 @@ function renderProgressSection() {
         ? `<span class="text-green-700 flex items-center"><i class="bi bi-person-check-fill mr-1"></i>Attendance Marked</span>`
         : (status.quiz && canAccess)
           ? `<button class="px-2 py-1 text-xs bg-green-600 text-white rounded attendance-btn" data-day="${s.day}">Mark Attendance</button>`
-          : `<button class="px-2 py-1 text-xs bg-gray-400 text-white rounded attendance-btn" data-day="${s.day}" disabled title="Attendance opens ${s.date} between 8pm-11:59pm">Locked</button>`
+          : `<button class="px-2 py-1 text-xs bg-gray-400 text-white rounded attendance-btn" data-day="${s.day}" disabled title="Attendance opens ${s.date} between 4:00am-12:00pm">Locked</button>`
       }
         </div>
       </div>
