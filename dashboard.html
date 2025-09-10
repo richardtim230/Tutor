@@ -760,6 +760,137 @@
       </div>
 
     </section>
+    <!-- Welcome Modal HTML (to be placed at the end of <body> in dashboard.html) -->
+<div id="welcomeModalBg" class="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center hidden">
+  <div id="welcomeModal" class="bg-white rounded-2xl shadow-2xl px-6 py-8 max-w-lg w-full relative animate-fadeIn">
+    <button aria-label="Close" onclick="closeWelcomeModal()" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-indigo-600 transition-colors font-bold">&times;</button>
+    <div id="welcomeSlides"></div>
+    <div class="flex justify-between items-center mt-6">
+      <button id="welcomePrevBtn" onclick="welcomePrevSlide()" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-indigo-100 transition" style="min-width:90px;display:none">Previous</button>
+      <button id="welcomeNextBtn" onclick="welcomeNextSlide()" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition" style="min-width:90px;">Next</button>
+    </div>
+    <div class="flex justify-center mt-5">
+      <div id="welcomeDots" class="flex gap-2"></div>
+    </div>
+  </div>
+</div>
+<style>
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.animate-fadeIn { animation: fadeIn 0.5s; }
+#welcomeModal h2 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #4338ca;
+  margin-bottom: 0.5rem;
+}
+#welcomeModal p, #welcomeModal ul {
+  color: #374151;
+  font-size: 1.07rem;
+  margin-bottom: 0.5rem;
+}
+#welcomeDots .dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #e0e7ff; transition: background 0.2s;
+  border: 1.5px solid #6366f1;
+  display: inline-block;
+}
+#welcomeDots .dot.active { background: #6366f1; }
+</style>
+<script>
+// Welcome modal slides content
+const welcomeSlides = [
+  {
+    // SLIDE 1
+    title: "",
+    body: `<p>Welcome <span id="welcomeStudentName" class="font-bold text-indigo-700"></span> to CODECX Institute for Developers.</p>
+    <p>This is your student dashboard where majority of the tasks would take place. Kindly take note of the following:</p>`
+  },
+  {
+    // SLIDE 2
+    title: "PAYMENT INSTRUCTIONS",
+    body: `<p>Kindly make a payment of <span class="font-bold text-green-700">N4000</span> through the payment channel below to have your account activated.</p>
+    <p>You can make use of transfer, card, or any other method provided on the payment page.</p>`
+  },
+  {
+    // SLIDE 3
+    title: "",
+    body: `<p>Upon activation of your dashboard, you'll have access to the needed features provided on this page which includes the resource page, video page, challenge page and live sessions.</p>`
+  },
+  {
+    // SLIDE 4
+    title: "IMPORTANT NOTICE",
+    body: `<p>Always check the resources pages, both video and materials, for the materials made available for you. The materials are very essential for this program so endeavor to go through them.</p>`
+  },
+  {
+    // SLIDE 5
+    title: "",
+    body: `<p>General classes hold on <span class="font-bold text-indigo-700">Thursday, Friday and Saturday</span> on the WhatsApp group which you can access via the link on your dashboard.</p>
+    <p class="text-green-700 font-semibold">Happy learning!</p>`
+  }
+];
+
+let welcomeCurrentSlide = 0;
+function showWelcomeModal(studentName = "") {
+  // Only show for first login
+  if (!localStorage.getItem('codecx_welcome_shown')) {
+    renderWelcomeSlide();
+    document.getElementById('welcomeModalBg').classList.remove('hidden');
+    // Set student name dynamically
+    setTimeout(() => {
+      const el = document.getElementById('welcomeStudentName');
+      if (el && studentName) el.textContent = studentName;
+    }, 0);
+    localStorage.setItem('codecx_welcome_shown', '1');
+  }
+}
+function closeWelcomeModal() {
+  document.getElementById('welcomeModalBg').classList.add('hidden');
+}
+function renderWelcomeSlide() {
+  const slide = welcomeSlides[welcomeCurrentSlide];
+  document.getElementById('welcomeSlides').innerHTML = `
+    ${slide.title ? `<h2>${slide.title}</h2>` : ""}
+    <div>${slide.body}</div>
+  `;
+  // Dots
+  let dots = '';
+  for (let i = 0; i < welcomeSlides.length; i++) {
+    dots += `<span class="dot${i === welcomeCurrentSlide ? ' active' : ''}"></span>`;
+  }
+  document.getElementById('welcomeDots').innerHTML = dots;
+  // Button states
+  document.getElementById('welcomePrevBtn').style.display = (welcomeCurrentSlide === 0) ? "none" : "";
+  document.getElementById('welcomeNextBtn').textContent = (welcomeCurrentSlide === welcomeSlides.length - 1) ? "Finish" : "Next";
+}
+function welcomeNextSlide() {
+  if (welcomeCurrentSlide < welcomeSlides.length - 1) {
+    welcomeCurrentSlide++;
+    renderWelcomeSlide();
+  } else {
+    closeWelcomeModal();
+  }
+}
+function welcomePrevSlide() {
+  if (welcomeCurrentSlide > 0) {
+    welcomeCurrentSlide--;
+    renderWelcomeSlide();
+  }
+}
+
+// Show modal after login if needed
+document.addEventListener("DOMContentLoaded", function() {
+  setTimeout(() => {
+    let name =
+      (window.student && window.student.fullName) ||
+      localStorage.getItem('studentName') ||
+      '';
+    showWelcomeModal(name);
+  }, 1100); // show shortly after dashboard is loaded
+});
+</script>
   </main>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script>
