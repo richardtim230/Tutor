@@ -1079,19 +1079,21 @@ function getQuizStatus(day) {
   };
 }
 
-// Render progress grid with time/date restrictions and quiz/attendance gating
 function renderProgressSection() {
   let completed = 0;
   const now = new Date();
   const allowedTopics = getAllowedTopics(student.courses);
 
-  // Check time window (4:00am to 12:00pm)
+  // Use UTC for all date and time logic!
+  function formatDateUTC(date) {
+    return date.toISOString().slice(0, 10);
+  }
   function isWithinWindow(sessionDate) {
-    if (formatDate(now) !== sessionDate) return false;
-    const hour = now.getHours();
-    const minute = now.getMinutes();
+    if (formatDateUTC(now) !== sessionDate) return false;
+    const hour = now.getUTCHours();
+    const minute = now.getUTCMinutes();
     const mins = hour * 60 + minute;
-    return (mins >= 4 * 60 && mins < 12 * 60); // 4:00am <= now < 12:00pm
+    return (mins >= 4 * 60 && mins < 12 * 60); // 4:00am <= now < 12:00pm UTC
   }
 
   document.getElementById("progressSummary").textContent = "";
@@ -1101,9 +1103,7 @@ function renderProgressSection() {
   let visibleCompleted = 0;
 
   sessions.forEach(s => {
-    // Only show session if topic is allowed
     if (!allowedTopics[s.topicKey]) return;
-
     visibleSessions++;
     const status = getQuizStatus(s.day);
     if (status.quiz && status.attendance) visibleCompleted++;
@@ -1111,8 +1111,6 @@ function renderProgressSection() {
     if (s.day <= 20) color = "border-yellow-400";
     else if (s.day <= 40) color = "border-blue-400";
     else color = "border-green-400";
-
-    // Determine quiz/attendance access
     const canAccess = isWithinWindow(s.date);
 
     grid.innerHTML += `
@@ -1546,12 +1544,7 @@ function renderPayments() {
       : "No payment yet. Please complete payment to unlock features.";
 }
 
-// --- Date Formatting ---
-function formatDate(dt) {
-  const date = new Date(dt);
-  if (isNaN(date)) return "";
-  return date.toLocaleString();
-}
+
 
 
 // Update assignment upload flow to call reloadDashboard after successful submission
