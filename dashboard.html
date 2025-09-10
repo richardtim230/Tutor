@@ -1040,11 +1040,10 @@ function getAllowedTopics(courses) {
   };
 }
 
-// Helper: Format date as YYYY-MM-DD
-function formatDate(date) {
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const dd = String(date.getDate()).padStart(2, '0');
+function formatDateUTC(date) {
+  const yyyy = date.getUTCFullYear();
+  const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const dd = String(date.getUTCDate()).padStart(2, '0');
   return `${yyyy}-${mm}-${dd}`;
 }
 
@@ -1544,7 +1543,12 @@ function renderPayments() {
       : "No payment yet. Please complete payment to unlock features.";
 }
 
-
+// --- Date Formatting ---
+function formatDate(dt) {
+  const date = new Date(dt);
+  if (isNaN(date)) return "";
+  return date.toLocaleString();
+    }
 
 
 // Update assignment upload flow to call reloadDashboard after successful submission
