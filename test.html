@@ -656,82 +656,96 @@ function getQuizStatus(day) {
 }
 
 function renderProgressSection() {
-  let completed = 0;
+/**
+ * Fetches today's quiz from quizzes.json based on the current day number.
+ * @param {number} day - The day number to fetch (e.g., 1 for Day 1)
+ * @returns {Promise<Object|null>} - Quiz object for the day or null if not found
+ */
+async function fetchQuizForDay(day) {
+  try {
+    // Adjust path if quizzes.json is stored elsewhere
+    const response = await fetch('/quizzes.json');
+    if (!response.ok) throw new Error('Failed to load quizzes.json');
+    const data = await response.json();
+    // Find the quiz for the requested day
+    const quiz = data.days.find(q => q.day === day);
+    return quiz || null;
+  } catch (error) {
+    console.error('Error fetching quiz:', error);
+    return null;
+  }
+}
+
+async function renderProgressSection() {
+  // Calculate today's day number based on PROGRAM_START_DATE
+  const PROGRAM_START_DATE = new Date('2025-09-08T00:00:00Z'); // UTC
   const now = new Date();
-  const allowedTopics = getAllowedTopics(student.courses);
+  const diffDays = Math.floor((now - PROGRAM_START_DATE) / (1000 * 60 * 60 * 24)) + 1;
 
-  // Use UTC for all date and time logic!
-  function formatDateUTC(date) {
-    return date.toISOString().slice(0, 10);
+  // Fetch today's quiz
+  const quiz = await fetchQuizForDay(diffDays);
+
+  const progressSummary = document.getElementById("progressSummary");
+  const progressGrid = document.getElementById("progressGrid");
+
+  // If quiz not found or before program starts
+  if (!quiz) {
+    if (now < PROGRAM_START_DATE) {
+      progressSummary.textContent = "The program has not started yet.";
+    } else {
+      progressSummary.textContent = "No quiz found for today.";
+    }
+    progressGrid.innerHTML = "";
+    return;
   }
-  function isWithinWindow(sessionDate) {
-    if (formatDateUTC(now) !== sessionDate) return false;
-    const hour = now.getUTCHours();
-    const minute = now.getUTCMinutes();
-    const mins = hour * 60 + minute;
-    return (mins >= 4 * 60 && mins < 12 * 60); // 4:00am <= now < 12:00pm UTC
+
+  // Determine completion status for today (use your own logic)
+  const status = getQuizStatus(diffDays); // assumes you have this helper
+
+  // Render single quiz card (and attendance)
+  let html = `<div class="border border-indigo-400 rounded-lg p-4 bg-gray-50 flex flex-col items-start relative min-w-0 mb-3" style="max-width:500px;">
+    <div class="font-bold text-lg mb-1">${quiz.topic}</div>
+    <div class="text-xs text-gray-500 mb-3">Day ${quiz.day}</div>
+    <div class="mb-3">`;
+
+  if (status.quiz) {
+    html += `<span class="text-green-700 flex items-center"><i class="bi bi-check-circle-fill mr-1"></i>Quiz Done</span>`;
+  } else {
+    html += `<button class="px-3 py-2 text-base bg-indigo-600 text-white rounded quiz-btn" data-day="${quiz.day}">Take Quiz</button>`;
   }
 
-  document.getElementById("progressSummary").textContent = "";
-  const grid = document.getElementById("progressGrid");
-  grid.innerHTML = "";
-  let visibleSessions = 0;
-  let visibleCompleted = 0;
+  html += `</div>`;
 
-  sessions.forEach(s => {
-    if (!allowedTopics[s.topicKey]) return;
-    visibleSessions++;
-    const status = getQuizStatus(s.day);
-    if (status.quiz && status.attendance) visibleCompleted++;
-    let color = "border-gray-300";
-    if (s.day <= 20) color = "border-yellow-400";
-    else if (s.day <= 40) color = "border-blue-400";
-    else color = "border-green-400";
-    const canAccess = isWithinWindow(s.date);
+  if (status.attendance) {
+    html += `<span class="text-green-700 flex items-center"><i class="bi bi-person-check-fill mr-1"></i>Attendance Marked</span>`;
+  } else if (status.quiz) {
+    html += `<button class="px-3 py-2 text-base bg-green-600 text-white rounded attendance-btn" data-day="${quiz.day}">Mark Attendance</button>`;
+  }
 
-    grid.innerHTML += `
-      <div class="border ${color} rounded-lg p-3 bg-gray-50 flex flex-col items-start relative min-w-0">
-        <div class="font-bold text-sm mb-1">${s.topic}</div>
-        <div class="text-xs text-gray-500 mb-2">Day ${s.day} | <span>${s.date}</span></div>
-        <div class="flex items-center gap-2 mb-2">
-          ${status.quiz
-        ? `<span class="text-green-700 flex items-center"><i class="bi bi-check-circle-fill mr-1"></i>Quiz Done</span>`
-        : canAccess
-          ? `<button class="px-2 py-1 text-xs bg-indigo-600 text-white rounded quiz-btn" data-day="${s.day}">Take Quiz</button>`
-          : `<button class="px-2 py-1 text-xs bg-gray-400 text-white rounded quiz-btn" data-day="${s.day}" disabled title="Quiz opens ${s.date} between 4:00am-12:00pm">Locked</button>`
-      }
-        </div>
-        <div class="flex items-center gap-2">
-          ${status.attendance
-        ? `<span class="text-green-700 flex items-center"><i class="bi bi-person-check-fill mr-1"></i>Attendance Marked</span>`
-        : (status.quiz && canAccess)
-          ? `<button class="px-2 py-1 text-xs bg-green-600 text-white rounded attendance-btn" data-day="${s.day}">Mark Attendance</button>`
-          : `<button class="px-2 py-1 text-xs bg-gray-400 text-white rounded attendance-btn" data-day="${s.day}" disabled title="Attendance opens ${s.date} between 4:00am-12:00pm">Locked</button>`
-      }
-        </div>
-      </div>
-    `;
-  });
+  html += `</div>`;
 
-  document.getElementById("progressSummary").textContent =
-    `Completed: ${visibleCompleted} / ${visibleSessions} days`;
+  progressSummary.textContent = "";
+  progressGrid.innerHTML = html;
 
-  // Quiz button click event
-  document.querySelectorAll(".quiz-btn:not([disabled])").forEach(btn => {
+  // Quiz button event
+  document.querySelectorAll(".quiz-btn").forEach(btn => {
     btn.onclick = async function () {
-      const day = btn.getAttribute("data-day");
+      const day = parseInt(btn.getAttribute("data-day"), 10);
+      // Use your existing quiz modal logic, e.g.:
       await showQuizModal(day);
     };
   });
 
-  // Attendance button click event
-  document.querySelectorAll(".attendance-btn:not([disabled])").forEach(btn => {
+  // Attendance button event
+  document.querySelectorAll(".attendance-btn").forEach(btn => {
     btn.onclick = async function () {
-      const day = btn.getAttribute("data-day");
+      const day = parseInt(btn.getAttribute("data-day"), 10);
       await markAttendance(day);
     };
   });
 }
+
+  
 
 // ---- QUIZ MODAL LOGIC ----
 async function showQuizModal(day) {
@@ -750,16 +764,20 @@ async function showQuizModal(day) {
       <form id="quizForm">
         <div class="modal-quiz">`;
     data.questions.forEach((q, i) => {
-      html += `
-        <div><b>Q${i + 1}:</b> ${q.question}</div>
-        <div class="modal-quiz-options">` +
-        q.options.map((opt, idx) =>
-          `<label>
-            <input type="radio" name="q${i}" value="${opt}" ${idx === 0 ? "checked" : ""}/>
-            <span>${opt}</span>
-          </label>`
-        ).join("") + `</div>`;
-    });
+  html += `<div class="mb-2"><b>Q${i + 1}:</b> ${q.question}</div>`;
+  if (q.code) {
+    html += `<pre class="bg-gray-100 rounded p-2 mb-2 overflow-x-auto">
+      <code class="language-html">${escapeHtml(q.code)}</code>
+    </pre>`;
+  }
+  html += `<div class="modal-quiz-options mb-4">` +
+    q.options.map((opt, idx) =>
+      `<label>
+        <input type="radio" name="q${i}" value="${opt}" ${idx === 0 ? "checked" : ""}/>
+        <span>${opt}</span>
+      </label>`
+    ).join("") + `</div>`;
+});
     html += `</div>
       <div class="modal-actions">
         <button type="submit" class="modal-btn" id="submitQuizBtn"><span>Submit Quiz</span></button>
