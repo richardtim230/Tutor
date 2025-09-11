@@ -390,37 +390,45 @@ async function renderProgressSection() {
     };
   });
 }
+
+
 // ---- QUIZ MODAL LOGIC ----
 async function showQuizModal(day) {
   showLoader(true);
   try {
-    const resp = await fetch(`${API_BASE}/quiz/${day}`, {
-      headers: { "Authorization": "Bearer " + token }
-    });
-    const data = await resp.json();
+    // Try API, fallback to quizzes.json if desired
+    let data;
+    // Comment/uncomment as needed:
+    // const resp = await fetch(`${API_BASE}/quiz/${day}`, {
+    //   headers: { "Authorization": "Bearer " + token }
+    // });
+    // data = await resp.json();
+
+    // Fetch from quizzes.json
+    data = await fetchQuizForDay(day);
     showLoader(false);
-    if (!resp.ok) {
-      showToastModal("Error Loading Quiz", data.message || "Could not load quiz", "error");
+    if (!data || !data.questions) {
+      showToastModal("Error Loading Quiz", "Could not load quiz", "error");
       return;
     }
     let html = `<div class="modal-title">Day ${day} Quiz</div>
       <form id="quizForm">
         <div class="modal-quiz">`;
     data.questions.forEach((q, i) => {
-  html += `<div class="mb-2"><b>Q${i + 1}:</b> ${q.question}</div>`;
-  if (q.code) {
-    html += `<pre class="bg-gray-100 rounded p-2 mb-2 overflow-x-auto">
-      <code class="language-html">${escapeHtml(q.code)}</code>
-    </pre>`;
-  }
-  html += `<div class="modal-quiz-options mb-4">` +
-    q.options.map((opt, idx) =>
-      `<label>
-        <input type="radio" name="q${i}" value="${opt}" ${idx === 0 ? "checked" : ""}/>
-        <span>${opt}</span>
-      </label>`
-    ).join("") + `</div>`;
-});
+      html += `<div class="mb-2"><b>Q${i + 1}:</b> ${q.question}</div>`;
+      if (q.code) {
+        html += `<pre class="bg-gray-100 rounded p-2 mb-2 overflow-x-auto">
+          <code class="language-html">${escapeHtml(q.code)}</code>
+        </pre>`;
+      }
+      html += `<div class="modal-quiz-options mb-4">` +
+        q.options.map((opt, idx) =>
+          `<label>
+            <input type="radio" name="q${i}" value="${opt}" ${idx === 0 ? "checked" : ""}/>
+            <span>${opt}</span>
+          </label>`
+        ).join("") + `</div>`;
+    });
     html += `</div>
       <div class="modal-actions">
         <button type="submit" class="modal-btn" id="submitQuizBtn"><span>Submit Quiz</span></button>
@@ -431,6 +439,9 @@ async function showQuizModal(day) {
     document.getElementById("dayQuizContent").innerHTML = html;
     document.getElementById("dayQuizModalBg").style.display = "flex";
 
+    // Highlight code blocks
+    setTimeout(() => { if (window.Prism) Prism.highlightAll(); }, 100);
+
     document.getElementById("quizForm").onsubmit = async function (e) {
       e.preventDefault();
       showLoader(true);
@@ -440,28 +451,15 @@ async function showQuizModal(day) {
       const answers = [...document.querySelectorAll('input[type="radio"]:checked')].map(input => input.value);
 
       try {
-        // Submit answers & get score from backend
-        const scoreResp = await fetch(`${API_BASE}/quiz/score/${day}`, {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer " + token,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ answers })
+        // Grade quiz on client-side for .json quizzes
+        let score = 0;
+        let total = data.questions.length;
+        data.questions.forEach((q, idx) => {
+          if (answers[idx] === q.answer) score++;
         });
-
-        const scoreData = await scoreResp.json();
-        showLoader(false);
-        if (!scoreResp.ok) {
-          showToastModal("Quiz Submission Failed", scoreData.message || "Error grading quiz", "error");
-          submitBtn.disabled = false;
-          return;
-        }
-
-        const score = scoreData.score;
-        const total = scoreData.total;
         const percent = Math.round((score / total) * 100);
 
+        showLoader(false);
         document.getElementById("quizResult").innerHTML =
           `<div class="font-bold text-green-700 mb-2"><i class="bi bi-award"></i> Quiz Score: ${score} / ${total} (${percent}%)</div>`;
 
@@ -490,6 +488,7 @@ async function showQuizModal(day) {
     showToastModal("Quiz Modal Error", err.message, "error");
   }
 }
+// ---- QUIZ MODAL LOGIC ----
 
 // Helper: Record quiz completed activity WITH score
 async function markQuizCompletedWithScore(day, score) {
