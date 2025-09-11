@@ -307,7 +307,6 @@ function getQuizStatus(day) {
   };
 }
 
-function renderProgressSection() {
 
 async function fetchQuizForDay(day) {
   try {
