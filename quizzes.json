@@ -1,6 +1,267 @@
 {
   "days": [
     {
+  "day": 1,
+  "topic": "Semantic HTML & Forms and Validation",
+  "questions": [
+    {
+      "question": "Which HTML tag is used for the main content of a page?",
+      "options": ["<main>", "<section>", "<div>", "<article>"],
+      "answer": "<main>"
+    },
+    {
+      "question": "What is the purpose of the <header> tag?",
+      "options": [
+        "Defines introductory content or navigational links",
+        "Adds a heading to a table",
+        "Creates a navigation bar",
+        "Displays an image at the top"
+      ],
+      "answer": "Defines introductory content or navigational links"
+    },
+    {
+      "question": "Which tag represents a self-contained piece of content, such as a blog post?",
+      "options": ["<section>", "<article>", "<aside>", "<div>"],
+      "answer": "<article>"
+    },
+    {
+      "question": "What does the <footer> tag define?",
+      "options": [
+        "Content at the bottom of a page or section",
+        "Page navigation",
+        "A form for user input",
+        "A highlighted section"
+      ],
+      "answer": "Content at the bottom of a page or section"
+    },
+    {
+      "question": "Which HTML tag is used for navigation links?",
+      "options": ["<nav>", "<link>", "<menu>", "<aside>"],
+      "answer": "<nav>"
+    },
+    {
+      "question": "What is the <aside> tag used for?",
+      "options": [
+        "Content tangentially related to the main content",
+        "A form sidebar",
+        "Image captions",
+        "Headers for articles"
+      ],
+      "answer": "Content tangentially related to the main content"
+    },
+    {
+      "question": "Which tag is used to group related options in a dropdown menu?",
+      "options": ["<optgroup>", "<option>", "<select>", "<fieldset>"],
+      "answer": "<optgroup>"
+    },
+    {
+      "question": "What is the <form> tag used for?",
+      "options": [
+        "To collect user input",
+        "To display images",
+        "To create semantic sections",
+        "To add navigation"
+      ],
+      "answer": "To collect user input"
+    },
+    {
+      "question": "Which attribute is used to make a form field required?",
+      "options": ["required", "validate", "must", "needed"],
+      "answer": "required"
+    },
+    {
+      "question": "What does the <fieldset> tag do in a form?",
+      "options": [
+        "Groups related fields together",
+        "Adds a border to a form",
+        "Creates a dropdown",
+        "Marks the form as completed"
+      ],
+      "answer": "Groups related fields together"
+    },
+    {
+      "question": "Which tag provides a caption for a <fieldset>?",
+      "options": ["<legend>", "<caption>", "<title>", "<label>"],
+      "answer": "<legend>"
+    },
+    {
+      "question": "How do you create a password input field in HTML?",
+      "options": [
+        "<input type='password'>",
+        "<input type='secret'>",
+        "<input type='text' password='true'>",
+        "<password>"
+      ],
+      "answer": "<input type='password'>"
+    },
+    {
+      "question": "Which input type is used for selecting a date?",
+      "options": [
+        "<input type='date'>",
+        "<input type='calendar'>",
+        "<input type='datetime'>",
+        "<input type='time'>"
+      ],
+      "answer": "<input type='date'>"
+    },
+    {
+      "question": "What is the correct way to create a radio button group?",
+      "options": [
+        "Use multiple <input type='radio'> elements with the same name attribute",
+        "Use <input type='radio'> with different name attributes",
+        "Use <input type='radio'> inside <select>",
+        "Use <input type='radio'> inside <fieldset>"
+      ],
+      "answer": "Use multiple <input type='radio'> elements with the same name attribute"
+    },
+    {
+      "question": "How do you associate a label with an input field?",
+      "options": [
+        "Use the 'for' attribute on <label> matching the input's id",
+        "Place the input inside the label",
+        "Use the 'name' attribute",
+        "Use the 'type' attribute"
+      ],
+      "answer": "Use the 'for' attribute on <label> matching the input's id"
+    },
+    {
+      "question": "What does the 'action' attribute in <form> specify?",
+      "options": [
+        "The URL where form data is sent",
+        "The type of validation",
+        "The form's theme",
+        "The name of the form"
+      ],
+      "answer": "The URL where form data is sent"
+    },
+    {
+      "question": "Which input type allows for file uploads?",
+      "options": [
+        "<input type='file'>",
+        "<input type='upload'>",
+        "<input type='image'>",
+        "<input type='photo'>"
+      ],
+      "answer": "<input type='file'>"
+    },
+    {
+      "question": "What is the purpose of <label> in forms?",
+      "options": [
+        "Describes the input field",
+        "Validates input",
+        "Groups inputs",
+        "Submits the form"
+      ],
+      "answer": "Describes the input field"
+    },
+    {
+      "question": "Which input type is used for email validation?",
+      "options": [
+        "<input type='email'>",
+        "<input type='text'>",
+        "<input type='mail'>",
+        "<input type='validate'>"
+      ],
+      "answer": "<input type='email'>"
+    },
+    {
+      "question": "How do you specify a placeholder for an input field?",
+      "options": [
+        "placeholder='Enter your name'",
+        "label='Enter your name'",
+        "hint='Enter your name'",
+        "default='Enter your name'"
+      ],
+      "answer": "placeholder='Enter your name'"
+    },
+    {
+      "question": "What does the <select> tag do?",
+      "options": [
+        "Creates a dropdown menu",
+        "Creates a text area",
+        "Validates input",
+        "Submits the form"
+      ],
+      "answer": "Creates a dropdown menu"
+    },
+    {
+      "question": "Which attribute limits the number of characters in an input?",
+      "options": [
+        "maxlength",
+        "max",
+        "limit",
+        "size"
+      ],
+      "answer": "maxlength"
+    },
+    {
+      "question": "Which semantic tag is best for marking up navigation links?",
+      "options": ["<nav>", "<menu>", "<ul>", "<aside>"],
+      "answer": "<nav>"
+    },
+    {
+      "question": "What does the <progress> tag represent?",
+      "options": [
+        "The completion progress of a task",
+        "A loading spinner",
+        "A timer",
+        "A chart"
+      ],
+      "answer": "The completion progress of a task"
+    },
+    {
+      "question": "Which tag is used for marking up time or dates?",
+      "options": ["<time>", "<date>", "<datetime>", "<span>"],
+      "answer": "<time>"
+    },
+    {
+      "question": "How do you ensure a form input is a number between 1 and 10?",
+      "options": [
+        "<input type='number' min='1' max='10'>",
+        "<input type='text' minlength='1' maxlength='10'>",
+        "<input type='range' min='1' max='10'>",
+        "<input type='number' validate='1-10'>"
+      ],
+      "answer": "<input type='number' min='1' max='10'>"
+    },
+    {
+      "question": "Which tag would you use for marking up a quotation?",
+      "options": ["<blockquote>", "<q>", "<cite>", "<quote>"],
+      "answer": "<blockquote>"
+    },
+    {
+      "question": "What does the 'novalidate' attribute do in a <form>?",
+      "options": [
+        "Disables form validation",
+        "Makes all fields required",
+        "Enables automatic validation",
+        "Submits the form without data"
+      ],
+      "answer": "Disables form validation"
+    },
+    {
+      "question": "Which tag is used for marking up a short inline quotation?",
+      "options": ["<q>", "<blockquote>", "<cite>", "<quote>"],
+      "answer": "<q>"
+    },
+    {
+      "question": "How do you create a multi-line text input in a form?",
+      "options": [
+        "<textarea></textarea>",
+        "<input type='text' multiline>",
+        "<input type='area'>",
+        "<input type='longtext'>"
+      ],
+      "answer": "<textarea></textarea>"
+    },
+    {
+      "question": "Which tag is best for marking up a contact information section?",
+      "options": ["<address>", "<contact>", "<info>", "<aside>"],
+      "answer": "<address>"
+    }
+  ]
+},
+    {
       "day": 4,
       "topic": "HTML: Introduction & Tags",
       "questions": [
