@@ -317,28 +317,8 @@
             "<i>"
           ],
           "answer": "<em>"
-        },
-        {
-          "question": "What does this HTML code do?",
-          "code": "<a href='mailto:info@codecx.com'>Email Us</a>",
-          "options": [
-            "Creates a clickable link to send email to info@codecx.com",
-            "Creates a link to the CodeCX homepage",
-            "Shows plain text 'Email Us'",
-            "Displays an error"
-          ],
-          "answer": "Creates a clickable link to send email to info@codecx.com"
-        },
-        {
-          "question": "Which tag is used to insert a horizontal line in HTML?",
-          "options": [
-            "<hr>",
-            "<line>",
-            "<horiz>",
-            "<break>"
-          ],
-          "answer": "<hr>"
         }
+
       ]
     }
   ]
