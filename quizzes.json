@@ -1,0 +1,112 @@
+{
+  "days": [
+    {
+      "day": 3,
+      "topic": "HTML: Day 3",
+      "questions": [
+        {
+          "question": "What is wrong with the following HTML code?",
+          "code": "<ul>\n  <li>Item 1\n  <li>Item 2\n</ul>",
+          "options": [
+            "The <li> tags are not properly closed.",
+            "The <ul> tag is not closed.",
+            "The code is correct.",
+            "The <ul> tag should be <ol>."
+          ],
+          "answer": "The <li> tags are not properly closed."
+        },
+        {
+          "question": "Which HTML tag is used to create a checkbox?",
+          "options": [
+            "<input type=\"checkbox\">",
+            "<checkbox>",
+            "<check>",
+            "<input checkbox>"
+          ],
+          "answer": "<input type=\"checkbox\">"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "topic": "HTML: Day 4",
+      "questions": [
+        {
+          "question": "What is the output of the following HTML code?",
+          "code": "<p>Hello<br>World</p>",
+          "options": [
+            "Hello World (on one line)",
+            "Hello and World on separate lines",
+            "Hello<br>World (with a visible <br> tag)",
+            "Error"
+          ],
+          "answer": "Hello and World on separate lines"
+        },
+        {
+          "question": "How do you add a comment in HTML?",
+          "options": [
+            "<!-- This is a comment -->",
+            "// This is a comment",
+            "# This is a comment",
+            "<comment>This is a comment</comment>"
+          ],
+          "answer": "<!-- This is a comment -->"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "topic": "HTML: Day 5",
+      "questions": [
+        {
+          "question": "Which tag would you use to make text bold in HTML?",
+          "options": [
+            "<b>",
+            "<bold>",
+            "<strong>",
+            "<em>"
+          ],
+          "answer": "<b>"
+        },
+        {
+          "question": "What is the result of the following HTML code?",
+          "code": "<img src=\"image.jpg\" alt=\"My Image\">",
+          "options": [
+            "Displays an image with alternate text 'My Image' if the image can't be shown.",
+            "Displays only the text 'My Image'.",
+            "Displays only the image, no alternate text.",
+            "Error: 'alt' is not a valid attribute."
+          ],
+          "answer": "Displays an image with alternate text 'My Image' if the image can't be shown."
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "topic": "HTML: Day 6",
+      "questions": [
+        {
+          "question": "What will happen if you use the following code?",
+          "code": "<a href=\"https://example.com\" target=\"_blank\">Visit Example</a>",
+          "options": [
+            "It will open the link in a new tab or window.",
+            "It will open the link in the same tab.",
+            "It will show an error.",
+            "It will not create a link."
+          ],
+          "answer": "It will open the link in a new tab or window."
+        },
+        {
+          "question": "Which attribute is used to provide a tool tip for an HTML element?",
+          "options": [
+            "title",
+            "tooltip",
+            "alt",
+            "hint"
+          ],
+          "answer": "title"
+        }
+      ]
+    }
+  ]
+}
