@@ -204,17 +204,7 @@
       ],
       "answer": "<select>"
     },
-    {
-      "question": "In the following code, what is the purpose of the `for` attribute in the `<label>` tag?",
-      "code": "<label for="username">Username:</label>n<input type="text" id="username">",
-      "options": [
-        "It defines the default value for the input.",
-        "It links the label to the input element with the matching `id`.",
-        "It specifies the styling for the label.",
-        "It indicates that the input is required."
-      ],
-      "answer": "It links the label to the input element with the matching `id`."
-    },
+
     {
       "question": "Which HTML tag is used to define a block of preformatted text, preserving spaces and line breaks?",
       "options": [
@@ -236,8 +226,7 @@
       "answer": "They provide meaning to the content, improving accessibility and search engine optimization (SEO)."
     }
   ]
-}
-,
+},
     {
       "day": 5,
       "topic": "HTML: Day 5",
