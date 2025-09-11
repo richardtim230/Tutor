@@ -1,6 +1,540 @@
 {
   "days": [
     {
+  "day": 3,
+  "topic": "HTML BASICS",
+  "questions": [
+    {
+      "question": "Which HTML tag is used to define the largest heading?",
+      "options": ["<h1>", "<h6>", "<header>", "<title>"],
+      "answer": "<h1>"
+    },
+    {
+      "question": "What is the correct HTML tag for inserting a line break?",
+      "options": ["<br>", "<break>", "<lb>", "<newline>"],
+      "answer": "<br>"
+    },
+    {
+      "question": "How do you create a hyperlink in HTML?",
+      "code": "<a href='https://example.com'>Visit Example</a>",
+      "options": [
+        "Creates a link to Example.com",
+        "Displays the text as bold",
+        "Shows an image from Example.com",
+        "Creates a button"
+      ],
+      "answer": "Creates a link to Example.com"
+    },
+    {
+      "question": "Which tag is used to create a numbered list?",
+      "options": ["<ol>", "<ul>", "<li>", "<dl>"],
+      "answer": "<ol>"
+    },
+    {
+      "question": "How do you make text bold in HTML?",
+      "options": ["<b>", "<bold>", "<strong>", "<em>"],
+      "answer": "<b>"
+    },
+    {
+      "question": "What is the purpose of the <form> tag in HTML?",
+      "options": [
+        "To collect user input",
+        "To display images",
+        "To add navigation",
+        "To group headings"
+      ],
+      "answer": "To collect user input"
+    },
+    {
+      "question": "How do you specify an image in HTML?",
+      "code": "<img src='image.jpg' alt='A sample image'>",
+      "options": [
+        "Displays an image called image.jpg",
+        "Creates an image gallery",
+        "Links to image.jpg",
+        "Creates a button"
+      ],
+      "answer": "Displays an image called image.jpg"
+    },
+    {
+      "question": "Which tag is used for the main content of a page?",
+      "options": ["<main>", "<section>", "<div>", "<article>"],
+      "answer": "<main>"
+    },
+    {
+      "question": "How do you create a table with two columns?",
+      "code": "<table><tr><td>One</td><td>Two</td></tr></table>",
+      "options": [
+        "Creates a table with one row and two columns",
+        "Creates a table with two rows and one column",
+        "Creates a bulleted list",
+        "Creates a dropdown menu"
+      ],
+      "answer": "Creates a table with one row and two columns"
+    },
+    {
+      "question": "What is the correct way to mark an input field as required?",
+      "code": "<input type='text' required>",
+      "options": [
+        "Makes the input field required",
+        "Validates email format",
+        "Limits input to 10 characters",
+        "Disables input"
+      ],
+      "answer": "Makes the input field required"
+    },
+    {
+      "question": "Which HTML tag is used to display a horizontal line?",
+      "options": ["<hr>", "<line>", "<br>", "<horizontal>"],
+      "answer": "<hr>"
+    },
+    {
+      "question": "How do you create a bulleted list?",
+      "code": "<ul><li>First</li><li>Second</li></ul>",
+      "options": [
+        "Creates a bulleted list",
+        "Creates a numbered list",
+        "Creates a table",
+        "Creates a dropdown menu"
+      ],
+      "answer": "Creates a bulleted list"
+    },
+    {
+      "question": "Which attribute is used to link a label to a form input?",
+      "code": "<label for='username'>Username</label><input id='username'>",
+      "options": [
+        "The 'for' attribute in label matches the input's id",
+        "The label must be inside the input",
+        "Their names must match",
+        "There is no way to link them"
+      ],
+      "answer": "The 'for' attribute in label matches the input's id"
+    },
+    {
+      "question": "What does the <title> tag do in HTML?",
+      "options": [
+        "Defines the title in the browser tab",
+        "Displays a title inside the page body",
+        "Adds a tooltip to text",
+        "Changes the font size"
+      ],
+      "answer": "Defines the title in the browser tab"
+    },
+    {
+      "question": "How do you create a dropdown menu?",
+      "code": "<select><option>One</option><option>Two</option></select>",
+      "options": [
+        "Creates a dropdown with options One and Two",
+        "Creates a list with two items",
+        "Creates a table",
+        "Creates a set of radio buttons"
+      ],
+      "answer": "Creates a dropdown with options One and Two"
+    },
+    {
+      "question": "Which tag is used for marking up navigation links?",
+      "options": ["<nav>", "<menu>", "<ul>", "<aside>"],
+      "answer": "<nav>"
+    },
+    {
+      "question": "How do you specify a placeholder for an input field?",
+      "code": "<input type='text' placeholder='Enter your name'>",
+      "options": [
+        "Displays 'Enter your name' as a placeholder",
+        "Limits input to your name",
+        "Makes the field required",
+        "Validates the input"
+      ],
+      "answer": "Displays 'Enter your name' as a placeholder"
+    },
+    {
+      "question": "What tag is used for a form submit button?",
+      "code": "<button type='submit'>Send</button>",
+      "options": [
+        "Creates a submit button labeled 'Send'",
+        "Creates a link",
+        "Creates a dropdown menu",
+        "Creates a checkbox"
+      ],
+      "answer": "Creates a submit button labeled 'Send'"
+    },
+    {
+      "question": "Which tag is used for a table header cell?",
+      "options": ["<th>", "<thead>", "<tr>", "<td>"],
+      "answer": "<th>"
+    },
+    {
+      "question": "How do you create a multi-line text input?",
+      "code": "<textarea rows='4' cols='30'></textarea>",
+      "options": [
+        "Creates a multi-line text box",
+        "Creates a single-line input",
+        "Creates a table",
+        "Creates a dropdown menu"
+      ],
+      "answer": "Creates a multi-line text box"
+    },
+    {
+      "question": "What does the 'action' attribute in <form> specify?",
+      "options": [
+        "The URL where form data is sent",
+        "The type of validation",
+        "The form's theme",
+        "The name of the form"
+      ],
+      "answer": "The URL where form data is sent"
+    },
+    {
+      "question": "Which input type is used for email validation?",
+      "code": "<input type='email'>",
+      "options": [
+        "Validates email format",
+        "Allows only numbers",
+        "Creates a dropdown menu",
+        "Makes the field required"
+      ],
+      "answer": "Validates email format"
+    },
+    {
+      "question": "What does the <footer> tag define?",
+      "options": [
+        "Content at the bottom of a page or section",
+        "Page navigation",
+        "A form for user input",
+        "A highlighted section"
+      ],
+      "answer": "Content at the bottom of a page or section"
+    },
+    {
+      "question": "Which HTML tag is used for marking up a quotation?",
+      "options": ["<blockquote>", "<q>", "<cite>", "<quote>"],
+      "answer": "<blockquote>"
+    },
+    {
+      "question": "How do you limit the number of characters in a text input?",
+      "code": "<input type='text' maxlength='10'>",
+      "options": [
+        "Limits input to 10 characters",
+        "Limits input to 10 words",
+        "Makes field required",
+        "Limits input to numbers only"
+      ],
+      "answer": "Limits input to 10 characters"
+    },
+    {
+      "question": "Which table tag is used for grouping column headers?",
+      "options": ["<thead>", "<th>", "<tr>", "<td>"],
+      "answer": "<thead>"
+    },
+    {
+      "question": "How do you create a checkbox input?",
+      "code": "<input type='checkbox' name='accept'>",
+      "options": [
+        "Creates a checkbox input",
+        "Creates a radio button",
+        "Creates a dropdown menu",
+        "Creates a submit button"
+      ],
+      "answer": "Creates a checkbox input"
+    },
+    {
+      "question": "What tag is used to group related fields together in a form?",
+      "code": "<fieldset><legend>Account Info</legend>...</fieldset>",
+      "options": [
+        "Groups related fields together with a label",
+        "Adds a border to a form",
+        "Creates a dropdown menu",
+        "Marks the form as completed"
+      ],
+      "answer": "Groups related fields together with a label"
+    },
+    {
+      "question": "How do you create a radio button group for gender selection?",
+      "code": "<input type='radio' name='gender' value='male'> Male <input type='radio' name='gender' value='female'> Female",
+      "options": [
+        "Creates a radio button group for gender selection",
+        "Creates a checkbox group",
+        "Creates a dropdown menu",
+        "Creates a submit button"
+      ],
+      "answer": "Creates a radio button group for gender selection"
+    }
+  ]
+},
+    {
+  "day": 2,
+  "topic": "Forms and Validation, Tables and Lists",
+  "questions": [
+    {
+      "question": "Which HTML tag is used to create a table?",
+      "options": ["<table>", "<tab>", "<tbody>", "<td>"],
+      "answer": "<table>"
+    },
+    {
+      "question": "What tag is used for a table row?",
+      "options": ["<tr>", "<td>", "<th>", "<row>"],
+      "answer": "<tr>"
+    },
+    {
+      "question": "How do you specify a required input field in a form?",
+      "options": [
+        "<input required>",
+        "<input validate>",
+        "<input must='true'>",
+        "<input mandatory>"
+      ],
+      "answer": "<input required>"
+    },
+    {
+      "question": "Which HTML tag creates an unordered list?",
+      "options": ["<ul>", "<ol>", "<li>", "<dl>"],
+      "answer": "<ul>"
+    },
+    {
+      "question": "What does this code do?",
+      "code": "<table><tr><td>Apple</td><td>Banana</td></tr></table>",
+      "options": [
+        "Creates a table with one row and two columns: Apple and Banana",
+        "Creates a table with two rows: Apple and Banana",
+        "Creates a list of fruits",
+        "Creates a table with one column"
+      ],
+      "answer": "Creates a table with one row and two columns: Apple and Banana"
+    },
+    {
+      "question": "Which tag is used for a table header cell?",
+      "options": ["<th>", "<thead>", "<tr>", "<td>"],
+      "answer": "<th>"
+    },
+    {
+      "question": "What is the correct HTML for a dropdown menu?",
+      "code": "<select><option>Red</option><option>Blue</option></select>",
+      "options": [
+        "Creates a dropdown with Red and Blue options",
+        "Creates a list of Red and Blue",
+        "Creates a form with color options",
+        "Creates a table with two columns"
+      ],
+      "answer": "Creates a dropdown with Red and Blue options"
+    },
+    {
+      "question": "How do you create a numbered list?",
+      "options": ["<ol>", "<ul>", "<li>", "<dl>"],
+      "answer": "<ol>"
+    },
+    {
+      "question": "Which tag is used for a list item?",
+      "options": ["<li>", "<ul>", "<ol>", "<item>"],
+      "answer": "<li>"
+    },
+    {
+      "question": "What does this code produce?",
+      "code": "<form><input type='email' required></form>",
+      "options": [
+        "A form with a required email input field",
+        "A form with a text input field",
+        "A form with an optional email field",
+        "A form with a password field"
+      ],
+      "answer": "A form with a required email input field"
+    },
+    {
+      "question": "How do you add a group label to a set of form fields?",
+      "code": "<fieldset><legend>Contact Info</legend>...</fieldset>",
+      "options": [
+        "Adds a group label 'Contact Info' to the form section",
+        "Adds a placeholder to the form",
+        "Adds a table caption",
+        "Adds a title to the list"
+      ],
+      "answer": "Adds a group label 'Contact Info' to the form section"
+    },
+    {
+      "question": "What does this code do?",
+      "code": "<ul><li>Pen</li><li>Pencil</li><li>Book</li></ul>",
+      "options": [
+        "Creates a bulleted list of Pen, Pencil, and Book",
+        "Creates a numbered list",
+        "Creates a table",
+        "Creates a dropdown menu"
+      ],
+      "answer": "Creates a bulleted list of Pen, Pencil, and Book"
+    },
+    {
+      "question": "How do you limit the number of characters in a text input?",
+      "code": "<input type='text' maxlength='10'>",
+      "options": [
+        "Limits input to 10 characters",
+        "Limits input to 10 words",
+        "Makes field required",
+        "Limits input to numbers only"
+      ],
+      "answer": "Limits input to 10 characters"
+    },
+    {
+      "question": "What tag is used to define a table body?",
+      "options": ["<tbody>", "<body>", "<td>", "<tr>"],
+      "answer": "<tbody>"
+    },
+    {
+      "question": "Which input type is best for entering a phone number?",
+      "options": [
+        "<input type='tel'>",
+        "<input type='number'>",
+        "<input type='text'>",
+        "<input type='phone'>"
+      ],
+      "answer": "<input type='tel'>"
+    },
+    {
+      "question": "What does this code do?",
+      "code": "<ol><li>First</li><li>Second</li></ol>",
+      "options": [
+        "Creates a numbered list: First, Second",
+        "Creates a bulleted list",
+        "Creates a table",
+        "Creates a form"
+      ],
+      "answer": "Creates a numbered list: First, Second"
+    },
+    {
+      "question": "How do you create a multi-line text input?",
+      "code": "<textarea rows='4' cols='30'></textarea>",
+      "options": [
+        "Creates a multi-line text box",
+        "Creates a single-line input",
+        "Creates a table",
+        "Creates a dropdown menu"
+      ],
+      "answer": "Creates a multi-line text box"
+    },
+    {
+      "question": "Which table tag is used for grouping column headers?",
+      "options": ["<thead>", "<th>", "<tr>", "<td>"],
+      "answer": "<thead>"
+    },
+    {
+      "question": "What does this code do?",
+      "code": "<form novalidate><input type='text'></form>",
+      "options": [
+        "Disables validation for the form",
+        "Makes all fields required",
+        "Enables validation",
+        "Creates a table"
+      ],
+      "answer": "Disables validation for the form"
+    },
+    {
+      "question": "How do you create a form with a submit button?",
+      "code": "<form><button type='submit'>Send</button></form>",
+      "options": [
+        "Creates a form with a submit button labeled 'Send'",
+        "Creates a form with a link",
+        "Creates a table",
+        "Creates a dropdown menu"
+      ],
+      "answer": "Creates a form with a submit button labeled 'Send'"
+    },
+    {
+      "question": "Which attribute is used to associate a label with an input?",
+      "code": "<label for='email'>Email:</label><input id='email'>",
+      "options": [
+        "The 'for' attribute in label matches the input's id",
+        "Both elements must have the same name",
+        "The label must be inside the input",
+        "There is no way to link them"
+      ],
+      "answer": "The 'for' attribute in label matches the input's id"
+    },
+    {
+      "question": "What is the purpose of the <caption> tag in tables?",
+      "options": [
+        "Provides a title or explanation for the table",
+        "Creates a header cell",
+        "Defines a table column",
+        "Marks the end of a table"
+      ],
+      "answer": "Provides a title or explanation for the table"
+    },
+    {
+      "question": "How do you make a checkbox input?",
+      "code": "<input type='checkbox' name='accept'>",
+      "options": [
+        "Creates a checkbox input",
+        "Creates a radio button",
+        "Creates a dropdown menu",
+        "Creates a submit button"
+      ],
+      "answer": "Creates a checkbox input"
+    },
+    {
+      "question": "What does this code do?",
+      "code": "<table><thead><tr><th>Name</th><th>Age</th></tr></thead><tbody><tr><td>Ada</td><td>20</td></tr></tbody></table>",
+      "options": [
+        "Creates a table with headers 'Name' and 'Age' and one data row for Ada",
+        "Creates a list with two names",
+        "Creates a form for user age",
+        "Creates only the table headers"
+      ],
+      "answer": "Creates a table with headers 'Name' and 'Age' and one data row for Ada"
+    },
+    {
+      "question": "Which tag is used for a definition list?",
+      "options": ["<dl>", "<ul>", "<ol>", "<li>"],
+      "answer": "<dl>"
+    },
+    {
+      "question": "What does this code do?",
+      "code": "<dl><dt>HTML</dt><dd>Markup Language</dd></dl>",
+      "options": [
+        "Creates a definition list: HTML - Markup Language",
+        "Creates a bulleted list",
+        "Creates a table",
+        "Creates a dropdown menu"
+      ],
+      "answer": "Creates a definition list: HTML - Markup Language"
+    },
+    {
+      "question": "How do you create a radio button group?",
+      "code": "<input type='radio' name='gender' value='male'> Male <input type='radio' name='gender' value='female'> Female",
+      "options": [
+        "Creates a radio button group for gender selection",
+        "Creates a checkbox group",
+        "Creates a dropdown menu",
+        "Creates a submit button"
+      ],
+      "answer": "Creates a radio button group for gender selection"
+    },
+    {
+      "question": "What does this code do?",
+      "code": "<form><input type='text' pattern='[A-Za-z]+'></form>",
+      "options": [
+        "Allows only alphabetic characters in the input",
+        "Allows only numeric characters",
+        "Makes the field required",
+        "Allows any input"
+      ],
+      "answer": "Allows only alphabetic characters in the input"
+    },
+    {
+      "question": "Which table tag is used for grouping footer content?",
+      "options": ["<tfoot>", "<th>", "<tr>", "<td>"],
+      "answer": "<tfoot>"
+    },
+    {
+      "question": "How do you create a select dropdown with three options?",
+      "code": "<select><option>One</option><option>Two</option><option>Three</option></select>",
+      "options": [
+        "Creates a dropdown with options One, Two, Three",
+        "Creates a list with three items",
+        "Creates a table with three columns",
+        "Creates three checkboxes"
+      ],
+      "answer": "Creates a dropdown with options One, Two, Three"
+    }
+  ]
+        },
+    {
   "day": 1,
   "topic": "Semantic HTML & Forms and Validation",
   "questions": [
@@ -253,12 +787,8 @@
         "<input type='longtext'>"
       ],
       "answer": "<textarea></textarea>"
-    },
-    {
-      "question": "Which tag is best for marking up a contact information section?",
-      "options": ["<address>", "<contact>", "<info>", "<aside>"],
-      "answer": "<address>"
     }
+
   ]
 },
     {
