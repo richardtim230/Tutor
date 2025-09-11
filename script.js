@@ -1,9 +1,4 @@
-
-
-  <script>
-    const API_BASE = "https://examguide.onrender.com/api/codecxreg";
-
-// Loader functions
+const API_BASE = "https://examguide.onrender.com/api/codecxreg";
 function showStudentLoader() {
   if (document.getElementById('studentDataLoader')) return;
   const loaderHtml = `
@@ -107,9 +102,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-
-// --- End of loader code ---
-// Drop-in Toast Modal & Loader System
 (function() {
   // Inject toast modal HTML if not present
   if (!document.getElementById('toastModalBg')) {
@@ -162,8 +154,7 @@ document.addEventListener("DOMContentLoaded", function() {
   };
 })();
     
-
-    const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
+const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
 let student = {};
 let token = localStorage.getItem('codecx_token');
 let chatPollingInterval = null;
@@ -317,11 +308,7 @@ function getQuizStatus(day) {
 }
 
 function renderProgressSection() {
-/**
- * Fetches today's quiz from quizzes.json based on the current day number.
- * @param {number} day - The day number to fetch (e.g., 1 for Day 1)
- * @returns {Promise<Object|null>} - Quiz object for the day or null if not found
- */
+
 async function fetchQuizForDay(day) {
   try {
     // Adjust path if quizzes.json is stored elsewhere
@@ -405,9 +392,6 @@ async function renderProgressSection() {
     };
   });
 }
-
-  
-
 // ---- QUIZ MODAL LOGIC ----
 async function showQuizModal(day) {
   showLoader(true);
@@ -588,15 +572,11 @@ window.student = student; // <-- Add this line!
       : `<span class="bg-red-100 text-red-800">Unpaid (Limited Access)</span>`;
     updateWhatsAppBtn();
 
-    
-
     // Lock masterclass features if unpaid
     const locked = !student.hasPaid;
     document.getElementById("masterclassSection").classList.toggle("locked", locked);
     document.querySelector("#masterclassSection .padlock-icon").style.display = locked ? "block" : "none";
     document.getElementById("unlockMessage").classList.toggle("hidden", !locked);
-
-
     renderAssignmentHistory(student.assignmentHistory || []);
   
     renderCourses();
@@ -995,6 +975,3 @@ window.showQuizModal = showQuizModal;
 window.logout = logout;
 window.closePaymentModal = closePaymentModal;
 window.closeReceipt = closeReceipt;
-  </script>
-</body>
-</html>
