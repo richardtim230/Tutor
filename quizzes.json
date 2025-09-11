@@ -165,16 +165,7 @@
           ],
           "answer": "<b>"
         },
-        {
-          "question": "What does the <title> tag do in HTML?",
-          "options": [
-            "Displays a title inside the page body",
-            "Defines the title in the browser tab",
-            "Adds a tooltip to text",
-            "Changes the font size"
-          ],
-          "answer": "Defines the title in the browser tab"
-        },
+
         {
           "question": "Which attribute is used to provide alternative text for an image?",
           "options": [
