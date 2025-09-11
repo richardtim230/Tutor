@@ -27,206 +27,33 @@
         }
       ]
     },
-{
-  "day": 4,
-  "topic": "HTML Tags & Semantic Structure",
-  "questions": [
     {
-      "question": "Which HTML tag is used to define the main content of an HTML document, excluding headers, footers, and sidebars?",
-      "options": [
-        "<body>",
-        "<content>",
-        "<main>",
-        "<section>"
-      ],
-      "answer": "<main>"
+      "day": 4,
+      "topic": "HTML: Day 4",
+      "questions": [
+        {
+          "question": "What is the output of the following HTML code?",
+          "code": "<p>Hello<br>World</p>",
+          "options": [
+            "Hello World (on one line)",
+            "Hello and World on separate lines",
+            "Hello<br>World (with a visible <br> tag)",
+            "Error"
+          ],
+          "answer": "Hello and World on separate lines"
+        },
+        {
+          "question": "How do you add a comment in HTML?",
+          "options": [
+            "<!-- This is a comment -->",
+            "// This is a comment",
+            "# This is a comment",
+            "<comment>This is a comment</comment>"
+          ],
+          "answer": "<!-- This is a comment -->"
+        }
+      ]
     },
-    {
-      "question": "What is the correct HTML tag for inserting a line break?",
-      "options": [
-        "<break>",
-        "<lb>",
-        "<br>",
-        "<newline>"
-      ],
-      "answer": "<br>"
-    },
-    {
-      "question": "Which HTML tag is used to define a navigation link or a set of navigation links?",
-      "options": [
-        "<links>",
-        "<nav>",
-        "<navigation>",
-        "<a>"
-      ],
-      "answer": "<nav>"
-    },
-    {
-      "question": "Look at the code below. What is the purpose of the `placeholder` attribute in this input field?",
-      "code": "<input type=\"email\" placeholder=\"Enter your email here\">",
-      "options": [
-        "It sets the initial value of the input field.",
-        "It makes the input field required.",
-        "It provides a hint or example of the expected input value.",
-        "It defines the name of the input field."
-      ],
-      "answer": "It provides a hint or example of the expected input value."
-    },
-    {
-      "question": "Which HTML tag is used to define a self-contained piece of content that could be distributed independently, like a blog post or a news article?",
-      "options": [
-        "<section>",
-        "<article>",
-        "<div>",
-        "<content>"
-      ],
-      "answer": "<article>"
-    },
-    {
-      "question": "What is the correct HTML for creating a hyperlink?",
-      "options": [
-        "<a name=\"http://www.example.com\">Example</a>",
-        "<link href=\"http://www.example.com\">Example</link>",
-        "<a href=\"http://www.example.com\">Example</a>",
-        "<url>http://www.example.com</url>"
-      ],
-      "answer": "<a href=\"http://www.example.com\">Example</a>"
-    },
-    {
-      "question": "Which HTML tag is used to define a footer for a document or a section, often containing copyright information or author details?",
-      "options": [
-        "<bottom>",
-        "<foot>",
-        "<footer>",
-        "<end>"
-      ],
-      "answer": "<footer>"
-    },
-    {
-      "question": "Consider the following HTML. What is the semantic advantage of using `<strong>` over `<b>` for bold text?",
-      "code": "<p>This is <strong>important</strong> text.</p>",
-      "options": [
-        "`<strong>` makes text bolder than `<b>`.",
-        "`<strong>` is deprecated, while `<b>` is not.",
-        "`<strong>` indicates strong importance, while `<b>` is purely for presentational bolding.",
-        "`<strong>` is only for headings."
-      ],
-      "answer": "`<strong>` indicates strong importance, while `<b>` is purely for presentational bolding."
-    },
-    {
-      "question": "Which HTML tag is used to define a section of a document, often with a heading?",
-      "options": [
-        "<div>",
-        "<group>",
-        "<section>",
-        "<area>"
-      ],
-      "answer": "<section>"
-    },
-    {
-      "question": "What is the correct HTML for inserting an image?",
-      "options": [
-        "<img src=\"image.jpg\" alt=\"My Image\">",
-        "<image href=\"image.jpg\" alt=\"My Image\">",
-        "<img alt=\"My Image\">image.jpg</img>",
-        "<picture source=\"image.jpg\" description=\"My Image\">"
-      ],
-      "answer": "<img src=\"image.jpg\" alt=\"My Image\">"
-    },
-    {
-      "question": "Which HTML tag is used to define content that is tangentially related to the content around it, often presented as a sidebar?",
-      "options": [
-        "<sidebar>",
-        "<aside>",
-        "<related>",
-        "<nav>"
-      ],
-      "answer": "<aside>"
-    },
-    {
-      "question": "What is the purpose of the `colspan` attribute in an HTML table cell \\(`<td>` or `<th>`\\)?",
-      "options": [
-        "It specifies the number of rows a cell should span.",
-        "It specifies the number of columns a cell should span.",
-        "It sets the background color of the cell.",
-        "It aligns the content within the cell."
-      ],
-      "answer": "It specifies the number of columns a cell should span."
-    },
-    {
-      "question": "Which HTML tag is used to define a list item within an ordered or unordered list?",
-      "options": [
-        "<item>",
-        "<list>",
-        "<li>",
-        "<ol>"
-      ],
-      "answer": "<li>"
-    },
-    {
-      "question": "Examine the following code. What is the correct way to link an external CSS file to an HTML document?",
-      "code": "<head>\n  <!-- Missing CSS link here -->\n</head>",
-      "options": [
-        "<style src=\"style.css\">",
-        "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">",
-        "<css href=\"style.css\">",
-        "<script src=\"style.css\"></script>"
-      ],
-      "answer": "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">"
-    },
-    {
-      "question": "Which HTML tag is used to define a caption for a `<table>` element?",
-      "options": [
-        "<caption>",
-        "<title>",
-        "<head>",
-        "<label>"
-      ],
-      "answer": "<caption>"
-    },
-    {
-      "question": "What is the semantic meaning of the `<time>` tag in HTML5?",
-      "options": [
-        "It defines a specific time of day.",
-        "It defines a date/time, and can include the `datetime` attribute for machine-readable format.",
-        "It is used for countdown timers.",
-        "It defines the duration of an event."
-      ],
-      "answer": "It defines a date/time, and can include the `datetime` attribute for machine-readable format."
-    },
-    {
-      "question": "What is the correct HTML for creating a dropdown list \\(select box\\)?",
-      "options": [
-        "<list>",
-        "<input type=\"dropdown\">",
-        "<select>",
-        "<option>"
-      ],
-      "answer": "<select>"
-    },
-
-    {
-      "question": "Which HTML tag is used to define a block of preformatted text, preserving spaces and line breaks?",
-      "options": [
-        "<code>",
-        "<format>",
-        "<pre>",
-        "<text>"
-      ],
-      "answer": "<pre>"
-    },
-    {
-      "question": "What is the primary benefit of using semantic HTML5 elements (like `<header>`, `<nav>`, `<main>`, `<article>`, `<footer>`) over generic `<div>` tags?",
-      "options": [
-        "They automatically apply default styling.",
-        "They make the HTML file smaller in size.",
-        "They provide meaning to the content, improving accessibility and search engine optimization (SEO).",
-        "They are easier to write and require less code."
-      ],
-      "answer": "They provide meaning to the content, improving accessibility and search engine optimization (SEO)."
-    }
-  ]
-},
     {
       "day": 5,
       "topic": "HTML: Day 5",
