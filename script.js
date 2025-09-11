@@ -486,7 +486,7 @@ async function showQuizModal(day) {
         setTimeout(() => {
           closeDayQuizModal();
           reloadDashboard();
-        }, 6000); // Increased to 6s for more time for review
+        }, 120000); // Increased to 6s for more time for review
 
       } catch (err) {
         showLoader(false);
