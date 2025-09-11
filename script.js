@@ -311,7 +311,7 @@ function getQuizStatus(day) {
 async function fetchQuizForDay(day) {
   try {
     // Adjust path if quizzes.json is stored elsewhere
-    const response = await fetch('/quizzes.json');
+    const response = await fetch('quizzes.json');
     if (!response.ok) throw new Error('Failed to load quizzes.json');
     const data = await response.json();
     // Find the quiz for the requested day
