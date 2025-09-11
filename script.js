@@ -310,12 +310,11 @@ function getQuizStatus(day) {
 
 async function fetchQuizForDay(day) {
   try {
-    // Adjust path if quizzes.json is stored elsewhere
-    const response = await fetch('quizzes.json');
+    const response = await fetch('/quizzes.json');
     if (!response.ok) throw new Error('Failed to load quizzes.json');
     const data = await response.json();
-    // Find the quiz for the requested day
-    const quiz = data.days.find(q => q.day === day);
+    // Ensure both are numbers for comparison
+    const quiz = data.days.find(q => Number(q.day) === Number(day));
     return quiz || null;
   } catch (error) {
     console.error('Error fetching quiz:', error);
