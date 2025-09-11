@@ -415,20 +415,21 @@ async function showQuizModal(day) {
       <form id="quizForm">
         <div class="modal-quiz">`;
     data.questions.forEach((q, i) => {
-      html += `<div class="mb-2"><b>Q${i + 1}:</b> ${q.question}</div>`;
-      if (q.code) {
-        html += `<pre class="bg-gray-100 rounded p-2 mb-2 overflow-x-auto">
-          <code class="language-html">${escapeHtml(q.code)}</code>
-        </pre>`;
-      }
-      html += `<div class="modal-quiz-options mb-4">` +
-        q.options.map((opt, idx) =>
-          `<label>
-            <input type="radio" name="q${i}" value="${opt}" ${idx === 0 ? "checked" : ""}/>
-            <span>${opt}</span>
-          </label>`
-        ).join("") + `</div>`;
-    });
+  html += `<div class="mb-2"><b>Q${i + 1}:</b> ${q.question}</div>`;
+  if (q.code) {
+    html += `<pre class="bg-gray-100 rounded p-2 mb-2 overflow-x-auto">
+      <code class="language-html">${escapeHtml(q.code)}</code>
+    </pre>`;
+  }
+  html += `<div class="modal-quiz-options mb-4">` +
+    q.options.map((opt, idx) =>
+      `<label>
+        <input type="radio" name="q${i}" value="${escapeHtml(opt)}" ${idx === 0 ? "checked" : ""}/>
+        <span>${escapeHtml(opt)}</span>
+      </label>`
+    ).join("") + `</div>`;
+});
+      
     html += `</div>
       <div class="modal-actions">
         <button type="submit" class="modal-btn" id="submitQuizBtn"><span>Submit Quiz</span></button>
