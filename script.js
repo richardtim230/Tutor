@@ -323,61 +323,66 @@ async function fetchQuizForDay(day) {
 }
 
 async function renderProgressSection() {
-  // Calculate today's day number based on PROGRAM_START_DATE
-  const PROGRAM_START_DATE = new Date('2025-09-08T00:00:00Z'); // UTC
+  const PROGRAM_START_DATE = new Date('2025-09-08T00:00:00Z');
   const now = new Date();
   const diffDays = Math.floor((now - PROGRAM_START_DATE) / (1000 * 60 * 60 * 24)) + 1;
 
-  // Fetch today's quiz
-  const quiz = await fetchQuizForDay(diffDays);
+  // Determine days to show (rolling window of 5 days)
+  const firstDayToShow = Math.max(1, diffDays - 4); // 5 quizzes max
+  const daysToShow = [];
+  for (let day = diffDays; day >= firstDayToShow; day--) {
+    daysToShow.push(day);
+  }
+
+  // Fetch quizzes for those days (in parallel)
+  const quizzes = await Promise.all(daysToShow.map(day => fetchQuizForDay(day)));
 
   const progressSummary = document.getElementById("progressSummary");
   const progressGrid = document.getElementById("progressGrid");
 
-  // If quiz not found or before program starts
-  if (!quiz) {
-    if (now < PROGRAM_START_DATE) {
-      progressSummary.textContent = "The program has not started yet.";
-    } else {
-      progressSummary.textContent = "No quiz found for today.";
-    }
+  // Handle program not started or no quizzes found
+  if (now < PROGRAM_START_DATE) {
+    progressSummary.textContent = "The program has not started yet.";
+    progressGrid.innerHTML = "";
+    return;
+  }
+  if (!quizzes.some(q => q)) {
+    progressSummary.textContent = "No quizzes found for these days.";
     progressGrid.innerHTML = "";
     return;
   }
 
-  // Determine completion status for today (use your own logic)
-  const status = getQuizStatus(diffDays); // assumes you have this helper
+  // Render quiz cards for each day (most recent at top)
+  let html = quizzes.map((quiz, index) => {
+    const day = daysToShow[index];
+    if (!quiz) return `<div class="border rounded-lg p-4 bg-gray-50 min-w-0 mb-3">No quiz for Day ${day}</div>`;
+    const status = getQuizStatus(day);
+    let card = `<div class="border border-indigo-400 rounded-lg p-4 bg-gray-50 flex flex-col items-start relative min-w-0 mb-3" style="max-width:500px;">
+      <div class="font-bold text-lg mb-1">${quiz.topic}</div>
+      <div class="text-xs text-gray-500 mb-3">Day ${quiz.day}</div>
+      <div class="mb-3">`;
+    if (status.quiz) {
+      card += `<span class="text-green-700 flex items-center"><i class="bi bi-check-circle-fill mr-1"></i>Quiz Done</span>`;
+    } else {
+      card += `<button class="px-3 py-2 text-base bg-indigo-600 text-white rounded quiz-btn" data-day="${quiz.day}">Take Quiz</button>`;
+    }
+    card += `</div>`;
+    if (status.attendance) {
+      card += `<span class="text-green-700 flex items-center"><i class="bi bi-person-check-fill mr-1"></i>Attendance Marked</span>`;
+    } else if (status.quiz) {
+      card += `<button class="px-3 py-2 text-base bg-green-600 text-white rounded attendance-btn" data-day="${quiz.day}">Mark Attendance</button>`;
+    }
+    card += `</div>`;
+    return card;
+  }).join("");
 
-  // Render single quiz card (and attendance)
-  let html = `<div class="border border-indigo-400 rounded-lg p-4 bg-gray-50 flex flex-col items-start relative min-w-0 mb-3" style="max-width:500px;">
-    <div class="font-bold text-lg mb-1">${quiz.topic}</div>
-    <div class="text-xs text-gray-500 mb-3">Day ${quiz.day}</div>
-    <div class="mb-3">`;
-
-  if (status.quiz) {
-    html += `<span class="text-green-700 flex items-center"><i class="bi bi-check-circle-fill mr-1"></i>Quiz Done</span>`;
-  } else {
-    html += `<button class="px-3 py-2 text-base bg-indigo-600 text-white rounded quiz-btn" data-day="${quiz.day}">Take Quiz</button>`;
-  }
-
-  html += `</div>`;
-
-  if (status.attendance) {
-    html += `<span class="text-green-700 flex items-center"><i class="bi bi-person-check-fill mr-1"></i>Attendance Marked</span>`;
-  } else if (status.quiz) {
-    html += `<button class="px-3 py-2 text-base bg-green-600 text-white rounded attendance-btn" data-day="${quiz.day}">Mark Attendance</button>`;
-  }
-
-  html += `</div>`;
-
-  progressSummary.textContent = "";
+  progressSummary.textContent = `Showing quizzes for Days ${firstDayToShow} to ${diffDays}.`;
   progressGrid.innerHTML = html;
 
   // Quiz button event
   document.querySelectorAll(".quiz-btn").forEach(btn => {
     btn.onclick = async function () {
       const day = parseInt(btn.getAttribute("data-day"), 10);
-      // Use your existing quiz modal logic, e.g.:
       await showQuizModal(day);
     };
   });
