@@ -1,5 +1,432 @@
 {
   "days": [
+
+    {
+  "day": 4,
+  "topic": "HTML BASICS",
+  "questions": [
+    {
+    "question": "What is the purpose of the <table> tag in HTML?",
+    "options": [
+      "To create a structured layout for data in rows and columns",
+      "To define a navigation menu",
+      "To group form elements",
+      "To display images in a grid"
+    ],
+    "answer": "To create a structured layout for data in rows and columns"
+  },
+  {
+    "question": "Which tag defines a row in an HTML table?",
+    "options": [
+      "<tr>",
+      "<td>",
+      "<th>",
+      "<table>"
+    ],
+    "answer": "<tr>"
+  },
+  {
+    "question": "What does the <td> tag represent in an HTML table?",
+    "options": [
+      "A table data cell",
+      "A table header",
+      "A table row",
+      "A table caption"
+    ],
+    "answer": "A table data cell"
+  },
+  {
+    "question": "Which tag is used to create a table header?",
+    "options": [
+      "<th>",
+      "<td>",
+      "<tr>",
+      "<table>"
+    ],
+    "answer": "<th>"
+  },
+  {
+    "question": "What is the role of the <caption> tag in an HTML table?",
+    "code": "<table><caption>Summary</caption>...</table>",
+    "options": [
+      "To provide a title or description for the table",
+      "To define a table cell",
+      "To create a table border",
+      "To group table rows"
+    ],
+    "answer": "To provide a title or description for the table"
+  },
+  {
+    "question": "Which attribute allows a table cell to span multiple columns?",
+    "options": [
+      "colspan",
+      "rowspan",
+      "span",
+      "width"
+    ],
+    "answer": "colspan"
+  },
+  {
+    "question": "What does the rowspan attribute do in a table cell?",
+    "options": [
+      "Spans the cell across multiple rows",
+      "Spans the cell across multiple columns",
+      "Sets the cell width",
+      "Aligns the cell content"
+    ],
+    "answer": "Spans the cell across multiple rows"
+  },
+  {
+    "question": "Which tag groups header content in a table?",
+    "code": "<table><thead>...</thead>...</table>",
+    "options": [
+      "<thead>",
+      "<tbody>",
+      "<tfoot>",
+      "<tr>"
+    ],
+    "answer": "<thead>"
+  },
+  {
+    "question": "What is the purpose of the <tbody> tag in an HTML table?",
+    "options": [
+      "To group the main content of the table",
+      "To define the table footer",
+      "To create a table caption",
+      "To set the table alignment"
+    ],
+    "answer": "To group the main content of the table"
+  },
+  {
+    "question": "Which tag defines the footer content of a table?",
+    "code": "<table><tfoot>...</tfoot>...</table>",
+    "options": [
+      "<tfoot>",
+      "<thead>",
+      "<tbody>",
+      "<caption>"
+    ],
+    "answer": "<tfoot>"
+  },
+  {
+    "question": "What is the structure of an unordered list in HTML?",
+    "code": "<ul><li>First</li><li>Second</li></ul>",
+    "options": [
+      "A list with bullet points",
+      "A numbered list",
+      "A definition list",
+      "A nested table"
+    ],
+    "answer": "A list with bullet points"
+  },
+  {
+    "question": "Which tag creates an ordered list in HTML?",
+    "options": [
+      "<ol>",
+      "<ul>",
+      "<li>",
+      "<dl>"
+    ],
+    "answer": "<ol>"
+  },
+  {
+    "question": "What does the <li> tag represent in an HTML list?",
+    "options": [
+      "A list item",
+      "A list header",
+      "A list container",
+      "A list description"
+    ],
+    "answer": "A list item"
+  },
+  {
+    "question": "What is the purpose of the <dl> tag in HTML?",
+    "options": [
+      "To create a definition list",
+      "To create an ordered list",
+      "To create an unordered list",
+      "To group table cells"
+    ],
+    "answer": "To create a definition list"
+  },
+  {
+    "question": "Which tag defines a term in a definition list?",
+    "code": "<dl><dt>Word</dt>...</dl>",
+    "options": [
+      "<dt>",
+      "<dd>",
+      "<li>",
+      "<dl>"
+    ],
+    "answer": "<dt>"
+  },
+  {
+    "question": "What does the <dd> tag do in a definition list?",
+    "code": "<dl><dt>Word</dt><dd>Meaning</dd></dl>",
+    "options": [
+      "Describes a term",
+      "Defines a term",
+      "Creates a list item",
+      "Groups list items"
+    ],
+    "answer": "Describes a term"
+  },
+  {
+    "question": "How can you nest a list inside another list in HTML?",
+    "options": [
+      "By placing a list inside an <li> tag",
+      "By placing a list inside a <table> tag",
+      "By using a <dd> tag",
+      "By using a <caption> tag"
+    ],
+    "answer": "By placing a list inside an <li> tag"
+  },
+  {
+    "question": "Which attribute changes the bullet style of an unordered list?",
+    "options": [
+      "type",
+      "align",
+      "value",
+      "id"
+    ],
+    "answer": "type"
+  },
+  {
+    "question": "Which type attribute value creates a numbered list with Roman numerals?",
+    "code": "<ol type='I'>...</ol>",
+    "options": [
+      "I",
+      "A",
+      "1",
+      "a"
+    ],
+    "answer": "I"
+  },
+  {
+    "question": "How do you add a border to a table in HTML?",
+    "options": [
+      "Using the border attribute",
+      "Using the width attribute",
+      "Using the align attribute",
+      "Using the type attribute"
+    ],
+    "answer": "Using the border attribute"
+  },
+  {
+    "question": "Which tag and attribute combination merges cells vertically in a table?",
+    "options": [
+      "<td rowspan='2'>",
+      "<td colspan='2'>",
+      "<tr span='2'>",
+      "<th rowspan='2'>"
+    ],
+    "answer": "<td rowspan='2'>"
+  },
+  {
+    "question": "What is the default bullet style for an unordered list?",
+    "options": [
+      "Disc",
+      "Circle",
+      "Square",
+      "None"
+    ],
+    "answer": "Disc"
+  },
+  {
+    "question": "How do you create a table with two columns and two rows?",
+    "code": "<table><tr><td>Cell</td><td>Cell</td></tr><tr><td>Cell</td><td>Cell</td></tr></table>",
+    "options": [
+      "Using two <tr> tags with two <td> tags each",
+      "Using one <tr> tag with four <td> tags",
+      "Using two <td> tags with two <tr> tags each",
+      "Using a single <table> tag with four <td> tags"
+    ],
+    "answer": "Using two <tr> tags with two <td> tags each"
+  },
+  {
+    "question": "Which attribute starts an ordered list at a specific number?",
+    "options": [
+      "start",
+      "begin",
+      "number",
+      "value"
+    ],
+    "answer": "start"
+  },
+  {
+    "question": "What happens if you omit the <tbody> tag in a table?",
+    "options": [
+      "The browser automatically adds it",
+      "The table will not display",
+      "The table headers will not work",
+      "The table caption will be ignored"
+    ],
+    "answer": "The browser automatically adds it"
+  },
+  {
+    "question": "Which attribute aligns content horizontally in a table cell?",
+    "options": [
+      "align",
+      "valign",
+      "position",
+      "width"
+    ],
+    "answer": "align"
+  },
+  {
+    "question": "What is the purpose of the type attribute in an ordered list?",
+    "options": [
+      "To specify the numbering style",
+      "To set the list item color",
+      "To define the list width",
+      "To group list items"
+    ],
+    "answer": "To specify the numbering style"
+  },
+  {
+    "question": "How do you create a table cell that spans two columns?",
+    "options": [
+      "Using colspan='2'",
+      "Using rowspan='2'",
+      "Using span='2'",
+      "Using width='2'"
+    ],
+    "answer": "Using colspan='2'"
+  },
+  {
+    "question": "Which list type is best for a glossary or dictionary-like structure?",
+    "options": [
+      "Definition list (<dl>)",
+      "Ordered list (<ol>)",
+      "Unordered list (<ul>)",
+      "Table list (<table>)"
+    ],
+    "answer": "Definition list (<dl>)"
+  },
+  {
+    "question": "What is the default alignment of content in a <th> tag?",
+    "options": [
+      "Center",
+      "Left",
+      "Right",
+      "Justify"
+    ],
+    "answer": "Center"
+  },
+  {
+    "question": "Which attribute sets the width of a table?",
+    "options": [
+      "width",
+      "size",
+      "length",
+      "span"
+    ],
+    "answer": "width"
+  },
+  {
+    "question": "How do you reverse the order of an ordered list?",
+    "options": [
+      "Using the reversed attribute",
+      "Using the type attribute",
+      "Using the order attribute",
+      "Using the sort attribute"
+    ],
+    "answer": "Using the reversed attribute"
+  },
+  {
+    "question": "What is the purpose of the scope attribute in a <th> tag?",
+    "options": [
+      "To specify whether the header applies to a row or column",
+      "To set the header width",
+      "To merge header cells",
+      "To align header content"
+    ],
+    "answer": "To specify whether the header applies to a row or column"
+  },
+  {
+    "question": "What does the value attribute do in an <li> tag within an ordered list?",
+    "options": [
+      "Sets the starting number for that list item",
+      "Sets the list item width",
+      "Defines the list item style",
+      "Groups list items"
+    ],
+    "answer": "Sets the starting number for that list item"
+  },
+  {
+    "question": "Which tag groups multiple rows in a table for structural purposes?",
+    "code": "<table><tbody>...</tbody>...</table>",
+    "options": [
+      "<tbody>",
+      "<thead>",
+      "<tfoot>",
+      "<tr>"
+    ],
+    "answer": "<tbody>"
+  },
+  {
+    "question": "How do you create a list with square bullets using only HTML?",
+    "options": [
+      "Using type='square' in <ul>",
+      "Using type='square' in <li>",
+      "Using align='square' in <ul>",
+      "Using value='square' in <ul>"
+    ],
+    "answer": "Using type='square' in <ul>"
+  },
+  {
+    "question": "What is the purpose of the cellpadding attribute in a table?",
+    "options": [
+      "To set the space between cell content and borders",
+      "To set the space between cells",
+      "To set the table width",
+      "To align cell content"
+    ],
+    "answer": "To set the space between cell content and borders"
+  },
+  {
+    "question": "Which attribute controls the space between table cells in HTML?",
+    "options": [
+      "cellspacing",
+      "cellpadding",
+      "border",
+      "width"
+    ],
+    "answer": "cellspacing"
+  },
+  {
+    "question": "What does the valign attribute do in a table cell?",
+    "options": [
+      "Vertically aligns content in a cell",
+      "Horizontally aligns content in a cell",
+      "Sets the cell height",
+      "Spans the cell across rows"
+    ],
+    "answer": "Vertically aligns content in a cell"
+  },
+  {
+    "question": "Which attribute sets the background color of a table in HTML?",
+    "options": [
+      "bgcolor",
+      "color",
+      "background",
+      "shade"
+    ],
+    "answer": "bgcolor"
+  },
+  {
+    "question": "Which attribute vertically centers content in a table cell?",
+    "code": "<td valign='middle'>...</td>",
+    "options": [
+      "valign='middle'",
+      "align='center'",
+      "valign='center'",
+      "align='middle'"
+    ],
+    "answer": "valign='middle'"
+  }
+]
+  },
     {
   "day": 3,
   "topic": "HTML BASICS",
@@ -792,7 +1219,7 @@
   ]
 },
     {
-      "day": 4,
+      "day": 5,
       "topic": "HTML: Introduction & Tags",
       "questions": [
         {
