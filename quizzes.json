@@ -1,297 +1,162 @@
 {
   "days": [
     {
-      "day": 3,
-      "topic": "HTML: Day 3",
+      "day": 4,
+      "topic": "HTML: Introduction & Tags",
       "questions": [
         {
-          "question": "What is wrong with the following HTML code?",
-          "code": "<ul>\n  <li>Item 1\n  <li>Item 2\n</ul>",
+          "question": "What does HTML stand for?",
           "options": [
-            "The <li> tags are not properly closed.",
-            "The <ul> tag is not closed.",
-            "The code is correct.",
-            "The <ul> tag should be <ol>."
+            "Hyper Trainer Marking Language",
+            "Hyper Text Markup Language",
+            "Hyper Text Marketing Language",
+            "Hyper Tool Markup Language"
           ],
-          "answer": "The <li> tags are not properly closed."
+          "answer": "Hyper Text Markup Language"
         },
         {
-          "question": "Which HTML tag is used to create a checkbox?",
+          "question": "Which HTML tag is used to create a hyperlink?",
           "options": [
-            "<input type=\"checkbox\">",
-            "<checkbox>",
-            "<check>",
-            "<input checkbox>"
+            "<a>",
+            "<link>",
+            "<href>",
+            "<hyperlink>"
           ],
-          "answer": "<input type=\"checkbox\">"
-        }
-      ]
-    },
-{
-  "day": 4,
-  "topic": "HTML: Introduction & Tags",
-  "questions": [
-    {
-      "question": "What does HTML stand for?",
-      "options": [
-        "Hyper Trainer Marking Language",
-        "Hyper Text Markup Language",
-        "Hyper Text Marketing Language",
-        "Hyper Tool Markup Language"
-      ],
-      "answer": "Hyper Text Markup Language"
-    },
-    {
-      "question": "Which HTML tag is used to create a hyperlink?",
-      "options": [
-        "<a>",
-        "<link>",
-        "<href>",
-        "<hyperlink>"
-      ],
-      "answer": "<a>"
-    },
-    {
-      "question": "What is the correct HTML element for inserting a line break?",
-      "options": [
-        "<break>",
-        "<lb>",
-        "<br>",
-        "<newline>"
-      ],
-      "answer": "<br>"
-    },
-    {
-      "question": "Which tag is used to display the largest heading?",
-      "options": [
-        "<h6>",
-        "<head>",
-        "<h1>",
-        "<heading>"
-      ],
-      "answer": "<h1>"
-    },
-    {
-      "question": "What is the output of the following HTML code?",
-      "code": "<p>Hello<br>World</p>",
-      "options": [
-        "Hello World (on one line)",
-        "Hello and World on separate lines",
-        "Hello<br>World (with a visible <br> tag)",
-        "Error"
-      ],
-      "answer": "Hello and World on separate lines"
-    },
-    {
-      "question": "How do you add a comment in HTML?",
-      "options": [
-        "<!-- This is a comment -->",
-        "// This is a comment",
-        "# This is a comment",
-        "<comment>This is a comment</comment>"
-      ],
-      "answer": "<!-- This is a comment -->"
-    },
-    {
-      "question": "Which HTML tag is used to display an image?",
-      "options": [
-        "<img>",
-        "<image>",
-        "<picture>",
-        "<src>"
-      ],
-      "answer": "<img>"
-    },
-    {
-      "question": "What is the correct HTML for making a numbered list?",
-      "options": [
-        "<ul>",
-        "<ol>",
-        "<list>",
-        "<dl>"
-      ],
-      "answer": "<ol>"
-    },
-    {
-      "question": "Which tag is used to create a table row?",
-      "options": [
-        "<tr>",
-        "<td>",
-        "<th>",
-        "<table-row>"
-      ],
-      "answer": "<tr>"
-    },
-    {
-      "question": "What is the correct HTML for creating a checkbox?",
-      "options": [
-        "<input type='checkbox'>",
-        "<checkbox>",
-        "<input type='check'>",
-        "<check>"
-      ],
-      "answer": "<input type='checkbox'>"
-    },
-    {      "question": "Which HTML tag is used to define emphasized text?",
-      "options": [
-        "<strong>",
-        "<b>",
-        "<em>",
-        "<i>"
-      ],
-      "answer": "<em>"
-    },
-    {
-      "question": "What is the correct HTML element for inserting a horizontal rule?",
-      "options": [
-        "<hr>",
-        "<line>",
-        "<horizontal>",
-        "<breakline>"
-      ],
-      "answer": "<hr>"
-    },
-    {
-      "question": "Which tag is used to create an unordered list?",
-      "options": [
-        "<ul>",
-        "<ol>",
-        "<list>",
-        "<dl>"
-      ],
-      "answer": "<ul>"
-    },
-    {
-      "question": "Which HTML tag is used for the largest heading?",
-      "options": [
-        "<heading>",
-        "<h6>",
-        "<h1>",
-        "<head>"
-      ],
-      "answer": "<h1>"
-    },
-    {
-      "question": "What is the correct HTML for creating a text input field?",
-      "options": [
-        "<input type='text'>",
-        "<textfield>",
-        "<input type='textfield'>",
-        "<textinput>"
-      ],
-      "answer": "<input type='text'>"
-    },
-    {
-      "question": "Which HTML tag is used to make text bold?",
-      "options": [
-        "<b>",
-        "<bold>",
-        "<strong>",
-        "<em>"
-      ],
-      "answer": "<b>"
-    },
-    {
-      "question": "What does the <title> tag do in HTML?",
-      "options": [
-        "Displays a title inside the page body",
-        "Defines the title in the browser tab",
-        "Adds a tooltip to text",
-        "Changes the font size"
-      ],
-      "answer": "Defines the title in the browser tab"
-    },
-    {
-      "question": "Which attribute is used to provide alternative text for an image?",
-      "options": [
-        "title",
-        "alt",
-        "src",
-        "description"
-      ],
-      "answer": "alt"
-    },
-    {
-      "question": "What is the correct structure of an HTML document?",
-      "options": [
-        "<html> <head> <body>",
-        "<head> <html> <body>",
-        "<body> <html> <head>",
-        "<html> <body> <head>"
-      ],
-      "answer": "<html> <head> <body>"
-    },
-    {
-      "question": "Which HTML tag is used to define a paragraph?",
-      "options": [
-        "<p>",
-        "<para>",
-        "<paragraph>",
-        "<text>"
-      ],
-      "answer": "<p>"
-    },
-    {      "question": "What will be displayed by the following HTML code?",
-      "code": "<h2>Welcome!</h2><p>This is a paragraph.</p>",
-      "options": [
-        "Welcome! This is a paragraph.",
-        "Welcome! (as a heading) and This is a paragraph. (as paragraph)",
-        "Nothing will be displayed",
-        "Error"
-      ],
-      "answer": "Welcome! (as a heading) and This is a paragraph. (as paragraph)"
-    },
-    {
-      "question": "How does the browser display the following HTML?",
-      "code": "<ul><li>Apple</li><li>Banana</li><li>Cherry</li></ul>",
-      "options": [
-        "A numbered list with Apple, Banana, Cherry",
-        "A bulleted list with Apple, Banana, Cherry",
-        "A table with three rows",
-        "Plain text: Apple Banana Cherry"
-      ],
-      "answer": "A bulleted list with Apple, Banana, Cherry"
-    },
-    {
-      "question": "What does this HTML code do?",
-      "code": "<a href='https://example.com'>Visit Example</a>",
-      "options": [
-        "Shows 'Visit Example' as a clickable link to https://example.com",
-        "Displays the URL only",
-        "Shows 'Visit Example' as plain text",
-        "Creates an image link"
-      ],
-      "answer": "Shows 'Visit Example' as a clickable link to https://example.com"
-    },
-    {
-      "question": "What is the result of the following HTML snippet?",
-      "code": "<img src='cat.jpg' alt='A cute cat'>",
-      "options": [
-        "Displays an image named 'cat.jpg' with alternative text 'A cute cat' if image is missing",
-        "Displays only the text 'A cute cat'",
-        "Shows 'cat.jpg' as text",
-        "Creates a table row"
-      ],
-      "answer": "Displays an image named 'cat.jpg' with alternative text 'A cute cat' if image is missing"
-    },
-    {
-      "question": "What happens when this HTML code is rendered?",
-      "code": "<input type='text' placeholder='Enter your name'>",
-      "options": [
-        "Displays a text box with placeholder text 'Enter your name'",
-        "Displays a button",
-        "Displays a label",
-        "Shows an error"
-      ],
-      "answer": "Displays a text box with placeholder text 'Enter your name'"
-    }
-  ]
-},    {
-      "day": 5,
-      "topic": "HTML: Day 5",
-      "questions": [
+          "answer": "<a>"
+        },
         {
-          "question": "Which tag would you use to make text bold in HTML?",
+          "question": "What is the correct HTML element for inserting a line break?",
+          "options": [
+            "<break>",
+            "<lb>",
+            "<br>",
+            "<newline>"
+          ],
+          "answer": "<br>"
+        },
+        {
+          "question": "Which tag is used to display the largest heading?",
+          "options": [
+            "<h6>",
+            "<head>",
+            "<h1>",
+            "<heading>"
+          ],
+          "answer": "<h1>"
+        },
+        {
+          "question": "What is the output of the following HTML code?",
+          "code": "<p>Hello<br>World</p>",
+          "options": [
+            "Hello World (on one line)",
+            "Hello and World on separate lines",
+            "Hello<br>World (with a visible <br> tag)",
+            "Error"
+          ],
+          "answer": "Hello and World on separate lines"
+        },
+        {
+          "question": "How do you add a comment in HTML?",
+          "options": [
+            "<!-- This is a comment -->",
+            "// This is a comment",
+            "# This is a comment",
+            "<comment>This is a comment</comment>"
+          ],
+          "answer": "<!-- This is a comment -->"
+        },
+        {
+          "question": "Which HTML tag is used to display an image?",
+          "options": [
+            "<img>",
+            "<image>",
+            "<picture>",
+            "<src>"
+          ],
+          "answer": "<img>"
+        },
+        {
+          "question": "What is the correct HTML for making a numbered list?",
+          "options": [
+            "<ul>",
+            "<ol>",
+            "<list>",
+            "<dl>"
+          ],
+          "answer": "<ol>"
+        },
+        {
+          "question": "Which tag is used to create a table row?",
+          "options": [
+            "<tr>",
+            "<td>",
+            "<th>",
+            "<table-row>"
+          ],
+          "answer": "<tr>"
+        },
+        {
+          "question": "What is the correct HTML for creating a checkbox?",
+          "options": [
+            "<input type='checkbox'>",
+            "<checkbox>",
+            "<input type='check'>",
+            "<check>"
+          ],
+          "answer": "<input type='checkbox'>"
+        },
+        {
+          "question": "Which HTML tag is used to define emphasized text?",
+          "options": [
+            "<strong>",
+            "<b>",
+            "<em>",
+            "<i>"
+          ],
+          "answer": "<em>"
+        },
+        {
+          "question": "What is the correct HTML element for inserting a horizontal rule?",
+          "options": [
+            "<hr>",
+            "<line>",
+            "<horizontal>",
+            "<breakline>"
+          ],
+          "answer": "<hr>"
+        },
+        {
+          "question": "Which tag is used to create an unordered list?",
+          "options": [
+            "<ul>",
+            "<ol>",
+            "<list>",
+            "<dl>"
+          ],
+          "answer": "<ul>"
+        },
+        {
+          "question": "Which HTML tag is used for the largest heading?",
+          "options": [
+            "<heading>",
+            "<h6>",
+            "<h1>",
+            "<head>"
+          ],
+          "answer": "<h1>"
+        },
+        {
+          "question": "What is the correct HTML for creating a text input field?",
+          "options": [
+            "<input type='text'>",
+            "<textfield>",
+            "<input type='textfield'>",
+            "<textinput>"
+          ],
+          "answer": "<input type='text'>"
+        },
+        {
+          "question": "Which HTML tag is used to make text bold?",
           "options": [
             "<b>",
             "<bold>",
@@ -301,42 +166,187 @@
           "answer": "<b>"
         },
         {
-          "question": "What is the result of the following HTML code?",
-          "code": "<img src=\"image.jpg\" alt=\"My Image\">",
+          "question": "What does the <title> tag do in HTML?",
           "options": [
-            "Displays an image with alternate text 'My Image' if the image can't be shown.",
-            "Displays only the text 'My Image'.",
-            "Displays only the image, no alternate text.",
-            "Error: 'alt' is not a valid attribute."
+            "Displays a title inside the page body",
+            "Defines the title in the browser tab",
+            "Adds a tooltip to text",
+            "Changes the font size"
           ],
-          "answer": "Displays an image with alternate text 'My Image' if the image can't be shown."
-        }
-      ]
-    },
-    {
-      "day": 6,
-      "topic": "HTML: Day 6",
-      "questions": [
-        {
-          "question": "What will happen if you use the following code?",
-          "code": "<a href=\"https://example.com\" target=\"_blank\">Visit Example</a>",
-          "options": [
-            "It will open the link in a new tab or window.",
-            "It will open the link in the same tab.",
-            "It will show an error.",
-            "It will not create a link."
-          ],
-          "answer": "It will open the link in a new tab or window."
+          "answer": "Defines the title in the browser tab"
         },
         {
-          "question": "Which attribute is used to provide a tool tip for an HTML element?",
+          "question": "Which attribute is used to provide alternative text for an image?",
           "options": [
             "title",
-            "tooltip",
             "alt",
-            "hint"
+            "src",
+            "description"
           ],
-          "answer": "title"
+          "answer": "alt"
+        },
+        {
+          "question": "What is the correct structure of an HTML document?",
+          "options": [
+            "<html> <head> <body>",
+            "<head> <html> <body>",
+            "<body> <html> <head>",
+            "<html> <body> <head>"
+          ],
+          "answer": "<html> <head> <body>"
+        },
+        {
+          "question": "Which HTML tag is used to define a paragraph?",
+          "options": [
+            "<p>",
+            "<para>",
+            "<paragraph>",
+            "<text>"
+          ],
+          "answer": "<p>"
+        },
+        {
+          "question": "What will be displayed by the following HTML code?",
+          "code": "<h2>Welcome!</h2><p>This is a paragraph.</p>",
+          "options": [
+            "Welcome! This is a paragraph.",
+            "Welcome! (as a heading) and This is a paragraph. (as paragraph)",
+            "Nothing will be displayed",
+            "Error"
+          ],
+          "answer": "Welcome! (as a heading) and This is a paragraph. (as paragraph)"
+        },
+        {
+          "question": "How does the browser display the following HTML?",
+          "code": "<ul><li>Apple</li><li>Banana</li><li>Cherry</li></ul>",
+          "options": [
+            "A numbered list with Apple, Banana, Cherry",
+            "A bulleted list with Apple, Banana, Cherry",
+            "A table with three rows",
+            "Plain text: Apple Banana Cherry"
+          ],
+          "answer": "A bulleted list with Apple, Banana, Cherry"
+        },
+        {
+          "question": "What does this HTML code do?",
+          "code": "<a href='https://example.com'>Visit Example</a>",
+          "options": [
+            "Shows 'Visit Example' as a clickable link to https://example.com",
+            "Displays the URL only",
+            "Shows 'Visit Example' as plain text",
+            "Creates an image link"
+          ],
+          "answer": "Shows 'Visit Example' as a clickable link to https://example.com"
+        },
+        {
+          "question": "What is the result of the following HTML snippet?",
+          "code": "<img src='cat.jpg' alt='A cute cat'>",
+          "options": [
+            "Displays an image named 'cat.jpg' with alternative text 'A cute cat' if image is missing",
+            "Displays only the text 'A cute cat'",
+            "Shows 'cat.jpg' as text",
+            "Creates a table row"
+          ],
+          "answer": "Displays an image named 'cat.jpg' with alternative text 'A cute cat' if image is missing"
+        },
+        {
+          "question": "What happens when this HTML code is rendered?",
+          "code": "<input type='text' placeholder='Enter your name'>",
+          "options": [
+            "Displays a text box with placeholder text 'Enter your name'",
+            "Displays a button",
+            "Displays a label",
+            "Shows an error"
+          ],
+          "answer": "Displays a text box with placeholder text 'Enter your name'"
+        },
+
+      
+        {
+          "question": "What is the output of the following HTML code?",
+          "code": "<a href='https://google.com'>Google</a>",
+          "options": [
+            "A clickable link labeled 'Google'",
+            "Plain text: Google",
+            "A button linking to Google",
+            "An image with alt text 'Google'"
+          ],
+          "answer": "A clickable link labeled 'Google'"
+        },
+        {
+          "question": "Which tag is used to display the following HTML code as a list of items?",
+          "code": "<li>Home</li><li>About</li><li>Contact</li>",
+          "options": [
+            "<ul>",
+            "<ol>",
+            "<dl>",
+            "<table>"
+          ],
+          "answer": "<ul>"
+        },
+        {
+          "question": "What is the result of this HTML snippet?",
+          "code": "<h1>Main Title</h1><h3>Subheading</h3>",
+          "options": [
+            "Main Title as a large heading, Subheading as a smaller heading",
+            "Both lines will be the same size",
+            "Subheading will be bold, Main Title normal",
+            "Both lines will be plain text"
+          ],
+          "answer": "Main Title as a large heading, Subheading as a smaller heading"
+        },
+        {
+          "question": "Which line correctly creates a hyperlink to CodecX homepage?",
+          "options": [
+            "<a href='https://codecx.com'>CodecX</a>",
+            "<link href='https://codecx.com'>CodecX</link>",
+            "<url href='https://codecx.com'>CodecX</url>",
+            "<hyperlink>CodecX</hyperlink>"
+          ],
+          "answer": "<a href='https://codecx.com'>CodecX</a>"
+        },
+        {
+          "question": "What does the following code display?",
+          "code": "<p>First line<br>Second line</p>",
+          "options": [
+            "First line and Second line on separate lines",
+            "First line Second line on one line",
+            "Error: <br> cannot be used here",
+            "A blank paragraph"
+          ],
+          "answer": "First line and Second line on separate lines"
+        },
+        {
+          "question": "Which tag is used for emphasized text in the following code?",
+          "code": "<em>Important</em>",
+          "options": [
+            "<em>",
+            "<b>",
+            "<strong>",
+            "<i>"
+          ],
+          "answer": "<em>"
+        },
+        {
+          "question": "What does this HTML code do?",
+          "code": "<a href='mailto:info@codecx.com'>Email Us</a>",
+          "options": [
+            "Creates a clickable link to send email to info@codecx.com",
+            "Creates a link to the CodeCX homepage",
+            "Shows plain text 'Email Us'",
+            "Displays an error"
+          ],
+          "answer": "Creates a clickable link to send email to info@codecx.com"
+        },
+        {
+          "question": "Which tag is used to insert a horizontal line in HTML?",
+          "options": [
+            "<hr>",
+            "<line>",
+            "<horiz>",
+            "<break>"
+          ],
+          "answer": "<hr>"
         }
       ]
     }
