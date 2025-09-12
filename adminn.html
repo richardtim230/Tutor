@@ -451,52 +451,886 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <!-- ... your other scripts ... -->
   <script>
-    // SIDEBAR LOGIC (Unified per new design)
-    const sidebar = document.getElementById('sidebar');
-    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
-    document.getElementById('sidebarToggle').onclick = function() {
-      sidebar.classList.add('sidebar-open');
-      sidebar.classList.remove('sidebar-closed');
-      sidebarBackdrop.classList.add('show');
-    };
-    sidebarBackdrop.onclick = function() {
-      sidebar.classList.remove('sidebar-open');
-      sidebar.classList.add('sidebar-closed');
-      sidebarBackdrop.classList.remove('show');
-    };
-    // Close sidebar on link click (mobile)
-    document.querySelectorAll('#sidebar a').forEach(tab => {
-      tab.addEventListener('click', function(e) {
-        sidebar.classList.remove('sidebar-open');
-        sidebar.classList.add('sidebar-closed');
-        sidebarBackdrop.classList.remove('show');
-      });
-    });
-    // Tab navigation
-    document.querySelectorAll('.sidebar a').forEach(tab => {
-      tab.onclick = function(e) {
-        e.preventDefault();
-        document.querySelectorAll('.sidebar a').forEach(t => t.classList.remove('tab-active'));
-        tab.classList.add('tab-active');
-        document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
-        document.getElementById('tab-' + tab.getAttribute('data-tab')).classList.remove('hidden');
-      }
-    });
-    
-function updateSidebarState() {
-  if (window.innerWidth >= 768) { // md breakpoint
-    sidebar.classList.add('sidebar-open');
-    sidebar.classList.remove('sidebar-closed');
-    sidebarBackdrop.classList.remove('show');
-  } else {
+
+
+
+    function showLoader() {
+  document.getElementById('pageLoader').style.display = 'flex';
+}
+function hideLoader() {
+  document.getElementById('pageLoader').style.display = 'none';
+}
+const API_BASE = "https://examguide.onrender.com/api/codecxreg";
+let admin = {};
+let candidates = [];
+let stats = {};
+let candidatePage = 1;
+let candidatePageSize = 10;
+let quizzes = {};
+
+// SIDEBAR LOGIC
+const sidebar = document.getElementById('sidebar');
+const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+document.getElementById('sidebarToggle').onclick = function() {
+  sidebar.classList.add('sidebar-open');
+  sidebar.classList.remove('sidebar-closed');
+  sidebarBackdrop.classList.add('show');
+};
+sidebarBackdrop.onclick = function() {
+  sidebar.classList.remove('sidebar-open');
+  sidebar.classList.add('sidebar-closed');
+  sidebarBackdrop.classList.remove('show');
+};
+// Close sidebar on link click (mobile)
+document.querySelectorAll('#sidebar a').forEach(tab => {
+  tab.addEventListener('click', function(e) {
     sidebar.classList.remove('sidebar-open');
     sidebar.classList.add('sidebar-closed');
+    sidebarBackdrop.classList.remove('show');
+  });
+});
+
+// Tab navigation
+document.querySelectorAll('.sidebar a').forEach(tab => {
+  tab.onclick = function(e) {
+    e.preventDefault();
+    document.querySelectorAll('.sidebar a').forEach(t => t.classList.remove('tab-active'));
+    tab.classList.add('tab-active');
+    document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
+    document.getElementById('tab-' + tab.getAttribute('data-tab')).classList.remove('hidden');
+  }
+});
+
+function logout() {
+  localStorage.removeItem("codecx_token");
+  window.location.href = "/login.html";
+}
+
+// Admin profile
+async function fetchAdmin() {
+  let token = localStorage.getItem('codecx_token');
+  if (!token) return logout();
+  const resp = await fetch(`${API_BASE}/me`, { headers: { "Authorization": "Bearer " + token } });
+  if (!resp.ok) return logout();
+  const data = await resp.json();
+  admin = data;
+  document.getElementById("adminName").textContent = admin.fullName || "Admin";
+  document.getElementById("adminAvatar").src = admin.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(admin.fullName || "Admin");
+  document.getElementById("settingsPanel").innerHTML = `<div>
+    <div class="mb-3"><img src="${admin.passportBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(admin.fullName || "Admin")}" class="w-14 h-14 rounded-full border mb-2"/></div>
+    <div class="mb-1 font-bold">${admin.fullName}</div>
+    <div class="mb-1 text-sm text-gray-600">${admin.email}</div>
+    <div class="mb-1 text-sm text-gray-600">Role: ${admin.role || "admin"}</div>
+  </div>`;
+}
+
+// Candidates & stats
+async function fetchCandidates() {
+  let token = localStorage.getItem('codecx_token');
+  try {
+    const resp = await fetch(`${API_BASE}/admin`, { headers: { "Authorization": "Bearer " + token } });
+    if (!resp.ok) {
+      alert("Failed to load candidates: " + resp.status);
+      return;
+    }
+    const data = await resp.json();
+    candidates = data.students || [];
+    stats = data.stats || {};
+    renderStats();
+    renderCandidates();
+    renderPayments();
+    renderCourses();
+    renderActivity();
+    renderOverviewActivity();
+    renderProgressChart();
+  } catch (error) {
+    alert("Error loading candidates: " + error.message);
   }
 }
-window.addEventListener('resize', updateSidebarState);
-window.addEventListener('DOMContentLoaded', updateSidebarState);
 
-    // FURTHER JS: Use your existing logic for all tabs and functions.
-  </script>
+// Fetch extra details (attendance, assignments, payments, quizzes) for every candidate
+async function fetchAllDetails(token) {
+  for (let i = 0; i < candidates.length; i++) {
+    let id = candidates[i]._id || candidates[i].id; // fallback for _id
+    try {
+      // Fetch single student folder/details
+      const resp = await fetch(`${API_BASE}/student/${id}`, {
+        headers: { "Authorization": "Bearer " + token }
+      });
+      if (resp.ok) {
+        const detail = await resp.json();
+        candidates[i].matricNumber = detail.matricNumber; // Fix matric number
+        candidates[i].attendance = detail.attendance || [];
+        candidates[i].attendanceMarked = detail.attendanceMarked || 0;
+        candidates[i].assignments = detail.assignments || [];
+        candidates[i].payments = detail.payments || [];
+        candidates[i].courses = detail.courses || [];
+        candidates[i].progress = detail.progress || {};
+        candidates[i].activities = detail.activities || [];
+        candidates[i].quizzes = detail.quizzes || [];
+      }
+    } catch(e) {}
+  }
+}
+async function waivePayment(id) {
+  if (!confirm("Are you sure you want to waive payment for this student?")) return;
+  let token = localStorage.getItem('codecx_token');
+  if (!token) return logout();
+  try {
+    const resp = await fetch(`https://examguide.onrender.com/api/codecxreg/admin/candidate/${id}/waive-payment`, {
+      method: "POST",
+      headers: { "Authorization": "Bearer " + token }
+    });
+    let data;
+    const contentType = resp.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      data = await resp.json();
+    } else {
+      const text = await resp.text();
+      alert("Server returned an unexpected response:\n" + text.slice(0, 120));
+      return;
+    }
+    if (resp.ok) {
+      alert("Payment waived successfully.");
+      await fetchCandidates();
+      closeCandidateModal();
+    } else {
+      alert("Waive failed: " + (data.message || resp.status));
+    }
+  } catch (e) {
+    alert("Error waiving payment: " + e.message);
+  }
+}
+window.waivePayment = waivePayment;
+function renderStats() {
+  document.getElementById("statTotal").textContent = stats.totalStudents || "-";
+  document.getElementById("statPaid").textContent = stats.paidCount || "-";
+  document.getElementById("statUnpaid").textContent = stats.unpaidCount || "-";
+  document.getElementById("statAssignments").textContent = stats.assignmentCount || "-";
+}
+
+// Candidates table/cards + pagination
+function renderCandidates() {
+  let search = document.getElementById("candidateSearch").value.trim().toLowerCase();
+  let filtered = candidates.filter(c =>
+    !search ||
+    (c.fullName && c.fullName.toLowerCase().includes(search)) ||
+    (c.email && c.email.toLowerCase().includes(search)) ||
+    (c.matricNumber && String(c.matricNumber).toLowerCase().includes(search))
+  );
+  let pageCount = Math.ceil(filtered.length / candidatePageSize);
+  candidatePage = Math.min(candidatePage, pageCount || 1);
+  let pageStart = (candidatePage - 1) * candidatePageSize;
+  let pageEnd = pageStart + candidatePageSize;
+  let paged = filtered.slice(pageStart, pageEnd);
+
+  // Table
+  let html = "";
+  paged.forEach(c => {
+    html += `
+<tr class="bg-white border-b hover:bg-indigo-50">
+  <td class="px-3 py-2">${c.fullName}</td>
+  <td class="px-3 py-2">${c.matricNumber || "N/A"}</td>
+  <td class="px-3 py-2">${c.email}</td>
+  <td class="px-3 py-2">${c.phone}</td>
+  <td class="px-3 py-2">
+    ${
+      c.payments?.some(p => p.status === "Waived")
+        ? '<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Waived</span>'
+        : c.hasPaid
+        ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded">Yes</span>'
+        : `<span class="bg-red-100 text-red-800 px-2 py-1 rounded">No</span>
+           <button class="bg-yellow-400 text-indigo-900 px-2 py-1 rounded ml-2 text-xs" onclick="waivePayment('${c._id}')">Waive Payment</button>`
+    }
+  </td>
+  <td class="px-3 py-2">${(c.courses || []).map(x => x.name).join(", ")}</td>
+  <td class="px-3 py-2">
+    <button class="px-2 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700" onclick="showCandidateModal('${c._id}')"><i class="bi bi-eye"></i></button>
+  </td>
+</tr>`;
+  });
+  document.getElementById("candidateTableBody").innerHTML = html;
+
+  // Cards for mobile
+  let cards = "";
+  paged.forEach(c => {
+    cards += `
+<div class="flex gap-3 mb-3 items-start">
+  <img src="${c.passportBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(c.fullName)}" class="w-20 h-20 rounded-full border mr-3"/>
+  <div>
+    <div class="font-bold text-lg mb-1">${c.fullName}</div>
+    <div class="text-sm text-gray-600 mb-1">Matric: ${c.matricNumber || "N/A"}</div>
+    <div class="text-sm text-gray-600 mb-1">Email: ${c.email}</div>
+    <div class="text-sm text-gray-600 mb-1">Phone: ${c.phone}</div>
+    <div class="text-sm mb-1">
+      ${
+        c.payments?.some(p => p.status === "Waived")
+          ? '<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Waived</span>'
+          : c.hasPaid
+          ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded">Paid</span>'
+          : `<span class="bg-red-100 text-red-800 px-2 py-1 rounded">Unpaid</span>
+             <button class="bg-yellow-400 text-indigo-900 px-2 py-1 rounded ml-2 text-xs" onclick="waivePayment('${c._id}')">Waive Payment</button>`
+      }
+    </div>
+    <div class="text-sm mb-1">Courses: ${(c.courses || []).map(x => x.name).join(", ") || "None"}</div>
+  </div>
+  </div>`;
+  });
+  document.getElementById("candidateCards").innerHTML = cards;
+
+  // Pagination
+  let pag = "";
+  for(let i=1; i<=pageCount; ++i) {
+    pag += `<button class="px-3 py-1 rounded-lg ${candidatePage===i?'bg-indigo-600 text-white':'bg-gray-200'}" onclick="setCandidatePage(${i})">${i}</button>`;
+  }
+  document.getElementById("candidatePagination").innerHTML = pag;
+}
+function setCandidatePage(p) {
+  candidatePage = p;
+  renderCandidates();
+}
+document.getElementById("candidateSearch").oninput = renderCandidates;
+
+// Export CSV
+function exportCSV() {
+  let rows = [["Name","Matric","Email","Phone","Paid","Courses"]];
+  candidates.forEach(c => {
+    rows.push([
+      c.fullName,
+      c.matricNumber,
+      c.email,
+      c.phone,
+      c.hasPaid ? "Paid" : "Unpaid",
+      (c.courses||[]).map(x=>x.name).join(", ")
+    ]);
+  });
+  let csv = rows.map(r=>r.map(x=>`"${x}"`).join(",")).join("\n");
+  let blob = new Blob([csv], {type:'text/csv'});
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement('a');
+  a.href = url; a.download = "candidates.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+window.exportCSV = exportCSV;
+
+// Candidate Modal (student folder)
+function showCandidateModal(id) {
+  let c = candidates.find(x => x._id === id);
+  if (!c) return;
+  let html = `<div class="flex gap-3 mb-3 items-start">
+    <img src="${c.passportBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(c.fullName)}" class="w-20 h-20 rounded-full border mr-3"/>
+    <div>
+      <div class="font-bold text-lg mb-1">${c.fullName}</div>
+      <div class="text-sm text-gray-600 mb-1">Matric: ${c.matricNumber || "N/A"}</div>
+      <div class="text-sm text-gray-600 mb-1">Email: ${c.email}</div>
+      <div class="text-sm text-gray-600 mb-1">Phone: ${c.phone}</div>
+      <div class="text-sm mb-1">${c.hasPaid ? '<span class="bg-green-100 text-green-800 px-2 py-1 rounded">Paid</span>' : '<span class="bg-red-100 text-red-800 px-2 py-1 rounded">Unpaid</span>'}</div>
+      <div class="text-sm mb-1">Courses: ${(c.courses || []).map(x => x.name).join(", ") || "None"}</div>
+    </div>
+  </div>
+  <div class="mb-2">
+    <div class="font-semibold text-indigo-700 mb-1">Attendance</div>
+    <div class="text-sm">Days marked: ${c.attendanceMarked || (c.attendance ? c.attendance.length : 0)}</div>
+    <ul class="text-sm pl-2 max-h-24 overflow-y-auto">
+      ${(c.attendance || []).map(a => `<li>${formatDate(a.date)} - ${a.status}</li>`).join("") || "<li>No attendance</li>"}
+    </ul>
+  </div>
+  <div class="mb-2">
+    <div class="font-semibold text-indigo-700 mb-1">Assignments</div>
+    <div class="text-sm">Total: ${(c.assignments || []).length}</div>
+    <ul class="text-sm pl-2 max-h-24 overflow-y-auto">
+      ${(c.assignments || []).map(a => `<li>${formatDate(a.date)} - ${a.title || a.name}</li>`).join("") || "<li>No assignments</li>"}
+    </ul>
+  </div>
+  <div class="mb-2">
+    <div class="font-semibold text-indigo-700 mb-1">Payments</div>
+    <ul class="text-sm pl-2 max-h-24 overflow-y-auto">
+      ${(c.payments || []).slice(-5).reverse().map(p => `<li>${formatDate(p.date)}: ₦${p.amount} (${p.status}) Ref:${p.ref}</li>`).join("") || "<li>No payment</li>"}
+    </ul>
+  </div>
+  <div class="mb-2">
+    <div class="font-semibold text-indigo-700 mb-1">Quiz</div>
+    <ul class="text-sm pl-2 max-h-32 overflow-y-auto">
+      ${(c.quizzes || []).map(q => `<li>Day ${q.day}: Score ${q.score || "-"} (${q.status || "Not submitted"})</li>`).join("") || "<li>No quiz records</li>"}
+    </ul>
+    <button class="px-3 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 mt-2" onclick="addQuiz('${c._id}')"><i class="bi bi-plus"></i> Add Quiz</button>
+  </div>
+  <div class="mb-2">
+    <div class="font-semibold text-indigo-700 mb-1">Progress</div>
+    <div class="text-sm">Completed: ${c.progress?.completed || 0} / ${c.progress?.total || 0}, Grade: ${c.progress?.grade || "-"}</div>
+  </div>
+  <div class="mb-2">
+    <div class="font-semibold text-indigo-700 mb-1">Recent Activity</div>
+    <ul class="text-sm pl-2 max-h-32 overflow-y-auto">
+      ${(c.activities || []).slice(-6).reverse().map(a => `<li>${formatDate(a.date)} - ${a.activity}</li>`).join("") || "<li>No activity</li>"}
+    </ul>
+  </div>
+  <div class="mt-3 flex gap-3">
+    <button class="px-3 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700" onclick="deleteCandidate('${c._id}')"><i class="bi bi-trash"></i> Delete</button>
+  </div>`;
+  document.getElementById("candidateModalContent").innerHTML = html;
+  document.getElementById("candidateModal").classList.remove("hidden");
+}
+function closeCandidateModal() {
+  document.getElementById("candidateModal").classList.add("hidden");
+}
+window.showCandidateModal = showCandidateModal;
+window.closeCandidateModal = closeCandidateModal;
+
+// Delete candidate (admin only, fixed: uses correct API endpoint)
+async function deleteCandidate(id) {
+  let token = localStorage.getItem('codecx_token');
+  if (!token) return logout();
+  if (!confirm("Are you sure you want to delete this candidate?")) return;
+  try {
+    const resp = await fetch(`${API_BASE}/admin/candidate/${id}`, {
+      method: "DELETE",
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (resp.ok) {
+      closeCandidateModal();
+      await fetchCandidates();
+      alert("Candidate deleted.");
+    } else {
+      const data = await resp.json();
+      alert("Delete failed: " + (data.message || resp.status));
+    }
+  } catch (e) {
+    alert("Error deleting candidate: " + e.message);
+  }
+}
+window.deleteCandidate = deleteCandidate;
+
+// Add Quiz - fetch quiz for a candidate and save result
+async function addQuiz(id) {
+  let token = localStorage.getItem('codecx_token');
+  let day = prompt("Enter quiz day (1-60):");
+  if (!day || isNaN(day) || day < 1 || day > 60) {
+    alert("Invalid day");
+    return;
+  }
+  try {
+    // Get quiz
+    const resp = await fetch(`${API_BASE}/quiz/${day}`, {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!resp.ok) {
+      alert("Failed to fetch quiz");
+      return;
+    }
+    const data = await resp.json();
+    quizzes[id] = { day, questions: data.questions };
+    // Show questions
+    let answers = [];
+    for (let i = 0; i < data.questions.length; i++) {
+      let q = data.questions[i];
+      let ans = prompt(`Q${i+1}: ${q.question}\nOptions: ${q.options.join(", ")}\nEnter answer:`);
+      answers.push(ans || "");
+    }
+    // Score
+    let score = 0;
+    for (let i = 0; i < data.questions.length; i++) {
+      if (answers[i] && answers[i].toLowerCase() === data.questions[i].answer.toLowerCase()) score++;
+    }
+    // Save quiz record for candidate (simulate)
+    let candidate = candidates.find(x => x._id === id);
+    if (!candidate) return;
+    candidate.quizzes = candidate.quizzes || [];
+    candidate.quizzes.push({ day, score, status: "Submitted" });
+    showCandidateModal(id);
+    alert(`Quiz for Day ${day} submitted. Score: ${score}/${data.questions.length}`);
+  } catch (e) {
+    alert("Quiz error: " + e.message);
+  }
+}
+window.addQuiz = addQuiz;
+
+// Payments
+function renderPayments() {
+  let search = document.getElementById("paymentSearch").value.trim().toLowerCase();
+  let filtered = [];
+  candidates.forEach(c => {
+    (c.payments||[]).forEach(p => {
+      if (!search || (c.fullName && c.fullName.toLowerCase().includes(search)) || (p.ref && p.ref.toLowerCase().includes(search))) {
+        filtered.push({...p, name:c.fullName, matric:c.matricNumber});
+      }
+    });
+  });
+  let html = "";
+  filtered.forEach(p => {
+    html += `<tr>
+      <td class="px-2 py-2">${p.name}</td>
+      <td class="px-2 py-2">${p.matric || "N/A"}</td>
+      <td class="px-2 py-2">₦${p.amount}</td>
+      <td class="px-2 py-2">${formatDate(p.date)}</td>
+      <td class="px-2 py-2">${p.status}</td>
+      <td class="px-2 py-2">${p.ref}</td>
+    </tr>`;
+  });
+  document.getElementById("paymentsTableBody").innerHTML = html;
+}
+document.getElementById("paymentSearch").oninput = renderPayments;
+
+// Courses
+function renderCourses() {
+  let allCourses = {};
+  candidates.forEach(c => (c.courses || []).forEach(course =>
+    allCourses[course.name] = (allCourses[course.name] || 0) + 1
+  ));
+  let html = `<div class="grid grid-cols-2 md:grid-cols-4 gap-5">`;
+  Object.entries(allCourses).forEach(([name, count]) => {
+    html += `<div class="card text-center">
+      <div class="font-bold text-indigo-700">${name}</div>
+      <div class="text-lg">${count} enrolled</div>
+    </div>`;
+  });
+  html += `</div>`;
+  document.getElementById("coursesList").innerHTML = html;
+}
+function groupActivitiesByDay(activities) {
+  const now = new Date();
+  const today = now.toDateString();
+  const yesterday = new Date(now - 86400000).toDateString();
+  const grouped = {};
+
+  activities.forEach(a => {
+    const date = new Date(a.date);
+    const dayKey =
+      date.toDateString() === today
+        ? "Today"
+        : date.toDateString() === yesterday
+        ? "Yesterday"
+        : date.toLocaleDateString();
+    if (!grouped[dayKey]) grouped[dayKey] = [];
+    grouped[dayKey].push(a);
+  });
+
+  return grouped;
+}
+
+function renderActivity() {
+  // Gather all activities with user info
+  let allActs = [];
+  candidates.forEach(c => (c.activities || []).forEach(a =>
+    allActs.push({ ...a, user: c.fullName, avatar: c.passportBase64 })
+  ));
+  allActs.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const grouped = groupActivitiesByDay(allActs);
+
+  let html = "";
+  for (const [day, acts] of Object.entries(grouped)) {
+    html += `<div class="text-lg font-semibold text-gray-700 mt-4 mb-1">${day}</div>`;
+    acts.forEach(a => {
+      html += `
+      <div class="bg-white rounded-xl shadow flex gap-3 items-start px-4 py-3 relative">
+        <img src="${a.avatar ? a.avatar : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(a.user)}"
+            class="w-10 h-10 rounded-full border flex-shrink-0 mt-1" />
+        <div class="flex-1 min-w-0">
+          <div class="text-sm text-gray-800 leading-tight">
+            <span class="font-semibold">${a.user}</span>
+            <span class="text-gray-600">${a.activity}</span>
+          </div>
+          <div class="text-xs text-gray-400 mt-1">${timeAgo(new Date(a.date))}</div>
+        </div>
+        <!-- Optional: <button class="text-gray-400 hover:text-indigo-600"><i class="bi bi-three-dots-vertical"></i></button> -->
+      </div>
+      `;
+    });
+  }
+  document.getElementById("activityFeed").innerHTML = html;
+}
+
+// Helper for relative time
+function timeAgo(date) {
+  if (!date) return "";
+  const now = new Date();
+  const seconds = Math.floor((now - date) / 1000);
+  if (seconds < 60) return "Just now";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hr${hours > 1 ? "s" : ""} ago`;
+  const days = Math.floor(hours / 24);
+  return `${days} day${days > 1 ? "s" : ""} ago`;
+}
+
+
+function renderOverviewActivity() {
+  // Gather all activities with user info
+  let allActs = [];
+  candidates.forEach(c => (c.activities || []).forEach(a =>
+    allActs.push({ ...a, user: c.fullName, avatar: c.passportBase64 })
+  ));
+  allActs.sort((a, b) => new Date(b.date) - new Date(a.date));
+  let html = "";
+  allActs.slice(0, 7).forEach(a => {
+    html += `
+    <div class="bg-white rounded-xl shadow flex gap-3 items-start px-4 py-3 relative">
+      <img src="${a.avatar ? a.avatar : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(a.user)}"
+          class="w-10 h-10 rounded-full border flex-shrink-0 mt-1" />
+      <div class="flex-1 min-w-0">
+        <div class="text-sm text-gray-800 leading-tight">
+          <span class="font-semibold">${a.user}</span>
+          <span class="text-gray-600">${a.activity}</span>
+        </div>
+        <div class="text-xs text-gray-400 mt-1">${timeAgo(new Date(a.date))}</div>
+      </div>
+    </div>
+    `;
+  });
+  document.getElementById("overviewActivityFeed").innerHTML = html;
+}
+
+// Helper for relative time
+function timeAgo(date) {
+  if (!date) return "";
+  const now = new Date();
+  const seconds = Math.floor((now - date) / 1000);
+  if (seconds < 60) return "Just now";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hr${hours > 1 ? "s" : ""} ago`;
+  const days = Math.floor(hours / 24);
+  return `${days} day${days > 1 ? "s" : ""} ago`;
+}
+
+
+// Chart.js demo
+function renderProgressChart() {
+  let paid = stats.paidCount || 0;
+  let unpaid = stats.unpaidCount || 0;
+  let chart = document.getElementById('progressChart').getContext('2d');
+  if(window.progressChartInstance) window.progressChartInstance.destroy();
+  window.progressChartInstance = new Chart(chart, {
+    type: 'doughnut',
+    data: {
+      labels: ['Paid', 'Unpaid'],
+      datasets: [{
+        label: 'Candidates',
+        data: [paid, unpaid],
+        backgroundColor: ['#22c55e', '#ef4444'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {legend: {position: 'bottom'}}
+    }
+  });
+}
+
+// Theme demo
+function toggleTheme() {
+  document.body.classList.toggle("bg-gray-900");
+  document.body.classList.toggle("text-white");
+  document.querySelectorAll(".card").forEach(x=>x.classList.toggle("bg-gray-800"));
+}
+
+
+    // --- ENROLL STUDENT TAB ---
+    document.getElementById('enrollForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const fullName = document.getElementById('enrollFullName').value.trim();
+      const email = document.getElementById('enrollEmail').value.trim();
+      const phone = document.getElementById('enrollPhone').value.trim();
+      const matricNumber = document.getElementById('enrollMatric').value.trim();
+      const passportFile = document.getElementById('enrollPassport').files[0];
+      if (!fullName || !email || !phone || !matricNumber || !passportFile) {
+        document.getElementById('enrollStatus').textContent = 'Please fill all fields.';
+        return;
+      }
+      const formData = new FormData();
+      formData.append('fullName', fullName);
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('matricNumber', matricNumber);
+      formData.append('passport', passportFile);
+
+      document.getElementById('enrollStatus').textContent = 'Submitting...';
+      try {
+        const resp = await fetch('https://examguide.onrender.com/api/codecxreg/', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await resp.json();
+        if (resp.ok) {
+          document.getElementById('enrollStatus').innerHTML =
+            `<span class="text-green-700">Student enrolled!</span><br>` +
+            `<b>Login Username:</b> ${data.login?.username}<br><b>Password:</b> ${data.login?.password}`;
+          document.getElementById('enrollForm').reset();
+        } else {
+          document.getElementById('enrollStatus').innerHTML =
+            `<span class="text-red-700">Error: ${data.message || 'Unknown error.'}</span>`;
+        }
+      } catch (err) {
+        document.getElementById('enrollStatus').innerHTML =
+          `<span class="text-red-700">Error: ${err.message}</span>`;
+      }
+    };
+
+    // --- ASSIGNMENTS TAB ---
+    // Demo: Load assignments via API (you should replace this with actual backend)
+    let assignments = [];
+    async function loadAssignments() {
+      // This demo fetches all candidates, then collects assignments.
+      // Replace with optimized backend endpoint if needed.
+      const resp = await fetch('https://examguide.onrender.com/api/codecxreg/admin');
+      const data = await resp.json();
+      assignments = [];
+      for (const student of data.students || []) {
+        const id = student._id || student.id;
+        // Fetch full details for each candidate
+        const detailResp = await fetch(`https://examguide.onrender.com/api/codecxreg/student/${id}`);
+        if (detailResp.ok) {
+          const detail = await detailResp.json();
+          for (const a of detail.assignments || []) {
+            assignments.push({
+              candidate: detail.fullName,
+              matric: detail.matricNumber,
+              passport: detail.passportBase64,
+              assignment: a,
+              fileType: getFileType(a.url),
+              codeUrl: a.url
+            });
+          }
+        }
+      }
+      renderAssignmentTable();
+    }
+
+    function getFileType(url) {
+      if (!url) return '';
+      if (url.endsWith('.js')) return 'javascript';
+      if (url.endsWith('.css')) return 'css';
+      if (url.endsWith('.html')) return 'htmlmixed';
+      return '';
+    }
+
+    function renderAssignmentTable() {
+      const search = document.getElementById('assignSearch').value.trim().toLowerCase();
+      let filtered = assignments.filter(a =>
+        !search ||
+        (a.candidate && a.candidate.toLowerCase().includes(search)) ||
+        (a.matric && String(a.matric).toLowerCase().includes(search)) ||
+        (a.assignment.title && a.assignment.title.toLowerCase().includes(search))
+      );
+      let html = '';
+      for (const a of filtered) {
+        html += `<tr>
+          <td class="px-3 py-2">${a.candidate}</td>
+          <td class="px-3 py-2">${a.matric}</td>
+          <td class="px-3 py-2">${a.assignment.title || 'Assignment'}</td>
+          <td class="px-3 py-2">${formatDate(a.assignment.date)}</td>
+          <td class="px-3 py-2">${a.assignment.mark || '-'}</td>
+          <td class="px-3 py-2">
+            <button class="bg-indigo-600 text-white px-2 py-1 rounded" onclick="showAssignmentCodeModal('${a.codeUrl}','${a.assignment.title}','${a.fileType}','${a.candidate}','${a.matric}')">
+              <i class="bi bi-eye"></i> View
+            </button>
+          </td>
+        </tr>`;
+      }
+      document.getElementById('assignmentTableBody').innerHTML = html;
+    }
+    document.getElementById('assignSearch').oninput = renderAssignmentTable;
+
+    // --- Code Editor Modal ---
+    async function showAssignmentCodeModal(url, title, fileType, candidate, matric) {
+      document.getElementById('assignmentCodeModal').classList.remove('hidden');
+      document.getElementById('assignmentCodeHeader').innerHTML =
+        `<div class="mb-1"><b>${title}</b></div>` +
+        `<div class="text-xs text-gray-500">By: ${candidate} (${matric})</div>`;
+      try {
+        let code = '';
+        if (url) {
+          const resp = await fetch(url); code = await resp.text();
+        } else {
+          code = 'No file submitted.';
+        }
+        document.getElementById('assignmentCodeEditor').innerHTML = '';
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        ta.id = 'codeEditor';
+        document.getElementById('assignmentCodeEditor').appendChild(ta);
+        window.codeMirrorInstance = CodeMirror.fromTextArea(ta, {
+          mode: fileType || 'javascript',
+          lineNumbers: true,
+          readOnly: true
+        });
+      } catch (err) {
+        document.getElementById('assignmentCodeEditor').innerHTML =
+          `<span class="text-red-700">Error loading file.</span>`;
+      }
+    }
+    function closeAssignmentCodeModal() {
+      document.getElementById('assignmentCodeModal').classList.add('hidden');
+      if (window.codeMirrorInstance) window.codeMirrorInstance.toTextArea();
+    }
+    window.showAssignmentCodeModal = showAssignmentCodeModal;
+    window.closeAssignmentCodeModal = closeAssignmentCodeModal;
+
+    // --- QUIZZES TAB ---
+
+let quizQuestions = [];
+
+// Load all quiz questions from backend
+async function loadQuizQuestions() {
+  let token = localStorage.getItem('codecx_token');
+  quizQuestions = [];
+  try {
+    const resp = await fetch(`${API_BASE}/admin/quizzes`, {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!resp.ok) {
+      document.getElementById('quizTableBody').innerHTML = `<tr><td colspan="6" class="text-center text-red-600 py-4">Failed to load quizzes</td></tr>`;
+      return;
+    }
+    const data = await resp.json();
+    // Flatten questions with day/topic
+    quizQuestions = [];
+    for (const quiz of data.quizzes || []) {
+      (quiz.questions || []).forEach((q, idx) => {
+        quizQuestions.push({
+          ...q,
+          day: quiz.day,
+          topic: quiz.topic,
+          qIndex: idx  // For deletion
+        });
+      });
+    }
+    renderQuizTable();
+  } catch (err) {
+    document.getElementById('quizTableBody').innerHTML = `<tr><td colspan="6" class="text-center text-red-600 py-4">Error: ${err.message}</td></tr>`;
+  }
+}
+
+// Render table with delete button
+function renderQuizTable() {
+  const search = document.getElementById('quizSearch').value.trim().toLowerCase();
+  let filtered = quizQuestions.filter(q =>
+    !search ||
+    (q.topic && q.topic.toLowerCase().includes(search)) ||
+    (q.question && q.question.toLowerCase().includes(search))
+  );
+  let html = '';
+  for (const q of filtered) {
+    html += `<tr>
+      <td class="px-4 py-3 font-semibold">${q.day}</td>
+      <td class="px-4 py-3">${q.topic}</td>
+      <td class="px-4 py-3">${q.question}</td>
+      <td class="px-4 py-3">${Array.isArray(q.options) ? q.options.join(', ') : q.options}</td>
+      <td class="px-4 py-3 font-semibold text-indigo-700">${q.answer}</td>
+      <td class="px-4 py-3 text-center">
+        <button class="bg-red-50 text-red-700 hover:bg-red-100 px-3 py-1 rounded-md border border-red-100 font-semibold transition"
+          onclick="deleteQuizQuestion('${q.day}', '${q.qIndex}')">
+          <i class="bi bi-trash"></i> Delete
+        </button>
+      </td>
+    </tr>`;
+  }
+  if (!filtered.length) {
+    html = `<tr><td colspan="6" class="text-center text-gray-400 py-4">No quizzes found.</td></tr>`;
+  }
+  document.getElementById('quizTableBody').innerHTML = html;
+}
+document.getElementById('quizSearch').oninput = renderQuizTable;
+
+// Show/close modal
+function showAddQuizModal() {
+  document.getElementById('addQuizModal').classList.remove('hidden');
+  document.getElementById('addQuizForm').reset();
+  document.getElementById('addQuizStatus').textContent = '';
+}
+function closeAddQuizModal() {
+  document.getElementById('addQuizModal').classList.add('hidden');
+}
+window.showAddQuizModal = showAddQuizModal;
+window.closeAddQuizModal = closeAddQuizModal;
+
+// Add quiz question via backend
+document.getElementById('addQuizForm').onsubmit = async function(e) {
+  e.preventDefault();
+  let token = localStorage.getItem('codecx_token');
+  const day = parseInt(document.getElementById('addQuizDay').value);
+  const topic = document.getElementById('addQuizTopic').value.trim();
+  const question = document.getElementById('addQuizQuestion').value.trim();
+  const options = document.getElementById('addQuizOptions').value.split(',').map(x => x.trim()).filter(x => x);
+  const answer = document.getElementById('addQuizAnswer').value.trim();
+  if (!day || !topic || !question || options.length < 2 || !answer) {
+    document.getElementById('addQuizStatus').textContent = 'Please fill all fields with valid data.';
+    return;
+  }
+  try {
+    const resp = await fetch(`${API_BASE}/admin/quiz/${day}/question`, {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ topic, question, options, answer })
+    });
+    const data = await resp.json();
+    if (resp.ok) {
+      document.getElementById('addQuizStatus').innerHTML = '<span class="text-green-700">Quiz added!</span>';
+      await loadQuizQuestions();
+      setTimeout(closeAddQuizModal, 800);
+    } else {
+      document.getElementById('addQuizStatus').innerHTML = `<span class="text-red-700">Error: ${data.message || 'Failed to add quiz.'}</span>`;
+    }
+  } catch (err) {
+    document.getElementById('addQuizStatus').innerHTML = `<span class="text-red-700">Error: ${err.message}</span>`;
+  }
+};
+
+// Delete quiz question via backend
+async function deleteQuizQuestion(day, qIdx) {
+  let token = localStorage.getItem('codecx_token');
+  if (!confirm('Delete this quiz question?')) return;
+  try {
+    const resp = await fetch(`${API_BASE}/admin/quiz/${day}/question/${qIdx}`, {
+      method: "DELETE",
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const data = await resp.json();
+    if (resp.ok) {
+      await loadQuizQuestions();
+    } else {
+      alert('Delete failed: ' + (data.message || resp.status));
+    }
+  } catch (err) {
+    alert('Error: ' + err.message);
+  }
+}
+window.deleteQuizQuestion = deleteQuizQuestion;
+
+// Initial load
+loadQuizQuestions();
+    // --- Helper ---
+    function formatDate(dt) {
+      if (!dt) return '';
+      let date = new Date(dt);
+      return date.toLocaleString();
+    }
+
+    
+window.onload = async function() {
+  showLoader();
+  try {
+    await fetchAdmin();
+    await fetchCandidates();
+    await loadAssignments();
+      await loadQuizQuestions();
+  } catch(e) {
+    alert("Error: " + e.message);
+    console.error(e);
+  } finally {
+    hideLoader();
+  }
+};
+
+</script>
 </body>
 </html>
