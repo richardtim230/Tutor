@@ -77,6 +77,90 @@
         <img id="adminAvatar" src="" alt="avatar" class="w-10 h-10 rounded-full border">
       </div>
     </nav>
+        <!-- Sections -->
+    <div id="tab-overview" class="tab">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-7">
+        <div class="card text-center">
+          <div class="text-sm text-gray-500">Total Candidates</div>
+          <div class="text-2xl font-bold text-indigo-700" id="statTotal"></div>
+        </div>
+        <div class="card text-center">
+          <div class="text-sm text-gray-500">Paid</div>
+          <div class="text-2xl font-bold text-green-700" id="statPaid"></div>
+        </div>
+        <div class="card text-center">
+          <div class="text-sm text-gray-500">Unpaid</div>
+          <div class="text-2xl font-bold text-red-700" id="statUnpaid"></div>
+        </div>
+        <div class="card text-center">
+          <div class="text-sm text-gray-500">Assignments</div>
+          <div class="text-2xl font-bold text-yellow-700" id="statAssignments"></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-7">
+        <div class="card">
+          <div class="font-bold text-lg text-indigo-800 mb-2">Candidates Progress Chart</div>
+          <canvas id="progressChart" height="150"></canvas>
+        </div>
+        <!-- Overview Tab: Replace the 'Recent Activity' section with this -->
+<div class="card">
+  <div class="font-bold text-lg text-indigo-800 mb-2">Recent Activity</div>
+  <div id="overviewActivityFeed" class="flex flex-col gap-3"></div>
+  </div>
+      </div>
+    </div>
+    <div id="tab-candidates" class="tab hidden">
+      <div class="flex flex-col md:flex-row items-center md:justify-between mb-4 gap-2">
+        <div class="font-bold text-lg text-indigo-800">Registered Candidates</div>
+        <div class="flex gap-2">
+          <input id="candidateSearch" type="text" placeholder="Search..." class="px-3 py-2 border rounded-lg w-40">
+          <button onclick="exportCSV()" class="bg-indigo-600 text-white px-3 py-2 rounded-lg hover:bg-indigo-700"><i class="bi bi-download"></i> Export CSV</button>
+        </div>
+      </div>
+      <div class="flex flex-col gap-5">
+        <div class="relative overflow-x-auto rounded-lg shadow mb-4">
+          <table class="w-full text-sm text-left text-gray-700 min-w-[720px]">
+            <thead class="text-xs uppercase bg-indigo-100 text-indigo-900">
+              <tr>
+                <th class="px-3 py-2">Name</th>
+                <th class="px-3 py-2">Matric</th>
+                <th class="px-3 py-2">Email</th>
+                <th class="px-3 py-2">Phone</th>
+                <th class="px-3 py-2">Paid</th>
+                <th class="px-3 py-2">Courses</th>
+                <th class="px-3 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="candidateTableBody"></tbody>
+          </table>
+        </div>
+        <!-- Cards for mobile -->
+        <div id="candidateCards" class="grid grid-cols-1 md:hidden gap-4"></div>
+        <!-- Pagination -->
+                <div class="flex justify-end mt-2 gap-2" id="candidatePagination"></div>
+      </div>
+    </div>
+    <div id="tab-payments" class="tab hidden">
+      <div class="flex items-center justify-between mb-4">
+        <div class="font-bold text-lg text-indigo-800">Payments</div>
+        <input id="paymentSearch" type="text" placeholder="Search..." class="px-3 py-2 border rounded-lg w-40">
+      </div>
+      <div class="relative overflow-x-auto rounded-lg shadow mb-4">
+        <table class="w-full text-sm text-left text-gray-700">
+          <thead class="text-xs uppercase bg-indigo-100 text-indigo-900">
+            <tr>
+              <th class="px-2 py-2 font-semibold">Name</th>
+              <th class="px-2 py-2">Matric</th>
+              <th class="px-2 py-2">Amount</th>
+              <th class="px-2 py-2">Date</th>
+              <th class="px-2 py-2">Status</th>
+              <th class="px-2 py-2">Ref</th>
+            </tr>
+          </thead>
+          <tbody id="paymentsTableBody"></tbody>
+        </table>
+      </div>
+            </div>
 <div id="tab-enroll" class="tab hidden">
   <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
     <div class="font-bold text-2xl text-indigo-700 flex items-center gap-2">
