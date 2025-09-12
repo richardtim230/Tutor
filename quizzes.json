@@ -1,6 +1,325 @@
 {
   "days": [
-
+{
+  "day": 5,
+  "topic": "HTML: Day 3 - SEO Basics & Meta Tags",
+  "questions": [
+    {
+      "question": "What is wrong with the following HTML code?",
+      "code": "<meta name=\"description\">SEO basics</meta>",
+      "options": [
+        "The <meta> tag should not have a closing tag.",
+        "The description must always be inside <body>.",
+        "The content attribute is missing.",
+        "Nothing is wrong."
+      ],
+      "answer": "The content attribute is missing."
+    },
+    {
+      "question": "Which HTML tag is used to define the title shown in the browser tab and search engine results?",
+      "options": [
+        "<head>",
+        "<title>",
+        "<meta>",
+        "<h1>"
+      ],
+      "answer": "<title>"
+    },
+    {
+      "question": "Where should the <title> tag be placed in an HTML document?",
+      "options": [
+        "Inside the <body> section",
+        "Inside the <footer> section",
+        "Inside the <head> section",
+        "Anywhere in the document"
+      ],
+      "answer": "Inside the <head> section"
+    },
+    {
+      "question": "What is wrong in this meta description tag?",
+      "code": "<meta name=\"description\" value=\"Learn SEO basics and meta tags\">",
+      "options": [
+        "The attribute should be content, not value.",
+        "Meta tags cannot be used in HTML5.",
+        "The description must be wrapped in quotes.",
+        "Nothing is wrong."
+      ],
+      "answer": "The attribute should be content, not value."
+    },
+    {
+      "question": "Which meta tag is used to define keywords for a web page?",
+      "options": [
+        "<meta name=\"keywords\" content=\"HTML, SEO\">",
+        "<meta keywords=\"HTML, SEO\">",
+        "<meta property=\"keywords\" value=\"HTML, SEO\">",
+        "<keywords>HTML, SEO</keywords>"
+      ],
+      "answer": "<meta name=\"keywords\" content=\"HTML, SEO\">"
+    },
+    {
+      "question": "Is the 'keywords' meta tag still widely used by search engines for ranking?",
+      "options": [
+        "Yes, it is essential",
+        "No, most search engines ignore it",
+        "Only Google uses it",
+        "It is required by HTML5"
+      ],
+      "answer": "No, most search engines ignore it"
+    },
+    {
+      "question": "What does this code do?",
+      "code": "<meta name=\"robots\" content=\"noindex, nofollow\">",
+      "options": [
+        "Prevents search engines from indexing and following links",
+        "Makes the site mobile friendly",
+        "Forces UTF-8 encoding",
+        "Defines structured data"
+      ],
+      "answer": "Prevents search engines from indexing and following links"
+    },
+    {
+      "question": "What does <meta charset=\"UTF-8\"> define?",
+      "options": [
+        "The SEO description",
+        "The character encoding of the page",
+        "The viewport size",
+        "The crawling rules for search engines"
+      ],
+      "answer": "The character encoding of the page"
+    },
+    {
+      "question": "Which meta tag helps make websites mobile-friendly?",
+      "code": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+      "options": [
+        "Makes site responsive on mobile devices",
+        "Forces page to use HTTPS",
+        "Improves site ranking",
+        "Defines character encoding"
+      ],
+      "answer": "Makes site responsive on mobile devices"
+    },
+    {
+      "question": "Which HTML tag is most important for SEO headings?",
+      "options": [
+        "<h1>",
+        "<h2>",
+        "<h3>",
+        "<p>"
+      ],
+      "answer": "<h1>"
+    },
+    {
+      "question": "What is the recommended length of a meta description for SEO?",
+      "options": [
+        "30–50 characters",
+        "50–160 characters",
+        "200–300 characters",
+        "There is no limit"
+      ],
+      "answer": "50–160 characters"
+    },
+    {
+      "question": "What is wrong with this title tag?",
+      "code": "<title>SEO Basics<title>",
+      "options": [
+        "The <title> tag is not closed properly.",
+        "The title must be inside <body>.",
+        "The title must use double quotes.",
+        "Nothing is wrong."
+      ],
+      "answer": "The <title> tag is not closed properly."
+    },
+    {
+      "question": "Which tag is used to specify the language of a web page?",
+      "options": [
+        "<meta name=\"language\" content=\"en\">",
+        "<html lang=\"en\">",
+        "<language=en>",
+        "<meta charset=\"en\">"
+      ],
+      "answer": "<html lang=\"en\">"
+    },
+    {
+      "question": "Which tag is best for defining the main subject of a page?",
+      "options": [
+        "<meta name=\"description\">",
+        "<h1>",
+        "<title>",
+        "<p>"
+      ],
+      "answer": "<h1>"
+    },
+    {
+      "question": "What is the function of the canonical tag?",
+      "code": "<link rel=\"canonical\" href=\"https://example.com/seo-basics\">",
+      "options": [
+        "Specifies the site favicon",
+        "Prevents duplicate content issues",
+        "Defines a meta description",
+        "Improves loading speed"
+      ],
+      "answer": "Prevents duplicate content issues"
+    },
+    {
+      "question": "What does this tag do?",
+      "code": "<meta name=\"robots\" content=\"noindex\">",
+      "options": [
+        "Search engines will not index the page",
+        "The page will load faster",
+        "Search engines will ignore links",
+        "The page will appear first in search results"
+      ],
+      "answer": "Search engines will not index the page"
+    },
+    {
+      "question": "Which attribute is used in Open Graph meta tags for social media sharing?",
+      "options": [
+        "property",
+        "name",
+        "content-type",
+        "rel"
+      ],
+      "answer": "property"
+    },
+    {
+      "question": "Which meta tag defines the author of a page?",
+      "code": "<meta name=\"author\" content=\"John Doe\">",
+      "options": [
+        "Correct syntax",
+        "<author>John Doe</author>",
+        "<meta author=\"John Doe\">",
+        "<meta property=\"author\" value=\"John Doe\">"
+      ],
+      "answer": "Correct syntax"
+    },
+    {
+      "question": "Which HTML tag provides structured data for rich snippets?",
+      "options": [
+        "<script type=\"application/ld+json\">",
+        "<meta name=\"schema\">",
+        "<ldjson>",
+        "<richsnippet>"
+      ],
+      "answer": "<script type=\"application/ld+json\">"
+    },
+    {
+      "question": "Which tag is used to set the favicon of a webpage?",
+      "code": "<link rel=\"icon\" href=\"favicon.ico\">",
+      "options": [
+        "Correct syntax",
+        "<favicon href=\"favicon.ico\">",
+        "<icon src=\"favicon.ico\">",
+        "<meta name=\"icon\" content=\"favicon.ico\">"
+      ],
+      "answer": "Correct syntax"
+    },
+    {
+      "question": "Which meta tag prevents search engines from following page links?",
+      "options": [
+        "<meta name=\"robots\" content=\"nofollow\">",
+        "<meta name=\"nofollow\">",
+        "<meta name=\"robots\" content=\"noindex\">",
+        "<meta name=\"links\" content=\"block\">"
+      ],
+      "answer": "<meta name=\"robots\" content=\"nofollow\">"
+    },
+    {
+      "question": "What does this tag do?",
+      "code": "<meta http-equiv=\"refresh\" content=\"30\">",
+      "options": [
+        "Refreshes the page every 30 seconds",
+        "Defines SEO description",
+        "Improves site speed",
+        "Blocks crawlers"
+      ],
+      "answer": "Refreshes the page every 30 seconds"
+    },
+    {
+      "question": "What does the <meta name=\"viewport\"> tag mainly improve?",
+      "options": [
+        "Mobile responsiveness",
+        "Crawling efficiency",
+        "Page security",
+        "Keyword ranking"
+      ],
+      "answer": "Mobile responsiveness"
+    },
+    {
+      "question": "Which tag is best for defining an alternative page when a language version is available?",
+      "code": "<link rel=\"alternate\" hreflang=\"en\" href=\"https://example.com/en\">",
+      "options": [
+        "Correct syntax",
+        "<meta hreflang=\"en\">",
+        "<meta name=\"alternate\">",
+        "<altpage lang=\"en\">"
+      ],
+      "answer": "Correct syntax"
+    },
+    {
+      "question": "Where should meta tags be placed in an HTML document?",
+      "options": [
+        "Inside the <body>",
+        "Inside the <head>",
+        "After the closing </html>",
+        "Anywhere before <title>"
+      ],
+      "answer": "Inside the <head>"
+    },
+    {
+      "question": "What is the maximum recommended number of <h1> tags per page for SEO?",
+      "options": [
+        "Unlimited",
+        "Only 1",
+        "Up to 3",
+        "None"
+      ],
+      "answer": "Only 1"
+    },
+    {
+      "question": "Which meta tag helps define the website’s theme color for mobile browsers?",
+      "code": "<meta name=\"theme-color\" content=\"#000000\">",
+      "options": [
+        "Correct syntax",
+        "<meta name=\"color\" content=\"black\">",
+        "<meta name=\"background\" content=\"#000000\">",
+        "<meta property=\"theme\">"
+      ],
+      "answer": "Correct syntax"
+    },
+    {
+      "question": "Which of the following is NOT a valid SEO meta tag?",
+      "options": [
+        "<meta name=\"description\">",
+        "<meta name=\"keywords\">",
+        "<meta name=\"robots\">",
+        "<meta name=\"ranking\">"
+      ],
+      "answer": "<meta name=\"ranking\">"
+    },
+    {
+      "question": "What does this code do?",
+      "code": "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">",
+      "options": [
+        "Forces Internet Explorer to use the latest rendering engine",
+        "Improves SEO ranking",
+        "Defines mobile viewport",
+        "Adds structured data"
+      ],
+      "answer": "Forces Internet Explorer to use the latest rendering engine"
+    },
+    {
+      "question": "Which meta tag can redirect a page after a few seconds?",
+      "code": "<meta http-equiv=\"refresh\" content=\"5; url=page.html\">",
+      "options": [
+        "Correct syntax",
+        "<meta redirect=\"page.html\">",
+        "<meta name=\"url\" content=\"page.html\">",
+        "<meta name=\"forward\" content=\"5\">"
+      ],
+      "answer": "Correct syntax"
+    }
+  ]
+},
     {
   "day": 3,
   "topic": "HTML BASICS",
@@ -1219,7 +1538,7 @@
   ]
 },
     {
-      "day": 5,
+      "day": 6,
       "topic": "HTML: Introduction & Tags",
       "questions": [
         {
