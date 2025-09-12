@@ -867,15 +867,31 @@ async function deleteAssignment(index) {
   }
 }
 
-// Render assignment history from window.student.assignments
-// Render assignment history from window.student.assignmentHistory
-function renderAssignmentHistory(assignmentHistory) {
+// PAGINATED assignment history rendering for student dashboard
+
+const ASSIGNMENTS_PER_PAGE = 5; // Number of items per page
+let assignmentCurrentPage = 1;
+let totalAssignmentPages = 1;
+
+function renderAssignmentHistoryPaginated(assignmentHistory) {
   const history = document.getElementById("assignmentHistory");
+  const pagination = document.getElementById("assignmentPagination");
+
   if (!assignmentHistory || !assignmentHistory.length) {
     history.innerHTML = `<div class="text-gray-400 text-center">No assignments submitted yet.</div>`;
+    if (pagination) pagination.innerHTML = "";
     return;
   }
-  history.innerHTML = assignmentHistory.map((a, idx) => `
+
+  // Pagination calculations
+  totalAssignmentPages = Math.ceil(assignmentHistory.length / ASSIGNMENTS_PER_PAGE) || 1;
+  assignmentCurrentPage = Math.min(Math.max(assignmentCurrentPage, 1), totalAssignmentPages);
+  const startIdx = (assignmentCurrentPage - 1) * ASSIGNMENTS_PER_PAGE;
+  const endIdx = startIdx + ASSIGNMENTS_PER_PAGE;
+  const pageAssignments = assignmentHistory.slice(startIdx, endIdx);
+
+  // Render assignment items
+  history.innerHTML = pageAssignments.map((a, idx) => `
     <div class="flex flex-col md:flex-row items-center bg-gray-50 rounded-lg shadow-sm px-4 py-3 gap-4">
       <div class="flex-1 min-w-0">
         <div class="font-semibold text-indigo-700">${a.title || a.fileName || "Assignment"}</div>
@@ -885,13 +901,50 @@ function renderAssignmentHistory(assignmentHistory) {
       </div>
       <div class="flex gap-2 mt-2 md:mt-0">
         <button class="px-3 py-1 bg-gray-200 text-indigo-700 rounded font-semibold hover:bg-indigo-100"
-          onclick="previewAssignmentHistory(${idx})">
+          onclick="previewAssignmentHistory(${startIdx + idx})">
           <i class="bi bi-eye-fill mr-1"></i> Preview
         </button>
       </div>
     </div>
   `).join("");
+
+  // Render pagination controls
+  if (pagination) {
+    pagination.innerHTML = totalAssignmentPages > 1 ? `
+      <button
+        class="px-2 py-1 rounded bg-gray-200 hover:bg-indigo-100"
+        onclick="assignmentPrevPage()" ${assignmentCurrentPage === 1 ? 'disabled' : ''}
+      >&larr; Prev</button>
+      <span class="px-3 font-semibold text-indigo-700">Page ${assignmentCurrentPage} of ${totalAssignmentPages}</span>
+      <button
+        class="px-2 py-1 rounded bg-gray-200 hover:bg-indigo-100"
+        onclick="assignmentNextPage()" ${assignmentCurrentPage === totalAssignmentPages ? 'disabled' : ''}
+      >Next &rarr;</button>
+    ` : "";
+  }
 }
+
+// Pagination button handlers
+function assignmentPrevPage() {
+  if (assignmentCurrentPage > 1) {
+    assignmentCurrentPage--;
+    renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
+  }
+}
+function assignmentNextPage() {
+  if (assignmentCurrentPage < totalAssignmentPages) {
+    assignmentCurrentPage++;
+    renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
+  }
+}
+
+// On page load or assignment update, call:
+document.addEventListener("DOMContentLoaded", function() {
+  renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
+});
+
+// Whenever assignments change, call:
+// renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
 
 // Helper to escape HTML for safe code preview
 function escapeHtml(text) {
