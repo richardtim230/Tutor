@@ -74,7 +74,7 @@ function loadDashboardData(token) {
       window.student = profile;
       window.assignments = assignments;
       window.payments = payments;
-      renderAssignmentHistory(assignments);
+      renderAssignmentHistoryPaginated(assignments);
       renderCourses();
       renderPayments();
       renderProgressSection();
@@ -590,7 +590,7 @@ window.student = student; // <-- Add this line!
     document.getElementById("masterclassSection").classList.toggle("locked", locked);
     document.querySelector("#masterclassSection .padlock-icon").style.display = locked ? "block" : "none";
     document.getElementById("unlockMessage").classList.toggle("hidden", !locked);
-    renderAssignmentHistory(student.assignmentHistory || []);
+    renderAssignmentHistoryPaginated(student.assignmentHistory || []);
   
     renderCourses();
     renderActivity();
