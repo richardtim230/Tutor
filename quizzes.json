@@ -1,5 +1,614 @@
 {
   "days": [
+    {
+  "day": 8,
+  "topic": "HTML: Day 8 - Images & Media Embeds",
+  "questions": [
+    {
+      "question": "What is wrong with the following image tag?",
+      "code": "<img src=\"cat.jpg\">",
+      "options": [
+        "The alt attribute is missing",
+        "The img tag must be closed with </img>",
+        "The src attribute is invalid",
+        "Nothing is wrong"
+      ],
+      "answer": "The alt attribute is missing"
+    },
+    {
+      "question": "Which attribute is required for accessibility in images?",
+      "options": [
+        "src",
+        "alt",
+        "title",
+        "role"
+      ],
+      "answer": "alt"
+    },
+    {
+      "question": "What is the default display behavior of an <img> tag?",
+      "options": [
+        "Block-level",
+        "Inline",
+        "Flex",
+        "Grid"
+      ],
+      "answer": "Inline"
+    },
+    {
+      "question": "What is wrong with this code?",
+      "code": "<img href=\"cat.png\" alt=\"Cute cat\">",
+      "options": [
+        "The attribute should be src, not href",
+        "The alt attribute is not allowed",
+        "The file extension is invalid",
+        "Nothing is wrong"
+      ],
+      "answer": "The attribute should be src, not href"
+    },
+    {
+      "question": "Which attribute provides text when an image cannot be displayed?",
+      "options": [
+        "title",
+        "caption",
+        "alt",
+        "desc"
+      ],
+      "answer": "alt"
+    },
+    {
+      "question": "What is wrong with this video embed?",
+      "code": "<video src=\"movie.mp4\">Your browser does not support video</video>",
+      "options": [
+        "The video tag must include controls",
+        "The fallback text is invalid",
+        "The video must use <source> instead of src",
+        "Nothing is wrong"
+      ],
+      "answer": "The video tag must include controls"
+    },
+    {
+      "question": "Which attribute allows users to play/pause a <video>?",
+      "options": [
+        "autoplay",
+        "controls",
+        "muted",
+        "loop"
+      ],
+      "answer": "controls"
+    },
+    {
+      "question": "What is wrong with this code?",
+      "code": "<audio src=\"song.mp3\">Audio not supported</audio>",
+      "options": [
+        "The audio tag must include controls",
+        "The src attribute is invalid",
+        "The alt attribute is missing",
+        "Nothing is wrong"
+      ],
+      "answer": "The audio tag must include controls"
+    },
+    {
+      "question": "What does the preload attribute in <audio> and <video> control?",
+      "options": [
+        "Buffering behavior before playback",
+        "Whether controls are visible",
+        "The playback speed",
+        "The audio quality"
+      ],
+      "answer": "Buffering behavior before playback"
+    },
+    {
+      "question": "Which tag is used to embed another webpage inside the current page?",
+      "options": [
+        "<embed>",
+        "<iframe>",
+        "<object>",
+        "<frame>"
+      ],
+      "answer": "<iframe>"
+    },
+    {
+      "question": "What is wrong with this iframe?",
+      "code": "<iframe>https://example.com</iframe>",
+      "options": [
+        "The src attribute is missing",
+        "The iframe must have a title",
+        "The iframe must use <embed>",
+        "Nothing is wrong"
+      ],
+      "answer": "The src attribute is missing"
+    },
+    {
+      "question": "Which tag is best for embedding YouTube videos?",
+      "options": [
+        "<iframe>",
+        "<embed>",
+        "<object>",
+        "<video>"
+      ],
+      "answer": "<iframe>"
+    },
+    {
+      "question": "Which attribute is recommended for iframe accessibility?",
+      "options": [
+        "title",
+        "role",
+        "alt",
+        "label"
+      ],
+      "answer": "title"
+    },
+    {
+      "question": "What is wrong with this embed tag?",
+      "code": "<embed href=\"movie.mp4\">",
+      "options": [
+        "The attribute should be src, not href",
+        "The embed tag must be closed",
+        "Embed cannot be used for media files",
+        "Nothing is wrong"
+      ],
+      "answer": "The attribute should be src, not href"
+    },
+    {
+      "question": "What is the difference between <embed> and <object>?",
+      "options": [
+        "<embed> is for external media, <object> is for structured content",
+        "<object> is obsolete, <embed> replaces it",
+        "Both are identical",
+        "<embed> is only for Flash content"
+      ],
+      "answer": "<embed> is for external media, <object> is for structured content"
+    },
+    {
+      "question": "Which attribute makes a video play automatically when loaded?",
+      "options": [
+        "autoplay",
+        "controls",
+        "muted",
+        "loop"
+      ],
+      "answer": "autoplay"
+    },
+    {
+      "question": "What is wrong with this code?",
+      "code": "<video autoplay loop>\n  <source src=\"clip.mp4\" type=\"video/mp4\">\n</video>",
+      "options": [
+        "The controls attribute is missing",
+        "The autoplay attribute requires muted",
+        "The type attribute is invalid",
+        "Nothing is wrong"
+      ],
+      "answer": "The autoplay attribute requires muted"
+    },
+    {
+      "question": "Which tag is used for SVG graphics?",
+      "options": [
+        "<svg>",
+        "<canvas>",
+        "<graphic>",
+        "<vector>"
+      ],
+      "answer": "<svg>"
+    },
+    {
+      "question": "What is wrong with this image code?",
+      "code": "<img src=\"cat.png\" alt=>",
+      "options": [
+        "The alt attribute must have a value (even if empty quotes)",
+        "The src attribute is invalid",
+        "The tag must be closed with </img>",
+        "Nothing is wrong"
+      ],
+      "answer": "The alt attribute must have a value (even if empty quotes)"
+    },
+    {
+      "question": "Which tag allows drawing shapes with JavaScript?",
+      "options": [
+        "<canvas>",
+        "<svg>",
+        "<paint>",
+        "<draw>"
+      ],
+      "answer": "<canvas>"
+    },
+    {
+      "question": "What is the correct way to provide multiple video formats for compatibility?",
+      "code": "<video controls>\n  <source src=\"movie.mp4\" type=\"video/mp4\">\n  <source src=\"movie.ogg\" type=\"video/ogg\">\n</video>",
+      "options": [
+        "Correct syntax",
+        "Only one <source> is allowed",
+        "The <video> tag must not use controls",
+        "The type attribute is optional"
+      ],
+      "answer": "Correct syntax"
+    },
+    {
+      "question": "Which attribute prevents audio from playing automatically when autoplay is used?",
+      "options": [
+        "muted",
+        "controls",
+        "stop",
+        "pause"
+      ],
+      "answer": "muted"
+    },
+    {
+      "question": "What is wrong with this iframe?",
+      "code": "<iframe src=\"video.html\" title=\"Video player\" sandbox></iframe>",
+      "options": [
+        "The sandbox attribute is incomplete (requires values)",
+        "The title is invalid",
+        "iframe must use <embed>",
+        "Nothing is wrong"
+      ],
+      "answer": "The sandbox attribute is incomplete (requires values)"
+    },
+    {
+      "question": "Which tag is best for fallback text when embedding media?",
+      "options": [
+        "<noscript>",
+        "Text inside <video> or <audio>",
+        "<alt>",
+        "<caption>"
+      ],
+      "answer": "Text inside <video> or <audio>"
+    },
+    {
+      "question": "What is wrong with this audio code?",
+      "code": "<audio controls>\n  <source src=\"track.wav\">\n  <source src=\"track.mp3\">\n</audio>",
+      "options": [
+        "The type attribute is missing in <source>",
+        "The audio tag cannot have multiple sources",
+        "The controls attribute is invalid",
+        "Nothing is wrong"
+      ],
+      "answer": "The type attribute is missing in <source>"
+    },
+    {
+      "question": "Which attribute makes a video or audio loop continuously?",
+      "options": [
+        "loop",
+        "repeat",
+        "cycle",
+        "autoplay"
+      ],
+      "answer": "loop"
+    },
+    {
+      "question": "Which tag is used to provide captions or subtitles for <video>?",
+      "options": [
+        "<track>",
+        "<caption>",
+        "<subtitle>",
+        "<desc>"
+      ],
+      "answer": "<track>"
+    },
+    {
+      "question": "What is wrong with this video code?",
+      "code": "<video controls>\n  <track src=\"subtitles.vtt\">\n</video>",
+      "options": [
+        "The track element requires kind and srclang attributes",
+        "The track must be outside the video tag",
+        "Subtitles cannot be added with track",
+        "Nothing is wrong"
+      ],
+      "answer": "The track element requires kind and srclang attributes"
+    },
+    {
+      "question": "What is the correct way to embed an image as a clickable link?",
+      "code": "<a href=\"https://example.com\">\n  <img src=\"logo.png\" alt=\"Logo\">\n</a>",
+      "options": [
+        "Correct syntax",
+        "The <img> tag must have title",
+        "The <a> must use target=\"_blank\"",
+        "This is invalid HTML"
+      ],
+      "answer": "Correct syntax"
+    }
+  ]
+},
+
+{
+  "day": 7,
+  "topic": "HTML: Day 7 - Links & Navigation",
+  "questions": [
+    {
+      "question": "What is wrong with the following code?",
+      "code": "<a href=\"www.example.com\">Visit Example</a>",
+      "options": [
+        "The href attribute must include http:// or https://",
+        "The <a> tag should be inside <nav>",
+        "The <a> tag cannot contain text",
+        "Nothing is wrong"
+      ],
+      "answer": "The href attribute must include http:// or https://"
+    },
+    {
+      "question": "Which attribute makes a link open in a new browser tab?",
+      "options": [
+        "target=\"_blank\"",
+        "open=\"tab\"",
+        "rel=\"external\"",
+        "new=\"true\""
+      ],
+      "answer": "target=\"_blank\""
+    },
+    {
+      "question": "What is the default behavior of a link without target specified?",
+      "options": [
+        "Opens in a new tab",
+        "Opens in the same tab",
+        "Opens in a popup",
+        "Does nothing"
+      ],
+      "answer": "Opens in the same tab"
+    },
+    {
+      "question": "What is wrong with this code?",
+      "code": "<a>Click me</a>",
+      "options": [
+        "The link must have an href attribute",
+        "The <a> tag must be self-closing",
+        "Anchor tags cannot contain text",
+        "Nothing is wrong"
+      ],
+      "answer": "The link must have an href attribute"
+    },
+    {
+      "question": "Which HTML element is commonly used to group navigation links?",
+      "options": [
+        "<nav>",
+        "<header>",
+        "<section>",
+        "<menu>"
+      ],
+      "answer": "<nav>"
+    },
+    {
+      "question": "What does the 'rel=\"noopener noreferrer\"' attribute pair do for links?",
+      "options": [
+        "Blocks SEO indexing of the link",
+        "Improves accessibility",
+        "Prevents security and performance issues with target=\"_blank\"",
+        "Forces the link to open in a new tab"
+      ],
+      "answer": "Prevents security and performance issues with target=\"_blank\""
+    },
+    {
+      "question": "What is wrong with this navigation menu?",
+      "code": "<ul>\n  <a href=\"/home\">Home</a>\n  <a href=\"/about\">About</a>\n</ul>",
+      "options": [
+        "The <a> tags should be inside <li> elements",
+        "The <ul> tag should be <ol>",
+        "The links must have target attributes",
+        "Nothing is wrong"
+      ],
+      "answer": "The <a> tags should be inside <li> elements"
+    },
+    {
+      "question": "Which protocol should be used for an email link?",
+      "options": [
+        "mailto:",
+        "emailto:",
+        "sendmail:",
+        "linkto:"
+      ],
+      "answer": "mailto:"
+    },
+    {
+      "question": "What does this code create?",
+      "code": "<a href=\"#section2\">Go to Section 2</a>",
+      "options": [
+        "A link to an external website",
+        "A link to another file",
+        "An internal page anchor link",
+        "A broken link"
+      ],
+      "answer": "An internal page anchor link"
+    },
+    {
+      "question": "What is the correct syntax for linking to an external stylesheet?",
+      "options": [
+        "<link rel=\"stylesheet\" href=\"style.css\">",
+        "<a href=\"style.css\">CSS</a>",
+        "<style src=\"style.css\">",
+        "<css href=\"style.css\">"
+      ],
+      "answer": "<link rel=\"stylesheet\" href=\"style.css\">"
+    },
+    {
+      "question": "Which of these is a semantic way to mark up a site navigation bar?",
+      "code": "<nav>\n  <ul>\n    <li><a href=\"/\">Home</a></li>\n    <li><a href=\"/about\">About</a></li>\n    <li><a href=\"/contact\">Contact</a></li>\n  </ul>\n</nav>",
+      "options": [
+        "Correct syntax",
+        "It should use <menu> instead of <ul>",
+        "It should not contain <li>",
+        "The <nav> tag is not semantic"
+      ],
+      "answer": "Correct syntax"
+    },
+    {
+      "question": "What does the download attribute do in a link?",
+      "code": "<a href=\"file.pdf\" download>Download PDF</a>",
+      "options": [
+        "Opens the file in the browser",
+        "Forces the file to download",
+        "Uploads a file to the server",
+        "Deletes the file"
+      ],
+      "answer": "Forces the file to download"
+    },
+    {
+      "question": "Which link is considered absolute?",
+      "options": [
+        "<a href=\"https://example.com/page.html\">Page</a>",
+        "<a href=\"/page.html\">Page</a>",
+        "<a href=\"page.html\">Page</a>",
+        "<a href=\"#page\">Page</a>"
+      ],
+      "answer": "<a href=\"https://example.com/page.html\">Page</a>"
+    },
+    {
+      "question": "Which link is relative to the current directory?",
+      "options": [
+        "<a href=\"/about.html\">About</a>",
+        "<a href=\"../about.html\">About</a>",
+        "<a href=\"about.html\">About</a>",
+        "<a href=\"https://example.com/about.html\">About</a>"
+      ],
+      "answer": "<a href=\"about.html\">About</a>"
+    },
+    {
+      "question": "What is wrong with this navigation list?",
+      "code": "<nav>\n  <li><a href=\"/\">Home</a></li>\n  <li><a href=\"/about\">About</a></li>\n</nav>",
+      "options": [
+        "The <li> items should be inside a <ul> or <ol>",
+        "The <nav> element cannot contain lists",
+        "The links are missing href",
+        "Nothing is wrong"
+      ],
+      "answer": "The <li> items should be inside a <ul> or <ol>"
+    },
+    {
+      "question": "Which attribute is used to specify where to open the linked document?",
+      "options": [
+        "target",
+        "rel",
+        "href",
+        "type"
+      ],
+      "answer": "target"
+    },
+    {
+      "question": "Which type of link points to a resource within the same page?",
+      "options": [
+        "External link",
+        "Relative link",
+        "Anchor link",
+        "Absolute link"
+      ],
+      "answer": "Anchor link"
+    },
+    {
+      "question": "What is the difference between <link> and <a>?",
+      "options": [
+        "<link> is for external resources, <a> is for navigation",
+        "<a> is obsolete, <link> replaces it",
+        "Both are identical",
+        "<link> is only for stylesheets"
+      ],
+      "answer": "<link> is for external resources, <a> is for navigation"
+    },
+    {
+      "question": "What is wrong with this code?",
+      "code": "<a href=\"\">Empty Link</a>",
+      "options": [
+        "Empty href causes the page to reload",
+        "The <a> tag must always point to external URLs",
+        "The href must contain #",
+        "Nothing is wrong"
+      ],
+      "answer": "Empty href causes the page to reload"
+    },
+    {
+      "question": "Which link correctly points to the parent directory?",
+      "options": [
+        "<a href=\"../index.html\">Home</a>",
+        "<a href=\"/index.html\">Home</a>",
+        "<a href=\"./index.html\">Home</a>",
+        "<a href=\"#index\">Home</a>"
+      ],
+      "answer": "<a href=\"../index.html\">Home</a>"
+    },
+    {
+      "question": "Which protocol should be used for a phone link?",
+      "options": [
+        "callto:",
+        "tel:",
+        "phone:",
+        "dial:"
+      ],
+      "answer": "tel:"
+    },
+    {
+      "question": "What is the difference between #id and .class in anchor links?",
+      "options": [
+        "#id links to a specific element, .class cannot be used in href",
+        "Both can be used in href",
+        ".class is for IDs and #id is for classes",
+        "#id is for JavaScript only"
+      ],
+      "answer": "#id links to a specific element, .class cannot be used in href"
+    },
+    {
+      "question": "Which is the correct way to create an accessible navigation menu?",
+      "code": "<nav aria-label=\"Main Navigation\">\n  <ul>\n    <li><a href=\"/\">Home</a></li>\n    <li><a href=\"/services\">Services</a></li>\n  </ul>\n</nav>",
+      "options": [
+        "Correct syntax",
+        "aria-label should not be used",
+        "<ul> should be replaced with <menu>",
+        "The <nav> element cannot have attributes"
+      ],
+      "answer": "Correct syntax"
+    },
+    {
+      "question": "What is wrong with this inline link?",
+      "code": "<p>Learn <a href=\"/html\">HTML<a> today!</p>",
+      "options": [
+        "The closing </a> tag is missing",
+        "The link must be outside <p>",
+        "The link must include target",
+        "Nothing is wrong"
+      ],
+      "answer": "The closing </a> tag is missing"
+    },
+    {
+      "question": "Which attribute can improve security when opening external links?",
+      "options": [
+        "rel=\"noopener\"",
+        "referrer=\"none\"",
+        "target=\"_secure\"",
+        "securelink=\"true\""
+      ],
+      "answer": "rel=\"noopener\""
+    },
+    {
+      "question": "What is the difference between <nav> and <menu>?",
+      "options": [
+        "<nav> is semantic for navigation, <menu> is for lists of commands",
+        "<menu> is used for navigation, <nav> is obsolete",
+        "Both are identical",
+        "<menu> is for CSS styling only"
+      ],
+      "answer": "<nav> is semantic for navigation, <menu> is for lists of commands"
+    },
+    {
+      "question": "What does this code do?",
+      "code": "<base href=\"https://example.com/\">",
+      "options": [
+        "Sets the base URL for all relative links",
+        "Forces external links to open in new tabs",
+        "Improves SEO rankings",
+        "Creates an anchor link"
+      ],
+      "answer": "Sets the base URL for all relative links"
+    },
+    {
+      "question": "Which element defines navigation landmarks for assistive technologies?",
+      "options": [
+        "<header>",
+        "<main>",
+        "<nav>",
+        "<footer>"
+      ],
+      "answer": "<nav>"
+    }
+  ]
+    },
+        
+
 {
   "day": 5,
   "topic": "HTML: Day 5 - SEO Basics & Meta Tags",
