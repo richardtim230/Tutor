@@ -491,7 +491,7 @@ async function showQuizModal(day) {
         setTimeout(() => {
           closeDayQuizModal();
           reloadDashboard();
-        }, 120000); // Increased to 6s for more time for review
+        }, 20000); // Increased to 6s for more time for review
 
       } catch (err) {
         showLoader(false);
@@ -504,10 +504,7 @@ async function showQuizModal(day) {
     showToastModal("Quiz Modal Error", err.message, "error");
   }
 }
-// ---- END QUIZ MODAL LOGIC ----
 
-
-// ---- QUIZ MODAL LOGIC ----
 
 // Helper: Record quiz completed activity WITH score
 async function markQuizCompletedWithScore(day, score) {
