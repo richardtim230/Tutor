@@ -1,6 +1,300 @@
 {
   "days": [
     {
+  "day": 9,
+  "topic": "HTML: Day 9 - Deprecated & Obsolete HTML Elements",
+  "questions": [
+    {
+      "question": "You open an old website and find <font color=\"red\"> tags everywhere. Why is this a problem?",
+      "options": [
+        "It’s deprecated; use CSS for styling",
+        "It only works in old browsers",
+        "It slows down websites",
+        "It causes SEO issues"
+      ],
+      "answer": "It’s deprecated; use CSS for styling"
+    },
+    {
+      "question": "Here’s a snippet from a 2005 webpage. What should you replace?",
+      "code": "<center>\n  <h1>Welcome!</h1>\n</center>",
+      "options": [
+        "Use CSS text-align: center",
+        "Use <div align=\"center\">",
+        "Keep <center> as is",
+        "Use <p align=\"center\">"
+      ],
+      "answer": "Use CSS text-align: center"
+    },
+    {
+      "question": "A teammate asks: 'Why doesn’t <marquee> work anymore?' What do you say?",
+      "options": [
+        "It’s obsolete; use CSS animations",
+        "It was never part of HTML",
+        "It only worked with Flash",
+        "Browsers block it by default"
+      ],
+      "answer": "It’s obsolete; use CSS animations"
+    },
+    {
+      "question": "You find this snippet in a legacy app. What’s wrong?",
+      "code": "<big>Important Notice</big>",
+      "options": [
+        "It’s obsolete; use CSS font-size",
+        "It must be closed with </big>",
+        "It only works in tables",
+        "Nothing is wrong"
+      ],
+      "answer": "It’s obsolete; use CSS font-size"
+    },
+    {
+      "question": "Which of these elements is NOT deprecated?",
+      "options": [
+        "<strike>",
+        "<u>",
+        "<b>",
+        "<center>"
+      ],
+      "answer": "<b>"
+    },
+    {
+      "question": "Here’s a fragment of code you’re modernizing. What should you change?",
+      "code": "<u>Contact Us</u>",
+      "options": [
+        "Use <span style=\"text-decoration: underline\">",
+        "Replace with <em>",
+        "Replace with <strong>",
+        "Keep <u> as is"
+      ],
+      "answer": "Use <span style=\"text-decoration: underline\">"
+    },
+    {
+      "question": "Why is <frameset> considered obsolete?",
+      "options": [
+        "It breaks responsive design",
+        "It requires Java support",
+        "It only works in Chrome",
+        "It was never valid"
+      ],
+      "answer": "It breaks responsive design"
+    },
+    {
+      "question": "You see this in an old blog template. How should you fix it?",
+      "code": "<tt>Monospaced text</tt>",
+      "options": [
+        "Use <code> or CSS monospace",
+        "Use <pre>",
+        "Keep <tt>",
+        "Use <kbd>"
+      ],
+      "answer": "Use <code> or CSS monospace"
+    },
+    {
+      "question": "Your coworker uses <bgsound> for autoplay audio. What’s the modern solution?",
+      "options": [
+        "Use the <audio> tag",
+        "Use <embed>",
+        "Use JavaScript only",
+        "No replacement exists"
+      ],
+      "answer": "Use the <audio> tag"
+    },
+    {
+      "question": "What’s wrong here?",
+      "code": "<applet code=\"MyApp.class\"></applet>",
+      "options": [
+        "It’s obsolete; use <object> or <embed>",
+        "The code attribute is invalid",
+        "Java can’t be embedded",
+        "Nothing is wrong"
+      ],
+      "answer": "It’s obsolete; use <object> or <embed>"
+    },
+    {
+      "question": "Which tag was often misused for bold text but is still valid?",
+      "options": [
+        "<b>",
+        "<big>",
+        "<blink>",
+        "<strike>"
+      ],
+      "answer": "<b>"
+    },
+    {
+      "question": "Your friend uses <blink> for attention-grabbing text. What should you suggest?",
+      "options": [
+        "Use CSS animations",
+        "Use <marquee>",
+        "Use <u>",
+        "Use <pre>"
+      ],
+      "answer": "Use CSS animations"
+    },
+    {
+      "question": "In a table, you see this: <th nowrap>. Why is it wrong?",
+      "options": [
+        "nowrap is obsolete; use CSS",
+        "th can’t have nowrap",
+        "nowrap requires a value",
+        "Nothing is wrong"
+      ],
+      "answer": "nowrap is obsolete; use CSS"
+    },
+    {
+      "question": "What’s the modern replacement for <acronym>?",
+      "options": [
+        "<abbr>",
+        "<small>",
+        "<span>",
+        "<dfn>"
+      ],
+      "answer": "<abbr>"
+    },
+    {
+      "question": "What is wrong with this snippet?",
+      "code": "<dir>\n  <li>Item 1</li>\n  <li>Item 2</li>\n</dir>",
+      "options": [
+        "Replace <dir> with <ul>",
+        "<dir> requires closing tags",
+        "<dir> is only for images",
+        "Nothing is wrong"
+      ],
+      "answer": "Replace <dir> with <ul>"
+    },
+    {
+      "question": "Why was <isindex> removed from HTML?",
+      "options": [
+        "Forms do the same job better",
+        "It only worked in IE",
+        "It needed Flash",
+        "It caused SEO issues"
+      ],
+      "answer": "Forms do the same job better"
+    },
+    {
+      "question": "Your manager asks you to center text without <center>. What do you use?",
+      "options": [
+        "CSS text-align",
+        "CSS flexbox",
+        "Both work",
+        "Use <p align>"
+      ],
+      "answer": "Both work"
+    },
+    {
+      "question": "What’s wrong with this code?",
+      "code": "<strike>Out of stock</strike>",
+      "options": [
+        "Use <del> instead",
+        "Use <s>",
+        "Use <b>",
+        "Nothing is wrong"
+      ],
+      "answer": "Use <del> instead"
+    },
+    {
+      "question": "You see this tag in a page: <menu type=\"context\">. Why won’t it work?",
+      "options": [
+        "type=context was dropped",
+        "menu requires <li>",
+        "Context menus need JS",
+        "Nothing is wrong"
+      ],
+      "answer": "type=context was dropped"
+    },
+    {
+      "question": "Which element is obsolete but often confused with a semantic one?",
+      "options": [
+        "<i>",
+        "<em>",
+        "<u>",
+        "<font>"
+      ],
+      "answer": "<font>"
+    },
+    {
+      "question": "Your teammate asks why <spacer> doesn’t work anymore. What’s the reason?",
+      "options": [
+        "It’s obsolete; use CSS margins",
+        "It only worked in Firefox",
+        "It was never valid",
+        "It needed frames"
+      ],
+      "answer": "It’s obsolete; use CSS margins"
+    },
+    {
+      "question": "What’s the modern replacement for <basefont>?",
+      "options": [
+        "Use CSS fonts",
+        "Use <style>",
+        "Use <span>",
+        "No replacement exists"
+      ],
+      "answer": "Use CSS fonts"
+    },
+    {
+      "question": "What’s wrong with this code?",
+      "code": "<hgroup>\n  <h1>Chapter 1</h1>\n  <h2>Introduction</h2>\n</hgroup>",
+      "options": [
+        "<hgroup> was removed",
+        "<hgroup> needs three headings",
+        "<hgroup> only works in nav",
+        "Nothing is wrong"
+      ],
+      "answer": "<hgroup> was removed"
+    },
+    {
+      "question": "Why should you avoid <keygen>?",
+      "options": [
+        "It was deprecated for security",
+        "It only worked with Java",
+        "It caused layout issues",
+        "It was never real HTML"
+      ],
+      "answer": "It was deprecated for security"
+    },
+    {
+      "question": "A client asks: 'Why not use <u> for emphasis?' What do you explain?",
+      "options": [
+        "Use <em> or <strong> instead",
+        "Browsers don’t support <u>",
+        "<u> is only for links",
+        "SEO penalizes <u>"
+      ],
+      "answer": "Use <em> or <strong> instead"
+    },
+    {
+      "question": "Which of these tags still works but is semantically weak?",
+      "options": [
+        "<b>",
+        "<font>",
+        "<center>",
+        "<big>"
+      ],
+      "answer": "<b>"
+    },
+    {
+      "question": "What is the modern equivalent of <nobr>?",
+      "options": [
+        "CSS white-space: nowrap",
+        "<span>",
+        "<pre>",
+        "<small>"
+      ],
+      "answer": "CSS white-space: nowrap"
+    },
+    {
+      "question": "You find <listing> in a really old HTML file. What do you replace it with?",
+      "options": [
+        "<pre>",
+        "<code>",
+        "<samp>",
+        "Either <pre> or <code>"
+      ],
+      "answer": "Either <pre> or <code>"
+    }
+  ]
+},
+    {
   "day": 8,
   "topic": "HTML: Day 8 - Images & Media Embeds",
   "questions": [
