@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CODECX Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <!-- Tailwind & Flowbite & Bootstrap Icons -->
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { font-family: 'Poppins', 'Inter', sans-serif; }
+    .tab-active { background: #6366f1; color: #fff;}
+    .sidebar { min-width:220px; transition: all .25s;}
+    .sidebar-closed { transform: translateX(-100%);}
+    .sidebar-open { transform: translateX(0);}
+    .sidebar-backdrop { display:none; position:fixed; z-index:39; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,.36);}
+    .sidebar-backdrop.show { display:block;}
+    .card { background: #fff; border-radius:1rem; box-shadow:0 2px 12px #6366f110; padding:1rem;}
+    @media (max-width: 900px) {
+      .main { margin-left: 0 !important;}
+      .sidebar { position: fixed; z-index:70; left:0; top:0; bottom:0;}
+    }
+    #pageLoader {
+      transition: opacity 0.15s;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <!-- Sidebar Backdrop -->
+  <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar sidebar-closed fixed top-0 left-0 z-70 w-64 h-screen bg-white shadow-lg text-indigo-900 flex flex-col transition-transform" aria-label="Sidebar">
+    <div class="h-full px-3 py-6 overflow-y-auto flex flex-col">
+      <div class="text-2xl font-bold text-blue-700 mb-7">CODECX Admin</div>
+      <nav>
+        <ul class="space-y-2">
+          <li><a href="#" class="flex items-center p-2 rounded-lg tab-active" data-tab="overview"><i class="bi bi-house-door mr-2"></i>Overview</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="candidates"><i class="bi bi-people mr-2"></i>Candidates</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="payments"><i class="bi bi-credit-card mr-2"></i>Payments</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="courses"><i class="bi bi-journal-code mr-2"></i>Courses</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="activity"><i class="bi bi-clock-history mr-2"></i>Activity</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="settings"><i class="bi bi-gear mr-2"></i>Settings</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="enroll"><i class="bi bi-person-plus mr-2"></i>Enroll Students</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="assignments"><i class="bi bi-journal-code mr-2"></i>Assignments</a></li>
+          <li><a href="#" class="flex items-center p-2 rounded-lg" data-tab="quizzes"><i class="bi bi-question-circle mr-2"></i>Quizzes</a></li>
+        </ul>
+      </nav>
+      <div class="mt-auto pt-8">
+        <button onclick="logout()" class="w-full bg-red-600 text-white rounded-lg py-2 font-semibold hover:bg-red-700"><i class="bi bi-box-arrow-right mr-2"></i>Logout</button>
+      </div>
+    </div>
+  </aside>
+  <!-- Mobile sidebar toggle -->
+  <button id="sidebarToggle" type="button" class="md:hidden fixed top-3 left-3 z-20 inline-flex items-center p-2 text-xl text-white bg-blue-700 rounded-lg">
+    <span class="sr-only">Open sidebar</span>
+    <i class="bi bi-list"></i>
+  </button>
+  <!-- Loader Spinner -->
+  <div id="pageLoader" class="fixed inset-0 bg-white bg-opacity-60 flex items-center justify-center z-800" style="display: none;">
+    <div class="flex flex-col items-center">
+      <svg class="animate-spin h-12 w-12 text-blue-700 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+      </svg>
+      <div class="text-blue-700 font-semibold">Loading...</div>
+    </div>
+  </div>
+  <!-- Main Content -->
+  <div class="main md:ml-64 px-2 pt-6 pb-8">
+    <!-- Topbar -->
+    <nav class="flex flex-col md:flex-row items-center justify-between mb-7 bg-white rounded-lg shadow px-5 py-4">
+      <div class="text-2xl font-bold text-blue-700">Admin Dashboard</div>
+      <div class="flex items-center gap-3 mt-3 md:mt-0">
+        <span id="adminName" class="font-semibold text-blue-800"></span>
+        <img id="adminAvatar" src="" alt="avatar" class="w-10 h-10 rounded-full border">
+      </div>
+    </nav>
+    <!-- Sections: Keep your tab structure -->
+    <div id="tab-overview" class="tab">
+      <!-- ... (Overview tab content unchanged, uses your original IDs) ... -->
+    </div>
+    <div id="tab-candidates" class="tab hidden">
+      <!-- ... (Candidates tab content unchanged, uses your original IDs) ... -->
+    </div>
+    <div id="tab-payments" class="tab hidden">
+      <!-- ... (Payments tab content unchanged, uses your original IDs) ... -->
+    </div>
+    <div id="tab-courses" class="tab hidden">
+      <!-- ... (Courses tab content unchanged, uses your original IDs) ... -->
+    </div>
+    <div id="tab-activity" class="tab hidden">
+      <!-- ... (Activity tab content unchanged, uses your original IDs) ... -->
+    </div>
+    <div id="tab-enroll" class="tab hidden">
+      <!-- ... (Enroll tab content unchanged, uses your original IDs) ... -->
+    </div>
+    <div id="tab-assignments" class="tab hidden">
+      <!-- ... (Assignments tab content unchanged, uses your original IDs) ... -->
+    </div>
+    <div id="tab-quizzes" class="tab hidden">
+      <!-- ... (Quizzes tab content unchanged, uses your original IDs) ... -->
+    </div>
+
+    <!-- SETTINGS TAB: Upgraded with new UI per images 4/5 -->
+    <div id="tab-settings" class="tab hidden">
+      <div class="max-w-lg mx-auto mt-6">
+        <nav class="flex items-center text-sm text-gray-500 mb-3 space-x-2">
+          <span class="inline-flex items-center space-x-1">
+            <svg class="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"></path></svg>
+            <span>Home</span>
+          </span>
+          <span>/</span>
+          <span>User</span>
+          <span>/</span>
+          <span>Settings</span>
+        </nav>
+        <div class="bg-white rounded-xl shadow p-6">
+          <div class="mb-4 font-bold text-xl text-gray-700">Account</div>
+          <div class="flex items-center mb-4 space-x-4">
+            <img id="settingsAvatar" src="" class="w-20 h-20 rounded-full object-cover" alt="Profile" />
+            <div class="flex flex-col space-y-2 w-full">
+              <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full flex items-center justify-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M9 16V9a3 3 0 016 0v7"></path></svg>Upload</button>
+              <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 w-full">Remove</button>
+            </div>
+          </div>
+          <form class="space-y-4">
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Username*</label>
+              <input type="text" id="settingsUsername" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Ex. SarahR" />
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Full name*</label>
+              <input type="text" id="settingsFullName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Ex. Sarah Richards" />
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Your email*</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12v2a4 4 0 11-8 0v-2M12 12V8m0 0a4 4 0 100 8 4 4 0 000-8z"></path></svg></span>
+                <input type="email" id="settingsEmail" class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="name@institution.edu" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Phone number</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10a1 1 0 011-1h3a1 1 0 011 1v1a2 2 0 002 2h2a2 2 0 002-2v-1a1 1 0 011-1h3a1 1 0 011 1v4a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 00-2-2h-2a2 2 0 00-2 2v1a1 1 0 01-1 1H4a1 1 0 01-1-1v-4z"></path></svg></span>
+                <input type="text" id="settingsPhone" class="w-full pl-10 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="123-456-7890" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Timezone <span class="ml-1 text-gray-400"><svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2" /></svg></span></label>
+              <select id="settingsTimezone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                <option>(GMT +0:00) UTC</option>
+                <option>(GMT +1:00) Central European Time</option>
+                <option>(GMT -8:00) Pacific Time (US & Canada)</option>
+                <option>(GMT -5:00) Eastern Time (US & Canada)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Gender</label>
+              <select id="settingsGender" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                <option value="" disabled selected>Choose your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 mt-2">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal for Candidate Details, etc. (unchanged) -->
+  <!-- Flowbite JS & Chart.js & other scripts (unchanged) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  <!-- ... your other scripts ... -->
+  <script>
+    // SIDEBAR LOGIC (Unified per new design)
+    const sidebar = document.getElementById('sidebar');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+    document.getElementById('sidebarToggle').onclick = function() {
+      sidebar.classList.add('sidebar-open');
+      sidebar.classList.remove('sidebar-closed');
+      sidebarBackdrop.classList.add('show');
+    };
+    sidebarBackdrop.onclick = function() {
+      sidebar.classList.remove('sidebar-open');
+      sidebar.classList.add('sidebar-closed');
+      sidebarBackdrop.classList.remove('show');
+    };
+    // Close sidebar on link click (mobile)
+    document.querySelectorAll('#sidebar a').forEach(tab => {
+      tab.addEventListener('click', function(e) {
+        sidebar.classList.remove('sidebar-open');
+        sidebar.classList.add('sidebar-closed');
+        sidebarBackdrop.classList.remove('show');
+      });
+    });
+    // Tab navigation
+    document.querySelectorAll('.sidebar a').forEach(tab => {
+      tab.onclick = function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.sidebar a').forEach(t => t.classList.remove('tab-active'));
+        tab.classList.add('tab-active');
+        document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
+        document.getElementById('tab-' + tab.getAttribute('data-tab')).classList.remove('hidden');
+      }
+    });
+    
+function updateSidebarState() {
+  if (window.innerWidth >= 768) { // md breakpoint
+    sidebar.classList.add('sidebar-open');
+    sidebar.classList.remove('sidebar-closed');
+    sidebarBackdrop.classList.remove('show');
+  } else {
+    sidebar.classList.remove('sidebar-open');
+    sidebar.classList.add('sidebar-closed');
+  }
+}
+window.addEventListener('resize', updateSidebarState);
+window.addEventListener('DOMContentLoaded', updateSidebarState);
+
+    // FURTHER JS: Use your existing logic for all tabs and functions.
+  </script>
+</body>
+</html>
