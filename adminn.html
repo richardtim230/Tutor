@@ -296,6 +296,156 @@
       </div>
     </div>
   </div>
+    <!-- Assignment Code Modal -->
+  <div id="assignmentCodeModal" class="modal hidden">
+    <div class="modal-content w-full max-w-2xl relative">
+      <span class="close-modal" onclick="closeAssignmentCodeModal()">&times;</span>
+      <div id="assignmentCodeHeader" class="font-bold text-indigo-800 mb-3"></div>
+      <div id="assignmentCodeEditor" style="height:400px;"></div>
+      <div id="assignmentCodeActions" class="mt-3"></div>
+    </div>
+  </div>
+
+  <!-- Quizzes Tab -->
+<!-- Quizzes Tab -->
+<div id="tab-quizzes" class="tab hidden">
+  <div class="font-bold text-2xl text-indigo-700 mb-6 flex items-center gap-2">
+    <i class="bi bi-question-circle"></i> Quiz Questions & Topics
+  </div>
+  <div id="quizFilter" class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+    <input id="quizSearch" type="text" placeholder="Search by topic or question"
+      class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition w-full md:w-80 bg-white shadow-sm"
+    >
+    <button class="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition mt-2 md:mt-0"
+      onclick="showAddQuizModal()">
+      <i class="bi bi-plus"></i> Add Quiz Question
+    </button>
+  </div>
+  <div class="bg-white rounded-2xl shadow overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-800 min-w-[760px]">
+      <thead class="text-xs uppercase bg-indigo-100 text-indigo-900">
+        <tr>
+          <th class="px-4 py-3">Day</th>
+          <th class="px-4 py-3">Topic</th>
+          <th class="px-4 py-3">Question</th>
+          <th class="px-4 py-3">Options</th>
+          <th class="px-4 py-3">Answer</th>
+          <th class="px-4 py-3 text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="quizTableBody">
+        
+      </tbody>
+    </table>
+  </div>
+            </div>
+  
+<!-- Quizzes Tab -->
+<div id="tab-quizzes" class="tab hidden">
+  <div class="font-bold text-2xl text-indigo-700 mb-6 flex items-center gap-2">
+    <i class="bi bi-question-circle"></i> Quiz Questions & Topics
+  </div>
+  <div id="quizFilter" class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+    <input id="quizSearch" type="text" placeholder="Search by topic or question"
+      class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition w-full md:w-80 bg-white shadow-sm"
+    >
+    <button class="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition mt-2 md:mt-0"
+      onclick="showAddQuizModal()">
+      <i class="bi bi-plus"></i> Add Quiz Question
+    </button>
+  </div>
+  <div class="bg-white rounded-2xl shadow overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-800 min-w-[760px]">
+      <thead class="text-xs uppercase bg-indigo-100 text-indigo-900">
+        <tr>
+          <th class="px-4 py-3">Day</th>
+          <th class="px-4 py-3">Topic</th>
+          <th class="px-4 py-3">Question</th>
+          <th class="px-4 py-3">Options</th>
+          <th class="px-4 py-3">Answer</th>
+          <th class="px-4 py-3 text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="quizTableBody">
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add Quiz Modal -->
+<div id="addQuizModal" class="modal hidden">
+  <div class="modal-content w-full max-w-lg">
+    <span class="close-modal" onclick="closeAddQuizModal()">&times;</span>
+    <div class="font-bold text-lg text-indigo-700 mb-3">Add Quiz Question</div>
+    <form id="addQuizForm" class="flex flex-col gap-4">
+      <div>
+        <label class="block font-semibold text-gray-700 mb-1">Day</label>
+        <input type="number" min="1" max="60" id="addQuizDay" required placeholder="Day (1-60)"
+          class="px-3 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-1">Topic</label>
+        <input type="text" id="addQuizTopic" required placeholder="Topic"
+          class="px-3 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-1">Question</label>
+        <textarea id="addQuizQuestion" required placeholder="Question"
+          class="px-3 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"></textarea>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-1">Options <span class="text-xs text-gray-400">(comma separated)</span></label>
+        <input type="text" id="addQuizOptions" required placeholder="Option 1, Option 2, Option 3"
+          class="px-3 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-1">Correct Answer</label>
+        <input type="text" id="addQuizAnswer" required placeholder="Correct Answer"
+          class="px-3 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+      </div>
+      <button type="submit"
+        class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition mt-2">
+        Add Quiz
+      </button>
+    </form>
+    <div id="addQuizStatus" class="mt-4"></div>
+  </div>
+</div>
+    <div id="tab-courses" class="tab hidden">
+      <div class="flex items-center justify-between mb-2">
+        <div class="font-bold text-lg text-indigo-800">Courses & Enrollment</div>
+        <button class="bg-indigo-600 text-white px-3 py-2 rounded-lg hover:bg-indigo-700"><i class="bi bi-plus"></i> Add Course</button>
+      </div>
+      <div id="coursesList"></div>
+    </div>
+    <div id="tab-activity" class="tab hidden">
+  <div class="font-bold text-2xl text-indigo-700 mb-6">Platform Activity Log</div>
+  <div id="activityFeed" class="flex flex-col gap-3"></div>
+      </div>
+    <div id="tab-settings" class="tab hidden">
+      <div class="font-bold text-lg text-indigo-800 mb-3">Admin Settings</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
+        <div class="card">
+          <div class="font-bold mb-2 text-indigo-700">Profile</div>
+          <div id="settingsPanel"></div>
+        </div>
+        <div class="card">
+          <div class="font-bold mb-2 text-indigo-700">Theme</div>
+          <button class="bg-yellow-400 text-indigo-900 px-4 py-2 rounded-lg" onclick="toggleTheme()">Toggle Light/Dark</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal for Candidate Details (Flowbite) -->
+  <div id="candidateModal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto h-modal h-full bg-black bg-opacity-40 flex items-center justify-center">
+    <div class="relative w-full max-w-lg max-h-full">
+      <div class="relative bg-white rounded-xl shadow-lg p-7">
+        <button type="button" class="absolute top-3 right-4 text-2xl text-gray-500 hover:text-indigo-700" onclick="closeCandidateModal()">&times;</button>
+        <div id="candidateModalContent"></div>
+      </div>
+    </div>
+  </div>
   <!-- Modal for Candidate Details, etc. (unchanged) -->
   <!-- Flowbite JS & Chart.js & other scripts (unchanged) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
