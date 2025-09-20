@@ -1,6 +1,893 @@
 {
   "days": [
     {
+      "day": 13,
+      "topic": "HTML: Day 13 - Tables & Lists",
+      "questions": [
+        {
+          "question": "Which HTML element is used to create a table row?",
+          "options": ["<tr>", "<td>", "<th>", "<row>"],
+          "answer": "<tr>"
+        },
+        {
+          "question": "What tag defines a table cell containing data (not a header)?",
+          "options": ["<td>", "<tr>", "<th>", "<cell>"],
+          "answer": "<td>"
+        },
+        {
+          "question": "Which tag is used to group the column headings in a table?",
+          "options": ["<thead>", "<tbody>", "<tfoot>", "<colgroup>"],
+          "answer": "<thead>"
+        },
+        {
+          "question": "How do you create a bulleted (unordered) list in HTML?",
+          "options": ["<ul>", "<ol>", "<li>", "<dl>"],
+          "answer": "<ul>"
+        },
+        {
+          "question": "Which tag must be used inside both <ul> and <ol> elements?",
+          "options": ["<li>", "<dt>", "<dd>", "<item>"],
+          "answer": "<li>"
+        },
+        {
+          "question": "Which HTML element creates a numbered (ordered) list?",
+          "options": ["<ol>", "<ul>", "<li>", "<dl>"],
+          "answer": "<ol>"
+        },
+        {
+          "question": "What tag is used for a description list?",
+          "options": ["<dl>", "<ol>", "<ul>", "<desc>"],
+          "answer": "<dl>"
+        },
+        {
+          "question": "Which element is for a term in a description list?",
+          "options": ["<dt>", "<dd>", "<desc>", "<li>"],
+          "answer": "<dt>"
+        },
+        {
+          "question": "How do you add a caption to a table?",
+          "code": "<table>\n  ____\n  ...\n</table>",
+          "options": ["<caption>", "<thead>", "<summary>", "<legend>"],
+          "answer": "<caption>"
+        },
+        {
+          "question": "What is the semantic purpose of <th> in a table?",
+          "options": [
+            "Table header cell",
+            "Table body cell",
+            "Table footer",
+            "Table row"
+          ],
+          "answer": "Table header cell"
+        },
+        {
+          "question": "How do you group table body content (not header or footer)?",
+          "options": ["<tbody>", "<thead>", "<tfoot>", "<tr>"],
+          "answer": "<tbody>"
+        },
+        {
+          "question": "Which attribute merges two or more table cells horizontally?",
+          "options": ["colspan", "rowspan", "merge", "span"],
+          "answer": "colspan"
+        },
+        {
+          "question": "What is the correct way to nest a list inside a table cell?",
+          "code": "<td>\n  ____\n</td>",
+          "options": ["A <ul> or <ol>", "<th>", "<table>", "<dl> only"],
+          "answer": "A <ul> or <ol>"
+        },
+        {
+          "question": "Which tag will create a table footer row?",
+          "options": ["<tfoot>", "<footer>", "<th>", "<tfootrow>"],
+          "answer": "<tfoot>"
+        },
+        {
+          "question": "What does <colgroup> do in a table?",
+          "options": [
+            "Groups columns for styling",
+            "Creates a group of rows",
+            "Adds a caption",
+            "Defines table borders"
+          ],
+          "answer": "Groups columns for styling"
+        },
+        {
+          "question": "Choose the correct way to start a list of requirements.",
+          "code": "____\n  <li>Item 1</li>\n  <li>Item 2</li>\n</ul>",
+          "options": [
+            "<ul>",
+            "<ol>",
+            "<dl>",
+            "<li>"
+          ],
+          "answer": "<ul>"
+        },
+        {
+          "question": "What is the result of using <ol type=\"A\"> in a list?",
+          "options": [
+            "List items are labeled A, B, C...",
+            "List items are labeled 1, 2, 3...",
+            "List uses roman numerals",
+            "No difference from <ol>"
+          ],
+          "answer": "List items are labeled A, B, C..."
+        },
+        {
+          "question": "How do you indicate a definition in a description list?",
+          "options": ["<dd>", "<dt>", "<li>", "<desc>"],
+          "answer": "<dd>"
+        },
+        {
+          "question": "Which table tag is NOT required for a valid table?",
+          "options": ["<caption>", "<tbody>", "<thead>", "<tfoot>"],
+          "answer": "<caption>"
+        },
+        {
+          "question": "What is a best practice when using tables in HTML?",
+          "options": [
+            "Use tables only for tabular data, not for layout",
+            "Always use tables for page layout",
+            "Use tables for navigation menus",
+            "Nest tables as much as possible"
+          ],
+          "answer": "Use tables only for tabular data, not for layout"
+        }
+      ]
+    },
+    {
+      "day": 14,
+      "topic": "HTML: Day 14 - Meta Tags & SEO Basics",
+      "questions": [
+        {
+          "question": "Which tag sets the title shown in the browser tab?",
+          "options": ["<title>", "<meta>", "<header>", "<caption>"],
+          "answer": "<title>"
+        },
+        {
+          "question": "Where should the <title> tag be placed?",
+          "options": [
+            "Inside <head>",
+            "Inside <body>",
+            "Anywhere in the document",
+            "Inside <footer>"
+          ],
+          "answer": "Inside <head>"
+        },
+        {
+          "question": "What is the purpose of the <meta name=\"description\"> tag?",
+          "options": [
+            "To provide a summary for search engines",
+            "To set the page title",
+            "To define the author",
+            "To load a CSS file"
+          ],
+          "answer": "To provide a summary for search engines"
+        },
+        {
+          "question": "Which meta tag is used to set the page's character encoding?",
+          "options": [
+            "<meta charset=\"UTF-8\">",
+            "<meta name=\"viewport\">",
+            "<meta name=\"author\">",
+            "<meta http-equiv=\"refresh\">"
+          ],
+          "answer": "<meta charset=\"UTF-8\">"
+        },
+        {
+          "question": "What is the effect of <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">?",
+          "options": [
+            "Makes the site responsive on mobile devices",
+            "Sets the background color",
+            "Links to a CSS file",
+            "Defines the site language"
+          ],
+          "answer": "Makes the site responsive on mobile devices"
+        },
+        {
+          "question": "Which tag helps prevent search engines from indexing a page?",
+          "options": [
+            "<meta name=\"robots\" content=\"noindex\">",
+            "<title>",
+            "<meta charset=\"UTF-8\">",
+            "<link rel=\"nofollow\">"
+          ],
+          "answer": "<meta name=\"robots\" content=\"noindex\">"
+        },
+        {
+          "question": "What is the correct way to set keywords for SEO in HTML?",
+          "options": [
+            "<meta name=\"keywords\" content=\"HTML, SEO\">",
+            "<keywords>HTML, SEO</keywords>",
+            "<meta keywords=\"HTML, SEO\">",
+            "<meta name=\"SEO\">"
+          ],
+          "answer": "<meta name=\"keywords\" content=\"HTML, SEO\">"
+        },
+        {
+          "question": "Is the 'keywords' meta tag still important for search engine ranking?",
+          "options": [
+            "No, most search engines ignore it",
+            "Yes, it's required",
+            "Only for mobile devices",
+            "Only works in <body>"
+          ],
+          "answer": "No, most search engines ignore it"
+        },
+        {
+          "question": "What does the <meta name=\"author\"> tag specify?",
+          "options": [
+            "The author of the web page",
+            "The website's copyright",
+            "The main language",
+            "The page's font"
+          ],
+          "answer": "The author of the web page"
+        },
+        {
+          "question": "What is the effect of <meta http-equiv=\"refresh\" content=\"5; url=login.html\">?",
+          "options": [
+            "Redirects to login.html after 5 seconds",
+            "Refreshes the page every 5 seconds",
+            "Deletes cookies after 5 seconds",
+            "Displays a login popup"
+          ],
+          "answer": "Redirects to login.html after 5 seconds"
+        },
+        {
+          "question": "Which meta tag is best for making a website mobile-friendly?",
+          "options": [
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+            "<meta name=\"mobile\">",
+            "<meta charset=\"UTF-8\">",
+            "<meta name=\"device\">"
+          ],
+          "answer": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
+        },
+        {
+          "question": "What is the role of the <base> tag?",
+          "options": [
+            "Sets the base URL for all relative links",
+            "Defines the main heading",
+            "Specifies the page character set",
+            "Links to the base CSS file"
+          ],
+          "answer": "Sets the base URL for all relative links"
+        },
+        {
+          "question": "What is the correct way to set a page description in the head?",
+          "code": "____",
+          "options": [
+            "<meta name=\"description\" content=\"Learn HTML tables and lists\">",
+            "<meta title=\"description\">",
+            "<title>description</title>",
+            "<meta content=\"description\">"
+          ],
+          "answer": "<meta name=\"description\" content=\"Learn HTML tables and lists\">"
+        },
+        {
+          "question": "Which tag is used for Open Graph to control social media previews?",
+          "options": [
+            "<meta property=\"og:title\" content=\"My Page\">",
+            "<meta name=\"og:title\">",
+            "<og:title>",
+            "<meta og:title>"
+          ],
+          "answer": "<meta property=\"og:title\" content=\"My Page\">"
+        },
+        {
+          "question": "What is the effect of <meta name=\"robots\" content=\"noindex, nofollow\">?",
+          "options": [
+            "Prevents indexing and following links by search engines",
+            "Increases the site's SEO ranking",
+            "Refreshes the page every 5 seconds",
+            "Adds a robots.txt file"
+          ],
+          "answer": "Prevents indexing and following links by search engines"
+        },
+        {
+          "question": "Where should meta tags be placed in an HTML document?",
+          "options": [
+            "Inside the <head> section",
+            "Inside the <body> section",
+            "At the end of the page",
+            "Anywhere in the file"
+          ],
+          "answer": "Inside the <head> section"
+        },
+        {
+          "question": "Why is <meta charset=\"UTF-8\"> important?",
+          "options": [
+            "It ensures all characters display correctly",
+            "It speeds up loading",
+            "It sets the page language",
+            "It adds a favicon"
+          ],
+          "answer": "It ensures all characters display correctly"
+        },
+        {
+          "question": "What is the effect of missing the <title> tag?",
+          "options": [
+            "The browser tab may be blank or show the URL",
+            "The page will not load",
+            "CSS will not work",
+            "Meta tags are ignored"
+          ],
+          "answer": "The browser tab may be blank or show the URL"
+        },
+        {
+          "question": "What is the role of meta tags in SEO?",
+          "options": [
+            "Provide information to search engines about the page",
+            "Add images to the page",
+            "Control JavaScript loading",
+            "Add CSS styles"
+          ],
+          "answer": "Provide information to search engines about the page"
+        },
+        {
+          "question": "Which meta tag tells the browser to use the latest rendering engine?",
+          "options": [
+            "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">",
+            "<meta name=\"viewport\">",
+            "<meta charset=\"UTF-8\">",
+            "<meta name=\"robots\">"
+          ],
+          "answer": "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">"
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "topic": "HTML: Day 10 - Internationalization (i18n) in HTML",
+      "questions": [
+        {
+          "question": "Which attribute should you set on the <html> tag to specify the main language of a page?",
+          "options": ["lang", "language", "dir", "charset"],
+          "answer": "lang"
+        },
+        {
+          "question": "What does the <code>dir</code> attribute do in HTML?",
+          "options": [
+            "Sets the text direction",
+            "Defines the document encoding",
+            "Specifies the page language",
+            "Links to a translation file"
+          ],
+          "answer": "Sets the text direction"
+        },
+        {
+          "question": "What is the correct way to set a page's language as Arabic and text direction as right-to-left?",
+          "code": "<html ____=\"ar\" ____=\"rtl\">",
+          "options": [
+            "lang, dir",
+            "xml:lang, dir",
+            "lang, align",
+            "locale, direction"
+          ],
+          "answer": "lang, dir"
+        },
+        {
+          "question": "Which value of the <code>dir</code> attribute is used for languages like English and French?",
+          "options": ["ltr", "rtl", "auto", "none"],
+          "answer": "ltr"
+        },
+        {
+          "question": "Why is setting the <code>lang</code> attribute important for accessibility?",
+          "options": [
+            "Screen readers use it to choose pronunciation",
+            "It changes the font automatically",
+            "It makes the page load faster",
+            "It sets the background color"
+          ],
+          "answer": "Screen readers use it to choose pronunciation"
+        },
+        {
+          "question": "What does the <code>hreflang</code> attribute in a link do?",
+          "options": [
+            "Tells search engines the target language",
+            "Changes the text direction",
+            "Specifies the encoding",
+            "Makes the link open in a new tab"
+          ],
+          "answer": "Tells search engines the target language"
+        },
+        {
+          "question": "How would you mark a single word on a page as French in an otherwise English document?",
+          "code": "<span ____=\"fr\">Bonjour</span>",
+          "options": ["lang", "locale", "dir", "xml:lang"],
+          "answer": "lang"
+        },
+        {
+          "question": "What is the recommended character encoding for supporting most world languages?",
+          "options": ["UTF-8", "ASCII", "ISO-8859-1", "UTF-16"],
+          "answer": "UTF-8"
+        },
+        {
+          "question": "Which of the following is NOT necessary for internationalization?",
+          "options": [
+            "Using deprecated tags",
+            "Setting lang and dir attributes",
+            "Specifying UTF-8 encoding",
+            "Testing with real multilingual content"
+          ],
+          "answer": "Using deprecated tags"
+        },
+        {
+          "question": "How do you make a navigation link for the French version of a site, using best i18n practices?",
+          "code": "<a href=\"index.fr.html\" ____=\"fr\">Version Française</a>",
+          "options": ["hreflang", "lang", "dir", "locale"],
+          "answer": "hreflang"
+        },
+        {
+          "question": "What is the default text direction if <code>dir</code> is not specified?",
+          "options": ["ltr", "rtl", "auto", "center"],
+          "answer": "ltr"
+        },
+        {
+          "question": "Which is true regarding the <meta charset=\"UTF-8\"> tag?",
+          "options": [
+            "It allows you to use characters from any language",
+            "It translates the page automatically",
+            "It makes the site mobile responsive",
+            "It is only for English pages"
+          ],
+          "answer": "It allows you to use characters from any language"
+        },
+        {
+          "question": "What is the main benefit of using separate HTML files for each language?",
+          "options": [
+            "Easy navigation and accurate translation for users",
+            "Smaller file size",
+            "Faster JavaScript execution",
+            "Automatic currency conversion"
+          ],
+          "answer": "Easy navigation and accurate translation for users"
+        },
+        {
+          "question": "How would you ensure that a <p> element is displayed in right-to-left direction for Hebrew?",
+          "code": "<p ____=\"he\" ____=\"rtl\">שלום</p>",
+          "options": ["lang, dir", "dir, lang", "locale, dir", "dir, locale"],
+          "answer": "lang, dir"
+        },
+        {
+          "question": "What does the value <code>auto</code> do when set as <code>dir=\"auto\"</code> on an element?",
+          "options": [
+            "Lets the browser determine direction from content",
+            "Forces left-to-right direction",
+            "Forces right-to-left direction",
+            "Removes direction settings"
+          ],
+          "answer": "Lets the browser determine direction from content"
+        },
+        {
+          "question": "Which attribute is recommended to make your site usable on all devices (not strictly i18n, but accessibility)?",
+          "code": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+          "options": [
+            "viewport",
+            "charset",
+            "lang",
+            "hreflang"
+          ],
+          "answer": "viewport"
+        },
+        {
+          "question": "When building a multilingual navigation bar, what is a best practice?",
+          "options": [
+            "Provide a link for each available language",
+            "Only use English links",
+            "Use the <blink> tag for emphasis",
+            "Hide language options from users"
+          ],
+          "answer": "Provide a link for each available language"
+        },
+        {
+          "question": "Which language code should you use for British English?",
+          "options": ["en-GB", "en", "en-US", "gb"],
+          "answer": "en-GB"
+        },
+        {
+          "question": "Why should you avoid hardcoding dates, currencies, and numbers in static HTML for i18n?",
+          "options": [
+            "Different regions have different formats",
+            "It slows down the website",
+            "Browsers do not support numbers",
+            "It changes the text color"
+          ],
+          "answer": "Different regions have different formats"
+        },
+        {
+          "question": "If you want to let users pick their language, what is the simplest pattern for a small site?",
+          "options": [
+            "Provide navigation links to each language version",
+            "Use JavaScript only",
+            "Rely on browser auto-detection",
+            "Ask users to email their preference"
+          ],
+          "answer": "Provide navigation links to each language version"
+        }
+      ]
+    },
+    {
+      "day": 11,
+      "topic": "HTML: Day 11 - Deprecated & Obsolete HTML Elements",
+      "questions": [
+        {
+          "question": "What is a deprecated HTML element?",
+          "options": [
+            "A tag that should no longer be used and may be removed in the future",
+            "A tag that is required for all pages",
+            "A tag used only for mobile devices",
+            "A new feature in HTML5"
+          ],
+          "answer": "A tag that should no longer be used and may be removed in the future"
+        },
+        {
+          "question": "Which tag was commonly used for colored text before CSS?",
+          "options": ["<font>", "<color>", "<span>", "<b>"],
+          "answer": "<font>"
+        },
+        {
+          "question": "What is the modern alternative to <center> for centering content?",
+          "options": [
+            "CSS text-align property",
+            "Using <align>",
+            "Using <middle>",
+            "Using <marquee>"
+          ],
+          "answer": "CSS text-align property"
+        },
+        {
+          "question": "Why should you avoid using <u> for underlining text?",
+          "options": [
+            "Use CSS (text-decoration) for better control and semantics",
+            "<u> is still valid for underlining",
+            "Browsers ignore underlines",
+            "<u> is only for links"
+          ],
+          "answer": "Use CSS (text-decoration) for better control and semantics"
+        },
+        {
+          "question": "What is wrong with this snippet?\n<font color=\"green\" size=\"4\">Hello!</font>",
+          "options": [
+            "Use CSS for color and size instead of <font>",
+            "The font tag must use double quotes",
+            "Font color must be a hex value",
+            "Nothing is wrong"
+          ],
+          "answer": "Use CSS for color and size instead of <font>"
+        },
+        {
+          "question": "Which of the following is an obsolete HTML element?",
+          "options": [
+            "<applet>",
+            "<div>",
+            "<main>",
+            "<section>"
+          ],
+          "answer": "<applet>"
+        },
+        {
+          "question": "What is the modern way to make text blink or scroll?",
+          "options": [
+            "Use CSS animations",
+            "Use <blink> and <marquee>",
+            "Use <scroll>",
+            "Use <i>"
+          ],
+          "answer": "Use CSS animations"
+        },
+        {
+          "question": "Which table attribute is now considered bad practice and should be replaced by CSS?",
+          "options": [
+            "border",
+            "class",
+            "id",
+            "scope"
+          ],
+          "answer": "border"
+        },
+        {
+          "question": "How do you refactor this old code to modern standards?\n<center><table border=\"1\"><tr><td>Data</td></tr></table></center>",
+          "options": [
+            "Use CSS for centering and border styling",
+            "Replace with <marquee>",
+            "Use <div> only",
+            "No changes are needed"
+          ],
+          "answer": "Use CSS for centering and border styling"
+        },
+        {
+          "question": "What is <isindex> replaced with in modern HTML?",
+          "options": [
+            "An <input> element inside a <form>",
+            "A <search> tag",
+            "A <span> with contenteditable",
+            "Nothing"
+          ],
+          "answer": "An <input> element inside a <form>"
+        },
+        {
+          "question": "Why were <frame> and <frameset> removed from HTML?",
+          "options": [
+            "They do not support modern responsive layouts",
+            "They are required for SEO",
+            "They only work on mobile browsers",
+            "They are replaced by <table>"
+          ],
+          "answer": "They do not support modern responsive layouts"
+        },
+        {
+          "question": "What is the modern alternative to <big> and <small> tags?",
+          "options": [
+            "Use CSS font-size property",
+            "Use <b> and <i>",
+            "Use <header> and <footer>",
+            "No replacement exists"
+          ],
+          "answer": "Use CSS font-size property"
+        },
+        {
+          "question": "What should you use instead of <basefont> for global font changes?",
+          "options": [
+            "CSS applied to the body or html tag",
+            "Inline <font> tags",
+            "The <typeface> attribute",
+            "The <head> tag"
+          ],
+          "answer": "CSS applied to the body or html tag"
+        },
+        {
+          "question": "Which tag allowed you to run Java programs in a browser, but is now obsolete?",
+          "options": [
+            "<applet>",
+            "<java>",
+            "<embed>",
+            "<object>"
+          ],
+          "answer": "<applet>"
+        },
+        {
+          "question": "How should you style tables now that attributes like bgcolor are deprecated?",
+          "options": [
+            "Use CSS for backgrounds and layout",
+            "Use <table bgcolor>",
+            "Use <color> tag",
+            "Use <frame> tag"
+          ],
+          "answer": "Use CSS for backgrounds and layout"
+        },
+        {
+          "question": "Which of these is a good modern practice?",
+          "options": [
+            "Use semantic HTML and CSS for structure and style",
+            "Mix markup and styling in one tag",
+            "Rely on deprecated tags for consistency",
+            "Use <marquee> for scrolling text"
+          ],
+          "answer": "Use semantic HTML and CSS for structure and style"
+        },
+        {
+          "question": "What tool can help you spot deprecated or obsolete HTML?",
+          "options": [
+            "W3C Validator",
+            "A color picker",
+            "A text editor",
+            "A JavaScript debugger"
+          ],
+          "answer": "W3C Validator"
+        },
+        {
+          "question": "Why is it important to modernize legacy HTML code?",
+          "options": [
+            "To ensure future compatibility and accessibility",
+            "To reduce file size",
+            "To improve server speed",
+            "To add more deprecated tags"
+          ],
+          "answer": "To ensure future compatibility and accessibility"
+        },
+        {
+          "question": "What is a benefit of using CSS frameworks like Bootstrap or Tailwind?",
+          "options": [
+            "They provide ready-made styles and layouts",
+            "They add deprecated tags automatically",
+            "They replace the need for HTML",
+            "They only work in old browsers"
+          ],
+          "answer": "They provide ready-made styles and layouts"
+        },
+        {
+          "question": "Which is a best practice when refactoring old HTML?",
+          "options": [
+            "Move all styling to CSS and use semantic markup",
+            "Keep all old tags for compatibility",
+            "Mix <font> and <span> for style",
+            "Hide deprecated tags with display:none"
+          ],
+          "answer": "Move all styling to CSS and use semantic markup"
+        }
+      ]
+    },
+    {
+      "day": 12,
+      "topic": "HTML: Day 12 - Links & Navigation",
+      "questions": [
+        {
+          "question": "Which HTML tag is used to create a hyperlink?",
+          "options": ["<a>", "<link>", "<nav>", "<button>"],
+          "answer": "<a>"
+        },
+        {
+          "question": "What attribute specifies the destination of a link?",
+          "options": ["href", "src", "action", "target"],
+          "answer": "href"
+        },
+        {
+          "question": "How do you make a link open in a new browser tab securely?",
+          "code": "<a href=\"https://example.com\" ____=\"_blank\" ____=\"noopener\">Visit Site</a>",
+          "options": [
+            "target, rel",
+            "href, rel",
+            "target, title",
+            "class, role"
+          ],
+          "answer": "target, rel"
+        },
+        {
+          "question": "What is the semantic tag for grouping major navigation links?",
+          "options": ["<nav>", "<header>", "<ul>", "<footer>"],
+          "answer": "<nav>"
+        },
+        {
+          "question": "Which link is best for sending an email?",
+          "options": [
+            "<a href=\"mailto:info@example.com\">Email</a>",
+            "<a href=\"email:info@example.com\">Email</a>",
+            "<a href=\"/info@example.com\">Email</a>",
+            "<a href=\"tel:info@example.com\">Email</a>"
+          ],
+          "answer": "<a href=\"mailto:info@example.com\">Email</a>"
+        },
+        {
+          "question": "What is the correct way to link to a section within the same page?",
+          "options": [
+            "<a href=\"#faq\">Go to FAQ</a>",
+            "<a href=\"faq\">Go to FAQ</a>",
+            "<a link=\"faq\">Go to FAQ</a>",
+            "<a href=\"/faq\">Go to FAQ</a>"
+          ],
+          "answer": "<a href=\"#faq\">Go to FAQ</a>"
+        },
+        {
+          "question": "What is the main benefit of using descriptive link text?",
+          "options": [
+            "Improves accessibility and SEO",
+            "Makes the link bold",
+            "Changes the link color",
+            "Opens the link in a new tab"
+          ],
+          "answer": "Improves accessibility and SEO"
+        },
+        {
+          "question": "Which protocol is used for phone links?",
+          "options": ["tel:", "call:", "phone:", "mobile:"],
+          "answer": "tel:"
+        },
+        {
+          "question": "How do you create a navigation menu using semantic HTML?",
+          "code": "<nav>\n  <ul>\n    <li><a href=\"index.html\">Home</a></li>\n    <li><a href=\"courses.html\">Courses</a></li>\n    <li><a href=\"contact.html\">Contact</a></li>\n  </ul>\n</nav>",
+          "options": [
+            "Correct syntax",
+            "<ul> should be <ol>",
+            "Use <div> instead of <nav>",
+            "Links must have target"
+          ],
+          "answer": "Correct syntax"
+        },
+        {
+          "question": "What does <a href=\"mailto:info@codecxinstitute.com\"> do?",
+          "options": [
+            "Opens the user's email app to send an email",
+            "Links to a PDF file",
+            "Creates an internal anchor",
+            "Opens a telephone call"
+          ],
+          "answer": "Opens the user's email app to send an email"
+        },
+        {
+          "question": "How can you ensure navigation is accessible to screen readers?",
+          "options": [
+            "Use semantic tags and clear link text",
+            "Use only <div> tags",
+            "Hide navigation with CSS",
+            "Use <b> tags for links"
+          ],
+          "answer": "Use semantic tags and clear link text"
+        },
+        {
+          "question": "What is a breadcrumb navigation?",
+          "options": [
+            "A navigation pattern showing the user's current page and path",
+            "A list of external links",
+            "A drop-down menu",
+            "A link that downloads a file"
+          ],
+          "answer": "A navigation pattern showing the user's current page and path"
+        },
+        {
+          "question": "Which attribute is used to open a link in a new tab?",
+          "options": ["target", "rel", "href", "id"],
+          "answer": "target"
+        },
+        {
+          "question": "Why is it important to test navigation on all devices?",
+          "options": [
+            "To ensure usability and consistency",
+            "To change the site color",
+            "To reduce file size",
+            "To enable JavaScript"
+          ],
+          "answer": "To ensure usability and consistency"
+        },
+        {
+          "question": "What is the benefit of highlighting the current page in your navigation?",
+          "options": [
+            "Helps users know their location",
+            "Makes links italic",
+            "Increases security",
+            "Adds animation"
+          ],
+          "answer": "Helps users know their location"
+        },
+        {
+          "question": "How do you create a button-style link for a call to action?",
+          "code": "<a href=\"register.html\" class=\"btn\">Sign Up Now</a>",
+          "options": [
+            "Add a CSS class for button styling",
+            "Use <button> instead of <a>",
+            "Use <input type=\"link\">",
+            "No way to style links as buttons"
+          ],
+          "answer": "Add a CSS class for button styling"
+        },
+        {
+          "question": "Which tag is NOT used for navigation?",
+          "options": ["<form>", "<nav>", "<ul>", "<li>"],
+          "answer": "<form>"
+        },
+        {
+          "question": "Why should you avoid vague link text like \"Click here\"?",
+          "options": [
+            "It is unclear for users and hurts accessibility",
+            "It is required by HTML5",
+            "It makes links open in new tabs",
+            "It hides the link"
+          ],
+          "answer": "It is unclear for users and hurts accessibility"
+        },
+        {
+          "question": "What should every navigation link have for accessibility?",
+          "options": [
+            "Descriptive text",
+            "A CSS class",
+            "An image icon",
+            "A tabindex"
+          ],
+          "answer": "Descriptive text"
+        },
+        {
+          "question": "What is a best practice for organizing navigation links?",
+          "options": [
+            "Group related links together logically",
+            "List every page in one line",
+            "Use <table> for navigation",
+            "Hide links on mobile"
+          ],
+          "answer": "Group related links together logically"
+        }
+      ]
+    },
+    {
   "day": 9,
   "topic": "HTML: Day 9 - Deprecated & Obsolete HTML Elements",
   "questions": [
