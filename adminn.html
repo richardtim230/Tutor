@@ -465,7 +465,7 @@
 function hideLoader() {
   document.getElementById('pageLoader').style.display = 'none';
 }
-const API_BASE = "https://examguide.onrender.com/api/codecxreg";
+const API_BASE = "https://examguide-edt3.onrender.com/api/codecxreg";
 let admin = {};
 let candidates = [];
 let stats = {};
@@ -582,7 +582,7 @@ async function waivePayment(id) {
   let token = localStorage.getItem('codecx_token');
   if (!token) return logout();
   try {
-    const resp = await fetch(`https://examguide.onrender.com/api/codecxreg/admin/candidate/${id}/waive-payment`, {
+    const resp = await fetch(`https://examguide-edt3.onrender.com/api/codecxreg/admin/candidate/${id}/waive-payment`, {
       method: "POST",
       headers: { "Authorization": "Bearer " + token }
     });
