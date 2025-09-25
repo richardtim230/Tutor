@@ -1,6 +1,793 @@
 {
   "days": [
     {
+      "day": 15,
+      "topic": "HTML: Day 15 - Progressive Enhancement & Graceful Degradation",
+      "questions": [
+        {
+          "question": "What is progressive enhancement in web development?",
+          "options": [
+            "Building a basic experience first, then adding features for capable browsers",
+            "Starting with a complex design and simplifying for older browsers",
+            "Using only new HTML elements",
+            "Ignoring accessibility"
+          ],
+          "answer": "Building a basic experience first, then adding features for capable browsers"
+        },
+        {
+          "question": "What is graceful degradation?",
+          "options": [
+            "Building a rich experience and making sure it works if features are missing",
+            "Making websites less attractive on older browsers",
+            "Removing CSS for old devices",
+            "Using only deprecated HTML tags"
+          ],
+          "answer": "Building a rich experience and making sure it works if features are missing"
+        },
+        {
+          "question": "Which approach starts with a basic experience and adds enhancements for capable browsers?",
+          "options": [
+            "Progressive enhancement",
+            "Graceful degradation",
+            "Obsolete HTML",
+            "Polyfill"
+          ],
+          "answer": "Progressive enhancement"
+        },
+        {
+          "question": "Which approach builds a rich experience and removes features for less capable browsers?",
+          "options": [
+            "Graceful degradation",
+            "Progressive enhancement",
+            "Feature detection",
+            "Responsive design"
+          ],
+          "answer": "Graceful degradation"
+        },
+        {
+          "question": "Why is progressive enhancement considered a best practice for accessibility?",
+          "options": [
+            "It ensures all users get a working experience, even with limited tech",
+            "It makes sites look better",
+            "It uses more JavaScript",
+            "It hides content from screen readers"
+          ],
+          "answer": "It ensures all users get a working experience, even with limited tech"
+        },
+        {
+          "question": "Which HTML element is commonly used to provide fallback content for unsupported features?",
+          "options": [
+            "<noscript>",
+            "<fallback>",
+            "<polyfill>",
+            "<deprecated>"
+          ],
+          "answer": "<noscript>"
+        },
+        {
+          "question": "What should you do if a browser doesn’t support the <video> tag?",
+          "options": [
+            "Provide fallback text or a link to the video file",
+            "Hide the video",
+            "Remove the tag",
+            "Use deprecated tags"
+          ],
+          "answer": "Provide fallback text or a link to the video file"
+        },
+        {
+          "question": "How does feature detection help with progressive enhancement?",
+          "options": [
+            "It checks if a browser supports a feature before using it",
+            "It disables features by default",
+            "It makes browsers faster",
+            "It removes older tags"
+          ],
+          "answer": "It checks if a browser supports a feature before using it"
+        },
+        {
+          "question": "Which JavaScript method checks if a browser supports localStorage?",
+          "options": [
+            "if ('localStorage' in window)",
+            "window.supportsLocalStorage()",
+            "typeof localStorage === 'undefined'",
+            "window.hasStorage"
+          ],
+          "answer": "if ('localStorage' in window)"
+        },
+        {
+          "question": "What is the role of the <noscript> tag in progressive enhancement?",
+          "options": [
+            "Shows content when JavaScript is disabled",
+            "Adds scripts to a page",
+            "Hides elements",
+            "Provides SEO data"
+          ],
+          "answer": "Shows content when JavaScript is disabled"
+        },
+        {
+          "question": "Why should CSS be layered on top of semantic HTML?",
+          "options": [
+            "To ensure content is readable without styles",
+            "To make sites load faster",
+            "To use deprecated tags",
+            "To hide content"
+          ],
+          "answer": "To ensure content is readable without styles"
+        },
+        {
+          "question": "Which is the correct order for loading resources in progressive enhancement?",
+          "options": [
+            "HTML first, then CSS and JavaScript",
+            "JavaScript first, then HTML",
+            "CSS first, then HTML",
+            "Images before HTML"
+          ],
+          "answer": "HTML first, then CSS and JavaScript"
+        },
+        {
+          "question": "What does it mean to “degrade gracefully”?",
+          "options": [
+            "The site remains usable if some features fail",
+            "All features are removed for old browsers",
+            "The site only works in the latest browser",
+            "Animations run on all devices"
+          ],
+          "answer": "The site remains usable if some features fail"
+        },
+        {
+          "question": "How can you ensure images have fallback text for non-visual browsers?",
+          "options": [
+            "Use the alt attribute",
+            "Hide images with CSS",
+            "Use the <fallback> tag",
+            "Remove images from HTML"
+          ],
+          "answer": "Use the alt attribute"
+        },
+        {
+          "question": "What is one advantage of progressive enhancement for mobile users?",
+          "options": [
+            "Basic features always work, even with slow connections",
+            "Sites always look the same everywhere",
+            "It ignores mobile devices",
+            "Requires the latest browser"
+          ],
+          "answer": "Basic features always work, even with slow connections"
+        },
+        {
+          "question": "Which HTML5 API would you check for support before using?",
+          "options": [
+            "Canvas API",
+            "Anchor tag",
+            "Paragraph tag",
+            "Table tag"
+          ],
+          "answer": "Canvas API"
+        },
+        {
+          "question": "Why is semantic HTML important for progressive enhancement?",
+          "options": [
+            "It provides meaning and structure for all browsers and devices",
+            "It only works with JavaScript",
+            "It makes styling harder",
+            "It is ignored by screen readers"
+          ],
+          "answer": "It provides meaning and structure for all browsers and devices"
+        },
+        {
+          "question": "What should you avoid when designing for graceful degradation?",
+          "options": [
+            "Relying only on advanced features",
+            "Using semantic elements",
+            "Adding fallback content",
+            "Testing in multiple browsers"
+          ],
+          "answer": "Relying only on advanced features"
+        },
+        {
+          "question": "What’s a best practice for JavaScript in progressive enhancement?",
+          "options": [
+            "Don’t require JavaScript for critical features",
+            "Put all scripts in the head",
+            "Never use feature detection",
+            "Use only inline scripts"
+          ],
+          "answer": "Don’t require JavaScript for critical features"
+        },
+        {
+          "question": "How can ARIA roles help with progressive enhancement?",
+          "options": [
+            "They improve accessibility for assistive technologies",
+            "They replace HTML tags",
+            "They hide elements from screen readers",
+            "They remove deprecated features"
+          ],
+          "answer": "They improve accessibility for assistive technologies"
+        }
+      ]
+    },
+    {
+      "day": 16,
+      "topic": "HTML: Day 16 - Meta Refresh & Redirects",
+      "questions": [
+        {
+          "question": "What is the purpose of the <meta http-equiv=\"refresh\"> tag?",
+          "options": [
+            "To automatically refresh or redirect a page",
+            "To add a page title",
+            "To control CSS styles",
+            "To set the character encoding"
+          ],
+          "answer": "To automatically refresh or redirect a page"
+        },
+        {
+          "question": "Which attribute in the <meta> tag sets the refresh interval?",
+          "options": [
+            "content",
+            "interval",
+            "refresh",
+            "time"
+          ],
+          "answer": "content"
+        },
+        {
+          "question": "How can you redirect a user after 5 seconds using meta refresh?",
+          "options": [
+            "<meta http-equiv=\"refresh\" content=\"5; url=login.html\">",
+            "<meta http-equiv=\"redirect\" content=\"5\">",
+            "<meta name=\"refresh\" content=\"5\">",
+            "<meta http-equiv=\"refresh\" url=\"login.html\">"
+          ],
+          "answer": "<meta http-equiv=\"refresh\" content=\"5; url=login.html\">"
+        },
+        {
+          "question": "What is a drawback of using meta refresh for redirection?",
+          "options": [
+            "It is less SEO-friendly than server redirects",
+            "It makes pages load faster",
+            "It adds a favicon",
+            "It sets the language"
+          ],
+          "answer": "It is less SEO-friendly than server redirects"
+        },
+        {
+          "question": "Which method is recommended for SEO-friendly redirects?",
+          "options": [
+            "Server-side HTTP redirects (301 or 302)",
+            "Meta refresh",
+            "JavaScript window.location",
+            "HTML <a> tag"
+          ],
+          "answer": "Server-side HTTP redirects (301 or 302)"
+        },
+        {
+          "question": "How do you perform a JavaScript-based redirect?",
+          "options": [
+            "window.location.href = 'newpage.html';",
+            "meta.redirect('newpage.html');",
+            "document.redirect('newpage.html');",
+            "location.meta = 'newpage.html';"
+          ],
+          "answer": "window.location.href = 'newpage.html';"
+        },
+        {
+          "question": "Which HTTP status code is best for permanent server-side redirects?",
+          "options": [
+            "301",
+            "200",
+            "404",
+            "302"
+          ],
+          "answer": "301"
+        },
+        {
+          "question": "What happens if you set <meta http-equiv=\"refresh\" content=\"0; url=page.html\">?",
+          "options": [
+            "Immediate redirect to page.html",
+            "No effect",
+            "Refresh after 10 seconds",
+            "Displays a message"
+          ],
+          "answer": "Immediate redirect to page.html"
+        },
+        {
+          "question": "Why should you avoid meta refresh for critical navigation?",
+          "options": [
+            "It can confuse users and may not be reliable",
+            "It improves SEO",
+            "It loads JavaScript",
+            "It sets the page language"
+          ],
+          "answer": "It can confuse users and may not be reliable"
+        },
+        {
+          "question": "How can you display a message before redirecting with meta refresh?",
+          "options": [
+            "Add visible text or instructions on the page",
+            "Use the <message> tag",
+            "Meta refresh handles messaging automatically",
+            "Place <meta> in the body"
+          ],
+          "answer": "Add visible text or instructions on the page"
+        },
+        {
+          "question": "What is the effect of <meta http-equiv=\"refresh\" content=\"10\"> without a URL?",
+          "options": [
+            "Refreshes the current page every 10 seconds",
+            "Redirects to another page",
+            "Closes the browser tab",
+            "Adds a new meta tag"
+          ],
+          "answer": "Refreshes the current page every 10 seconds"
+        },
+        {
+          "question": "Which tag is used for client-side redirects?",
+          "options": [
+            "<meta>",
+            "<redirect>",
+            "<script>",
+            "<link>"
+          ],
+          "answer": "<meta>"
+        },
+        {
+          "question": "What is the impact of meta refresh on browser history?",
+          "options": [
+            "It can create extra entries in the history",
+            "It deletes history",
+            "No impact",
+            "It clears cookies"
+          ],
+          "answer": "It can create extra entries in the history"
+        },
+        {
+          "question": "How can you prevent search engines from indexing a redirect page?",
+          "options": [
+            "<meta name=\"robots\" content=\"noindex\">",
+            "<meta http-equiv=\"refresh\">",
+            "<base href=\"/\">",
+            "<meta name=\"noindex\">"
+          ],
+          "answer": "<meta name=\"robots\" content=\"noindex\">"
+        },
+        {
+          "question": "Which is more user-friendly: JavaScript redirect or meta refresh?",
+          "options": [
+            "JavaScript redirect (can be controlled and customized)",
+            "Meta refresh (always instant)",
+            "Both are equal",
+            "Neither is user-friendly"
+          ],
+          "answer": "JavaScript redirect (can be controlled and customized)"
+        },
+        {
+          "question": "How do you perform a server-side redirect in Apache?",
+          "options": [
+            "Using Redirect or RewriteRule in .htaccess",
+            "Using <meta> tags",
+            "Using JavaScript",
+            "Using <link> tags"
+          ],
+          "answer": "Using Redirect or RewriteRule in .htaccess"
+        },
+        {
+          "question": "What is the effect of a meta refresh with a long interval?",
+          "options": [
+            "Page will refresh after the specified time",
+            "Immediate redirect",
+            "No effect",
+            "Page loads faster"
+          ],
+          "answer": "Page will refresh after the specified time"
+        },
+        {
+          "question": "How can you combine meta refresh with accessibility considerations?",
+          "options": [
+            "Provide clear messaging and alternatives for users",
+            "Hide the meta tag",
+            "Use very short intervals",
+            "Never use meta refresh"
+          ],
+          "answer": "Provide clear messaging and alternatives for users"
+        },
+        {
+          "question": "What is the difference between 301 and 302 redirects?",
+          "options": [
+            "301 is permanent, 302 is temporary",
+            "301 is for images, 302 for scripts",
+            "301 is insecure, 302 is secure",
+            "No difference"
+          ],
+          "answer": "301 is permanent, 302 is temporary"
+        },
+        {
+          "question": "How can you test if your meta refresh is working correctly?",
+          "options": [
+            "Open the page and observe if it refreshes or redirects after the interval",
+            "Check the CSS file",
+            "Inspect the favicon",
+            "Open the page in only one browser"
+          ],
+          "answer": "Open the page and observe if it refreshes or redirects after the interval"
+        }
+      ]
+    },
+    {
+      "day": 17,
+      "topic": "HTML: Day 17 - Links & Navigation (Part 1)",
+      "questions": [
+        {
+          "question": "Which HTML tag is used to create a hyperlink?",
+          "options": ["<a>", "<link>", "<nav>", "<button>"],
+          "answer": "<a>"
+        },
+        {
+          "question": "What attribute specifies the destination of a link?",
+          "options": ["href", "src", "action", "target"],
+          "answer": "href"
+        },
+        {
+          "question": "How do you make a link open in a new browser tab securely?",
+          "code": "<a href=\"https://example.com\" ____=\"_blank\" ____=\"noopener\">Visit Site</a>",
+          "options": [
+            "target, rel",
+            "href, rel",
+            "target, title",
+            "class, role"
+          ],
+          "answer": "target, rel"
+        },
+        {
+          "question": "What is the semantic tag for grouping major navigation links?",
+          "options": ["<nav>", "<header>", "<ul>", "<footer>"],
+          "answer": "<nav>"
+        },
+        {
+          "question": "Which link is best for sending an email?",
+          "options": [
+            "<a href=\"mailto:info@example.com\">Email</a>",
+            "<a href=\"email:info@example.com\">Email</a>",
+            "<a href=\"/info@example.com\">Email</a>",
+            "<a href=\"tel:info@example.com\">Email</a>"
+          ],
+          "answer": "<a href=\"mailto:info@example.com\">Email</a>"
+        },
+        {
+          "question": "What is the correct way to link to a section within the same page?",
+          "options": [
+            "<a href=\"#faq\">Go to FAQ</a>",
+            "<a href=\"faq\">Go to FAQ</a>",
+            "<a link=\"faq\">Go to FAQ</a>",
+            "<a href=\"/faq\">Go to FAQ</a>"
+          ],
+          "answer": "<a href=\"#faq\">Go to FAQ</a>"
+        },
+        {
+          "question": "What is the main benefit of using descriptive link text?",
+          "options": [
+            "Improves accessibility and SEO",
+            "Makes the link bold",
+            "Changes the link color",
+            "Opens the link in a new tab"
+          ],
+          "answer": "Improves accessibility and SEO"
+        },
+        {
+          "question": "Which protocol is used for phone links?",
+          "options": ["tel:", "call:", "phone:", "mobile:"],
+          "answer": "tel:"
+        },
+        {
+          "question": "How do you create a navigation menu using semantic HTML?",
+          "code": "<nav>\n  <ul>\n    <li><a href=\"index.html\">Home</a></li>\n    <li><a href=\"courses.html\">Courses</a></li>\n    <li><a href=\"contact.html\">Contact</a></li>\n  </ul>\n</nav>",
+          "options": [
+            "Correct syntax",
+            "<ul> should be <ol>",
+            "Use <div> instead of <nav>",
+            "Links must have target"
+          ],
+          "answer": "Correct syntax"
+        },
+        {
+          "question": "What does <a href=\"mailto:info@codecxinstitute.com\"> do?",
+          "options": [
+            "Opens the user's email app to send an email",
+            "Links to a PDF file",
+            "Creates an internal anchor",
+            "Opens a telephone call"
+          ],
+          "answer": "Opens the user's email app to send an email"
+        },
+        {
+          "question": "How can you ensure navigation is accessible to screen readers?",
+          "options": [
+            "Use semantic tags and clear link text",
+            "Use only <div> tags",
+            "Hide navigation with CSS",
+            "Use <b> tags for links"
+          ],
+          "answer": "Use semantic tags and clear link text"
+        },
+        {
+          "question": "What is a breadcrumb navigation?",
+          "options": [
+            "A navigation pattern showing the user's current page and path",
+            "A list of external links",
+            "A drop-down menu",
+            "A link that downloads a file"
+          ],
+          "answer": "A navigation pattern showing the user's current page and path"
+        },
+        {
+          "question": "Which attribute is used to open a link in a new tab?",
+          "options": ["target", "rel", "href", "id"],
+          "answer": "target"
+        },
+        {
+          "question": "Why is it important to test navigation on all devices?",
+          "options": [
+            "To ensure usability and consistency",
+            "To change the site color",
+            "To reduce file size",
+            "To enable JavaScript"
+          ],
+          "answer": "To ensure usability and consistency"
+        },
+        {
+          "question": "What is the benefit of highlighting the current page in your navigation?",
+          "options": [
+            "Helps users know their location",
+            "Makes links italic",
+            "Increases security",
+            "Adds animation"
+          ],
+          "answer": "Helps users know their location"
+        },
+        {
+          "question": "How do you create a button-style link for a call to action?",
+          "code": "<a href=\"register.html\" class=\"btn\">Sign Up Now</a>",
+          "options": [
+            "Add a CSS class for button styling",
+            "Use <button> instead of <a>",
+            "Use <input type=\"link\">",
+            "No way to style links as buttons"
+          ],
+          "answer": "Add a CSS class for button styling"
+        },
+        {
+          "question": "Which tag is NOT used for navigation?",
+          "options": ["<form>", "<nav>", "<ul>", "<li>"],
+          "answer": "<form>"
+        },
+        {
+          "question": "Why should you avoid vague link text like \"Click here\"?",
+          "options": [
+            "It is unclear for users and hurts accessibility",
+            "It is required by HTML5",
+            "It makes links open in new tabs",
+            "It hides the link"
+          ],
+          "answer": "It is unclear for users and hurts accessibility"
+        },
+        {
+          "question": "What should every navigation link have for accessibility?",
+          "options": [
+            "Descriptive text",
+            "A CSS class",
+            "An image icon",
+            "A tabindex"
+          ],
+          "answer": "Descriptive text"
+        }
+      ]
+    },
+    {
+      "day": 18,
+      "topic": "HTML: Day 18 - Links & Navigation (Part 2)",
+      "questions": [
+        {
+          "question": "What is a best practice for organizing navigation links?",
+          "options": [
+            "Group related links together logically",
+            "List every page in one line",
+            "Use <table> for navigation",
+            "Hide links on mobile"
+          ],
+          "answer": "Group related links together logically"
+        },
+        {
+          "question": "Which tag is used to group navigation links?",
+          "options": [
+            "<nav>",
+            "<aside>",
+            "<main>",
+            "<section>"
+          ],
+          "answer": "<nav>"
+        },
+        {
+          "question": "How can you make a link look like a button?",
+          "options": [
+            "Use a CSS class with button styles",
+            "Use <button> instead of <a>",
+            "Use <input type=\"button\">",
+            "Add target=\"_blank\""
+          ],
+          "answer": "Use a CSS class with button styles"
+        },
+        {
+          "question": "Which attribute can help with SEO for links?",
+          "options": [
+            "rel",
+            "id",
+            "style",
+            "tabindex"
+          ],
+          "answer": "rel"
+        },
+        {
+          "question": "How do you make a navigation menu responsive?",
+          "options": [
+            "Use CSS media queries",
+            "Use only anchor tags",
+            "Use <table>",
+            "Add inline styles"
+          ],
+          "answer": "Use CSS media queries"
+        },
+        {
+          "question": "What protocol should you use for a downloadable file link?",
+          "options": [
+            "http(s):",
+            "ftp:",
+            "mailto:",
+            "tel:"
+          ],
+          "answer": "http(s):"
+        },
+        {
+          "question": "Which attribute makes a link download a file instead of opening it?",
+          "options": [
+            "download",
+            "target",
+            "rel",
+            "href"
+          ],
+          "answer": "download"
+        },
+        {
+          "question": "What is an anchor link?",
+          "options": [
+            "A link to a specific part of the same page",
+            "A link to an external website",
+            "A telephone link",
+            "A mailto link"
+          ],
+          "answer": "A link to a specific part of the same page"
+        },
+        {
+          "question": "Which element is used to create items in a navigation list?",
+          "options": [
+            "<li>",
+            "<ul>",
+            "<nav>",
+            "<ol>"
+          ],
+          "answer": "<li>"
+        },
+        {
+          "question": "How do you give users visual feedback for the current page?",
+          "options": [
+            "Add a CSS class to highlight the active link",
+            "Remove the link",
+            "Use <b> tags",
+            "Hide navigation"
+          ],
+          "answer": "Add a CSS class to highlight the active link"
+        },
+        {
+          "question": "Which attribute would you use to make a link open in a new tab?",
+          "options": [
+            "target=\"_blank\"",
+            "download",
+            "rel=\"noopener\"",
+            "id"
+          ],
+          "answer": "target=\"_blank\""
+        },
+        {
+          "question": "What is skip navigation?",
+          "options": [
+            "A link that lets users jump directly to the main content",
+            "A hidden menu",
+            "A link to another website",
+            "A downloadable link"
+          ],
+          "answer": "A link that lets users jump directly to the main content"
+        },
+        {
+          "question": "How can you style navigation links for better accessibility?",
+          "options": [
+            "Ensure good contrast and clear focus states",
+            "Use only images",
+            "Hide links with CSS",
+            "Make all links bold"
+          ],
+          "answer": "Ensure good contrast and clear focus states"
+        },
+        {
+          "question": "Which tag is used for navigation menus in HTML5?",
+          "options": [
+            "<nav>",
+            "<menu>",
+            "<header>",
+            "<footer>"
+          ],
+          "answer": "<nav>"
+        },
+        {
+          "question": "What is the purpose of the rel=\"noopener\" attribute?",
+          "options": [
+            "Improves security when opening links in new tabs",
+            "Makes links look bold",
+            "Changes link color",
+            "Enables download"
+          ],
+          "answer": "Improves security when opening links in new tabs"
+        },
+        {
+          "question": "How can you make a link to a PDF file?",
+          "options": [
+            "<a href=\"file.pdf\">Download PDF</a>",
+            "<link href=\"file.pdf\">",
+            "<nav href=\"file.pdf\">",
+            "<button href=\"file.pdf\">"
+          ],
+          "answer": "<a href=\"file.pdf\">Download PDF</a>"
+        },
+        {
+          "question": "Which navigation element should be present on every page of a website?",
+          "options": [
+            "Main menu",
+            "Footer link",
+            "Sidebar",
+            "Table of contents"
+          ],
+          "answer": "Main menu"
+        },
+        {
+          "question": "How do you ensure navigation links are keyboard accessible?",
+          "options": [
+            "Use <a> tags and proper tabindex order",
+            "Use <div> tags only",
+            "Hide links on mobile",
+            "Use <button> for links"
+          ],
+          "answer": "Use <a> tags and proper tabindex order"
+        },
+        {
+          "question": "Which element is best for grouping related navigation links?",
+          "options": [
+            "<ul>",
+            "<div>",
+            "<span>",
+            "<section>"
+          ],
+          "answer": "<ul>"
+        },
+        {
+          "question": "What is a good practice for external links?",
+          "options": [
+            "Indicate they open a new website and use rel=\"noopener\"",
+            "Hide them from users",
+            "Never open in new tabs",
+            "Use <form> for external links"
+          ],
+          "answer": "Indicate they open a new website and use rel=\"noopener\""
+        }
+      ]
+    },
+    {
       "day": 13,
       "topic": "HTML: Day 13 - Tables & Lists",
       "questions": [
