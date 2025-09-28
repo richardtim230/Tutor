@@ -328,7 +328,7 @@ async function renderProgressSection() {
   const diffDays = Math.floor((now - PROGRAM_START_DATE) / (1000 * 60 * 60 * 24)) + 1;
 
   // Determine days to show (rolling window of 5 days)
-  const firstDayToShow = Math.max(1, diffDays - 4); // 5 quizzes max
+  const firstDayToShow = Math.max(1, diffDays - 20); // 5 quizzes max
   const daysToShow = [];
   for (let day = diffDays; day >= firstDayToShow; day--) {
     daysToShow.push(day);
