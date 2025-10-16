@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Codecx Institute for Developers – Live Coding Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.2.1/dist/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.2.1/dist/flowbite.min.js"></script>
+  <style>
+    body, html {height:100%;margin:0;}
+    .main-app {width:100vw;max-width:100vw;min-width:100vw;display:flex;flex-direction:row;gap:2rem;min-height:70vh;}
+    .editor-parent, .preview-area {width:100%;max-width:100%;box-sizing:border-box;min-height:600px;margin:0 auto;border-radius:0.75rem;overflow:hidden;box-shadow:0 2px 14px rgba(99,102,241,0.06);border:2px solid #6366f1;background:#fff;}
+    .editor-parent:focus-within {border-color:#0ea5e9;}
+    .panel-divider {cursor:ew-resize;width:6px;background:#6366f1;opacity:0.12;transition:opacity 0.2s;z-index:10;}
+    .panel-divider:hover {opacity:.6;}
+    .tab-btn.active, .tab-btn[data-active="true"] {background:linear-gradient(90deg,#6366f1 50%,#0ea5e9 100%);color:#fff!important;box-shadow:0 4px 16px rgba(99,102,241,0.10);}
+    .tab-btn {transition:background 0.22s,color 0.22s;}
+    .editor-toolbar {box-shadow:0 2px 10px 0 rgba(99,102,241,0.08);background:rgba(243,244,246,0.92);backdrop-filter:blur(4px);}
+    .timer-badge {background:linear-gradient(90deg,#6366f1 50%,#0ea5e9 100%);color:white;font-weight:700;border-radius:1.5rem;font-size:1.25rem;padding:.5rem 1.4rem;box-shadow:0 2px 8px rgba(99,102,241,0.14);transition:background 0.3s;}
+    .timer-badge.warning {background:linear-gradient(90deg,#f59e42 50%,#ef4444 100%);}
+    .output-console {background:#18181b;color:#f4f4f5;font-family:'Fira Mono',monospace;min-height:80px;max-height:220px;overflow:auto;border-radius:0.5rem;padding:.8em 1em;font-size:1rem;border:1px solid #818cf8;margin-top:.5em;margin-bottom:.5em;}
+    @media (max-width:1024px) {.main-app{flex-direction:column;width:100vw!important;min-width:100vw!important;max-width:100vw!important;gap:1.2rem;}.panel-divider{width:100%;height:8px;cursor:ns-resize;}.editor-parent, .preview-area{min-height:400px;}}
+    @media (max-width:800px) {.main-app{flex-direction:column;gap:1rem;}.panel-divider{display:none;}.editor-toolbar{flex-wrap:wrap;}.editor-parent, .preview-area{min-height:320px;}}
+    .copy-btn {position:absolute;top:10px;right:10px;z-index:20;}
+  </style>
+</head>
+<body class="h-full min-h-screen flex flex-col">
+  <!-- HEADER -->
+  <header class="w-full bg-gradient-to-r from-indigo-700 via-indigo-600 to-blue-500 py-6 shadow-lg z-10">
+    <div class="container max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-2 md:gap-0 items-center justify-between">
+      <div class="flex items-center gap-3">
+        <svg width="36" height="36" fill="none" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#fff" opacity=".13"/><rect x="13" y="13" width="22" height="22" rx="4" fill="#6366f1"/><path d="M17 24L31 24" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="text-white text-2xl md:text-3xl font-extrabold tracking-wide">Codecx Institute for Developers</span>
+      </div>
+      <div class="flex flex-col text-right">
+        <span class="text-indigo-100 text-base md:text-lg font-medium">Live Coding Training Platform</span>
+        <span class="text-indigo-300 text-xs">Modern, responsive, and assessment-ready</span>
+      </div>
+    </div>
+  </header>
+  <!-- TIMER AND SUBMIT -->
+  <div class="container max-w-7xl mx-auto px-4 my-4 flex flex-col md:flex-row items-center justify-between gap-3">
+    <div class="flex items-center gap-4">
+      <span id="timer" class="timer-badge">30:00</span>
+      <span class="text-gray-700 font-medium hidden sm:inline">Assessment Timer</span>
+      <button id="resetBtn" class="ml-3 bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-400 border font-semibold px-3 py-1 rounded-lg shadow-sm transition text-sm">Reset</button>
+    </div>
+    <button id="submitBtn" class="bg-indigo-600 hover:bg-indigo-800 text-white font-semibold px-7 py-2.5 rounded-xl shadow transition flex items-center gap-2 text-lg">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" class="inline"><path d="M5 12l5 5L20 7"></path></svg>
+      Submit Assessment
+    </button>
+  </div>
+  <!-- MAIN APP -->
+  <div class="main-app" id="mainApp">
+    <!-- LEFT: CODE PANEL -->
+    <div id="leftPanel" class="flex flex-col flex-1 w-full max-w-full min-w-0 relative">
+      <div class="editor-toolbar flex gap-2 px-2 py-2 mb-2 rounded-lg">
+        <button class="tab-btn flex items-center gap-1 px-4 py-2 rounded-lg font-bold text-indigo-700 transition" data-tab="html" data-active="true">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="14" height="10" rx="2" /><path d="M2 8h14" /></svg>
+          HTML
+        </button>
+        <button class="tab-btn flex items-center gap-1 px-4 py-2 rounded-lg font-bold text-blue-700 transition" data-tab="css">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="14" height="10" rx="2" /><path d="M4 10h10" /></svg>
+          CSS
+        </button>
+        <button class="tab-btn flex items-center gap-1 px-4 py-2 rounded-lg font-bold text-yellow-500 transition" data-tab="js">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="14" height="10" rx="2" /><path d="M7 7h4v4H7z" /></svg>
+          JS
+        </button>
+      </div>
+      <button class="copy-btn bg-indigo-600 hover:bg-indigo-800 text-white px-4 py-1 rounded shadow text-sm font-semibold transition absolute" id="copyCodeBtn" style="display:none;">Copy Code</button>
+      <div class="editor-parent flex-1 relative" id="editorParent">
+        <div id="editor-html" style="width:100%;height:100%;min-height:600px;"></div>
+        <div id="editor-css" style="width:100%;height:100%;min-height:600px;display:none"></div>
+        <div id="editor-js" style="width:100%;height:100%;min-height:600px;display:none"></div>
+      </div>
+      <div class="output-console mt-2" id="errorConsole" style="display:none"></div>
+      <div class="mt-2 flex justify-between items-center">
+        <span class="text-sm text-gray-400 font-medium">Powered by Monaco Editor</span>
+        <span class="text-xs text-gray-500">Tab to switch panels • Ctrl+Enter to run • Paste with Ctrl+V</span>
+      </div>
+    </div>
+    <div class="panel-divider" id="panelDivider"></div>
+    <!-- RIGHT: PREVIEW PANEL -->
+    <div id="rightPanel" class="flex flex-col flex-1 w-full max-w-full min-w-0">
+      <div class="editor-toolbar flex gap-2 px-2 py-2 mb-2 rounded-lg">
+        <button class="tab-btn flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-indigo-700 transition" data-tab="output" data-active="true">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="7"/><circle cx="9" cy="9" r="2.5" /></svg>
+          Result/Output
+        </button>
+        <button id="refreshBtn" class="ml-2 bg-blue-600 hover:bg-blue-800 text-white px-4 py-1.5 rounded-lg shadow font-medium transition flex items-center gap-2 text-base">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v5h5M3.51 9a9 9 0 1 0 2.13-8.36"></path></svg>
+          Refresh
+        </button>
+      </div>
+      <div class="flex-1 bg-white overflow-hidden rounded-xl border-2 border-blue-300 shadow-lg relative min-h-[600px]">
+        <iframe id="preview" class="preview-area w-full h-full absolute top-0 left-0" sandbox="allow-scripts allow-same-origin"></iframe>
+      </div>
+      <div class="mt-2 rounded-xl bg-indigo-50 px-4 py-3 text-indigo-800 text-sm shadow-sm font-medium hidden md:block">
+        <strong>Instructions:</strong> <span id="instructions">Edit your code in the panels. Errors will show below the editor. Preview updates live. Timer runs down for assessment.</span>
+      </div>
+    </div>
+  </div>
+  <!-- LOGIN MODAL -->
+  <div id="modalLogin" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <form class="bg-white rounded-2xl shadow-2xl px-8 py-8 max-w-md text-center border border-indigo-400" id="loginForm">
+      <h2 class="text-2xl font-bold text-indigo-600 mb-2">Login Required</h2>
+      <input type="text" id="username" class="w-full px-4 py-2 rounded-lg border mb-3" placeholder="Username, Email or Matric Number" required>
+      <input type="password" id="password" class="w-full px-4 py-2 rounded-lg border mb-4" placeholder="Password" required>
+      <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded-lg">Login</button>
+      <div id="loginError" class="text-red-600 mt-2"></div>
+    </form>
+  </div>
+  <!-- TIMEUP MODAL -->
+  <div id="modalTimeUp" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl px-8 py-8 max-w-md text-center border border-red-400">
+      <h2 class="text-2xl font-bold text-red-600 mb-2">Time's Up!</h2>
+      <p class="text-lg text-gray-800 mb-4">The assessment timer has ended. Your session is now locked.</p>
+      <button onclick="document.getElementById('modalTimeUp').classList.add('hidden')" class="mt-3 px-6 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold">OK</button>
+    </div>
+  </div>
+  <!-- SUBMIT MODAL -->
+  <div id="modalSubmit" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl px-8 py-8 max-w-md text-center border border-blue-400">
+      <h2 class="text-2xl font-bold text-blue-700 mb-2">Assessment Submitted!</h2>
+      <p class="text-lg text-gray-800 mb-4">Your code has been submitted.<br>Thank you for participating!</p>
+      <button onclick="document.getElementById('modalSubmit').classList.add('hidden')" class="mt-3 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold">Close</button>
+    </div>
+  </div>
+  <script>
+    // --- Auth/Session ---
+    let candidateId = null;
+    let token = localStorage.getItem("codecxToken") || sessionStorage.getItem("codecxToken");
+    function isLoggedIn() { return !!token; }
+    async function getCandidateId() {
+      if (!token) return null;
+      // Use backend /me endpoint
+      try {
+        const res = await fetch("https://examguide.onrender.com/api/codecxreg/me", {
+          headers: { "Authorization": "Bearer " + token }
+        });
+        if (!res.ok) throw new Error("Not logged in");
+        const user = await res.json();
+        return user._id || user.id || null;
+      } catch {
+        return null;
+      }
+    }
+    async function ensureLoggedIn() {
+      candidateId = await getCandidateId();
+      if (!candidateId) {
+        document.getElementById("modalLogin").classList.remove("hidden");
+        return false;
+      }
+      return true;
+    }
+    // --- Monaco Code Editor ---
+    let editors = {};
+    let initialCode = {
+      html: `<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Assessment</title>
+  </head>
+  <body>
+    <h1>Welcome to Codecx Live Coding!</h1>
+    <p>Edit your HTML, CSS, and JavaScript to see updates in the Result panel.</p>
+  </body>
+</html>`,
+      css: `body {
+  background: linear-gradient(90deg, #6366f1 0%, #0ea5e9 100%);
+  color: #fff;
+  font-family: Inter, sans-serif;
+  text-align: center;
+}
+h1 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+}`,
+      js: `document.querySelector('h1').onclick = function() {
+  alert('You clicked the heading!');
+};`
+    };
+    let editingLocked = false;
+    function getEditorValue(tab) { return editors[tab] ? editors[tab].getValue() : ''; }
+    function setEditorValue(tab, value) { if (editors[tab]) editors[tab].setValue(value || ''); }
+    function setEditorsEditable(editable) { Object.values(editors).forEach(editor => editor.updateOptions({ readOnly: !editable })); }
+    window.require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
+    window.MonacoEnvironment = { getWorkerUrl: function(workerId, label) { return `data:text/javascript;charset=utf-8,${encodeURIComponent(`self.MonacoEnvironment={baseUrl:'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/'};importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/base/worker/workerMain.min.js');`)}` } };
+    require(['vs/editor/editor.main'], function () {
+      editors.html = monaco.editor.create(document.getElementById('editor-html'), {
+        value: initialCode.html,
+        theme: "vs-dark",
+        language: "html",
+        fontFamily: "'Fira Mono','Consolas',monospace",
+        fontSize: 16,
+        minimap: { enabled: false },
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        wordWrap: "on",
+        bracketPairColorization: { enabled: true },
+      });
+      editors.css = monaco.editor.create(document.getElementById('editor-css'), {
+        value: initialCode.css,
+        theme: "vs-dark",
+        language: "css",
+        fontFamily: "'Fira Mono','Consolas',monospace",
+        fontSize: 16,
+        minimap: { enabled: false },
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        wordWrap: "on",
+        bracketPairColorization: { enabled: true },
+      });
+      editors.js = monaco.editor.create(document.getElementById('editor-js'), {
+        value: initialCode.js,
+        theme: "vs-dark",
+        language: "javascript",
+        fontFamily: "'Fira Mono','Consolas',monospace",
+        fontSize: 16,
+        minimap: { enabled: false },
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        wordWrap: "on",
+        bracketPairColorization: { enabled: true },
+      });
+      // Save in localStorage for session persistence
+      ['html','css','js'].forEach(tab => {
+        if(localStorage[`codecx_${tab}`]) setEditorValue(tab, localStorage[`codecx_${tab}`]);
+        editors[tab].onDidChangeModelContent(() => {
+          if (!editingLocked) {
+            localStorage[`codecx_${tab}`] = getEditorValue(tab);
+            if (tab === activeTab) updatePreviewDebounced();
+          }
+        });
+      });
+      updatePreview();
+    });
+    // --- Tab switching logic ---
+    let activeTab = "html";
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.onclick = function() {
+        let tab = btn.getAttribute('data-tab');
+        document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('data-active','false'));
+        btn.setAttribute('data-active','true');
+        ["html","css","js"].forEach(t => { document.getElementById('editor-'+t).style.display = (t === tab) ? "block" : "none"; });
+        activeTab = tab;
+        showErrorConsole('');
+        setTimeout(()=>editors[tab]?.focus(), 50);
+        document.getElementById('copyCodeBtn').style.display = (tab && tab !== "output") ? "" : "none";
+      };
+    });
+    document.querySelectorAll('[data-tab="output"]').forEach(btn => btn.onclick = ()=>{});
+    document.getElementById('refreshBtn').onclick = () => updatePreview(true);
+    function showErrorConsole(msg) {
+      let con = document.getElementById('errorConsole');
+      if (msg) {con.innerHTML = msg;con.style.display = '';}
+      else {con.innerHTML = '';con.style.display = 'none';}
+    }
+    let lastPreviewContent = '';
+    function updatePreview(force) {
+      const html = getEditorValue('html');
+      const css = getEditorValue('css');
+      const js = getEditorValue('js');
+      const content = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>${css}</style>
+</head>
+<body>
+${html}
+<script>
+try {
+${js}
+} catch(e) {
+  window.parent.postMessage({codecx_js_error: e.message}, '*');
+}
+<\/script>
+</body>
+</html>
+      `.trim();
+      lastPreviewContent = content;
+      let iframe = document.getElementById('preview');
+      iframe.srcdoc = content;
+      showErrorConsole('');
+    }
+    let previewTimeout;
+    function updatePreviewDebounced() {
+      clearTimeout(previewTimeout);
+      previewTimeout = setTimeout(()=>updatePreview(), 350);
+    }
+    window.addEventListener('message', function(e){
+      if (e.data && e.data.codecx_js_error) {
+        showErrorConsole('JavaScript Error: ' + e.data.codecx_js_error);
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (editingLocked) return;
+      if (e.ctrlKey && e.key === 'Enter') updatePreview(true);
+    });
+    // --- Copy Button Logic ---
+    document.getElementById('copyCodeBtn').onclick = function() {
+      let code = getEditorValue(activeTab);
+      navigator.clipboard.writeText(code).then(()=>{this.textContent="Copied!";setTimeout(()=>this.textContent="Copy Code",1500);});
+    };
+    // --- Resize logic (optional, same as before) ---
+    let leftPanel = document.getElementById('leftPanel');
+    let rightPanel = document.getElementById('rightPanel');
+    let divider = document.getElementById('panelDivider');
+    let isDragging = false;let lastX=0,lastWidth=0;
+    divider.addEventListener('mousedown', function(e){isDragging=true;lastX=e.clientX;lastWidth=leftPanel.offsetWidth;document.body.style.userSelect="none";});
+    document.addEventListener('mousemove', function(e){if(!isDragging)return;let dx=e.clientX-lastX;let containerW=leftPanel.parentElement.offsetWidth;let newW=Math.max(240,Math.min(containerW-240,lastWidth+dx));leftPanel.style.flex='none';leftPanel.style.width=newW+'px';rightPanel.style.flex='1 1 0%';});
+    document.addEventListener('mouseup', function(){isDragging=false;document.body.style.userSelect="";});
+    window.addEventListener('resize', ()=>{if(window.innerWidth<800){leftPanel.style.width='';leftPanel.style.flex='1 1 0%';rightPanel.style.flex='1 1 0%';}});
+    // --- Timer logic ---
+    let timerSecs = 30*60;
+    let timerElapsed = 0;
+    let timerEl = document.getElementById('timer');
+    let timerInterval = null;
+    function pad(n) { return n<10?'0'+n:n; }
+    function updateTimerUI() {
+      let remain = timerSecs-timerElapsed;
+      timerEl.textContent = `${pad(Math.floor(remain/60))}:${pad(remain%60)}`;
+      timerEl.classList.toggle('warning', remain <= 60);
+      if(remain <= 0){timerEl.textContent="00:00";timerEl.classList.add('warning');stopEditing();showModal('modalTimeUp');}
+    }
+    function startTimer() {
+      timerElapsed = 0;
+      if(timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(()=>{
+        timerElapsed++;
+        updateTimerUI();
+        if(timerElapsed >= timerSecs) clearInterval(timerInterval);
+      },1000);
+      updateTimerUI();
+    }
+    function stopTimer() {if(timerInterval) clearInterval(timerInterval);}
+    function stopEditing() {
+      editingLocked = true;
+      setEditorsEditable(false);
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('resetBtn').disabled = true;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.disabled = true);
+      document.getElementById('refreshBtn').disabled = true;
+      document.getElementById('copyCodeBtn').disabled = true;
+    }
+    function unlockEditing() {
+      editingLocked = false;
+      setEditorsEditable(true);
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('resetBtn').disabled = false;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.disabled = false);
+      document.getElementById('refreshBtn').disabled = false;
+      document.getElementById('copyCodeBtn').disabled = false;
+    }
+    startTimer();
+    document.getElementById('resetBtn').onclick = function(){startTimer();unlockEditing();};
+    // --- Submission logic (integrated with backend) ---
+    document.getElementById('submitBtn').onclick = async function() {
+      stopTimer();
+      stopEditing();
+      if (!(await ensureLoggedIn())) return;
+      candidateId = await getCandidateId();
+      if (!candidateId) {document.getElementById("modalLogin").classList.remove("hidden");return;}
+      // Send code to backend
+      let assignment = {
+        title: "Live Coding Assessment",
+        date: new Date().toISOString(),
+        mark: "",
+        code: {
+          html: getEditorValue('html'),
+          css: getEditorValue('css'),
+          js: getEditorValue('js')
+        }
+      };
+      try {
+        // Adjust endpoint as needed
+        let res = await fetch(`https://examguide.onrender.com/api/codecxreg/student/${candidateId}/assignment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+          },
+          body: JSON.stringify({
+            title: assignment.title,
+            date: assignment.date,
+            code: assignment.code
+          })
+        });
+        if (res.ok) showModal('modalSubmit');
+        else alert("Submission failed: " + (await res.text()));
+      } catch (err) {alert("Submission error: " + err);}
+    };
+    function showModal(id) {document.getElementById(id).classList.remove('hidden');}
+    setTimeout(()=>updatePreview(), 600);
+    document.getElementById('instructions').textContent =
+      "Edit your code in the panels. Errors will show below the editor. Preview updates live. Timer runs down for assessment. Submit when ready!";
+    // --- Login Logic ---
+    document.getElementById("loginForm").onsubmit = async function(e){
+      e.preventDefault();
+      let username = document.getElementById("username").value.trim();
+      let password = document.getElementById("password").value.trim();
+      let loginError = document.getElementById("loginError");
+      loginError.textContent = "";
+      try {
+        let res = await fetch("https://examguide.onrender.com/api/codecxreg/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        let data = await res.json();
+        if (res.ok && data.token) {
+          token = data.token;
+          localStorage.setItem("codecxToken", token);
+          document.getElementById("modalLogin").classList.add("hidden");
+          candidateId = await getCandidateId();
+          unlockEditing();
+        } else {
+          loginError.textContent = data.message || "Login failed";
+        }
+      } catch (err) {
+        loginError.textContent = "Server error: " + err;
+      }
+    };
+  </script>
+</body>
+</html>
