@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Codecx Institute Assessment – BioData Task</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Tailwind CSS and Flowbite -->
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.2.1/dist/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.2.1/dist/flowbite.min.js"></script>
+  <style>
+    .spinner {
+      border: 6px solid #e5e7eb;
+      border-top: 6px solid #6366f1;
+      border-radius: 50%;
+      width: 48px; height: 48px;
+      animation: spin 1s linear infinite;
+      margin: auto;
+      display: block;
+    }
+    body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+      }
+    @keyframes spin { to {transform: rotate(360deg);} }
+    .credit-btn:disabled {background: #e5e7eb !important; color: #a1a1aa !important; cursor: not-allowed;}
+    .modal-bg {background: rgba(0,0,0,0.36);}
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- BioData Preview Modal -->
+  <div id="bioModal" class="w-full min-h-screen modal-bg z-50">
+  <div class="max-w-3xl mx-auto mt-8 mb-8">
+    <!-- Modal Content -->
+    <div class="bg-white rounded-2xl shadow-2xl px-8 py-8 w-full max-w-3xl text-left border border-indigo-400 relative">
+      <div id="bioSpinner" class="spinner mb-4" style="display:none;"></div>
+      <div class="flex flex-col md:flex-row gap-8">
+        <div class="flex-shrink-0 flex flex-col items-center">
+          <img src="https://randomuser.me/api/portraits/men/23.jpg" alt="Profile Picture" class="rounded-full shadow-lg mb-3" style="width:140px;height:140px;object-fit:cover;">
+          <span class="font-bold text-lg text-indigo-700">John Doe</span>
+          <span class="text-gray-600">Senior Web Developer</span>
+        </div>
+        <div class="flex-1">
+          <div class="grid grid-cols-2 gap-2 mb-2">
+            <div>
+              <span class="block font-semibold text-indigo-700">Contact</span>
+              <div class="text-sm text-gray-700">Email: johndoe@gmail.com<br>
+                Phone: +1 202 555 0142<br>
+                Address: 1209 Pecan St, Austin TX, USA
+              </div>
+            </div>
+            <div>
+              <span class="block font-semibold text-indigo-700">Personal</span>
+              <div class="text-sm text-gray-700">
+                DOB: 1990-05-12<br>
+                Gender: Male<br>
+                Nationality: USA<br>
+                Marital Status: Married
+              </div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <span class="block font-semibold text-indigo-700">Education</span>
+            <ul class="list-disc ml-6 text-sm text-gray-700">
+              <li>BSc Computer Science, UT Austin (2012)</li>
+              <li>MSc Software Engineering, Stanford (2015)</li>
+            </ul>
+          </div>
+          <div class="mb-2">
+            <span class="block font-semibold text-indigo-700">Work Experience</span>
+            <ul class="list-disc ml-6 text-sm text-gray-700">
+              <li>Senior Developer, Microsoft (2018 - Present)</li>
+              <li>Web Developer, Google (2015 - 2018)</li>
+              <li>Intern, IBM (2011 - 2012)</li>
+            </ul>
+          </div>
+          <div class="mb-2">
+            <span class="block font-semibold text-indigo-700">Skills</span>
+            <span class="block text-sm text-gray-700">HTML, CSS, JavaScript, React, Tailwind, Node.js, Python, SQL, Azure</span>
+          </div>
+          <div class="mb-2">
+            <span class="block font-semibold text-indigo-700">Interests & Habits</span>
+            <span class="block text-sm text-gray-700">Running, Reading, Chess, Blogging, Volunteering, Early Riser, Daily Coding, Weekly Book Club</span>
+          </div>
+          <div class="mb-2">
+            <span class="block font-semibold text-indigo-700">Social Links</span>
+            <div class="flex gap-2 mt-1">
+              <a href="https://github.com/johndoe" target="_blank" class="text-indigo-600 hover:underline text-sm">GitHub</a>
+              <a href="https://twitter.com/johndoe" target="_blank" class="text-indigo-600 hover:underline text-sm">Twitter</a>
+              <a href="https://linkedin.com/in/johndoe" target="_blank" class="text-indigo-600 hover:underline text-sm">LinkedIn</a>
+            </div>
+          </div>
+          <div class="mb-2">
+            <span class="block font-semibold text-indigo-700">Achievements</span>
+            <ul class="list-disc ml-6 text-sm text-gray-700">
+              <li>Winner, US Coding Olympiad (2017)</li>
+              <li>Microsoft MVP (2020)</li>
+              <li>Published Author, “Modern JS” (2019)</li>
+            </ul>
+          </div>
+          <div class="mb-2">
+            <span class="block font-semibold text-indigo-700">About</span>
+            <span class="block text-sm text-gray-700">John is a passionate web developer, team leader, and educator. He enjoys building scalable web apps, mentoring junior devs, and sharing tech knowledge through blogs and workshops.</span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6 bg-indigo-50 rounded-xl p-4 shadow">
+        <strong class="text-indigo-700">Sample BioData Code Preview</strong>
+        <pre id="sampleCode" class="bg-gray-900 text-gray-100 rounded-xl p-2 mt-2 text-left overflow-x-auto text-xs" style="max-height:160px;">
+&lt;div class=&quot;bio-card&quot;&gt;
+  &lt;img src=&quot;profile.jpg&quot; alt=&quot;Profile Picture&quot; /&gt;
+  &lt;h1&gt;John Doe&lt;/h1&gt;
+  &lt;p&gt;Senior Web Developer&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Email: johndoe@gmail.com&lt;/li&gt;
+    &lt;li&gt;Phone: +1 202 555 0142&lt;/li&gt;
+    ...
+  &lt;/ul&gt;
+&lt;/div&gt;
+        </pre>
+        <div class="flex justify-center mt-2 gap-2">
+          <button class="credit-btn bg-indigo-100 text-indigo-700 px-4 py-1 font-semibold rounded" id="viewCodeBtn">View Full Sample Code (3 credits left)</button>
+          <button class="credit-btn bg-indigo-600 text-white px-8 py-1 font-semibold rounded" id="readyBtn">Ready</button>
+        </div>
+      </div>
+      <div id="bioCreditNotice" class="text-sm text-red-500 font-semibold mt-2"></div>
+    </div>
+  </div>
+  </div>
+  <!-- Sample Code Modal -->
+<div id="codeModal" class="w-full min-h-screen modal-bg z-50" style="display:none;">
+  <div class="max-w-xl mx-auto mt-8 mb-8">
+    <div class="bg-white rounded-2xl shadow-2xl px-8 py-8 w-full text-left border border-indigo-400 relative">
+      
+      <h2 class="text-xl font-bold text-indigo-700 mb-2">BioData Sample Code (HTML)</h2>
+      <div class="mb-2 text-xs text-gray-400">Easy to understand, copy-paste ready!</div>
+      <pre class="bg-gray-900 text-gray-100 rounded-xl p-3 text-xs overflow-x-auto" style="max-height:350px;">
+&lt;div class=&quot;card&quot;&gt;
+  &lt;img src=&quot;profile.jpg&quot; alt=&quot;Profile Picture&quot; class=&quot;profile&quot; /&gt;
+  &lt;h1&gt;John Doe&lt;/h1&gt;
+  &lt;p&gt;Senior Web Developer&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Email: johndoe@gmail.com&lt;/li&gt;
+    &lt;li&gt;Phone: +1 202 555 0142&lt;/li&gt;
+    &lt;li&gt;Address: 1209 Pecan St, Austin TX, USA&lt;/li&gt;
+    &lt;li&gt;DOB: 1990-05-12&lt;/li&gt;
+    &lt;li&gt;Nationality: USA&lt;/li&gt;
+    &lt;li&gt;Skills: HTML, CSS, JavaScript, React, Python, SQL&lt;/li&gt;
+    &lt;li&gt;Interests: Running, Reading, Chess, Blogging&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+      </pre>
+      <h2 class="text-xl font-bold text-indigo-700 mb-2 mt-6">CSS</h2>
+      <pre class="bg-gray-900 text-gray-100 rounded-xl p-3 text-xs overflow-x-auto" style="max-height:200px;">
+.card {background: #fff; border-radius: 1em; box-shadow: 0 2px 8px #e5e7eb; padding: 2em; max-width: 400px;}
+.profile {width: 100px; height: 100px; border-radius: 50%; box-shadow: 0 2px 8px #6366f1;}
+h1 {font-size: 1.4em; font-weight: bold;}
+ul {margin: 1em 0 0 1em;}
+li {margin-bottom: 0.5em;}
+      </pre>
+      <h2 class="text-xl font-bold text-indigo-700 mb-2 mt-6">JavaScript</h2>
+      <pre class="bg-gray-900 text-gray-100 rounded-xl p-3 text-xs overflow-x-auto" style="max-height:120px;">
+document.querySelector('.profile').onclick = function() {
+  alert('Profile clicked!');
+}
+      </pre>
+      <button class="credit-btn bg-indigo-600 text-white px-6 py-1 font-semibold rounded mt-4" id="closeCodeBtn">Close</button>
+    </div>
+  </div>
+  </div>
+  <!-- Modal: Notification -->
+  <div id="modalNotify" class="fixed inset-0 modal-bg flex items-center justify-center z-50" style="display:none;">
+    <div class="bg-white rounded-2xl shadow-xl px-8 py-8 w-full max-w-md text-center border border-blue-400">
+      <h2 class="text-2xl font-bold text-blue-700 mb-2" id="notifyTitle"></h2>
+      <p class="text-lg text-gray-800 mb-4" id="notifyMsg"></p>
+      <button onclick="document.getElementById('modalNotify').style.display='none'" class="mt-3 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold">Close</button>
+    </div>
+  </div>
+  <!-- Timer and Assessment (hidden till ready) -->
+  <div class="max-w-7xl mx-auto px-4 my-4 flex flex-col md:flex-row items-center justify-between gap-3" id="assessmentHeader" style="display:none;">
+    <div class="flex items-center gap-4">
+      <span id="timer" class="timer-badge bg-indigo-600 text-white font-bold px-5 py-2 rounded-lg shadow-lg">60:00</span>
+      <span class="text-gray-700 font-medium hidden sm:inline">Assessment Timer (1 hour)</span>
+    </div>
+    <button id="submitBtn" class="bg-indigo-600 hover:bg-indigo-800 text-white font-semibold px-7 py-2.5 rounded-xl shadow transition flex items-center gap-2 text-lg">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" class="inline"><path d="M5 12l5 5L20 7"></path></svg>
+      Submit Assessment
+    </button>
+  </div>
+  <!-- Coding Area (hidden till ready) -->
+  <div class="main-app" id="mainApp" style="display:none;">
+    <!-- Left: Code Panel -->
+    <div id="leftPanel" class="flex flex-col flex-1 w-full max-w-full min-w-0 relative">
+      <div class="editor-toolbar flex gap-2 px-2 py-2 mb-2 rounded-lg">
+        <button class="tab-btn flex items-center gap-1 px-4 py-2 rounded-lg font-bold text-indigo-700 transition" data-tab="html" data-active="true">
+          HTML
+        </button>
+        <button class="tab-btn flex items-center gap-1 px-4 py-2 rounded-lg font-bold text-blue-700 transition" data-tab="css">
+          CSS
+        </button>
+        <button class="tab-btn flex items-center gap-1 px-4 py-2 rounded-lg font-bold text-yellow-500 transition" data-tab="js">
+          JS
+        </button>
+      </div>
+      <button class="copy-btn bg-indigo-600 hover:bg-indigo-800 text-white px-4 py-1 rounded shadow text-sm font-semibold transition absolute" id="copyCodeBtn" style="display:none;">Copy Code</button>
+      <div class="editor-parent flex-1 relative" id="editorParent">
+        <div id="editor-html" style="width:100%;height:100%;min-height:600px;"></div>
+        <div id="editor-css" style="width:100%;height:100%;min-height:600px;display:none"></div>
+        <div id="editor-js" style="width:100%;height:100%;min-height:600px;display:none"></div>
+      </div>
+      <div class="output-console mt-2" id="errorConsole" style="display:none"></div>
+      <div class="mt-2 flex justify-between items-center">
+        <span class="text-sm text-gray-400 font-medium">Powered by Monaco Editor</span>
+        <span class="text-xs text-gray-500">Tab to switch panels • Ctrl+Enter to run • Paste with Ctrl+V</span>
+      </div>
+    </div>
+    <div class="panel-divider" id="panelDivider"></div>
+    <!-- Right: Preview Panel -->
+    <div id="rightPanel" class="flex flex-col flex-1 w-full max-w-full min-w-0">
+      <div class="editor-toolbar flex gap-2 px-2 py-2 mb-2 rounded-lg">
+        <button class="tab-btn flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-indigo-700 transition" data-tab="output" data-active="true">
+          Result/Output
+        </button>
+        <button id="refreshBtn" class="ml-2 bg-blue-600 hover:bg-blue-800 text-white px-4 py-1.5 rounded-lg shadow font-medium transition flex items-center gap-2 text-base">
+          Refresh
+        </button>
+      </div>
+      <div class="flex-1 bg-white overflow-hidden rounded-xl border-2 border-blue-300 shadow-lg relative min-h-[600px]">
+        <iframe id="preview" class="preview-area w-full h-full absolute top-0 left-0" sandbox="allow-scripts allow-same-origin"></iframe>
+      </div>
+      <div class="mt-2 rounded-xl bg-indigo-50 px-4 py-3 text-indigo-800 text-sm shadow-sm font-medium hidden md:block">
+        <strong>Instructions:</strong> <span id="instructions">Edit your code in the panels. Errors will show below the editor. Preview updates live. Timer runs down for assessment.</span>
+      </div>
+    </div>
+  </div>
+  <!-- Modal: TimeUp -->
+  <div id="modalTimeUp" class="fixed inset-0 modal-bg flex items-center justify-center z-50" style="display:none;">
+    <div class="bg-white rounded-2xl shadow-2xl px-8 py-8 max-w-md text-center border border-red-400">
+      <h2 class="text-2xl font-bold text-red-600 mb-2">Time's Up!</h2>
+      <p class="text-lg text-gray-800 mb-4">The assessment timer has ended. Your session is now locked.</p>
+      <button onclick="document.getElementById('modalTimeUp').style.display='none'" class="mt-3 px-6 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold">OK</button>
+    </div>
+  </div>
+  <!-- Modal: Submit -->
+  <div id="modalSubmit" class="fixed inset-0 modal-bg flex items-center justify-center z-50" style="display:none;">
+    <div class="bg-white rounded-2xl shadow-2xl px-8 py-8 max-w-md text-center border border-blue-400">
+      <h2 class="text-2xl font-bold text-blue-700 mb-2">Assessment Submitted!</h2>
+      <p class="text-lg text-gray-800 mb-4">Your code has been submitted.<br>Thank you for participating!</p>
+      <button onclick="document.getElementById('modalSubmit').style.display='none'" class="mt-3 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold">Close</button>
+    </div>
+  </div>
+  <script>
+    // MODAL LOGIC
+    function showModal(id, title, msg) {
+      if (id === "modalNotify") {
+        document.getElementById("modalNotify").style.display = "";
+        document.getElementById("notifyTitle").textContent = title || "";
+        document.getElementById("notifyMsg").textContent = msg || "";
+      } else {
+        document.getElementById(id).style.display = "";
+      }
+    }
+    function hideModal(id) { document.getElementById(id).style.display = "none"; }
+    // BIO DATA PREVIEW LOGIC
+    let bioCredits = 3;
+    document.getElementById("viewCodeBtn").onclick = function() {
+      if (bioCredits > 0) {
+        document.getElementById("bioSpinner").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("bioSpinner").style.display = "none";
+          document.getElementById("codeModal").style.display = "";
+          bioCredits--;
+          this.textContent = `View Full Sample Code (${bioCredits} credits left)`;
+          if (bioCredits === 0) {
+            this.disabled = true;
+            document.getElementById("bioCreditNotice").textContent = "No more credits. Access denied to sample code.";
+          }
+        }, 800);
+      } else {
+        showModal("modalNotify", "Access Denied", "You have exhausted all sample code credits.");
+      }
+    };
+    document.getElementById("closeCodeBtn").onclick = function() { hideModal("codeModal"); };
+    document.getElementById("readyBtn").onclick = function() {
+      hideModal("bioModal");
+      document.getElementById("assessmentHeader").style.display = "";
+      document.getElementById("mainApp").style.display = "";
+      showModal("modalNotify", "Assessment Started", "You may begin coding. Good luck!");
+      startTimer();
+    };
+    // Monaco Code Editor
+    let editors = {};
+    let initialCode = {
+      html: `<!DOCTYPE html>
+<html>
+  <head>
+    <title>BioData Assessment</title>
+  </head>
+  <body>
+    <h1>Welcome to Codecx Assessment!</h1>
+    <p>Edit your HTML, CSS, and JavaScript to build your own BioData page.</p>
+  </body>
+</html>`,
+      css: `body {
+  background: linear-gradient(90deg, #6366f1 0%, #0ea5e9 100%);
+  color: #fff;
+  font-family: Inter, sans-serif;
+  text-align: center;
+}
+h1 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+}`,
+      js: `document.querySelector('h1').onclick = function() {
+  alert('You clicked the heading!');
+};`
+    };
+    let editingLocked = false;
+    function getEditorValue(tab) { return editors[tab] ? editors[tab].getValue() : ''; }
+    function setEditorValue(tab, value) { if (editors[tab]) editors[tab].setValue(value || ''); }
+    function setEditorsEditable(editable) { Object.values(editors).forEach(editor => editor.updateOptions({ readOnly: !editable })); }
+    window.require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
+    window.MonacoEnvironment = { getWorkerUrl: function(workerId, label) { return `data:text/javascript;charset=utf-8,${encodeURIComponent(`self.MonacoEnvironment={baseUrl:'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/'};importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/base/worker/workerMain.min.js');`)}`; }};
+    require(['vs/editor/editor.main'], function () {
+      editors.html = monaco.editor.create(document.getElementById('editor-html'), {
+        value: initialCode.html,
+        theme: "vs-dark",
+        language: "html",
+        fontFamily: "'Fira Mono','Consolas',monospace",
+        fontSize: 16,
+        minimap: { enabled: false },
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        wordWrap: "on",
+        bracketPairColorization: { enabled: true },
+      });
+      editors.css = monaco.editor.create(document.getElementById('editor-css'), {
+        value: initialCode.css,
+        theme: "vs-dark",
+        language: "css",
+        fontFamily: "'Fira Mono','Consolas',monospace",
+        fontSize: 16,
+        minimap: { enabled: false },
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        wordWrap: "on",
+        bracketPairColorization: { enabled: true },
+      });
+      editors.js = monaco.editor.create(document.getElementById('editor-js'), {
+        value: initialCode.js,
+        theme: "vs-dark",
+        language: "javascript",
+        fontFamily: "'Fira Mono','Consolas',monospace",
+        fontSize: 16,
+        minimap: { enabled: false },
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        wordWrap: "on",
+        bracketPairColorization: { enabled: true },
+      });
+      ['html','css','js'].forEach(tab => {
+        if(localStorage[`codecx_${tab}`]) setEditorValue(tab, localStorage[`codecx_${tab}`]);
+        editors[tab].onDidChangeModelContent(() => {
+          if (!editingLocked) {
+            localStorage[`codecx_${tab}`] = getEditorValue(tab);
+            if (tab === activeTab) updatePreviewDebounced();
+          }
+        });
+      });
+      updatePreview();
+    });
+    // Tab switching logic
+    let activeTab = "html";
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.onclick = function() {
+        let tab = btn.getAttribute('data-tab');
+        document.querySelectorAll('.tab-btn').forEach(b => b.setAttribute('data-active','false'));
+        btn.setAttribute('data-active','true');
+        ["html","css","js"].forEach(t => { document.getElementById('editor-'+t).style.display = (t === tab) ? "block" : "none"; });
+        activeTab = tab;
+        showErrorConsole('');
+        setTimeout(()=>editors[tab]?.focus(), 50);
+        document.getElementById('copyCodeBtn').style.display = (tab && tab !== "output") ? "" : "none";
+      };
+    });
+    document.querySelectorAll('[data-tab="output"]').forEach(btn => btn.onclick = ()=>{});
+    document.getElementById('refreshBtn').onclick = () => updatePreview(true);
+    function showErrorConsole(msg) {
+      let con = document.getElementById('errorConsole');
+      if (msg) {con.innerHTML = msg;con.style.display = '';}
+      else {con.innerHTML = '';con.style.display = 'none';}
+    }
+    let lastPreviewContent = '';
+    function updatePreview(force) {
+      const html = getEditorValue('html');
+      const css = getEditorValue('css');
+      const js = getEditorValue('js');
+      const content = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>${css}</style>
+</head>
+<body>
+${html}
+<script>
+try {
+${js}
+} catch(e) {
+  window.parent.postMessage({codecx_js_error: e.message}, '*');
+}
+<\/script>
+</body>
+</html>
+      `.trim();
+      lastPreviewContent = content;
+      let iframe = document.getElementById('preview');
+      iframe.srcdoc = content;
+      showErrorConsole('');
+    }
+    let previewTimeout;
+    function updatePreviewDebounced() {
+      clearTimeout(previewTimeout);
+      previewTimeout = setTimeout(()=>updatePreview(), 350);
+    }
+    window.addEventListener('message', function(e){
+      if (e.data && e.data.codecx_js_error) {
+        showErrorConsole('JavaScript Error: ' + e.data.codecx_js_error);
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (editingLocked) return;
+      if (e.ctrlKey && e.key === 'Enter') updatePreview(true);
+    });
+    // Copy Button Logic
+    document.getElementById('copyCodeBtn').onclick = function() {
+      let code = getEditorValue(activeTab);
+      navigator.clipboard.writeText(code).then(()=>{this.textContent="Copied!";setTimeout(()=>this.textContent="Copy Code",1500);});
+    };
+    // Resize logic
+    let leftPanel = document.getElementById('leftPanel');
+    let rightPanel = document.getElementById('rightPanel');
+    let divider = document.getElementById('panelDivider');
+    let isDragging = false;let lastX=0,lastWidth=0;
+    divider.addEventListener('mousedown', function(e){isDragging=true;lastX=e.clientX;lastWidth=leftPanel.offsetWidth;document.body.style.userSelect="none";});
+    document.addEventListener('mousemove', function(e){if(!isDragging)return;let dx=e.clientX-lastX;let containerW=leftPanel.parentElement.offsetWidth;let newW=Math.max(240,Math.min(containerW-240,lastWidth+dx));leftPanel.style.flex="none";leftPanel.style.width=newW+"px";rightPanel.style.flex="1 1 0%";});
+    document.addEventListener('mouseup', function(){isDragging=false;document.body.style.userSelect="";});
+    window.addEventListener('resize', ()=>{if(window.innerWidth<800){leftPanel.style.width='';leftPanel.style.flex='1 1 0%';rightPanel.style.flex='1 1 0%';}});
+    // Timer logic (1 hour, no reset button)
+    let timerSecs = 60*60;
+    let timerElapsed = 0;
+    let timerEl = document.getElementById('timer');
+    let timerInterval = null;
+    function pad(n) { return n<10?'0'+n:n; }
+    function updateTimerUI() {
+      let remain = timerSecs-timerElapsed;
+      timerEl.textContent = `${pad(Math.floor(remain/60))}:${pad(remain%60)}`;
+      timerEl.classList.toggle('bg-red-500', remain <= 60);
+      if(remain <= 0){timerEl.textContent="00:00";timerEl.classList.add('bg-red-500');stopEditing();showModal('modalTimeUp');}
+    }
+    function startTimer() {
+      timerElapsed = 0;
+      if(timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(()=>{
+        timerElapsed++;
+        updateTimerUI();
+        if(timerElapsed >= timerSecs) clearInterval(timerInterval);
+      },1000);
+      updateTimerUI();
+    }
+    function stopTimer() {if(timerInterval) clearInterval(timerInterval);}
+    function stopEditing() {
+      editingLocked = true;
+      setEditorsEditable(false);
+      document.getElementById('submitBtn').disabled = true;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.disabled = true);
+      document.getElementById('refreshBtn').disabled = true;
+      document.getElementById('copyCodeBtn').disabled = true;
+    }
+    function unlockEditing() {
+      editingLocked = false;
+      setEditorsEditable(true);
+      document.getElementById('submitBtn').disabled = false;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.disabled = false);
+      document.getElementById('refreshBtn').disabled = false;
+      document.getElementById('copyCodeBtn').disabled = false;
+    }
+    // Submission logic
+    document.getElementById('submitBtn').onclick = async function() {
+      stopTimer();
+      stopEditing();
+      showModal('modalSubmit');
+    };
+    setTimeout(()=>updatePreview(), 600);
+    document.getElementById('instructions').textContent =
+      "Edit your code in the panels. Errors will show below the editor. Preview updates live. Timer runs down for assessment. Submit when ready!";
+  </script>
+</body>
+</html>
