@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accessibility with CSS – CSS Resource | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.9">
+  <!-- Tailwind CSS, Bootstrap Icons, PrismJS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    .glass-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-radius: 1rem;
+      border: 1px solid #e0e7ff;
+      box-shadow: 0 8px 32px rgba(99,102,241,.08), 0 1.5px 10px rgba(0,0,0,.04);
+    }
+    pre[class*="language-"] {
+      border-radius: 0.7rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    code {
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    }
+    .highlight {
+      background: #a7f3d0;
+      border-radius: 0.3rem;
+      padding: 0.1em 0.3em;
+      font-weight: bold;
+    }
+    .contrast-demo {
+      background: #111827;
+      color: #fbbf24;
+      padding: 1.3rem;
+      border-radius: 1rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .focus-demo {
+      outline: none;
+      border: 2px solid #d1d5db;
+      border-radius: 0.8rem;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      margin-bottom: 1rem;
+    }
+    .focus-demo:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px #a5b4fc99;
+    }
+    .visually-hidden {
+      position: absolute !important;
+      height: 1px; width: 1px;
+      overflow: hidden;
+      clip: rect(1px 1px 1px 1px); 
+      white-space: nowrap;
+    }
+    .reduced-motion-demo {
+      width: 120px;
+      height: 50px;
+      background: #6366f1;
+      color: #fff;
+      border-radius: 1rem;
+      font-weight: bold;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      transition: transform 0.5s;
+    }
+    .reduced-motion-demo:hover {
+      transform: scale(1.1) rotate(-2deg);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reduced-motion-demo {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-green-50 via-indigo-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-shield-check text-3xl text-green-600"></i>
+      <h1 class="text-2xl font-extrabold text-green-700 tracking-tight">
+        CSS Topic: Accessibility with CSS
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm">
+      <a href="resource.html" class="text-green-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="#color" class="text-green-600 hover:underline flex items-center gap-1"><i class="bi bi-palette"></i> Color & Contrast</a>
+      <a href="#focus" class="text-green-600 hover:underline flex items-center gap-1"><i class="bi bi-cursor"></i> Focus Indicators</a>
+      <a href="#hidden" class="text-green-600 hover:underline flex items-center gap-1"><i class="bi bi-eye-slash"></i> Visually Hidden</a>
+      <a href="#motion" class="text-green-600 hover:underline flex items-center gap-1"><i class="bi bi-slash-circle"></i> Reduced Motion</a>
+    </nav>
+  </header>
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-4">
+
+    <!-- Intro -->
+    <section class="glass-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-green-700 mb-3 flex items-center gap-2"><i class="bi bi-shield-check"></i>Why Accessibility with CSS?</h2>
+      <p class="mb-4 text-gray-700">
+        <span class="highlight">Accessibility</span> means making your web content usable by everyone, including people with disabilities. CSS plays a vital role in improving accessibility by ensuring that content is readable, navigable, and interactive for all users.
+      </p>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>Good color contrast helps users with low vision or color blindness.</li>
+        <li>Visible focus indicators support keyboard navigation.</li>
+        <li>Visually hidden elements help screen readers provide context.</li>
+        <li>Respecting reduced motion preferences helps users with vestibular disorders.</li>
+      </ul>
+    </section>
+
+    <!-- Color & Contrast -->
+    <section id="color" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-palette"></i>Color & Contrast</h2>
+      <p class="mb-4 text-gray-700">
+        Ensure sufficient contrast between foreground and background colors for readability. WCAG recommends a contrast ratio of at least 4.5:1 for normal text.
+      </p>
+      <div class="contrast-demo">High Contrast Example</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;div class="contrast-demo"&gt;High Contrast Example&lt;/div&gt;
+          </code></pre>
+        </div>
+        <div>
+          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+          <pre class="language-css"><code class="language-css">
+.contrast-demo {
+  background: #111827;
+  color: #fbbf24;
+  padding: 1.3rem;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+}
+          </code></pre>
+        </div>
+      </div>
+      <p class="mt-2 text-gray-700">
+        <span class="highlight">Tip:</span> Use online tools like <a href="https://webaim.org/resources/contrastchecker/" class="text-green-700 underline">WebAIM Contrast Checker</a> to verify ratios.
+      </p>
+    </section>
+
+    <!-- Focus Indicators -->
+    <section id="focus" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-cursor"></i>Focus Indicators</h2>
+      <p class="mb-4 text-gray-700">
+        Always show a visible outline or highlight when form controls or interactive elements receive focus. This supports users navigating with a keyboard.
+      </p>
+      <input class="focus-demo" type="text" placeholder="Try tabbing here!">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;input class="focus-demo" type="text" placeholder="Try tabbing here!"&gt;
+          </code></pre>
+        </div>
+        <div>
+          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+          <pre class="language-css"><code class="language-css">
+.focus-demo {
+  outline: none;
+  border: 2px solid #d1d5db;
+  border-radius: 0.8rem;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.focus-demo:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px #a5b4fc99;
+}
+          </code></pre>
+        </div>
+      </div>
+      <p class="mt-2 text-gray-700">
+        <span class="highlight">Tip:</span> Never remove outlines with <code>outline: none;</code> unless you replace them with a clear visual indicator.
+      </p>
+    </section>
+
+    <!-- Visually Hidden -->
+    <section id="hidden" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-eye-slash"></i>Visually Hidden Content</h2>
+      <p class="mb-4 text-gray-700">
+        Sometimes, you'll want to include extra labels or instructions for screen readers that are hidden visually but accessible to assistive technology.
+      </p>
+      <div>
+        <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+        <pre class="language-html"><code class="language-html">
+&lt;button&gt;
+  &lt;span class="visually-hidden"&gt;Close dialog&lt;/span&gt;
+  &lt;i class="bi bi-x-lg" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/button&gt;
+        </code></pre>
+        <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+        <pre class="language-css"><code class="language-css">
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); 
+  white-space: nowrap;
+}
+        </code></pre>
+      </div>
+      <p class="mt-2 text-gray-700">
+        <span class="highlight">Tip:</span> Use <code>.visually-hidden</code> for extra context, instructions, or labels.
+      </p>
+    </section>
+
+    <!-- Reduced Motion -->
+    <section id="motion" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-slash-circle"></i>Respect Reduced Motion Preferences</h2>
+      <p class="mb-4 text-gray-700">
+        Some users experience discomfort with excessive movement. Use the <code>prefers-reduced-motion</code> media query to minimize or disable CSS transitions and animations for them.
+      </p>
+      <div class="reduced-motion-demo">Hover Me!</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;div class="reduced-motion-demo"&gt;Hover Me!&lt;/div&gt;
+          </code></pre>
+        </div>
+        <div>
+          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+          <pre class="language-css"><code class="language-css">
+.reduced-motion-demo {
+  transition: transform 0.5s;
+}
+.reduced-motion-demo:hover {
+  transform: scale(1.1) rotate(-2deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reduced-motion-demo {
+    transition: none !important;
+  }
+}
+          </code></pre>
+        </div>
+      </div>
+      <p class="mt-2 text-gray-700">
+        <span class="highlight">Tip:</span> Always respect user preferences for reduced motion!
+      </p>
+    </section>
+
+    <!-- Best Practices -->
+    <section class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-bookmark-star"></i>Best Practices for CSS Accessibility</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>Always test your color contrast and font sizes for readability.</li>
+        <li>Provide clear focus indicators for all interactive elements.</li>
+        <li>Use <code>.visually-hidden</code> for extra labels and context.</li>
+        <li>Never use CSS to hide important content from assistive technology.</li>
+        <li>Respect <code>prefers-reduced-motion</code> for users who request it.</li>
+        <li>Test with keyboard and screen reader for real accessibility!</li>
+      </ul>
+    </section>
+
+    <!-- Practice Challenge -->
+    <section class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Practice: Make Accessible Buttons</h2>
+      <p class="mb-2 text-gray-700">
+        Create a button with a visible focus indicator, high contrast, and a visually hidden label for screen readers.
+      </p>
+      <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+      <pre class="language-html"><code class="language-html">
+&lt;button class="accessible-btn"&gt;
+  &lt;span class="visually-hidden"&gt;Submit form&lt;/span&gt;
+  &lt;i class="bi bi-send" aria-hidden="true"&gt;&lt;/i&gt; Send
+&lt;/button&gt;
+      </code></pre>
+      <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+      <pre class="language-css"><code class="language-css">
+.accessible-btn {
+  background: #111827;
+  color: #fbbf24;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: box-shadow 0.3s, border-color 0.3s;
+  outline: none;
+}
+.accessible-btn:focus {
+  box-shadow: 0 0 0 3px #fbbf24aa;
+  border: 2px solid #fbbf24;
+}
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); 
+  white-space: nowrap;
+}
+      </code></pre>
+      <div class="mt-2 text-gray-700">
+        <p>
+          Try tabbing to your button, checking color contrast, and using a screen reader to test accessibility!
+        </p>
+      </div>
+    </section>
+
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-green-600 text-white font-semibold hover:bg-green-700 transition"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script>
+</body>
+</html>

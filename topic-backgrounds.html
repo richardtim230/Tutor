@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Backgrounds & Borders – CSS Resource | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=0.9">
+  <!-- Tailwind CSS, Bootstrap Icons, PrismJS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+    .glass-card {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-radius: 1rem;
+      border: 1px solid #e0e7ff;
+      box-shadow: 0 8px 32px rgba(99,102,241,.08), 0 1.5px 10px rgba(0,0,0,.04);
+    }
+    pre[class*="language-"] {
+      border-radius: 0.7rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    code {
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    }
+    .highlight {
+      background: #bbf7d0;
+      border-radius: 0.3rem;
+      padding: 0.1em 0.3em;
+      font-weight: bold;
+    }
+    .display-demo {
+      min-height: 70px; 
+      margin-bottom: 1rem; 
+      border-radius: 0.8rem; 
+      border: 1.5px solid #a7f3d0;
+    }
+    .border-demo {
+      border: 4px dashed #22d3ee;
+      border-radius: 16px;
+      padding: 1.5rem;
+      background: #f0fdfa;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 12px #a7f3d088;
+      font-weight: bold;
+      text-align: center;
+      color: #0e7490;
+    }
+    .bg-gradient-demo {
+      background: linear-gradient(120deg, #34d399 0%, #6366f1 80%);
+      color: #fff;
+      font-weight: bold;
+      border-radius: 0.8rem;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .shadow-demo {
+      box-shadow: 0 6px 24px rgba(34,211,238,0.15), 0 1.5px 10px rgba(99,102,241,.09);
+      background: #e0e7ff;
+      border-radius: 0.8rem;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #2563eb;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-green-50 via-indigo-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-palette text-3xl text-green-600"></i>
+      <h1 class="text-2xl font-extrabold text-green-700 tracking-tight">
+        CSS Topic: Backgrounds & Borders
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm">
+      <a href="resource.html" class="text-green-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="#backgrounds" class="text-green-600 hover:underline flex items-center gap-1"><i class="bi bi-image"></i> Backgrounds</a>
+      <a href="#borders" class="text-green-600 hover:underline flex items-center gap-1"><i class="bi bi-border-style"></i> Borders</a>
+      <a href="#advanced" class="text-green-600 hover:underline flex items-center gap-1"><i class="bi bi-stars"></i> Advanced Effects</a>
+    </nav>
+  </header>
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-4">
+
+    <!-- Intro -->
+    <section class="glass-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-green-700 mb-3 flex items-center gap-2"><i class="bi bi-palette"></i>What Are Backgrounds & Borders in CSS?</h2>
+      <p class="mb-4 text-gray-700">
+        <span class="highlight">Backgrounds</span> and <span class="highlight">Borders</span> are essential visual tools in CSS for designing and separating content. Backgrounds allow you to add color, images, or gradients behind elements, while borders create outlines, shapes, and structure. Together, they help you bring clarity, emphasis, and aesthetic appeal to your web pages.
+      </p>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>Backgrounds can be solid colors, gradients, images, or even multiple layers.</li>
+        <li>Borders define edges, add separation, and can be styled in many creative ways.</li>
+        <li>Both are controlled entirely with CSS, supporting responsive and dynamic designs.</li>
+      </ul>
+    </section>
+
+    <!-- Backgrounds Section -->
+    <section id="backgrounds" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-image"></i>CSS Backgrounds</h2>
+      <p class="mb-4 text-gray-700">
+        The <code>background-*</code> family of CSS properties lets you set backgrounds on any element. Here are the most common uses:
+      </p>
+      <!-- Background Color -->
+      <h3 class="text-base font-bold text-green-600 flex items-center mb-2"><i class="bi bi-droplet"></i> Background Color</h3>
+      <div class="display-demo" style="background-color: #34d399; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;">This has a green background!</div>
+      <pre class="language-css"><code class="language-css">
+.box {
+  background-color: #34d399;
+  color: #fff;
+}
+      </code></pre>
+
+      <!-- Background Image -->
+      <h3 class="text-base font-bold text-green-600 flex items-center mb-2"><i class="bi bi-card-image"></i> Background Image</h3>
+      <div class="display-demo" style="background-image: url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80'); background-size: cover; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+        This uses a background image!
+      </div>
+      <pre class="language-css"><code class="language-css">
+.hero {
+  background-image: url('image.jpg');
+  background-size: cover;
+  background-position: center;
+}
+      </code></pre>
+
+      <!-- Background Gradient -->
+      <h3 class="text-base font-bold text-green-600 flex items-center mb-2"><i class="bi bi-bar-chart-steps"></i> Background Gradient</h3>
+      <div class="bg-gradient-demo">Gradient Background Example</div>
+      <pre class="language-css"><code class="language-css">
+.gradient {
+  background: linear-gradient(120deg, #34d399 0%, #6366f1 80%);
+}
+      </code></pre>
+
+      <!-- Multiple Backgrounds -->
+      <h3 class="text-base font-bold text-green-600 flex items-center mb-2"><i class="bi bi-layers"></i> Multiple Backgrounds</h3>
+      <div class="display-demo" style="background: url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=100&q=80') left top no-repeat, linear-gradient(120deg, #34d399, #6366f1); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+        Multiple backgrounds layered!
+      </div>
+      <pre class="language-css"><code class="language-css">
+.multi-bg {
+  background: url('pattern.png') left top no-repeat,
+              linear-gradient(120deg, #34d399, #6366f1);
+}
+      </code></pre>
+      <p class="mt-2 text-gray-700">
+        <span class="highlight">Tip:</span> You can combine images, gradients, and colors for creative effects.
+      </p>
+    </section>
+
+    <!-- Borders Section -->
+    <section id="borders" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-border-style"></i>CSS Borders</h2>
+      <p class="mb-4 text-gray-700">
+        Borders frame elements and are highly customizable. Here’s how to use the core border properties:
+      </p>
+      <!-- Border Basics -->
+      <h3 class="text-base font-bold text-green-600 flex items-center mb-2"><i class="bi bi-square"></i> Basic Border</h3>
+      <div class="border-demo">This box has a dashed, colored border!</div>
+      <pre class="language-css"><code class="language-css">
+.card {
+  border: 4px dashed #22d3ee;
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+      </code></pre>
+
+      <!-- Border Radius -->
+      <h3 class="text-base font-bold text-green-600 flex items-center mb-2"><i class="bi bi-circle"></i> Rounded Borders (border-radius)</h3>
+      <div class="display-demo" style="background:#e0e7ff; border-radius: 30px; border: 2px solid #6366f1; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #6366f1;">
+        Border Radius Demo
+      </div>
+      <pre class="language-css"><code class="language-css">
+.circle-box {
+  border: 2px solid #6366f1;
+  border-radius: 30px;
+}
+      </code></pre>
+
+      <!-- Border Sides -->
+      <h3 class="text-base font-bold text-green-600 flex items-center mb-2"><i class="bi bi-border-bottom"></i> Border on Specific Sides</h3>
+      <pre class="language-css"><code class="language-css">
+.underline {
+  border-bottom: 2px solid #22d3ee;
+}
+      </code></pre>
+
+      <!-- Border Colors & Styles -->
+      <p class="mt-2 text-gray-700">
+        <span class="highlight">Border Styles:</span> <code>solid</code>, <code>dashed</code>, <code>dotted</code>, <code>double</code>, <code>groove</code>, <code>ridge</code>, <code>inset</code>, <code>outset</code>.
+      </p>
+      <pre class="language-css"><code class="language-css">
+.fancy-border {
+  border: 3px double #6366f1;
+}
+      </code></pre>
+    </section>
+
+    <!-- Advanced Effects Section -->
+    <section id="advanced" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-stars"></i>Advanced Background & Border Effects</h2>
+      <!-- Border Image -->
+      <h3 class="text-base font-bold text-green-600 flex items-center mb-2"><i class="bi bi-images"></i> Border Image</h3>
+      <pre class="language-css"><code class="language-css">
+.image-border {
+  border: 10px solid transparent;
+  border-image: url('border.png') 30 round;
+}
+      </code></pre>
+
+      <!-- Box Shadow -->
+      <h3 class="text-base font-bold text-green-600 flex items-center mb-2"><i class="bi bi-cloud"></i> Box Shadow</h3>
+      <div class="shadow-demo">Box Shadow Effect!</div>
+      <pre class="language-css"><code class="language-css">
+.shadowed {
+  box-shadow: 0 6px 24px rgba(34,211,238,0.23);
+}
+      </code></pre>
+
+      <!-- Practice Refactoring: Legacy to Modern CSS -->
+      <h3 class="text-base font-bold text-green-600 flex items-center mb-2"><i class="bi bi-tools"></i> Refactoring Legacy Code</h3>
+      <p class="mb-2 text-gray-700 font-medium">Old HTML (using <code>bgcolor</code> and <code>border</code> attributes):</p>
+      <pre class="language-html"><code class="language-html">
+&lt;table bgcolor="#34d399" border="2"&gt;
+  &lt;tr&gt;&lt;td&gt;Hello!&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+      </code></pre>
+      <p class="mb-2 text-gray-700 font-medium">Modern CSS approach:</p>
+      <pre class="language-html"><code class="language-html">
+&lt;table style="background-color: #34d399; border: 2px solid #22d3ee;"&gt;
+  &lt;tr&gt;&lt;td&gt;Hello!&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+      </code></pre>
+      <p class="mt-2 text-gray-700">
+        <span class="highlight">Tip:</span> Always use CSS for backgrounds and borders—never mix HTML and presentation.
+      </p>
+    </section>
+
+    <!-- Best Practices Section -->
+    <section class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-bookmark-star"></i>Best Practices for Backgrounds & Borders</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>
+          Keep presentation and markup separate: Use CSS for all backgrounds and borders.
+        </li>
+        <li>
+          Prefer external stylesheets for maintainable code.
+        </li>
+        <li>
+          Use semantic HTML and descriptive class names.
+        </li>
+        <li>
+          Test your backgrounds and borders on different devices and browsers.
+        </li>
+        <li>
+          Combine backgrounds and borders for visually appealing designs.
+        </li>
+        <li>
+          Explore CSS frameworks (Tailwind, Bootstrap) for ready-made styles and utilities.
+        </li>
+      </ul>
+    </section>
+
+    <!-- Practice Challenge Section -->
+    <section class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Practice: Design with Backgrounds & Borders</h2>
+      <p class="mb-2 text-gray-700">
+        Try creating cards, buttons, and layouts using creative combinations of <code>background</code>, <code>border</code>, <code>border-radius</code>, <code>box-shadow</code>, and gradients!
+      </p>
+      <pre class="language-html"><code class="language-html">
+&lt;div class="card-demo"&gt;I am a stylish card!&lt;/div&gt;
+&lt;style&gt;
+.card-demo {
+  background: linear-gradient(90deg, #34d399, #6366f1);
+  color: #fff;
+  border-radius: 1rem;
+  border: 3px solid #fff;
+  box-shadow: 0 8px 32px #6366f155;
+  padding: 2rem 1.7rem;
+  font-weight: bold;
+}
+&lt;/style&gt;
+      </code></pre>
+      <div class="mt-2 text-gray-700">
+        <p>
+          Experiment and showcase your creativity with CSS backgrounds and borders!
+        </p>
+      </div>
+    </section>
+
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-green-600 text-white font-semibold hover:bg-green-700 transition"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script>
+</body>
+</html>
