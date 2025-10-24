@@ -3,14 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>Animations & Transitions – CSS Resource | CODECX Institute</title>
-  <meta name="viewport" content="width=device-width,initial-scale=0.9">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <!-- Tailwind CSS, Bootstrap Icons, PrismJS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
   <style>
+    html {
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+    body {
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
     .glass-card {
-      background: rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.96);
       backdrop-filter: blur(6px);
       border-radius: 1rem;
       border: 1px solid #e0e7ff;
@@ -20,6 +28,8 @@
       border-radius: 0.7rem;
       margin-bottom: 1rem;
       font-size: 1rem;
+      overflow-x: auto;
+      max-width: 100%;
     }
     code {
       font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
@@ -125,10 +135,81 @@
       50% { background: #34d399; }
       100% { background: #6366f1; }
     }
+    .solution-block {
+      display: none;
+      margin-top: 0.7rem;
+    }
+    .reveal-btn {
+      background: #fde68a;
+      color: #92400e;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.4em 1.1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .reveal-btn:hover {
+      background: #fbbf24;
+      color: #fff;
+    }
+    .practice-icon {
+      color: #eab308;
+      font-size: 1.3em;
+      vertical-align: middle;
+      margin-right: 0.3em;
+    }
+    .shake-demo {
+      width: 120px;
+      height: 50px;
+      background: #fffbe6;
+      color: #92400e;
+      border-radius: 1rem;
+      font-weight: bold;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      border: 2px dashed #fde68a;
+      transition: box-shadow 0.6s;
+    }
+    .shake-demo:hover {
+      box-shadow: 0 4px 12px #6366f188;
+      animation: shake 0.6s;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0);}
+      25% { transform: translateX(-5px);}
+      50% { transform: translateX(5px);}
+      75% { transform: translateX(-5px);}
+      100% { transform: translateX(0);}
+    }
+    .slow-fade-demo {
+      width: 120px;
+      height: 50px;
+      background: #fbbf24;
+      color: #fff;
+      border-radius: 1rem;
+      font-weight: bold;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      opacity: 1;
+      transition: opacity 2s cubic-bezier(.36,2,.62,-1) 0.5s;
+    }
+    .slow-fade-demo.hide {
+      opacity: 0.2;
+    }
   </style>
 </head>
 <body class="bg-gradient-to-tr from-indigo-50 via-yellow-100 to-white min-h-screen">
-  <!-- Header -->
+  <!-- Sticky Header -->
   <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
     <div class="flex items-center gap-3">
       <i class="bi bi-lightning text-3xl text-yellow-500"></i>
@@ -136,43 +217,41 @@
         CSS Topic: Animations & Transitions
       </h1>
     </div>
-    <nav class="mt-2 flex gap-2 text-sm">
+    <nav class="mt-2 flex gap-2 text-sm flex-wrap">
       <a href="resource.html" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
       <a href="#transitions" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-repeat"></i> Transitions</a>
       <a href="#animations" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-stars"></i> Animations</a>
       <a href="#advanced" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-bezier"></i> Advanced Effects</a>
+      <a href="#practical" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-lightbulb"></i> Practice</a>
     </nav>
   </header>
-  <main class="max-w-3xl mx-auto pt-10 pb-20 px-4">
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-2 sm:px-4">
 
     <!-- Intro -->
     <section class="glass-card p-6 mb-8">
       <h2 class="text-xl font-bold text-yellow-600 mb-3 flex items-center gap-2"><i class="bi bi-lightning"></i>What Are Animations & Transitions in CSS?</h2>
       <p class="mb-4 text-gray-700">
-        <span class="highlight">Transitions</span> and <span class="highlight">Animations</span> bring web interfaces to life by adding movement and smooth changes to elements. Use transitions for gradual changes (like color, size, or position on hover), and animations for more complex, scripted sequences using keyframes.
+        Animations and transitions are like superpowers for your web designs! They add life, smoothness, and visual feedback when users interact with your page. <span class="highlight">Transitions</span> create gradual changes (like color or size) on events such as hover or focus, while <span class="highlight">animations</span> can move, fade, or transform elements over time, even looping or sequencing steps.
       </p>
       <ul class="list-disc ml-7 text-gray-700 space-y-2">
-        <li>Transitions create smooth effects when CSS properties change.</li>
-        <li>Animations let you define keyframes for multi-step, repeating or timed effects.</li>
-        <li>Both enhance user experience and draw attention to important elements.</li>
+        <li>Transitions make UI changes feel natural and intuitive.</li>
+        <li>Animations draw attention, communicate state, and delight users.</li>
+        <li>Used thoughtfully, these effects guide users—not distract them!</li>
       </ul>
+      <p class="mt-3 text-gray-700">Ready to bring your interfaces to life? Let’s dive in!</p>
     </section>
 
     <!-- Transitions Section -->
     <section id="transitions" class="glass-card p-6 mb-8">
-      <h2 class="text-lg font-semibold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-arrow-repeat"></i>CSS Transitions</h2>
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-arrow-repeat"></i>CSS Transitions</h2>
       <p class="mb-4 text-gray-700">
-        <code>transition</code> lets you specify how CSS properties change over time. The effect starts when a property changes (often on <code>:hover</code>, <code>:focus</code>, or <code>:active</code>).
+        The <code>transition</code> property lets you control how CSS changes happen over time. Instead of a sudden jump, properties like <code>color</code>, <code>background</code>, <code>transform</code>, and <code>opacity</code> can change smoothly when triggered by user actions.
       </p>
-      <!-- Transition Example -->
-      <h3 class="text-base font-bold text-yellow-500 flex items-center mb-2"><i class="bi bi-hand-index-thumb"></i> Hover Transition Example</h3>
       <div class="trans-demo">Hover Me!</div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
-          <pre class="language-html"><code class="language-html">
-&lt;div class="trans-demo"&gt;Hover Me!&lt;/div&gt;
-          </code></pre>
+          <pre class="language-html"><code class="language-html">&lt;div class="trans-demo"&gt;Hover Me!&lt;/div&gt;</code></pre>
         </div>
         <div>
           <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
@@ -188,56 +267,22 @@
           </code></pre>
         </div>
       </div>
-
-      <!-- Fade Example -->
-      <h3 class="text-base font-bold text-yellow-500 flex items-center mb-2"><i class="bi bi-eye"></i> Fade Effect Example</h3>
-      <div class="fade-demo" id="fadeDemo">Fade Me!</div>
-      <button class="px-4 py-2 rounded bg-yellow-500 text-white font-bold hover:bg-yellow-600 mb-2" onclick="document.getElementById('fadeDemo').classList.toggle('hide')">
-        Toggle Fade
-      </button>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
-          <pre class="language-html"><code class="language-html">
-&lt;div class="fade-demo" id="fadeDemo"&gt;Fade Me!&lt;/div&gt;
-&lt;button onclick="document.getElementById('fadeDemo').classList.toggle('hide')"&gt;
-  Toggle Fade
-&lt;/button&gt;
-          </code></pre>
-        </div>
-        <div>
-          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
-          <pre class="language-css"><code class="language-css">
-.fade-demo {
-  opacity: 1;
-  transition: opacity 1s;
-}
-.fade-demo.hide {
-  opacity: 0.2;
-}
-          </code></pre>
-        </div>
-      </div>
-      <p class="mt-2 text-gray-700">
-        <span class="highlight">Tip:</span> You can transition most numeric CSS properties, including <code>color</code>, <code>background</code>, <code>transform</code>, <code>width</code>, <code>opacity</code>, and more!
+      <p class="mt-3 text-gray-700">
+        <span class="highlight">Tip:</span> Transitions work best with properties that change numerically—like <code>opacity</code>, <code>color</code>, <code>transform</code>, <code>background</code>, or <code>border-width</code>.
       </p>
     </section>
 
     <!-- Animations Section -->
     <section id="animations" class="glass-card p-6 mb-8">
-      <h2 class="text-lg font-semibold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-stars"></i>CSS Animations</h2>
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-stars"></i>CSS Animations</h2>
       <p class="mb-4 text-gray-700">
-        Animations use <code>@keyframes</code> rules to create multi-step, repeating, and complex motion. You can animate properties like <code>transform</code>, <code>opacity</code>, <code>color</code>, and more.
+        Animations let you define sequences of changes using <code>@keyframes</code>. Elements can bounce, fade, rotate, or shift colors—on a schedule, repeated or alternating. Use them for alerts, loaders, or to highlight important sections.
       </p>
-      <!-- Animation Example -->
-      <h3 class="text-base font-bold text-yellow-500 flex items-center mb-2"><i class="bi bi-arrow-up"></i> Bounce Animation Example</h3>
       <div class="anim-demo">I'm bouncing!</div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
-          <pre class="language-html"><code class="language-html">
-&lt;div class="anim-demo"&gt;I'm bouncing!&lt;/div&gt;
-          </code></pre>
+          <pre class="language-html"><code class="language-html">&lt;div class="anim-demo"&gt;I'm bouncing!&lt;/div&gt;</code></pre>
         </div>
         <div>
           <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
@@ -252,16 +297,19 @@
           </code></pre>
         </div>
       </div>
+      <p class="mt-3 text-gray-700">
+        <span class="highlight">Tip:</span> Use <code>animation-duration</code>, <code>animation-iteration-count</code>, <code>animation-delay</code>, and <code>animation-direction</code> for full control.
+      </p>
+    </section>
 
-      <!-- Keyframes Example -->
+    <!-- More Animation Example -->
+    <section class="glass-card p-6 mb-8">
       <h3 class="text-base font-bold text-yellow-500 flex items-center mb-2"><i class="bi bi-clock-history"></i> Custom Keyframes Example</h3>
       <div class="animated-bg-demo">Color Change!</div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
-          <pre class="language-html"><code class="language-html">
-&lt;div class="animated-bg-demo"&gt;Color Change!&lt;/div&gt;
-          </code></pre>
+          <pre class="language-html"><code class="language-html">&lt;div class="animated-bg-demo"&gt;Color Change!&lt;/div&gt;</code></pre>
         </div>
         <div>
           <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
@@ -277,27 +325,31 @@
           </code></pre>
         </div>
       </div>
-      <p class="mt-2 text-gray-700">
-        <span class="highlight">Tip:</span> Control <code>animation-duration</code>, <code>animation-iteration-count</code>, <code>animation-direction</code>, <code>animation-delay</code>, and more!
+      <p class="mt-3 text-gray-700">
+        <span class="highlight">Use case:</span> Color transitions can be used for loaders, alerts, or visual cues!
       </p>
     </section>
 
     <!-- Advanced Effects Section -->
     <section id="advanced" class="glass-card p-6 mb-8">
-      <h2 class="text-lg font-semibold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-bezier"></i>Advanced Animation & Transition Techniques</h2>
-      <!-- Chaining Animations -->
-      <h3 class="text-base font-bold text-yellow-500 flex items-center mb-2"><i class="bi bi-link"></i> Chaining Animations & Transitions</h3>
-      <div>
-        <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
-        <pre class="language-html"><code class="language-html">
-&lt;div class="card"&gt;Hover me and shake!&lt;/div&gt;
-        </code></pre>
-        <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
-        <pre class="language-css"><code class="language-css">
-.card {
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-bezier"></i>Advanced Animation & Transition Techniques</h2>
+      <p class="mb-4 text-gray-700">
+        Want to combine transitions and animations? You can chain effects for interactive feedback and fun experiences.
+      </p>
+      <div class="shake-demo">Hover & Shake!</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+          <pre class="language-html"><code class="language-html">&lt;div class="shake-demo"&gt;Hover &amp; Shake!&lt;/div&gt;</code></pre>
+        </div>
+        <div>
+          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+          <pre class="language-css"><code class="language-css">
+.shake-demo {
   transition: box-shadow 0.6s;
+  border: 2px dashed #fde68a;
 }
-.card:hover {
+.shake-demo:hover {
   box-shadow: 0 4px 12px #6366f188;
   animation: shake 0.6s;
 }
@@ -308,68 +360,63 @@
   75% { transform: translateX(-5px);}
   100% { transform: translateX(0);}
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
-      <!-- Delay & Timing Functions -->
+      <p class="mt-3 text-gray-700">
+        <span class="highlight">Pro tip:</span> Chain transitions and animations for more dynamic user feedback!
+      </p>
       <h3 class="text-base font-bold text-yellow-500 flex items-center mb-2"><i class="bi bi-hourglass-split"></i> Delays & Timing Functions</h3>
-      <div>
-        <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
-        <pre class="language-html"><code class="language-html">
-&lt;div class="slow-fade"&gt;Slow Fade!&lt;/div&gt;
-        </code></pre>
-        <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
-        <pre class="language-css"><code class="language-css">
-.slow-fade {
+      <div class="slow-fade-demo" id="slowFadeDemo">Slow Fade!</div>
+      <button class="px-4 py-2 rounded bg-yellow-500 text-white font-bold hover:bg-yellow-600 mb-2" onclick="document.getElementById('slowFadeDemo').classList.toggle('hide')">
+        Toggle Fade
+      </button>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;div class="slow-fade-demo" id="slowFadeDemo"&gt;Slow Fade!&lt;/div&gt;
+&lt;button onclick="document.getElementById('slowFadeDemo').classList.toggle('hide')"&gt;
+  Toggle Fade
+&lt;/button&gt;
+          </code></pre>
+        </div>
+        <div>
+          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+          <pre class="language-css"><code class="language-css">
+.slow-fade-demo {
   opacity: 1;
   transition: opacity 2s cubic-bezier(.36,2,.62,-1) 0.5s;
 }
-.slow-fade.hide {
+.slow-fade-demo.hide {
   opacity: 0.2;
 }
-        </code></pre>
+          </code></pre>
+        </div>
       </div>
-      <p class="mt-2 text-gray-700">
-        <span class="highlight">Tip:</span> Use <code>cubic-bezier</code> for custom timing curves and <code>animation-delay</code> for sequenced effects!
+      <p class="mt-3 text-gray-700">
+        <span class="highlight">Tip:</span> Adjust <code>transition-timing-function</code> for custom animation speeds and feel!
       </p>
     </section>
 
-    <!-- Best Practices Section -->
-    <section class="glass-card p-6 mb-8">
-      <h2 class="text-lg font-semibold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-bookmark-star"></i>Best Practices for Animations & Transitions</h2>
-      <ul class="list-disc ml-7 text-gray-700 space-y-2">
-        <li>Use animations and transitions to guide user attention, not distract.</li>
-        <li>Keep motion short and smooth; avoid long delays or excessive repetition.</li>
-        <li>Test motion on all devices for smoothness and accessibility.</li>
-        <li>Avoid animating layout properties (<code>width</code>, <code>height</code>) if possible; use <code>transform</code> and <code>opacity</code> for performance.</li>
-        <li>Use <code>prefers-reduced-motion</code> media query for accessibility:</li>
-      </ul>
-      <pre class="language-css"><code class="language-css">
-@media (prefers-reduced-motion: reduce) {
-  .anim-demo, .bounce, .animated-bg-demo {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-      </code></pre>
-    </section>
-
-    <!-- Practice Challenge Section -->
-    <section class="glass-card p-6 mb-8">
-      <h2 class="text-lg font-semibold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Practice: Animate Your Page!</h2>
-      <p class="mb-2 text-gray-700">
-        Try creating a button that animates when hovered and a card that fades in/out when clicked! Here’s sample code to get you started:
+    <!-- Practical Section -->
+    <section id="practical" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Practice: Animation Challenges</h2>
+      <p class="mb-3 text-gray-700">
+        Try these hands-on exercises! Each focuses on a key animation or transition skill. Click the <i class="bi bi-eye" aria-hidden="true"></i> <span class="font-semibold">Reveal Solution</span> button to see working HTML &amp; CSS for each.
       </p>
-      <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
-      <pre class="language-html"><code class="language-html">
+      <!-- Exercise 1: Animated Button -->
+      <div class="mb-7">
+        <i class="bi bi-hand-index-thumb practice-icon"></i>
+        <b>Exercise 1:</b> Create a button that scales and pulses with color when hovered.
+        <button class="reveal-btn mt-2" onclick="toggleSolution('sol1')"><i class="bi bi-eye"></i>Reveal Solution</button>
+        <div id="sol1" class="solution-block">
+          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+          <pre class="language-html"><code class="language-html">
 &lt;button class="btn-demo"&gt;Animated Button&lt;/button&gt;
-
-&lt;div class="practice-card" id="practiceCard"&gt;I am a fading card!&lt;/div&gt;
-&lt;button onclick="document.getElementById('practiceCard').classList.toggle('hide')"&gt;
-  Toggle Card Fade
-&lt;/button&gt;
-      </code></pre>
-      <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
-      <pre class="language-css"><code class="language-css">
+          </code></pre>
+          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+          <pre class="language-css"><code class="language-css">
 .btn-demo {
   background: #6366f1;
   color: #fff;
@@ -390,6 +437,24 @@
   70% { box-shadow: 0 0 0 16px #34d39900;}
   100% { box-shadow: 0 0 0 0 #34d39900;}
 }
+          </code></pre>
+        </div>
+      </div>
+      <!-- Exercise 2: Fade Card -->
+      <div class="mb-7">
+        <i class="bi bi-eye-fill practice-icon"></i>
+        <b>Exercise 2:</b> Make a card that fades in and out when a button is clicked.
+        <button class="reveal-btn mt-2" onclick="toggleSolution('sol2')"><i class="bi bi-eye"></i>Reveal Solution</button>
+        <div id="sol2" class="solution-block">
+          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;div class="practice-card" id="practiceCard"&gt;I am a fading card!&lt;/div&gt;
+&lt;button onclick="document.getElementById('practiceCard').classList.toggle('hide')"&gt;
+  Toggle Card Fade
+&lt;/button&gt;
+          </code></pre>
+          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+          <pre class="language-css"><code class="language-css">
 .practice-card {
   background: #34d399;
   color: #fff;
@@ -403,12 +468,115 @@
 .practice-card.hide {
   opacity: 0.2;
 }
-      </code></pre>
-      <div class="mt-2 text-gray-700">
-        <p>
-          Experiment and showcase your creativity with CSS transitions and animations!
-        </p>
+          </code></pre>
+        </div>
       </div>
+      <!-- Exercise 3: Color-changing Loader -->
+      <div class="mb-7">
+        <i class="bi bi-stars practice-icon"></i>
+        <b>Exercise 3:</b> Build a loader that cycles through colors using keyframes.
+        <button class="reveal-btn mt-2" onclick="toggleSolution('sol3')"><i class="bi bi-eye"></i>Reveal Solution</button>
+        <div id="sol3" class="solution-block">
+          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;div class="loader-demo"&gt;Loading...&lt;/div&gt;
+          </code></pre>
+          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+          <pre class="language-css"><code class="language-css">
+.loader-demo {
+  background: #fbbf24;
+  color: #fff;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  animation: loaderColors 1.5s infinite alternate;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+@keyframes loaderColors {
+  0% { background: #fbbf24; }
+  50% { background: #34d399; }
+  100% { background: #6366f1; }
+}
+          </code></pre>
+        </div>
+      </div>
+      <!-- Exercise 4: Shake on Hover -->
+      <div class="mb-7">
+        <i class="bi bi-bezier practice-icon"></i>
+        <b>Exercise 4:</b> Make a box that shakes when hovered and casts a shadow.
+        <button class="reveal-btn mt-2" onclick="toggleSolution('sol4')"><i class="bi bi-eye"></i>Reveal Solution</button>
+        <div id="sol4" class="solution-block">
+          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;div class="shake-demo"&gt;Hover &amp; Shake!&lt;/div&gt;
+          </code></pre>
+          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+          <pre class="language-css"><code class="language-css">
+.shake-demo {
+  border: 2px dashed #fde68a;
+  transition: box-shadow 0.6s;
+}
+.shake-demo:hover {
+  box-shadow: 0 4px 12px #6366f188;
+  animation: shake 0.6s;
+}
+@keyframes shake {
+  0% { transform: translateX(0);}
+  25% { transform: translateX(-5px);}
+  50% { transform: translateX(5px);}
+  75% { transform: translateX(-5px);}
+  100% { transform: translateX(0);}
+}
+          </code></pre>
+        </div>
+      </div>
+      <!-- Exercise 5: Slow Fade Card with Custom Timing -->
+      <div class="mb-7">
+        <i class="bi bi-hourglass-split practice-icon"></i>
+        <b>Exercise 5:</b> Create a card that fades slowly with a custom timing function.
+        <button class="reveal-btn mt-2" onclick="toggleSolution('sol5')"><i class="bi bi-eye"></i>Reveal Solution</button>
+        <div id="sol5" class="solution-block">
+          <span class="block font-semibold text-gray-700 mb-1">HTML:</span>
+          <pre class="language-html"><code class="language-html">
+&lt;div class="slow-fade-demo" id="slowPracticeCard"&gt;Slow Fade!&lt;/div&gt;
+&lt;button onclick="document.getElementById('slowPracticeCard').classList.toggle('hide')"&gt;
+  Toggle Fade
+&lt;/button&gt;
+          </code></pre>
+          <span class="block font-semibold text-gray-700 mb-1">CSS:</span>
+          <pre class="language-css"><code class="language-css">
+.slow-fade-demo {
+  opacity: 1;
+  transition: opacity 2s cubic-bezier(.36,2,.62,-1) 0.5s;
+}
+.slow-fade-demo.hide {
+  opacity: 0.2;
+}
+          </code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Best Practices Section -->
+    <section class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-bookmark-star"></i>Best Practices for Animations & Transitions</h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>Use motion to guide attention—not distract or annoy!</li>
+        <li>Keep effects short, smooth, and meaningful.</li>
+        <li>Test on different devices for performance and accessibility.</li>
+        <li>Prefer <code>transform</code> and <code>opacity</code> over layout properties for speed.</li>
+        <li>Respect <code>prefers-reduced-motion</code> for users who request it.</li>
+        <li>Combine transitions and animations for interactive, delightful UIs!</li>
+      </ul>
+      <pre class="language-css"><code class="language-css">
+@media (prefers-reduced-motion: reduce) {
+  .anim-demo, .bounce, .animated-bg-demo, .shake-demo, .slow-fade-demo, .practice-card {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+      </code></pre>
     </section>
 
     <div class="text-center pt-4">
@@ -421,5 +589,13 @@
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-html.min.js"></script>
+  <script>
+    function toggleSolution(id) {
+      var elem = document.getElementById(id);
+      if (elem) {
+        elem.style.display = (elem.style.display === 'block') ? 'none' : 'block';
+      }
+    }
+  </script>
 </body>
 </html>
