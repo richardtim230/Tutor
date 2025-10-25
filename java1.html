@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>JavaScript: Variables & Data Types – CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <!-- Tailwind (for layout) + Bootstrap Icons + Prism -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <style>
+    /* Prevent any horizontal overflow */
+    html, body { overflow-x: hidden; max-width: 100vw; }
+
+    /* Glass card style used across pages */
+    .glass-card {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(6px);
+      border-radius: 1rem;
+      border: 1px solid #e6eef8;
+      box-shadow: 0 8px 32px rgba(99,102,241,.06);
+    }
+
+    pre[class*="language-"] {
+      overflow-x: auto;
+      max-width: 100%;
+      border-radius: 0.6rem;
+      padding: 0.9rem;
+      font-size: .95rem;
+    }
+
+    code { font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace; }
+
+    .highlight { background: #fde68a; padding: .08rem .25rem; border-radius: .25rem; font-weight:600; }
+
+    /* Demo boxes */
+    .demo-box {
+      background: #eef2ff;
+      border-radius: .75rem;
+      padding: 1rem;
+      margin-bottom: .9rem;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .6rem;
+      box-sizing: border-box;
+    }
+    .demo-output {
+      background: #fff;
+      border-radius: .5rem;
+      padding: .6rem .8rem;
+      border: 1px solid #e6eef8;
+      min-width: 150px;
+      text-align: center;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    /* Solution reveal */
+    .solution-block { display: none; overflow-x: auto; margin-top: .6rem; }
+    .reveal-btn {
+      background: #c7f9d6;
+      color: #065f46;
+      border: none;
+      padding: .45rem .9rem;
+      border-radius: .5rem;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      gap: .5rem;
+      align-items: center;
+    }
+    .reveal-btn:hover { background: #34d399; color: white; }
+
+    /* Sticky header */
+    header.sticky { position: sticky; top: 0; z-index: 60; }
+
+    /* Responsive code grid */
+    .code-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media(min-width: 768px) { .code-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* Small helpers */
+    .kbd { background:#111827; color:#fff; padding:.15rem .4rem; border-radius:.25rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono"; font-size:.85rem; }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-white to-white min-h-screen">
+  <!-- Sticky header -->
+  <header class="sticky bg-white shadow px-6 py-4 glass-card sticky top-0">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-code-slash text-3xl text-indigo-600"></i>
+      <div>
+        <h1 class="text-2xl font-extrabold text-indigo-700">JavaScript: Variables & Data Types</h1>
+        <p class="text-sm text-gray-500">Core concepts, practical examples (HTML + CSS + JS), and hands-on exercises with revealable solutions.</p>
+      </div>
+    </div>
+    <nav class="mt-3 flex gap-3 text-sm flex-wrap">
+      <a href="resource.html" class="text-indigo-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="#intro" class="text-indigo-600 hover:underline">Intro</a>
+      <a href="#variables" class="text-indigo-600 hover:underline">Variables</a>
+      <a href="#types" class="text-indigo-600 hover:underline">Data Types</a>
+      <a href="#scope" class="text-indigo-600 hover:underline">Scope & Hoisting</a>
+      <a href="#practical" class="text-indigo-600 hover:underline">Practice</a>
+    </nav>
+  </header>
+
+  <main class="max-w-4xl mx-auto p-4 sm:p-6">
+    <!-- Intro -->
+    <section id="intro" class="glass-card p-6 mb-6">
+      <h2 class="text-lg font-bold text-indigo-700 mb-2">Why Variables & Data Types matter</h2>
+      <p class="text-gray-700 mb-3">
+        Variables are the building blocks of programs — they store values that your code can read and change. Data types describe what kind of values variables hold (strings, numbers, booleans, objects, and more). Understanding differences (and pitfalls like coercion and hoisting) helps you write clearer, less-buggy JavaScript.
+      </p>
+      <ul class="list-disc ml-6 text-gray-700 space-y-1">
+        <li><b>Declare</b> with let, const, or var — prefer <code>let</code> and <code>const</code> today.</li>
+        <li><b>Know</b> primitive types vs. objects (mutability, copying behavior).</li>
+        <li><b>Avoid</b> surprises from automatic type coercion — use explicit conversion.</li>
+      </ul>
+    </section>
+
+    <!-- Variables -->
+    <section id="variables" class="glass-card p-6 mb-6">
+      <h2 class="text-indigo-700 font-bold mb-2">Variables: let, const, var</h2>
+      <p class="text-gray-700 mb-3">
+        Use <code class="kbd">const</code> for values that shouldn't be re-assigned, <code class="kbd">let</code> for re-assignment, and avoid <code class="kbd">var</code> (function-scoped and hoisted). const doesn't make an object immutable — it only prevents re-binding.
+      </p>
+
+      <!-- Demo: reassignment -->
+      <div class="demo-box">
+        <div>
+          <div class="text-sm text-gray-600">Demo: try reassigning a variable and a const object</div>
+          <div class="text-xs text-gray-500">Open console to view results</div>
+        </div>
+        <div class="demo-output" id="varsDemoOutput">Ready</div>
+      </div>
+
+      <pre class="language-js"><code class="language-js">
+// JavaScript demo (also executed on this page)
+let a = 5;
+a = a + 2;            
+const person = { name: 'Ada' };
+person.age = 33;      
+// person = { name: 'Another' } 
+
+console.log('a:', a);
+console.log('person:', person);
+document.getElementById('varsDemoOutput').textContent = 'Check browser console (a: 7)';
+      </code></pre>
+
+      <p class="mt-3 text-gray-700"><span class="highlight">Tip:</span> Prefer <code>const</code> by default. If you need to change the binding later, use <code>let</code>.</p>
+    </section>
+
+    <!-- Data Types -->
+    <section id="types" class="glass-card p-6 mb-6">
+      <h2 class="text-indigo-700 font-bold mb-2">Data Types & Type Checking</h2>
+      <p class="text-gray-700 mb-3">
+        JavaScript has primitives (string, number, boolean, undefined, null, symbol, bigint) and objects (arrays, functions, plain objects). Use <code>typeof</code> to inspect types, but note special cases like <code>typeof null === "object"</code>.
+      </p>
+
+      <!-- Demo: typeof and coercion -->
+      <div class="demo-box">
+        <div>
+          <div class="text-sm text-gray-600">Demo: typeof and implicit coercion</div>
+          <div class="text-xs text-gray-500">Watch how values convert to strings or numbers</div>
+        </div>
+        <div class="demo-output" id="typesDemoOutput">Ready</div>
+      </div>
+
+      <pre class="language-js"><code class="language-js">
+// typeof examples
+console.log(typeof 'hello'); // "string"
+console.log(typeof 42);      // "number"
+console.log(typeof null);    // "object" (quirk)
+
+// coercion examples
+console.log('5' + 3); // "53"  (string + number => string)
+console.log('5' - 3); // 2     (string - number => number)
+
+document.getElementById('typesDemoOutput').textContent = "'5'+3 => \"53\"  |  '5'-3 => 2";
+      </code></pre>
+
+      <p class="mt-3 text-gray-700"><span class="highlight">Rule:</span> When unsure, convert explicitly: <code>Number('5')</code>, <code>String(5)</code>, <code>Boolean(value)</code>.</p>
+    </section>
+
+    <!-- Scope & Hoisting -->
+    <section id="scope" class="glass-card p-6 mb-6">
+      <h2 class="text-indigo-700 font-bold mb-2">Scope & Hoisting</h2>
+      <p class="text-gray-700 mb-3">
+        <b>Scope</b> defines where variables are visible. <code>let</code> and <code>const</code> are block-scoped; <code>var</code> is function-scoped. <b>Hoisting</b> means declarations are moved to the top — but initializations are not. That’s why using variables before they’re initialized can surprise you.
+      </p>
+
+      <div class="demo-box">
+        <div>
+          <div class="text-sm text-gray-600">Demo: Illustrating scope (open console)</div>
+        </div>
+        <div class="demo-output" id="scopeDemoOutput">Ready</div>
+      </div>
+
+      <pre class="language-js"><code class="language-js">
+// scope example
+function demoScope() {
+  if (true) {
+    let x = 'block';
+    var y = 'function';
+  }
+  console.log(typeof x); // "undefined" (x is block scoped)
+  console.log(y);        // "function"  (y is function scoped)
+}
+demoScope();
+
+document.getElementById('scopeDemoOutput').textContent = "See console for scope demo";
+      </code></pre>
+
+      <p class="mt-2 text-gray-700"><span class="highlight">Careful:</span> Avoid relying on <code>var</code> — prefer block-scoped variables to prevent accidental leaks.</p>
+    </section>
+
+    <!-- Quick Reference -->
+    <section class="glass-card p-6 mb-6">
+      <h3 class="text-indigo-700 font-bold mb-2">Quick reference</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="p-3 bg-white rounded-lg border">
+          <b>Primitives</b>
+          <ul class="ml-5 text-gray-700 mt-2 list-disc">
+            <li>String, Number, Boolean</li>
+            <li>Null, Undefined</li>
+            <li>Symbol, BigInt</li>
+          </ul>
+        </div>
+        <div class="p-3 bg-white rounded-lg border">
+          <b>Objects</b>
+          <ul class="ml-5 text-gray-700 mt-2 list-disc">
+            <li>Array, Function, Date, RegExp</li>
+            <li>Plain object: {}</li>
+            <li>Mutable; beware shallow copies</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Practical Exercises (with reveal) -->
+    <section id="practical" class="glass-card p-6 mb-6">
+      <h2 class="text-indigo-700 font-bold mb-2">Practice Exercises — Try them out</h2>
+      <p class="text-gray-700 mb-3">
+        Each exercise includes a runnable demo and a "Reveal Solution" button that shows the full HTML, CSS, and JavaScript. Try to solve on your own first — then reveal to compare.
+      </p>
+
+      <!-- Exercise 1 -->
+      <div class="mb-5">
+        <div class="flex items-center gap-3 mb-2">
+          <i class="bi bi-1-circle text-indigo-600"></i>
+          <div>
+            <b>Exercise 1: Greeting (template literals)</b>
+            <div class="text-sm text-gray-500">Create a form that asks for a name and shows "Hello, &lt;name&gt;!" using template literals.</div>
+          </div>
+        </div>
+
+        <!-- Live demo -->
+        <div class="demo-box">
+          <div style="flex:1;">
+            <input id="greetName" class="px-3 py-2 border rounded w-full max-w-md" placeholder="Type a name">
+          </div>
+          <div class="demo-output" id="greetOut">—</div>
+        </div>
+
+        <!-- Reveal button -->
+        <button class="reveal-btn" onclick="toggleSolution('sol1')"><i class="bi bi-eye"></i> Reveal Solution</button>
+
+        <!-- Solution -->
+        <div id="sol1" class="solution-block">
+          <div class="code-grid mt-3">
+            <div>
+              <span class="font-semibold text-gray-700">HTML</span>
+              <pre class="language-html"><code class="language-html">
+&lt;input id="greetName" placeholder="Type a name"&gt;
+&lt;div id="greetOut"&gt;&lt;/div&gt;
+              </code></pre>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-700">JavaScript</span>
+              <pre class="language-js"><code class="language-js">
+const input = document.getElementById('greetName');
+const out = document.getElementById('greetOut');
+
+input.addEventListener('input', () =&gt; {
+  const name = input.value || 'Friend';
+  out.textContent = `Hello, ${name}!`;
+});
+              </code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exercise 2 -->
+      <div class="mb-5">
+        <div class="flex items-center gap-3 mb-2">
+          <i class="bi bi-2-circle text-indigo-600"></i>
+          <div>
+            <b>Exercise 2: Fix the hoisting bug</b>
+            <div class="text-sm text-gray-500">This broken snippet throws. Fix it by using the right keyword and scope.</div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div style="flex:1;">
+            <div class="text-sm text-gray-700">Open the solution to see original broken code and the fixed version.</div>
+          </div>
+          <div class="demo-output">—</div>
+        </div>
+
+        <button class="reveal-btn" onclick="toggleSolution('sol2')"><i class="bi bi-eye"></i> Reveal Solution</button>
+        <div id="sol2" class="solution-block">
+          <div class="code-grid mt-3">
+            <div>
+              <span class="font-semibold text-gray-700">Broken (example)</span>
+              <pre class="language-js"><code class="language-js">
+// var hoisting problem
+console.log(message); // undefined instead of error
+var message = 'hi';
+              </code></pre>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-700">Fixed</span>
+              <pre class="language-js"><code class="language-js">
+// Use let/const, avoid using before declaration
+let message = 'hi';
+console.log(message); // "hi"
+              </code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exercise 3 -->
+      <div class="mb-5">
+        <div class="flex items-center gap-3 mb-2">
+          <i class="bi bi-3-circle text-indigo-600"></i>
+          <div>
+            <b>Exercise 3: Convert and sum</b>
+            <div class="text-sm text-gray-500">Given two inputs with numeric strings, convert to numbers and show the sum.</div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div style="flex:1; display:flex; gap:.5rem;">
+            <input id="n1" class="px-3 py-2 border rounded w-full max-w-[120px]" placeholder="5">
+            <input id="n2" class="px-3 py-2 border rounded w-full max-w-[120px]" placeholder="3">
+          </div>
+          <div class="demo-output" id="sumOut">—</div>
+        </div>
+
+        <button class="reveal-btn" onclick="toggleSolution('sol3')"><i class="bi bi-eye"></i> Reveal Solution</button>
+        <div id="sol3" class="solution-block">
+          <div class="code-grid mt-3">
+            <div>
+              <span class="font-semibold text-gray-700">HTML</span>
+              <pre class="language-html"><code class="language-html">
+&lt;input id="n1" placeholder="5"&gt;
+&lt;input id="n2" placeholder="3"&gt;
+&lt;div id="sumOut"&gt;&lt;/div&gt;
+              </code></pre>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-700">JS</span>
+              <pre class="language-js"><code class="language-js">
+const aEl = document.getElementById('n1');
+const bEl = document.getElementById('n2');
+const sumOut = document.getElementById('sumOut');
+
+function updateSum() {
+  const a = Number(aEl.value) || 0;
+  const b = Number(bEl.value) || 0;
+  sumOut.textContent = a + b;
+}
+
+aEl.addEventListener('input', updateSum);
+bEl.addEventListener('input', updateSum);
+updateSum();
+              </code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exercise 4 -->
+      <div class="mb-5">
+        <div class="flex items-center gap-3 mb-2">
+          <i class="bi bi-4-circle text-indigo-600"></i>
+          <div>
+            <b>Exercise 4: Sum array with reduce</b>
+            <div class="text-sm text-gray-500">Given an array of numbers, compute the sum using <code>reduce</code>.</div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div style="flex:1;">
+            <div class="text-sm text-gray-700">Try the example array [1,2,3,4].</div>
+          </div>
+          <div class="demo-output" id="reduceOut">—</div>
+        </div>
+
+        <button class="reveal-btn" onclick="toggleSolution('sol4')"><i class="bi bi-eye"></i> Reveal Solution</button>
+        <div id="sol4" class="solution-block">
+          <div class="code-grid mt-3">
+            <div>
+              <span class="font-semibold text-gray-700">JavaScript</span>
+              <pre class="language-js"><code class="language-js">
+const nums = [1,2,3,4];
+const sum = nums.reduce((acc, cur) =&gt; acc + cur, 0);
+console.log(sum); // 10
+document.getElementById('reduceOut').textContent = sum;
+              </code></pre>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-700">Why reduce?</span>
+              <pre class="language-js"><code class="language-js">
+// reduce accumulates values and is great for totals, averages, etc.
+// Start value (0) avoids errors on empty arrays.
+              </code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exercise 5 -->
+      <div class="mb-5">
+        <div class="flex items-center gap-3 mb-2">
+          <i class="bi bi-5-circle text-indigo-600"></i>
+          <div>
+            <b>Exercise 5: const + mutation</b>
+            <div class="text-sm text-gray-500">Show that a <code>const</code> object can be mutated but not re-assigned. Provide a UI that adds a property to a const object.</div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div style="flex:1;">
+            <div class="text-sm text-gray-700">Click the button to add a property to the const object (then check console)</div>
+          </div>
+          <div>
+            <button id="mutBtn" class="reveal-btn">Mutate</button>
+          </div>
+        </div>
+
+        <button class="reveal-btn" onclick="toggleSolution('sol5')"><i class="bi bi-eye"></i> Reveal Solution</button>
+        <div id="sol5" class="solution-block">
+          <div class="code-grid mt-3">
+            <div>
+              <span class="font-semibold text-gray-700">HTML</span>
+              <pre class="language-html"><code class="language-html">
+&lt;button id="mutBtn"&gt;Mutate&lt;/button&gt;
+              </code></pre>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-700">JS</span>
+              <pre class="language-js"><code class="language-js">
+const obj = { name: 'Ada' };
+document.getElementById('mutBtn').addEventListener('click', () =&gt; {
+  obj.age = (obj.age || 0) + 1; // mutate allowed
+  console.log('obj after mutate:', obj);
+  alert('obj mutated — check console');
+});
+              </code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Final tips -->
+    <section class="glass-card p-6 mb-8">
+      <h3 class="text-indigo-700 font-bold mb-2">Final tips & best practices</h3>
+      <ul class="list-disc ml-6 text-gray-700 space-y-1">
+        <li>Prefer <code>const</code> when you don't plan to rebind; use <code>let</code> otherwise.</li>
+        <li>Convert values explicitly (Number, String, Boolean) to avoid coercion bugs.</li>
+        <li>Avoid <code>var</code> and global variables to reduce accidental clashes.</li>
+        <li>Test edge cases: empty arrays, NaN, null, and undefined.</li>
+      </ul>
+    </section>
+
+    <div class="text-center mb-12">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    </div>
+  </main>
+
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card mx-4 mb-8">
+    CODECX INSTITUTE © 2025. All rights reserved.
+  </footer>
+
+  <!-- Prism & scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-js.min.js"></script>
+
+  <script>
+    // Utility to toggle solution blocks
+    function toggleSolution(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // Small live behaviors for the demos on the page
+    (function initDemos() {
+      // Vars demo and console outputs
+      try {
+        let a = 5;
+        a = a + 2;
+        const person = { name: 'Ada' };
+        person.age = 33;
+        console.log('Variables demo -> a:', a, 'person:', person);
+        document.getElementById('varsDemoOutput').textContent = 'a: ' + a;
+      } catch (e) { /* ignore */ }
+
+      // Types demo
+      try {
+        console.log(typeof 'hello', typeof 42, typeof null);
+        console.log('Coercion:', '5' + 3, ' / ', '5' - 3);
+        document.getElementById('typesDemoOutput').textContent = "'5'+3 => \"53\"  |  '5'-3 => 2";
+      } catch (e) { /* ignore */ }
+
+      // Scope demo
+      try {
+        function demoScope() {
+          if (true) {
+            let x = 'block';
+            var y = 'function';
+          }
+          console.log('scope demo typeof x:', typeof x, 'y:', y);
+        }
+        demoScope();
+        document.getElementById('scopeDemoOutput').textContent = 'See console for scope demo';
+      } catch (e) { /* ignore */ }
+
+      // Greeting demo
+      const input = document.getElementById('greetName');
+      const out = document.getElementById('greetOut');
+      if (input && out) {
+        input.addEventListener('input', () => {
+          const name = input.value || 'Friend';
+          out.textContent = `Hello, ${name}!`;
+        });
+      }
+
+      // Sum demo (exercise 3)
+      const aEl = document.getElementById('n1');
+      const bEl = document.getElementById('n2');
+      const sumOut = document.getElementById('sumOut');
+      function updateSum() {
+        const a = Number(aEl.value) || 0;
+        const b = Number(bEl.value) || 0;
+        sumOut.textContent = a + b;
+      }
+      if (aEl && bEl && sumOut) {
+        aEl.addEventListener('input', updateSum);
+        bEl.addEventListener('input', updateSum);
+        updateSum();
+      }
+
+      // Reduce demo
+      try {
+        const nums = [1,2,3,4];
+        const sum = nums.reduce((acc, cur) => acc + cur, 0);
+        document.getElementById('reduceOut').textContent = sum;
+      } catch (e) { /* ignore */ }
+
+      // Mutate demo button
+      const mutBtn = document.getElementById('mutBtn');
+      if (mutBtn) {
+        const obj = { name: 'Ada' };
+        mutBtn.addEventListener('click', () => {
+          obj.age = (obj.age || 0) + 1;
+          console.log('obj after mutate:', obj);
+          alert('Object mutated. Check browser console for details.');
+        });
+      }
+
+      // Slow fade demo for advanced exercises (if any)
+      const slowToggleBtn = document.getElementById('slowPracticeCard');
+      if (slowToggleBtn) {
+        slowToggleBtn.addEventListener('click', () => {
+          slowToggleBtn.classList.toggle('hide');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
