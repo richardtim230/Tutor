@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Functions & Scope | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    html, body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(236,179,56,.06), 0 2px 8px rgba(0,0,0,.03);
+      border: 1px solid #ffefa2;
+    }
+    pre { border-radius: 0.7rem; background: #1f2937; color: #fbbf24; padding: 1em; font-size: 1em; overflow-x: auto; }
+    code { font-family: 'Fira Mono', 'Consolas', monospace; }
+    .highlight { background: #fbca36; color: #975a00; border-radius: 0.3rem; padding: 0.1em 0.3em; font-weight: bold;}
+    .demo-output {
+      background: #fde68a;
+      color: #6b4800;
+      border-radius: 0.5rem;
+      padding: 0.8em 1.4em;
+      font-weight: 600;
+      margin-bottom: 0.5em;
+      border: 1px solid #fff7d6;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.14em;
+      box-shadow: 0 2px 12px #fbbf2466;
+      min-width: 140px;
+      text-align: center;
+    }
+    @media (max-width:900px) {
+      .glass-card, pre { font-size: 0.98em; padding: 1em;}
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-yellow-50 via-yellow-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-diagram-2 text-3xl text-yellow-500"></i>
+      <h1 class="text-2xl font-extrabold text-yellow-700 tracking-tight">
+        JavaScript: Functions & Scope
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm flex-wrap">
+      <a href="resource.html" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="#functions" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-gear"></i> What Are Functions?</a>
+      <a href="#scope" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-layers"></i> Understanding Scope</a>
+      <a href="#practice" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-flask"></i> Examples & Exercises</a>
+    </nav>
+  </header>
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-2 sm:px-4">
+    <!-- Everyday Explanations -->
+    <section class="glass-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-yellow-600 mb-3 flex items-center gap-2">
+        <i class="bi bi-diagram-2"></i>Introduction: Why Functions?
+      </h2>
+      <p class="mb-4 text-gray-700">
+        Functions are the “recipe steps” in JavaScript applications. They help you organize your code into reusable blocks—so you don’t have to copy-paste logic everywhere.
+      </p>
+      <p class="mb-4 text-gray-700">
+        <span class="highlight">Scope</span> defines "where" in your code a variable or function is accessible. Understanding scope is crucial for writing bug-free apps and for using modern JavaScript well.
+      </p>
+    </section>
+
+    <!-- Functions Section -->
+    <section id="functions" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-gear"></i>Declaring & Using Functions</h2>
+      <p class="mb-4 text-gray-700">
+        There are several ways to create a function in JavaScript. All allow you to group code that you wish to re-use with different inputs:
+      </p>
+      <h3 class="text-base font-semibold text-yellow-700 mb-1">1. Named Function Declaration</h3>
+      <pre><code>
+function greet(name) {
+  return "Hello, " + name + "!";
+}
+console.log( greet("Alex") ); // Output: Hello, Alex!
+      </code></pre>
+      <h3 class="text-base font-semibold text-yellow-700 mb-1 mt-3">2. Function Expression</h3>
+      <pre><code>
+const add = function(x, y) {
+  return x + y;
+};
+console.log( add(5, 7) ); // Output: 12
+      </code></pre>
+      <h3 class="text-base font-semibold text-yellow-700 mb-1 mt-3">3. Arrow Function (ES6+)</h3>
+      <pre><code>
+const double = (n) => n * 2;
+console.log( double(8) ); // Output: 16
+      </code></pre>
+      <h3 class="text-base font-semibold text-yellow-700 mb-1 mt-3">Functions in HTML – Click to See</h3>
+      <pre><code>&lt;button onclick="showDate()"&gt;Show Date&lt;/button&gt;
+&lt;div id="dateResult"&gt;&lt;/div&gt;
+&lt;script&gt;
+function showDate() {
+  document.getElementById("dateResult").textContent = new Date().toLocaleString();
+}
+&lt;/script&gt;
+      </code></pre>
+      <div class="demo-output" id="demoDateOut">Try it: <button id="demoDateBtn" class="bg-yellow-500 px-3 py-1 rounded text-white font-bold">Show Date</button></div>
+      <script>
+        document.addEventListener("DOMContentLoaded",function(){
+          let btn=document.getElementById('demoDateBtn');
+          let out=document.getElementById('demoDateOut');
+          if(btn && out) btn.onclick=function(){
+            out.innerHTML = (new Date().toLocaleString()) + " <button id='demoDateBtn' class='bg-yellow-500 px-3 py-1 rounded text-white font-bold'>Show Date</button>";
+            document.getElementById('demoDateBtn').onclick=btn.onclick;
+          }
+        });
+      </script>
+    </section>
+
+    <!-- Scope Section -->
+    <section id="scope" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-layers"></i>What Is Scope?</h2>
+      <p class="mb-4 text-gray-700">
+        <span class="highlight">Scope</span> controls where in your program variables and functions are accessible. Badly managed scope leads to confusing bugs, but good habits keep your code safe and readable.
+      </p>
+      <h3 class="text-base font-semibold text-yellow-700 mb-1">Global Scope</h3>
+      <pre><code>
+let name = "Sam"; // Global variable
+
+function display() {
+  // Can use 'name' here
+  alert("User: " + name);
+}
+      </code></pre>
+      <h3 class="text-base font-semibold text-yellow-700 mb-1 mt-3">Function (Local) Scope</h3>
+      <pre><code>
+function localExample() {
+  let msg = "Inside function!";
+  console.log(msg); // Accessible
+}
+console.log(msg); // ERROR: Not defined outside function
+      </code></pre>
+      <h3 class="text-base font-semibold text-yellow-700 mb-1 mt-3">Block Scope (with let/const)</h3>
+      <pre><code>
+if (true) {
+  let color = "purple";
+  console.log(color); // Accessible here
+}
+console.log(color); // ERROR: Not defined outside if-block
+      </code></pre>
+      <h3 class="text-base font-semibold text-yellow-700 mb-1 mt-3">Practical: Scope in Real Usage</h3>
+      <pre><code>
+let counter = 0; // Global
+
+function increment() {
+  counter++;
+}
+function demo() {
+  let counter = 10; // Local to function
+  counter++;
+  console.log(counter); // Prints 11
+}
+increment();
+console.log(counter); // Prints 1 (global 'counter')
+demo();
+console.log(counter); // Still prints 1
+      </code></pre>
+      <div class="demo-output" id="demoScopeOut">
+        <button id="scopeCountBtn" class="bg-yellow-500 px-3 py-1 rounded text-white font-bold">Add Global Count</button>
+        <button id="scopeLocalBtn" class="bg-yellow-500 px-3 py-1 rounded text-white font-bold">Local Scope Test</button>
+        <div id="scopeCountResult" style="margin-top: 0.5em;"></div>
+      </div>
+      <script>
+        let scopeGlobalCounter = 0;
+        document.addEventListener("DOMContentLoaded", function(){
+          let btnG = document.getElementById('scopeCountBtn');
+          let btnL = document.getElementById('scopeLocalBtn');
+          let res = document.getElementById('scopeCountResult');
+          if(btnG && res) btnG.onclick=function(){
+            scopeGlobalCounter++;
+            res.textContent = 'Global Counter: ' + scopeGlobalCounter;
+          }
+          if(btnL && res) btnL.onclick=function(){
+            let scopeGlobalCounter = 10; // local
+            scopeGlobalCounter++;
+            res.textContent = 'Local Counter in Function: ' + scopeGlobalCounter + ' (Global stays at ' + window.scopeGlobalCounter + ')';
+          }
+        });
+      </script>
+    </section>
+
+    <!-- Practice & Applied Examples -->
+    <section id="practice" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Try These: Function & Scope Challenges</h2>
+      <ul class="list-decimal ml-8 space-y-2 text-gray-700">
+        <li>
+          Write a function <code>multiply(x, y)</code> that returns the result of multiplying two numbers. Call it with your favorite numbers.
+        </li>
+        <li>
+          Make a function called <code>checkLogin(username)</code> that shows "Welcome" or "Try again" based on a username you define.
+        </li>
+        <li>
+          Create a <b>counter</b> webpage: button increases a value, using a function to update the DOM.
+        </li>
+        <li>
+          Advanced: In a loop, call a function that logs each color in <code>['red','yellow','blue']</code> with its index.
+        </li>
+        <li>
+          Bonus: Try creating a function INSIDE another function, and see which variables are available (nested scope).
+        </li>
+      </ul>
+
+      <h3 class="text-base font-semibold text-yellow-700 mt-3 mb-2">Bonus: Functions and Scope in HTML & CSS</h3>
+      <pre><code>
+&lt;button onclick="increaseFont()"&gt;Bigger Text&lt;/button&gt;
+&lt;div id="demoText" style="font-size: 1em;"&gt;Change my size!&lt;/div&gt;
+&lt;script&gt;
+function increaseFont() {
+  let text = document.getElementById("demoText");
+  let size = window.demoSize || 1;
+  size += 0.15;
+  text.style.fontSize = size + "em";
+  window.demoSize = size;
+}
+&lt;/script&gt;
+      </code></pre>
+      <p class="mb-2 text-gray-700">Tweak the function to shrink text, or reset it! This mixes functions, variables, DOM and scope for practical hands-on experience.</p>
+    </section>
+
+    <!-- Human Tips -->
+    <section class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-semibold text-yellow-600 mb-2 flex items-center gap-2">
+        <i class="bi bi-person-badge"></i>Habits & Real-World Advice
+      </h2>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2">
+        <li>Always use <code>let</code> or <code>const</code> for variables unless attached to <code>window</code>.</li>
+        <li>Use functions to break up big code into small chunks. Easier to debug!</li>
+        <li>Avoid naming conflicts by keeping variables scoped where needed.</li>
+        <li>If stuck, write out variable lifetimes on paper—it helps spot scope issues.</li>
+      </ul>
+    </section>
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-yellow-500 text-white font-semibold hover:bg-yellow-600 transition">
+        <i class="bi bi-arrow-left"></i> Back to Resources
+      </a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+</body>
+</html>
