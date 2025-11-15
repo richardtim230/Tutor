@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript: Arrays & Array Methods | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(59,130,246,.08), 0 2px 8px rgba(0,0,0,.03);
+      border: 1px solid #e0e7ff;
+    }
+    pre, .solution-code {
+      border-radius: 0.7rem;
+      background: #2d3340;
+      color: #93c5fd;
+      padding: 1em;
+      font-size: 1em;
+      overflow-x: auto;
+      word-break: break-all;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      margin-top: 0.6em;
+    }
+    .demo-output {
+      background: #dbeafe;
+      color: #1e40af;
+      border-radius: 0.5rem;
+      padding: 0.7em 1.2em;
+      font-weight: 600;
+      margin: 0.6em 0 1.2em 0;
+      border: 1px solid #93c5fd;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.08em;
+      display: inline-block;
+      min-width: 120px;
+    }
+    .show-btn {
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      padding: 0.3em 1.1em;
+      border-radius: 0.5em;
+      margin: 0.5em 0 0.3em 0;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .show-btn:hover { background: #2563eb; }
+    .hidden { display: none; }
+    .highlight {
+      background: #bae6fd;
+      color: #0ea5e9;
+      border-radius: 0.3rem;
+      padding: 0.1em 0.3em;
+      font-weight: bold;
+    }
+    .explain { color: #374151; margin-bottom: 1.2em; }
+    @media (max-width:900px) {
+      .glass-card, pre, .solution-code { font-size: 0.98em; }
+      .demo-output { font-size: 1em; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-blue-50 via-blue-100 to-white min-h-screen">
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-braces text-3xl text-blue-500"></i>
+      <h1 class="text-2xl font-extrabold text-blue-800 tracking-tight">
+        JavaScript: Arrays & Array Methods
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm flex-wrap">
+      <a href="resource.html" class="text-blue-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="#connect" class="text-blue-600 hover:underline flex items-center gap-1"><i class="bi bi-link"></i>Connecting Topics</a>
+      <a href="#core" class="text-blue-600 hover:underline flex items-center gap-1"><i class="bi bi-lightbulb"></i>Why Arrays?</a>
+      <a href="#create" class="text-blue-600 hover:underline flex items-center gap-1"><i class="bi bi-box"></i>Creating Arrays</a>
+      <a href="#access" class="text-blue-600 hover:underline flex items-center gap-1"><i class="bi bi-cursor"></i>Reading & Updating</a>
+      <a href="#looping" class="text-blue-600 hover:underline flex items-center gap-1"><i class="bi bi-repeat"></i>Looping</a>
+      <a href="#methods" class="text-blue-600 hover:underline flex items-center gap-1"><i class="bi bi-tools"></i>Common Methods</a>
+      <a href="#practice" class="text-blue-600 hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Practice</a>
+    </nav>
+  </header>
+
+  <main class="max-w-3xl mx-auto pt-10 pb-16 px-2 sm:px-4">
+
+    <!-- Connection to Previous Topics -->
+    <section id="connect" class="glass-card p-6 mb-7">
+      <h2 class="text-xl font-bold text-blue-600 mb-2 flex items-center gap-2"><i class="bi bi-link"></i>Putting the Puzzle Together</h2>
+      <div class="explain mb-2">
+        So far, you've worked with variables, loops, conditionals, and simple data types. What if you need to store a group—like a list of colors, scores, or students? That's where <span class="highlight">arrays</span> step in. They help you level up your coding: combining memory, math, and logic into dynamic, real-world apps.
+      </div>
+    </section>
+
+    <!-- Why Arrays -->
+    <section id="core" class="glass-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-blue-600 mb-3 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Why Arrays?</h2>
+      <div class="explain">
+        An array is like a storage box with slots, each slot holding a value. Want to keep track of all your grades, or every button on a page? Use an array. Think: <span class="highlight">let fruits = ["apple", "banana", "kiwi"]</span>
+      </div>
+      <pre><code>
+let scores = [98, 87, 79];
+console.log(scores[0]); // 98 (first item)
+      </code></pre>
+      <div class="demo-output" id="boxDemo"></div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let scores = [98, 87, 79];
+          document.getElementById("boxDemo").innerHTML = "First score: " + scores[0];
+        });
+      </script>
+      <div class="explain">
+        Arrays keep related data together and make it easy to add, remove, or update information in bulk.
+      </div>
+    </section>
+
+    <!-- Creating Arrays -->
+    <section id="create" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-blue-600 mb-2 flex items-center gap-2"><i class="bi bi-box"></i>Creating Arrays</h2>
+      <div class="explain">You can set up an array with square brackets <code>[]</code> and separate items by commas. Items can be numbers, text, or even other arrays.</div>
+      <pre><code>
+let fruits = ["apple", "banana", "kiwi"];
+let mixed = [8, "cat", true, [1,2]];
+      </code></pre>
+      <div class="explain">
+        <b>Tip:</b> You can have values of any type, but usually keep one kind for clarity.
+      </div>
+    </section>
+
+    <!-- Access & Update -->
+    <section id="access" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-blue-600 mb-2 flex items-center gap-2"><i class="bi bi-cursor"></i>Reading & Updating Array Items</h2>
+      <div class="explain">Array positions start at <span class="highlight">0</span>. Access with square brackets, and re-assign directly.
+      </div>
+      <pre><code>
+let pets = ["dog", "cat", "parrot"];
+let secondPet = pets[1];      // "cat"
+pets[2] = "hamster";          // Change "parrot" to "hamster"
+      </code></pre>
+      <div class="demo-output" id="accessDemo"></div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let pets = ["dog", "cat", "parrot"];
+          let secondPet = pets[1];
+          pets[2] = "hamster";
+          document.getElementById("accessDemo").innerHTML = "Second pet: " + secondPet + "<br>Third pet is now: " + pets[2];
+        });
+      </script>
+      <div class="explain">
+        <b>Why?</b> Arrays let you keep, change, and refer to any item by its position. That makes organizing lots of data much simpler.
+      </div>
+    </section>
+
+    <!-- Looping Over Arrays -->
+    <section id="looping" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-blue-600 mb-2 flex items-center gap-2"><i class="bi bi-repeat"></i>Looping Over Arrays</h2>
+      <div class="explain">Arrays become powerful when you process every value inside them. You can use a <code>for</code> loop, <code>for...of</code>, or <code>forEach</code> to move through each item.</div>
+      <pre><code>
+let colors = ["red", "blue", "yellow"];
+for (let i = 0; i &lt; colors.length; i++) {
+  console.log(colors[i]);
+}
+// or
+for (let color of colors) {
+  console.log(color);
+}
+      </code></pre>
+      <div class="demo-output" id="loopDemo"></div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let colors = ["red", "blue", "yellow"];
+          let ans = "";
+          for (let color of colors) {
+            ans += color + "<br>";
+          }
+          document.getElementById("loopDemo").innerHTML = ans;
+        });
+      </script>
+    </section>
+
+    <!-- Common Array Methods -->
+    <section id="methods" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-blue-600 mb-2 flex items-center gap-2"><i class="bi bi-tools"></i>Common Array Methods</h2>
+
+      <div class="explain"><b>push()</b> adds an item to the end</div>
+      <pre><code>
+let fruits = ["apple", "banana"];
+fruits.push("lemon");
+// ["apple", "banana", "lemon"]
+      </code></pre>
+      <div class="explain"><b>pop()</b> removes the last item</div>
+      <pre><code>
+let nums = [10, 20, 30];
+let lastNum = nums.pop();
+// nums = [10, 20] , lastNum = 30
+      </code></pre>
+      <div class="explain"><b>shift()</b> and <b>unshift()</b>: add/remove from the start</div>
+      <pre><code>
+let list = [1, 2, 3];
+list.unshift(0); // [0,1,2,3]
+list.shift();    // returns and removes 0, so [1,2,3]
+      </code></pre>
+      <div class="explain"><b>indexOf()</b>: find the position of an item</div>
+      <pre><code>
+let birds = ["parrot", "canary", "hawk"];
+birds.indexOf("canary"); // 1
+      </code></pre>
+      <div class="explain"><b>includes()</b>: check if an item is present</div>
+      <pre><code>
+let tools = ["pen", "book"];
+tools.includes("book"); // true
+      </code></pre>
+      <div class="explain"><b>join()</b>: turn an array into a string</div>
+      <pre><code>
+let letters = ["A", "B", "C"];
+let word = letters.join("-"); // "A-B-C"
+      </code></pre>
+      <div class="explain"><b>slice()</b>: copy out a part of an array</div>
+      <pre><code>
+let nums = [1, 2, 3, 4];
+let part = nums.slice(1, 3); // [2,3]
+      </code></pre>
+      <div class="explain"><b>map()</b>: make a new array by changing each item</div>
+      <pre><code>
+let nums = [1, 2, 3];
+let doubled = nums.map(function(n) { return n*2; }); // [2,4,6]
+      </code></pre>
+      <div class="explain"><b>filter()</b>: keep only items that pass a test</div>
+      <pre><code>
+let nums = [1, 2, 3, 4];
+let even = nums.filter(n => n % 2 === 0); // [2,4]
+      </code></pre>
+    </section>
+    
+    <!-- Practice Section -->
+    <section id="practice" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-blue-600 mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Practice (with Hidden Solutions)</h2>
+      <div class="mb-5">
+        <div class="explain mb-1">
+          1. Create an array of three fruits, then use <code>push()</code> to add another fruit and print the result.
+        </div>
+        <button class="show-btn" onclick="toggleSolution('sol1')">Show Solution</button>
+        <div id="sol1" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="fruits"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let fruits = ["apple", "banana", "kiwi"];
+    fruits.push("mango");
+    document.getElementById('fruits').textContent = fruits.join(", ");
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <div class="mb-5">
+        <div class="explain mb-1">
+          2. Given <code>["a","b","c","d"]</code>, remove the last item using <code>pop()</code> and show the final array.
+        </div>
+        <button class="show-btn" onclick="toggleSolution('sol2')">Show Solution</button>
+        <div id="sol2" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="letters"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let arr = ["a","b","c","d"];
+    arr.pop();
+    document.getElementById('letters').textContent = arr.join(", ");
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <div class="mb-5">
+        <div class="explain mb-1">
+          3. Use <code>filter()</code> to get only odd numbers from <code>[1,2,3,4,5]</code>.
+        </div>
+        <button class="show-btn" onclick="toggleSolution('sol3')">Show Solution</button>
+        <div id="sol3" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="odds"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let nums = [1,2,3,4,5];
+    let odds = nums.filter(num =&gt; num % 2 !== 0);
+    document.getElementById('odds').textContent = odds.join(", ");
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <div class="mb-5">
+        <div class="explain mb-1">
+          4. Using <code>map()</code>, change <code>[2,3,4]</code> into <code>[4,6,8]</code>
+        </div>
+        <button class="show-btn" onclick="toggleSolution('sol4')">Show Solution</button>
+        <div id="sol4" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="double"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let arr = [2,3,4];
+    let doubled = arr.map(n =&gt; n * 2);
+    document.getElementById('double').textContent = doubled.join(", ");
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <script>
+        function toggleSolution(id) {
+          var el = document.getElementById(id);
+          el.classList.toggle('hidden');
+        }
+      </script>
+      <div class="explain mb-2">
+        Try your ideas first before revealing the solution.
+      </div>
+    </section>
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-blue-500 text-white font-semibold hover:bg-blue-600 transition">
+        <i class="bi bi-arrow-left"></i> Back to Resources
+      </a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-blue-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Events & Listeners | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    html, body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(251,191,36,.085), 0 2px 8px rgba(0,0,0,.04);
+      border: 1px solid #ffe29c;
+    }
+    pre { border-radius: 0.7rem; background: #1f2937; color: #fbbf24; padding: 1em; font-size: 1em; overflow-x: auto; }
+    code { font-family: 'Fira Mono', 'Consolas', monospace; }
+    .highlight { background: #fbca36; color: #975a00; border-radius: 0.3rem; padding: 0.1em 0.3em; font-weight: bold;}
+    .demo-output {
+      background: #fde68a;
+      color: #6b4800;
+      border-radius: 0.5rem;
+      padding: 0.8em 1.4em;
+      font-weight: 600;
+      margin-bottom: 0.5em;
+      border: 1px solid #fff7d6;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.12em;
+      box-shadow: 0 2px 12px #fbbf2466;
+      min-width: 140px;
+      text-align: center;
+    }
+    @media (max-width:900px) {
+      .glass-card, pre { font-size: 0.98em; padding: 1em;}
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-yellow-50 via-yellow-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-lightning text-3xl text-yellow-500"></i>
+      <h1 class="text-2xl font-extrabold text-yellow-700 tracking-tight">
+        JavaScript: Events & Listeners
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm flex-wrap">
+      <a href="resource.html" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="#connect" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-link"></i>How This Connects</a>
+      <a href="#what-are-events" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-question-circle"></i>What Are Events?</a>
+      <a href="#adding-listeners" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-ear"></i>Adding Listeners</a>
+      <a href="#examples" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Real Examples</a>
+      <a href="#practice" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-lightbulb"></i>Practice!</a>
+    </nav>
+  </header>
+  <main class="max-w-3xl mx-auto pt-10 pb-20 px-2 sm:px-4">
+
+    <!-- Connects to Previous -->
+    <section id="connect" class="glass-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-yellow-600 mb-2 flex items-center gap-2">
+        <i class="bi bi-link"></i>How Does “Events & Listeners” Fit With What You Just Learned?
+      </h2>
+      <p class="mb-4 text-gray-700">
+        If you’ve checked out <b>Variables & Data Types</b>, <b>Functions & Scope</b>, and especially <b>DOM Manipulation</b> (making real-time changes to web pages), you already have all the ingredients for web magic!
+      </p>
+      <ul class="list-disc ml-7 text-gray-700 space-y-2 mb-4">
+        <li><b>Variables:</b> Store and update information about the page</li>
+        <li><b>Functions:</b> Bundle up actions you want to run, like updating content or changing styles</li>
+        <li><b>DOM Manipulation:</b> Actually change the page based on your logic</li>
+      </ul>
+      <p class="mb-2 text-gray-700">
+        But… <b>when</b> do you actually call these functions? How do you know <i>when</i> to update, react, or run some code?
+      </p>
+      <p class="mb-1 text-gray-700"><b>That's where Events & Listeners jump in!</b> They act as the “trigger”—the thing that says: “Hey JS, NOW is the right time to run that code!”</p>
+    </section>
+    
+    <!-- What Are Events -->
+    <section id="what-are-events" class="glass-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-yellow-600 mb-3 flex items-center gap-2">
+        <i class="bi bi-question-circle"></i>What Are Events (And Why Should You Care?)
+      </h2>
+      <p class="mb-4 text-gray-700">
+        In web pages, an <span class="highlight">event</span> is anything the user (or browser) does: a click, hovering the mouse, typing in a box, pressing a key, submitting a form, scrolling, resizing, and more!
+      </p>
+      <ul class="list-disc ml-7 text-gray-700 space-y-1 mb-4">
+        <li><b>Click:</b> Mouse clicks a button or link</li>
+        <li><b>Input:</b> User types in a text area or box</li>
+        <li><b>Submit:</b> A form is sent</li>
+        <li><b>Mouseover / Mouseout:</b> Mouse moves over or away from an element</li>
+        <li><b>Change:</b> Input/select/checkbox changes</li>
+      </ul>
+      <p class="text-gray-700">
+        <span class="highlight">Listeners</span> are JavaScript’s way of “listening” for those events—and running your function whenever the event fires.
+      </p>
+    </section>
+
+    <!-- How to Listen -->
+    <section id="adding-listeners" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-ear"></i>How To Add an Event Listener (With Real Human Words)</h2>
+      <p class="mb-4 text-gray-700">
+        To “listen” for an event, you first select your element (just like in DOM Manipulation!), then use <span class="highlight">addEventListener</span> to attach the event and a function to call:
+      </p>
+      <pre><code>
+element.addEventListener("event", functionToRun);
+
+// Example:
+let btn = document.getElementById("magicBtn");
+btn.addEventListener("click", function() {
+  alert("Button clicked!");
+});
+      </code></pre>
+      <p class="mt-2 text-gray-700">
+        <b>Why?</b> This tells JS: “Whenever someone clicks this button, do something special (here, show an alert box).”
+      </p>
+    </section>
+
+    <!-- Real Examples, Explained -->
+    <section id="examples" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Hands-On Examples & the “Why” Behind Each</h2>
+      
+      <h3 class="text-base font-semibold text-yellow-700 mb-1">1. Click a Button, Change a Color!</h3>
+      <pre><code>
+// HTML
+&lt;button id="colorBtn"&gt;Make it Blue!&lt;/button&gt;
+
+// JavaScript
+document.getElementById("colorBtn").addEventListener("click", function() {
+  document.body.style.background = "skyblue";
+});
+      </code></pre>
+      <div class="demo-output" id="bgDemo">
+        <button id="demo-colorBtn" class="bg-yellow-500 px-3 py-1 rounded text-white font-bold">Make it Blue!</button>
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let btn = document.getElementById("demo-colorBtn");
+          if (btn) btn.addEventListener("click", function() {
+            document.body.style.background = "skyblue";
+          });
+        });
+      </script>
+      <p class="mb-4 text-gray-700">
+        <b>Why?</b> All your past knowledge—variables (for colors), functions (to run code), DOM selection (get button)—join forces. But until <span class="highlight">this click event</span>, none of it happens. Now, user action triggers it!
+      </p>
+
+      <h3 class="text-base font-semibold text-yellow-700 mb-1">2. Live Typing Feedback (Input Event)</h3>
+      <pre><code>
+// HTML
+&lt;input id="userName"&gt;
+&lt;span id="greetOut"&gt;&lt;/span&gt;
+
+// JS
+let inp = document.getElementById("userName");
+let out = document.getElementById("greetOut");
+inp.addEventListener("input", function() {
+  out.textContent = "Hi, " + inp.value + "!";
+});
+      </code></pre>
+      <div class="demo-output" id="inputDemo">
+        <input id="demo-userName" class="border px-2 py-1 rounded" placeholder="Type your name...">
+        <span id="demo-greetOut" class="ml-2"></span>
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let inp = document.getElementById("demo-userName");
+          let out = document.getElementById("demo-greetOut");
+          if (inp && out) {
+            inp.addEventListener("input", function() {
+              out.textContent = inp.value ? "Hi, " + inp.value + "!" : "";
+            });
+          }
+        });
+      </script>
+      <p class="mb-4 text-gray-700">
+        <b>Why?</b> Previously you learned to update elements via JS. Now, you can do it every single time the user types! Listeners make apps interactive (think: search bars, instant feedback, chat).
+      </p>
+
+      <h3 class="text-base font-semibold text-yellow-700 mb-1">3. Mouse Hover Interactivity</h3>
+      <pre><code>
+// HTML
+&lt;div id="hoverBox" style="width:80px;height:40px;background:gold;"&gt;Hover me!&lt;/div&gt;
+
+// JS
+let box = document.getElementById("hoverBox");
+box.addEventListener("mouseover", function() {
+  box.style.background = "salmon";
+});
+box.addEventListener("mouseout", function() {
+  box.style.background = "gold";
+});
+      </code></pre>
+      <div class="demo-output" id="hoverDemo">
+        <div id="demo-hoverBox" style="width:80px;height:40px;background:gold;display:inline-block;font-weight:500;line-height:40px;text-align:center;">Hover me!</div>
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let box = document.getElementById("demo-hoverBox");
+          if (box) {
+            box.addEventListener("mouseover", function() { box.style.background = "salmon"; });
+            box.addEventListener("mouseout", function() { box.style.background = "gold"; });
+          }
+        });
+      </script>
+      <p class="mb-4 text-gray-700">
+        <b>Why?</b> <span class="highlight">mouseover</span> and <span class="highlight">mouseout</span> listeners give instant, visual feedback. This is how you can make menus, highlights, tooltips—whatever!
+      </p>
+
+      <h3 class="text-base font-semibold text-yellow-700 mb-1">4. The Form Submit “Magic Stopper”</h3>
+      <pre><code>
+// HTML
+&lt;form id="myForm"&gt;
+  &lt;input id="favColor" placeholder="Favorite color?"&gt;
+  &lt;button&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+
+// JS
+let form = document.getElementById("myForm");
+form.addEventListener("submit", function(event) {
+  event.preventDefault(); // stops the reload
+  let color = document.getElementById("favColor").value;
+  alert("Cool choice: " + color);
+});
+      </code></pre>
+      <div class="demo-output" id="formDemo">
+        <form id="demo-myForm" class="flex items-center gap-2" onsubmit="return false;">
+          <input id="demo-favColor" class="border px-2 py-1 rounded" placeholder="Favorite color?">
+          <button class="px-3 py-1 rounded bg-yellow-500 text-white font-bold">Submit</button>
+        </form>
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let form = document.getElementById("demo-myForm");
+          if (form) {
+            form.addEventListener("submit", function(e) {
+              e.preventDefault();
+              let color = document.getElementById("demo-favColor").value;
+              alert(color ? `Cool choice: ${color}` : "Type your favorite color!");
+            });
+          }
+        });
+      </script>
+      <p class="mb-2 text-gray-700">
+        <b>Why?</b> HTML forms usually reload the page. <span class="highlight">event.preventDefault()</span> makes it stay put—so you control what happens after submit, and can update content (just like DOM Manipulation)!
+      </p>
+    </section>
+
+    <!-- Practice Challenges -->
+    <section id="practice" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2">
+        <i class="bi bi-lightbulb"></i>Mini Practice: Test Your Event Powers!
+      </h2>
+      <ul class="list-decimal ml-8 space-y-2 text-gray-700 mb-3">
+        <li>Create a button that toggles (shows/hides) a message on your page. (Hint: use a click event and play with <code>element.style.display</code>!)</li>
+        <li>Make a color picker input and change the background using the <code>change</code> event.</li>
+        <li>Have a counter that increases every time you click a button (Combine variables, click events, and DOM updates!)</li>
+        <li>
+          <b>Bonus:</b> Combine mouse “mouseenter” and “mouseleave” to double the size of a div and return to normal.
+        </li>
+      </ul>
+      <p class="text-gray-700 mt-2">
+        <b>Super Tip:</b> Whenever something needs to “happen” exactly when a user does something, stop and ask yourself: “what event should I listen for?”
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-yellow-500 text-white font-semibold hover:bg-yellow-600 transition">
+        <i class="bi bi-arrow-left"></i> Back to Resources
+      </a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+</body>
+</html>

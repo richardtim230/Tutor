@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript: Operators & Expressions | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(251,191,36,.07), 0 2px 8px rgba(0,0,0,.03);
+      border: 1px solid #ffe29c;
+    }
+    pre, .solution-code {
+      border-radius: 0.7rem;
+      background: #23272e;
+      color: #ffdf8d;
+      padding: 1em;
+      font-size: 1em;
+      overflow-x: auto;
+      word-break: break-all;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      margin-top: 0.6em;
+    }
+    .demo-output {
+      background: #fde68a;
+      color: #715600;
+      border-radius: 0.5rem;
+      padding: 0.7em 1.2em;
+      font-weight: 600;
+      margin: 0.6em 0 1.2em 0;
+      border: 1px solid #ffeeba;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.08em;
+      display: inline-block;
+      min-width: 120px;
+    }
+    .show-btn {
+      background: #fbbf24;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      padding: 0.3em 1.1em;
+      border-radius: 0.5em;
+      margin: 0.5em 0 0.3em 0;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .show-btn:hover { background: #e9b413; }
+    .hidden { display: none; }
+    .highlight { background: #fbca36; color: #975a00; border-radius: 0.3rem; padding: 0.1em 0.3em; font-weight: bold;}
+    .explain { color: #444; margin-bottom: 1.2em; }
+    @media (max-width:900px) {
+      .glass-card, pre, .solution-code { font-size: 0.98em; padding: 1em;}
+      .demo-output { font-size: 1em; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-yellow-50 via-yellow-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-arrow-left-right text-3xl text-yellow-500"></i>
+      <h1 class="text-2xl font-extrabold text-yellow-700 tracking-tight">
+        JavaScript: Operators & Expressions
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm flex-wrap">
+      <a href="resource.html" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="#connect" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-link"></i>Connecting Topics</a>
+      <a href="#core" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-lightbulb"></i>What & Why</a>
+      <a href="#arithmetic" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-calculator"></i>Arithmetic</a>
+      <a href="#assignment" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-chevron-right"></i>Assignment</a>
+      <a href="#comparison" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-equal"></i>Comparison</a>
+      <a href="#logical" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-diagram-3"></i>Logical</a>
+      <a href="#practice" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Practice</a>
+    </nav>
+  </header>
+
+  <main class="max-w-3xl mx-auto pt-10 pb-16 px-2 sm:px-4">
+
+    <!-- Connects to Previous -->
+    <section id="connect" class="glass-card p-6 mb-7">
+      <h2 class="text-xl font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-link"></i>Connecting with Previous Topics</h2>
+      <div class="explain">
+        In earlier topics, you learned how to:
+        <ul class="list-disc ml-7 mb-3">
+          <li>Store information using <b>variables</b></li>
+          <li>Bundle logic in <b>functions</b></li>
+          <li>Respond to the page and users with <b>DOM Manipulation</b> and <b>Events</b></li>
+        </ul>
+        As you start combining and comparing data, JavaScript needs a way to “do things” such as math, text operations, or checking conditions. These are handled by <span class="highlight">operators</span>. Whenever you see a plus, equals, or question mark in your code, you’re using them.
+      </div>
+    </section>
+
+    <!-- Core Concept -->
+    <section id="core" class="glass-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-yellow-600 mb-3 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Operators & Expressions: What and Why?</h2>
+      <div class="explain">
+        <b>Operators:</b> Symbols that tell JavaScript “do something” (add, subtract, check equality, etc.)<br>
+        <b>Expression:</b> Any chunk of code that produces a value. Think of it like a math problem or a question to JS.
+      </div>
+      <pre><code>
+// Example expression
+let price = 12 + 3;   // '+' is an operator, 12 + 3 is an expression, price gets 15
+
+let isExpensive = price > 15; // '>' compares, returns true or false
+      </code></pre>
+      <div class="explain">
+        Operators and expressions are everywhere, from variables to conditions, loops, and DOM updates.
+      </div>
+    </section>
+
+    <!-- Arithmetic Operators -->
+    <section id="arithmetic" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-calculator"></i>Arithmetic Operators</h2>
+      <div class="explain">
+        Arithmetic operators let JavaScript perform basic math: <code>+</code> (add), <code>-</code> (subtract), <code>*</code> (multiply), <code>/</code> (divide), <code>%</code> (remainder).
+      </div>
+      <pre><code>
+let a = 8, b = 5;
+let sum = a + b;      // 13
+let diff = a - b;     // 3
+let prod = a * b;     // 40
+let quot = a / b;     // 1.6
+let rem = a % b;      // 3
+      </code></pre>
+      <div class="demo-output" id="arithResult">
+        <span id="arithLive"></span>
+      </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let a = 8, b = 5;
+          let result = "";
+          result += "Sum: " + (a + b) + "<br>";
+          result += "Difference: " + (a - b) + "<br>";
+          result += "Product: " + (a * b) + "<br>";
+          result += "Quotient: " + (a / b) + "<br>";
+          result += "Remainder: " + (a % b);
+          document.getElementById("arithLive").innerHTML = result;
+        });
+      </script>
+      <div class="explain">
+        <b>Why?</b> Any time you need to calculate values or change existing ones, arithmetic operators are your tools.
+      </div>
+    </section>
+
+    <!-- Assignment Operators -->
+    <section id="assignment" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-chevron-right"></i>Assignment Operators</h2>
+      <div class="explain">
+        Assignment operators assign values to variables. Most common is <code>=</code>, but you’ll also see <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code> (update a value with math at once).
+      </div>
+      <pre><code>
+let counter = 10;
+counter += 5;  // Same as: counter = counter + 5;  Now counter is 15
+counter -= 3;  // counter = counter - 3;  Now counter is 12
+      </code></pre>
+      <div class="explain">
+        <b>Why?</b> Assignment operators save you time and reduce confusion when updating variable values.
+      </div>
+    </section>
+ 
+    <!-- Comparison Operators -->
+    <section id="comparison" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-equal"></i>Comparison Operators</h2>
+      <div class="explain">
+        These help JS decide if something is the same or different.
+        <ul class="list-disc ml-7 mb-3">
+          <li><code>==</code> and <code>===</code>: Equality (<code>===</code> is “strict”—checks both value and type)</li>
+          <li><code>!=</code> and <code>!==</code>: Not equal</li>
+          <li><code>&lt; &gt; &lt;= &gt;=</code>: Less/greater than</li>
+        </ul>
+      </div>
+      <pre><code>
+let x = 10;
+let y = "10";
+x == y      // true  (just value: same)
+x === y     // false (type is different: number vs string)
+x != 7      // true
+x > 5       // true
+      </code></pre>
+      <div class="explain">
+        <b>Why?</b> You use these operators every time you need to check conditions in if statements, loops, and validations.
+      </div>
+    </section>
+  
+    <!-- Logical Operators -->
+    <section id="logical" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-diagram-3"></i>Logical Operators</h2>
+      <div class="explain">
+        <b>Logical operators</b> let your code ask about more than one thing at once:
+        <ul class="list-disc ml-7">
+          <li><code>&&</code> (and): true only if both sides are true</li>
+          <li><code>||</code> (or): true if at least one side is true</li>
+          <li><code>!</code> (not): reverses a true/false result</li>
+        </ul>
+      </div>
+      <pre><code>
+let age = 20;
+let hasTicket = true;
+
+if (age >= 18 && hasTicket) {
+  // Both conditions true: you can enter
+}
+      </code></pre>
+      <div class="explain">
+        <b>Why?</b> Use these to combine multiple conditions in programs, like login forms or feature gating.
+      </div>
+    </section>
+  
+    <!-- Mini Practice -->
+    <section id="practice" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Practice – Try These (Solutions Hidden!)</h2>
+      
+      <div class="mb-5">
+        <div class="explain mb-1">1. A script that takes two numbers and shows their sum, difference, product, and quotient on button click.</div>
+        <button class="show-btn" onclick="toggleSolution('sol1')">Show Solution</button>
+        <div id="sol1" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;input id="num1" placeholder="First number"&gt;
+  &lt;input id="num2" placeholder="Second number"&gt;
+  &lt;button onclick="calc()"/&gt;Calculate&lt;/button&gt;
+  &lt;div id="result"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function calc() {
+      let n1 = Number(document.getElementById('num1').value);
+      let n2 = Number(document.getElementById('num2').value);
+      let sum = n1 + n2;
+      let diff = n1 - n2;
+      let prod = n1 * n2;
+      let quo = n2 !== 0 ? (n1 / n2) : 'Cannot divide by zero';
+      document.getElementById('result').innerHTML =
+        'Sum: ' + sum + '&lt;br&gt;' +
+        'Difference: ' + diff + '&lt;br&gt;' +
+        'Product: ' + prod + '&lt;br&gt;' +
+        'Quotient: ' + quo;
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <div class="mb-5">
+        <div class="explain mb-1">2. An age checker: Given a user’s number input, use an if/else statement and comparison operators to say “You are a minor” or “You are an adult.”</div>
+        <button class="show-btn" onclick="toggleSolution('sol2')">Show Solution</button>
+        <div id="sol2" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;input id="age" placeholder="Enter age"&gt;
+  &lt;button onclick="checkAge()"/&gt;Check&lt;/button&gt;
+  &lt;div id="ageResult"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function checkAge() {
+      let age = Number(document.getElementById('age').value);
+      if (age >= 18) {
+        document.getElementById('ageResult').textContent = "You are an adult";
+      } else if (age > 0) {
+        document.getElementById('ageResult').textContent = "You are a minor";
+      } else {
+        document.getElementById('ageResult').textContent = "Please enter a valid age";
+      }
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <div class="mb-5">
+        <div class="explain mb-1">3. Two inputs: If both are filled, print “Both filled”; else, print “Please fill both.” Use logical AND.</div>
+        <button class="show-btn" onclick="toggleSolution('sol3')">Show Solution</button>
+        <div id="sol3" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;input id="a" placeholder="A"&gt;
+  &lt;input id="b" placeholder="B"&gt;
+  &lt;button onclick="checkBoth()"/&gt;Check&lt;/button&gt;
+  &lt;div id="bothResult"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function checkBoth() {
+      let a = document.getElementById('a').value.trim();
+      let b = document.getElementById('b').value.trim();
+      if (a && b) {
+        document.getElementById('bothResult').textContent = "Both filled";
+      } else {
+        document.getElementById('bothResult').textContent = "Please fill both";
+      }
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <div class="mb-5">
+        <div class="explain mb-1">4. An even/odd checker: Enter a number. On button click, display “Even” or “Odd” using the modulus operator <code>%</code>.</div>
+        <button class="show-btn" onclick="toggleSolution('sol4')">Show Solution</button>
+        <div id="sol4" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;input id="num" placeholder="Number"&gt;
+  &lt;button onclick="checkEvenOdd()"/&gt;Check&lt;/button&gt;
+  &lt;div id="evenOddResult"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function checkEvenOdd() {
+      let num = Number(document.getElementById('num').value);
+      if (isNaN(num)) {
+        document.getElementById('evenOddResult').textContent = "Please enter a number";
+      } else if (num % 2 == 0) {
+        document.getElementById('evenOddResult').textContent = "Even";
+      } else {
+        document.getElementById('evenOddResult').textContent = "Odd";
+      }
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <script>
+        function toggleSolution(id) {
+          var el = document.getElementById(id);
+          el.classList.toggle('hidden');
+        }
+      </script>
+      <div class="explain mb-2">
+        Try these in your own editor. Solutions are hidden until you want them—you have full control over your learning flow.
+      </div>
+    </section>
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-yellow-500 text-white font-semibold hover:bg-yellow-600 transition">
+        <i class="bi bi-arrow-left"></i> Back to Resources
+      </a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+</body>
+</html>

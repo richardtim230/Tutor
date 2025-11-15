@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript: Objects & Object Methods | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(99,102,241,.11), 0 2px 8px rgba(30,64,175,.06);
+      border: 1px solid #e0e7ff;
+    }
+    pre, .solution-code {
+      border-radius: 0.7rem;
+      background: #2d3340;
+      color: #818cf8;
+      padding: 1em;
+      font-size: 1em;
+      overflow-x: auto;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      margin-top: 0.6em;
+    }
+    .demo-output {
+      background: #dbeafe;
+      color: #1e40af;
+      border-radius: 0.5rem;
+      padding: 0.7em 1.2em;
+      font-weight: 600;
+      margin: 0.6em 0 1.2em 0;
+      border: 1px solid #818cf8;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.08em;
+      display: inline-block;
+    }
+    .show-btn {
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      padding: 0.3em 1.1em;
+      border-radius: 0.5em;
+      margin: 0.5em 0 0.3em 0;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .show-btn:hover { background: #312e81; }
+    .hidden { display: none; }
+    .highlight {
+      background: #a5b4fc;
+      color: #312e81;
+      border-radius: 0.3rem;
+      padding: 0.08em 0.24em;
+      font-weight: bold;
+    }
+    .explain { color: #374151; margin-bottom: 1.2em; }
+    h1, h2, h3 { color: #312e81; }
+    @media (max-width:900px) {
+      .glass-card, pre, .solution-code { font-size: 0.97em; }
+      .demo-output { font-size: 1em; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+<header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <i class="bi bi-boxes text-3xl text-indigo-500"></i>
+    <h1 class="text-2xl font-extrabold tracking-tight">
+      JavaScript: Objects & Object Methods
+    </h1>
+  </div>
+  <nav class="mt-2 flex gap-2 text-sm flex-wrap text-indigo-700">
+    <a href="resource.html" class="hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    <a href="#connect" class="hover:underline flex items-center gap-1"><i class="bi bi-link"></i>Connecting Topics</a>
+    <a href="#core" class="hover:underline flex items-center gap-1"><i class="bi bi-lightbulb"></i>What & Why?</a>
+    <a href="#create" class="hover:underline flex items-center gap-1"><i class="bi bi-box"></i>Creating Objects</a>
+    <a href="#access" class="hover:underline flex items-center gap-1"><i class="bi bi-cursor"></i>Reading & Updating</a>
+    <a href="#methods" class="hover:underline flex items-center gap-1"><i class="bi bi-tools"></i>Object Methods</a>
+    <a href="#iterate" class="hover:underline flex items-center gap-1"><i class="bi bi-repeat"></i>Looping Objects</a>
+    <a href="#practice" class="hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Practice</a>
+  </nav>
+</header>
+
+<main class="max-w-3xl mx-auto pt-10 pb-16 px-2 sm:px-4">
+
+  <section id="connect" class="glass-card p-6 mb-7">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2"><i class="bi bi-link"></i>Connecting with Previous Topics</h2>
+    <div class="explain mb-2">
+      Variables store single values, arrays are used for lists, loops are for repetition, and functions organize reusable code. Objects are the next step, letting you group different, named properties or methods together. This structure keeps complex code organized and readable.
+    </div>
+  </section>
+
+  <section id="core" class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-3 flex items-center gap-2"><i class="bi bi-lightbulb"></i>What Are Objects?</h2>
+    <div class="explain">
+      An object organizes information with key-value pairs called properties. It can also have methods, which are actions attached to an object.
+    </div>
+    <pre><code>
+let car = {
+  brand: "Toyota",
+  model: "Corolla",
+  year: 2021
+};
+    </code></pre>
+    <div class="demo-output" id="carDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let car = { brand: "Toyota", model: "Corolla", year: 2021 };
+        document.getElementById("carDemo").innerHTML = "Brand: " + car.brand + "<br>Model: " + car.model;
+      });
+    </script>
+    <div class="explain">
+      This is more efficient and more readable than declaring multiple separate variables for each property.
+    </div>
+    <div class="explain">
+      You can build objects for anything, such as users, posts, settings, transactions, animals, events, or products.
+    </div>
+    <pre><code>
+let profile = {
+  username: "codecxtutor",
+  age: 25,
+  isAdmin: false,
+  tags: ["moderator", "active"]
+};
+
+let article = {
+  id: 3,
+  title: "Intro to JS Objects",
+  published: true,
+  comments: []
+};
+    </code></pre>
+  </section>
+
+  <section id="create" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-box"></i>Creating and Modifying Objects</h2>
+    <div class="explain">
+      You can use curly braces to make a new object, assigning values with colons. Add properties or methods after object creation using dot or bracket notation.
+    </div>
+    <pre><code>
+let book = {};
+book.title = "Beginner JavaScript";
+book.year = 2020;
+book["pages"] = 150;
+    </code></pre>
+    <div class="explain">
+      To update or remove properties:
+      <pre><code>
+book.year = 2022;            // update
+delete book.pages;           // remove
+      </code></pre>
+      To check if a property exists:
+      <pre><code>
+"title" in book;             // true
+"author" in book;            // false
+      </code></pre>
+    </div>
+  </section>
+
+  <section id="access" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-cursor"></i>Reading Properties and Access Patterns</h2>
+    <div class="explain">
+      Use dot notation when you know the property name:
+    </div>
+    <pre><code>
+let user = {name: "Aminat", age: 18};
+console.log(user.name);            // "Aminat"
+    </code></pre>
+    <div class="explain">
+      Use bracket notation if the key is stored in a variable or has special characters:
+    </div>
+    <pre><code>
+let item = { "data-type": "json" };
+console.log(item["data-type"]);
+let prop = "age";
+console.log(user[prop]);           
+    </code></pre>
+    <div class="demo-output" id="accessDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let user = {name: "Aminat", age: 18};
+        let item = { "data-type": "json" };
+        let output = "Dot: " + user.name + "<br>Bracket: " + item["data-type"];
+        document.getElementById("accessDemo").innerHTML = output;
+      });
+    </script>
+  </section>
+
+  <section id="methods" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-tools"></i>Object Methods</h2>
+    <div class="explain">
+      A method is a function attached to an object. Methods let objects perform actions using their own data.
+    </div>
+    <pre><code>
+let student = {
+  name: "Frank",
+  greet: function() {
+    return "Hello, I am " + this.name;
+  }
+};
+student.greet(); // "Hello, I am Frank"
+    </code></pre>
+    <div class="explain">
+      <span class="highlight">this</span> lets you refer to the object the method belongs to.
+    </div>
+    <pre><code>
+let circle = {
+  radius: 5,
+  area: function() {
+    return Math.PI * this.radius ** 2;
+  }
+};
+circle.area(); // 78.5398...
+    </code></pre>
+    <div class="demo-output" id="methodDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let student = {
+          name: "Frank",
+          greet: function() { return "Hello, I am " + this.name; }
+        };
+        let circle = {
+          radius: 5,
+          area: function() { return Math.PI * this.radius ** 2; }
+        };
+        document.getElementById("methodDemo").innerHTML = 
+          student.greet() + "<br>Area: " + circle.area().toFixed(2);
+      });
+    </script>
+  </section>
+
+  <section id="iterate" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-repeat"></i>Looping Through Object Properties</h2>
+    <div class="explain">
+      Use <code>for...in</code> to loop through all keys in an object. For getting property names and values as arrays, use static methods:
+    </div>
+    <pre><code>
+let phone = { brand: "Samsung", os: "Android", price: 500 };
+for (let key in phone) {
+  console.log(key + ": " + phone[key]);
+}
+Object.keys(phone); // ["brand","os","price"]
+Object.values(phone); // ["Samsung","Android",500]
+Object.entries(phone); // [["brand","Samsung"],["os","Android"],["price",500]]
+    </code></pre>
+    <div class="demo-output" id="iterateDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let phone = { brand: "Samsung", os: "Android", price: 500 };
+        let entries = Object.entries(phone);
+        let result = '';
+        for (let [k, v] of entries) result += k + ": " + v + "<br>";
+        document.getElementById("iterateDemo").innerHTML = result;
+      });
+    </script>
+    <div class="explain">
+      These array methods make it easy to transform or search all properties at once.
+    </div>
+  </section>
+
+  <section id="practice" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Practice (with Hidden Solutions)</h2>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        1. Define an object <code>pet</code> with keys <code>name</code> and <code>species</code>. Print both values using dot notation.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol1')">Show Solution</button>
+      <div id="sol1" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="petOut"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let pet = { name: "Rex", species: "dog" };
+    document.getElementById('petOut').textContent = pet.name + " " + pet.species;
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        2. Add a method <code>describe</code> to <code>pet</code> that returns a string like "Rex is a dog".
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol2')">Show Solution</button>
+      <div id="sol2" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="descOut"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let pet = {
+      name: "Rex",
+      species: "dog",
+      describe: function() {
+        return this.name + " is a " + this.species;
+      }
+    };
+    document.getElementById('descOut').textContent = pet.describe();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        3. Given <code>order = {id:1, total:700, status:"paid"}</code>, print all keys and values using a loop.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol3')">Show Solution</button>
+      <div id="sol3" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="orderOut"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let order = {id:1, total:700, status:"paid"};
+    let out = "";
+    for (let key in order) {
+      out += key + ": " + order[key] + "&lt;br&gt;";
+    }
+    document.getElementById('orderOut').innerHTML = out;
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        4. Using <code>Object.entries()</code>, display each property and value of <code>settings = {theme:"dark", font:"Arial"}</code> as "theme: dark", "font: Arial".
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol4')">Show Solution</button>
+      <div id="sol4" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="setOut"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let settings = {theme:"dark", font:"Arial"};
+    let output = "";
+    for (let [k, v] of Object.entries(settings)) {
+      output += k + ": " + v + "&lt;br&gt;";
+    }
+    document.getElementById('setOut').innerHTML = output;
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <script>
+      function toggleSolution(id) {
+        var el = document.getElementById(id);
+        el.classList.toggle('hidden');
+      }
+    </script>
+    <div class="explain mb-2">
+      Practice writing and running these examples before expanding the solutions.
+    </div>
+  </section>
+  <div class="text-center pt-4">
+    <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-700 text-white font-semibold hover:bg-indigo-800 transition">
+      <i class="bi bi-arrow-left"></i> Back to Resources
+    </a>
+  </div>
+</main>
+<footer class="text-center py-6 text-sm text-indigo-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+  CODECX INSTITUTE &copy; 2025. All rights reserved.
+</footer>
+</body>
+</html>

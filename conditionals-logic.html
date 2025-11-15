@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript: Conditionals & Logic | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(251,191,36,.07), 0 2px 8px rgba(0,0,0,.03);
+      border: 1px solid #ffe29c;
+    }
+    pre, .solution-code {
+      border-radius: 0.7rem;
+      background: #23272e;
+      color: #ffdf8d;
+      padding: 1em;
+      font-size: 0.99em;
+      overflow-x: auto;
+      word-break: break-all;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      margin-top: 0.6em;
+    }
+    .demo-output {
+      background: #fde68a;
+      color: #715600;
+      border-radius: 0.5rem;
+      padding: 0.7em 1.2em;
+      font-weight: 600;
+      margin: 0.6em 0 1.2em 0;
+      border: 1px solid #ffeeba;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.08em;
+      display: inline-block;
+      min-width: 120px;
+    }
+    .show-btn {
+      background: #fbbf24;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      padding: 0.3em 1.1em;
+      border-radius: 0.5em;
+      margin: 0.5em 0 0.3em 0;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .show-btn:hover { background: #e9b413; }
+    .hidden { display: none; }
+    .highlight { background: #fbca36; color: #975a00; border-radius: 0.3rem; padding: 0.1em 0.3em; font-weight: bold;}
+    .explain { color: #444; margin-bottom: 1.2em; }
+    @media (max-width:900px) {
+      .glass-card, pre, .solution-code { font-size: 0.98em; }
+      .demo-output { font-size: 1em; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-yellow-50 via-yellow-100 to-white min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <i class="bi bi-check2-circle text-3xl text-yellow-500"></i>
+      <h1 class="text-2xl font-extrabold text-yellow-700 tracking-tight">
+        JavaScript: Conditionals & Logic
+      </h1>
+    </div>
+    <nav class="mt-2 flex gap-2 text-sm flex-wrap">
+      <a href="resource.html" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+      <a href="#connect" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-link"></i>Connecting Topics</a>
+      <a href="#core" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-lightbulb"></i>What & Why</a>
+      <a href="#if" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-return-right"></i>If Statements</a>
+      <a href="#ifelse" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-arrow-left-right"></i>Else, Else if</a>
+      <a href="#logic" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-diagram-3"></i>Logical Operators</a>
+      <a href="#switch" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-shuffle"></i>Switch</a>
+      <a href="#practice" class="text-yellow-600 hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Practice</a>
+    </nav>
+  </header>
+
+  <main class="max-w-3xl mx-auto pt-10 pb-16 px-2 sm:px-4">
+
+    <!-- Connecting to Previous Topics -->
+    <section id="connect" class="glass-card p-6 mb-7">
+      <h2 class="text-xl font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-link"></i>Why Conditionals Matter Now</h2>
+      <div class="explain mb-2">
+        Up to this point, you’ve learned to work with <b>variables</b>, <b>operators</b>, <b>loops</b>, and <b>events</b>. By themselves, each lets you store, change, or repeat things in your code. What’s missing is the “brains”—making your code respond to situations. <span class="highlight">Conditionals</span> add logic: they let your program decide and react, shifting between outcomes.
+      </div>
+      <div class="explain">
+        In real life, you make choices all the time: <br>
+        <ul class="list-disc ml-7">
+          <li>If it’s raining, take an umbrella.</li>
+          <li>If the grade is &gt;= 70, you pass.</li>
+          <li>Your phone battery is low? Plug it in.</li>
+        </ul>
+        Programming conditionals work on the same principle: check a condition, do something if it’s true (and something else if not).
+      </div>
+    </section>
+
+    <!-- Core Concept -->
+    <section id="core" class="glass-card p-6 mb-8">
+      <h2 class="text-xl font-bold text-yellow-600 mb-3 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Conditionals & Logic: What and Why?</h2>
+      <div class="explain">
+        Whenever you want your code to answer questions or handle options (“Should I show an error? Is this user logged in? Is this number even?”), you need conditionals. They unlock smarter functions, dynamic pages, and personalized interfaces.
+      </div>
+      <pre><code>
+// Imagine a weather app
+if (temperature &lt; 20) {
+  console.log("Wear a jacket");
+}
+      </code></pre>
+      <div class="explain">
+        That’s all there is: <b>if (condition) { do something }</b>
+      </div>
+    </section>
+
+    <!-- If Statements -->
+    <section id="if" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-arrow-return-right"></i>If Statements</h2>
+      <div class="explain">
+        The heart of all decisions in JavaScript. If something is true, the code block runs.
+      </div>
+      <pre><code>
+let isLoggedIn = true;
+if (isLoggedIn) {
+  console.log("Welcome back!");
+}
+      </code></pre>
+      <div class="demo-output" id="ifDemo"></div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let isLoggedIn = true;
+          let out = "";
+          if (isLoggedIn) {
+            out = "Welcome back!";
+          }
+          document.getElementById("ifDemo").innerHTML = out;
+        });
+      </script>
+      <div class="explain">
+        <b>Why?</b> If statements run only when a certain test is true. Your page can stay uncluttered and only display what matters for the situation.
+      </div>
+    </section>
+
+    <!-- Else and Else If -->
+    <section id="ifelse" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-arrow-left-right"></i>Else and Else If</h2>
+      <div class="explain">
+        Use <b>else</b> if you want to provide a backup option. Add <b>else if</b> when you have several different checks you want to try in order.
+      </div>
+      <pre><code>
+let score = 78;
+if (score &gt;= 90) {
+  console.log("Grade: A");
+} else if (score &gt;= 70) {
+  console.log("Grade: B");
+} else if (score &gt;= 50) {
+  console.log("Grade: C");
+} else {
+  console.log("Grade: F");
+}
+      </code></pre>
+      <div class="demo-output" id="elseDemo"></div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let score = 78;
+          let msg = "";
+          if (score >= 90) {
+            msg = "Grade: A";
+          } else if (score >= 70) {
+            msg = "Grade: B";
+          } else if (score >= 50) {
+            msg = "Grade: C";
+          } else {
+            msg = "Grade: F";
+          }
+          document.getElementById("elseDemo").innerHTML = msg;
+        })
+      </script>
+      <div class="explain">
+        <b>Why?</b> In real situations, you rarely have just two outcomes. With <code>else if</code> you can check several conditions in order.
+      </div>
+    </section>
+
+    <!-- Logical Operators with If -->
+    <section id="logic" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-diagram-3"></i>Logical Operators in Action</h2>
+      <div class="explain">
+        Sometimes, you want to check more than one condition at a time. Use <code>&&</code> for “and”, <code>||</code> for “or”, and <code>!</code> for “not”.
+      </div>
+      <pre><code>
+let user = "Sam";
+let age = 20;
+
+if (user && age &gt;= 18) {
+  console.log("Access granted");
+} else {
+  console.log("Access denied");
+}
+      </code></pre>
+      <div class="demo-output" id="logicDemo"></div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let user = "Sam";
+          let age = 20;
+          let msg = "";
+          if (user && age >= 18) {
+            msg = "Access granted";
+          } else {
+            msg = "Access denied";
+          }
+          document.getElementById("logicDemo").innerHTML = msg;
+        });
+      </script>
+      <div class="explain">
+        <b>Why?</b> With logic, your code can handle more realistic requirements and filter more precisely.
+      </div>
+    </section>
+
+    <!-- Switch Statement -->
+    <section id="switch" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-shuffle"></i>Switch Statements</h2>
+      <div class="explain">
+        For certain situations (like picking a menu or reacting to user input), <code>switch</code> statements give you a clean alternative. They check one value against different possibilities.
+      </div>
+      <pre><code>
+let fruit = "banana";
+switch(fruit) {
+  case "apple":
+    console.log("Red fruit");
+    break;
+  case "banana":
+    console.log("Yellow fruit");
+    break;
+  case "grape":
+    console.log("Purple fruit");
+    break;
+  default:
+    console.log("Unknown color");
+}
+      </code></pre>
+      <div class="demo-output" id="switchDemo"></div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let fruit = "banana";
+          let msg = "";
+          switch(fruit) {
+            case "apple":
+              msg = "Red fruit";
+              break;
+            case "banana":
+              msg = "Yellow fruit";
+              break;
+            case "grape":
+              msg = "Purple fruit";
+              break;
+            default:
+              msg = "Unknown color";
+          }
+          document.getElementById("switchDemo").innerHTML = msg;
+        });
+      </script>
+      <div class="explain">
+        <b>Why?</b> Whenever you have a single variable with lots of possible cases, switch is simpler and easier to read than lots of else if statements.
+      </div>
+    </section>
+    
+    <!-- Practice Section -->
+    <section id="practice" class="glass-card p-6 mb-8">
+      <h2 class="text-lg font-bold text-yellow-600 mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Practice (with Hidden Solutions)</h2>
+      <div class="mb-5">
+        <div class="explain mb-1">
+          1. Write a script that checks if a number (from user input) is positive, negative, or zero and displays a message.
+        </div>
+        <button class="show-btn" onclick="toggleSolution('sol1')">Show Solution</button>
+        <div id="sol1" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;input id="num" type="number" placeholder="Enter a number"&gt;
+  &lt;button onclick="checkPosNeg()"/&gt;Check&lt;/button&gt;
+  &lt;div id="result"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function checkPosNeg() {
+      let num = Number(document.getElementById('num').value);
+      let msg = '';
+      if (num > 0) {
+        msg = "Positive";
+      } else if (num < 0) {
+        msg = "Negative";
+      } else {
+        msg = "Zero";
+      }
+      document.getElementById('result').textContent = msg;
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <div class="explain mb-1">
+          2. Build a temperature guidance app: If the value is &gt;= 30, print “Too hot”; if &lt; 15, print “Too cold”; else print “Nice weather”.
+        </div>
+        <button class="show-btn" onclick="toggleSolution('sol2')">Show Solution</button>
+        <div id="sol2" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;input id="temp" type="number" placeholder="Temperature"&gt;
+  &lt;button onclick="advise()"/&gt;Check&lt;/button&gt;
+  &lt;div id="advice"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function advise() {
+      let t = Number(document.getElementById('temp').value);
+      let msg = '';
+      if (t >= 30) {
+        msg = "Too hot";
+      } else if (t < 15) {
+        msg = "Too cold";
+      } else {
+        msg = "Nice weather";
+      }
+      document.getElementById('advice').textContent = msg;
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <div class="mb-5">
+        <div class="explain mb-1">
+          3. Use logic operators: Create two checkboxes “Has ID?” and “Paid Fee?”. When both are checked, let the user through (“Access granted”); otherwise, show “Access denied”.
+        </div>
+        <button class="show-btn" onclick="toggleSolution('sol3')">Show Solution</button>
+        <div id="sol3" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  Has ID? &lt;input id="id" type="checkbox"&gt;
+  Paid Fee? &lt;input id="fee" type="checkbox"&gt;
+  &lt;button onclick="gate()"/&gt;Check Access&lt;/button&gt;
+  &lt;div id="gateMsg"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function gate() {
+      let hasID = document.getElementById('id').checked;
+      let paid = document.getElementById('fee').checked;
+      let msg = (hasID && paid) ? "Access granted" : "Access denied";
+      document.getElementById('gateMsg').textContent = msg;
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <div class="mb-5">
+        <div class="explain mb-1">
+          4. Use a switch: Prompt for a day shortname (“mon”, “tue”, etc.), print “Workday” for mon–fri, “Weekend” for sat/sun.
+        </div>
+        <button class="show-btn" onclick="toggleSolution('sol4')">Show Solution</button>
+        <div id="sol4" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;input id="day" placeholder="Day (e.g., mon, sat)"&gt;
+  &lt;button onclick="whichDay()"/&gt;Check&lt;/button&gt;
+  &lt;div id="dayResult"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function whichDay() {
+      let d = document.getElementById('day').value.toLowerCase();
+      let msg = '';
+      switch (d) {
+        case "mon":
+        case "tue":
+        case "wed":
+        case "thu":
+        case "fri":
+          msg = "Workday";
+          break;
+        case "sat":
+        case "sun":
+          msg = "Weekend";
+          break;
+        default:
+          msg = "Not a valid day";
+      }
+      document.getElementById('dayResult').textContent = msg;
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </div>
+      </div>
+      <script>
+        function toggleSolution(id) {
+          var el = document.getElementById(id);
+          el.classList.toggle('hidden');
+        }
+      </script>
+      <div class="explain mb-2">
+        Test your solution first, then expand to see one way you could achieve it.
+      </div>
+    </section>
+    <div class="text-center pt-4">
+      <a href="resource.html" class="inline-block px-5 py-2 rounded bg-yellow-500 text-white font-semibold hover:bg-yellow-600 transition">
+        <i class="bi bi-arrow-left"></i> Back to Resources
+      </a>
+    </div>
+  </main>
+  <footer class="text-center py-6 text-sm text-gray-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+    CODECX INSTITUTE &copy; 2025. All rights reserved.
+  </footer>
+</body>
+</html>
