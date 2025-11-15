@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript: APIs & Fetch | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(59,130,246,.10), 0 2px 8px rgba(0,0,0,.03);
+      border: 1px solid #e0e7ff;
+    }
+    pre, .solution-code {
+      border-radius: 0.7rem;
+      background: #23272e;
+      color: #38bdf8;
+      padding: 1em;
+      font-size: 1em;
+      overflow-x: auto;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      margin-top: 0.6em;
+    }
+    .demo-output {
+      background: #e0f2fe;
+      color: #0369a1;
+      border-radius: 0.5rem;
+      padding: 0.7em 1.2em;
+      font-weight: 600;
+      margin: 0.6em 0 1.2em 0;
+      border: 1px solid #38bdf8;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.08em;
+      display: inline-block;
+      min-width: 160px;
+      line-height: 1.5;
+    }
+    .show-btn {
+      background: #0ea5e9;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      padding: 0.3em 1.1em;
+      border-radius: 0.5em;
+      margin: 0.5em 0 0.3em 0;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .show-btn:hover { background: #0369a1; }
+    .hidden { display: none; }
+    .highlight {
+      background: #bae6fd;
+      color: #0ea5e9;
+      border-radius: 0.3rem;
+      padding: 0.08em 0.24em;
+      font-weight: bold;
+    }
+    .tutor-note {
+      background: #f0f9ff;
+      border-left: 5px solid #38bdf8;
+      color: #155e75;
+      padding: 0.6em 1em;
+      margin: 1em 0;
+      border-radius: 0.3em;
+      font-style: italic;
+    }
+    .explain { color: #155e75; margin-bottom: 1.2em; }
+    h1, h2, h3 { color: #0369a1; }
+    .fake-api-table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #0369a1;
+      margin-bottom: 1em;
+    }
+    .fake-api-table th, .fake-api-table td {
+      border: 1px solid #bae6fd;
+      padding: 0.6em;
+      text-align: left;
+    }
+    .fake-api-table th {
+      background: #e0f2fe;
+    }
+    @media (max-width:900px) {
+      .glass-card, pre, .solution-code { font-size: 0.98em; }
+      .demo-output, .fake-api-table { font-size: 0.98em; }
+    }
+    @media (max-width: 640px) {
+      .glass-card, main { padding: 6px !important; }
+      .demo-output { font-size: 0.96em; padding: 0.6em; }
+      .fake-api-table th, .fake-api-table td { padding: 0.38em;}
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-sky-50 via-blue-100 to-white min-h-screen">
+
+<header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <i class="bi bi-plug text-3xl text-sky-500"></i>
+    <h1 class="text-2xl font-extrabold tracking-tight">
+      JavaScript: APIs &amp; Fetch
+    </h1>
+  </div>
+  <nav class="mt-2 flex gap-2 text-sm flex-wrap text-sky-800">
+    <a href="resource.html" class="hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    <a href="#intro" class="hover:underline flex items-center gap-1"><i class="bi bi-lightbulb"></i>What is an API?</a>
+    <a href="#why" class="hover:underline flex items-center gap-1"><i class="bi bi-link"></i>Why Use Fetch?</a>
+    <a href="#get" class="hover:underline flex items-center gap-1"><i class="bi bi-download"></i>GET Requests</a>
+    <a href="#display" class="hover:underline flex items-center gap-1"><i class="bi bi-eye"></i>Displaying Fetched Data</a>
+    <a href="#post" class="hover:underline flex items-center gap-1"><i class="bi bi-upload"></i>POST & Sending Data</a>
+    <a href="#headers" class="hover:underline flex items-center gap-1"><i class="bi bi-bookmark-check"></i>Headers & Auth</a>
+    <a href="#error" class="hover:underline flex items-center gap-1"><i class="bi bi-bug"></i>Handling Errors</a>
+    <a href="#best" class="hover:underline flex items-center gap-1"><i class="bi bi-hammer"></i>Best Practices</a>
+    <a href="#practice" class="hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Practice</a>
+  </nav>
+</header>
+<main class="max-w-3xl mx-auto pt-10 pb-16 px-2 sm:px-4">
+
+  <section id="intro" class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-3 flex items-center gap-2"><i class="bi bi-lightbulb"></i>What is an API?</h2>
+    <div class="explain">
+      API stands for <strong>Application Programming Interface</strong>. In web development, an API is like a messenger between your code and other data sources or services. With JavaScript, you most often use APIs to: 
+      <ul class="list-disc ml-7 mt-1">
+        <li>Get dynamic data (news, weather, posts, user info)</li>
+        <li>Send data to a server (forms, uploads, etc.)</li>
+        <li>Power "live" features, search bars, or dashboards</li>
+      </ul>
+    </div>
+    <table class="fake-api-table">
+      <tr><th>API Example</th><th>What It Can Do</th></tr>
+      <tr><td>Public REST API</td><td>e.g. <a href="https://jsonplaceholder.typicode.com/" target="_blank">JSONPlaceholder</a>: Get posts, comments, etc.</td></tr>
+      <tr><td>Weather API</td><td>Get live temperature for a city</td></tr>
+      <tr><td>Your Own Server</td><td>Save contact form or fetch user profile info</td></tr>
+    </table>
+    <div class="explain">
+      Almost all modern apps (web, mobile, even desktop) use APIs for up-to-date content and interaction.
+    </div>
+  </section>
+
+  <section id="why" class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-3 flex items-center gap-2"><i class="bi bi-link"></i>Why Use Fetch?</h2>
+    <div class="explain">
+      JavaScript comes with the <span class="highlight">fetch()</span> function for making HTTP requests. It works with APIs so your code can get or send data—straight from the browser, without page reloads.
+    </div>
+    <pre><code>
+fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response =&gt; response.json())
+  .then(data =&gt; console.log(data))
+  .catch(err =&gt; console.error(err));
+    </code></pre>
+    <div class="tutor-note">
+      fetch() always returns a <b>Promise</b>. You use <code>.then()</code> and <code>.catch()</code> to wait for the response and handle success/failure.
+    </div>
+    <div class="explain">
+      <b>You can use fetch for:</b>
+      <ul class="list-disc ml-7">
+        <li>GET — Retrieve existing info (products, users, tasks)</li>
+        <li>POST — Send new data (create an item, send a message)</li>
+        <li>PUT, PATCH — Update something</li>
+        <li>DELETE — Remove an item</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="get" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-download"></i>GET Requests: Fetching Data</h2>
+    <div class="explain">
+      The most basic fetch call uses just a URL. If you’re getting data (like a public feed, search, or sample for testing), use a simple GET request:
+    </div>
+    <pre><code>
+fetch('https://jsonplaceholder.typicode.com/todos/3')
+  .then(res =&gt; res.json())     // Parse the response as JSON
+  .then(data =&gt; {
+    console.log(data.title);  // Use the data
+  });
+    </code></pre>
+    <div class="demo-output" id="getDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        fetch('https://jsonplaceholder.typicode.com/todos/3')
+          .then(res => res.json())
+          .then(data => {
+            document.getElementById('getDemo').innerHTML = data.title;
+          })
+          .catch(() => {
+            document.getElementById('getDemo').innerHTML = "Could not fetch data";
+          });
+      });
+    </script>
+    <div class="explain">
+      The data you get is almost always in "JSON" format—a way to send objects and arrays!
+    </div>
+    <div class="tutor-note">
+      Try practicing fetch with <a href="https://jsonplaceholder.typicode.com" target="_blank">JSONPlaceholder</a>, a free, fake API for learning.
+    </div>
+  </section>
+
+  <section id="display" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-eye"></i>Displaying Fetched Data in the Page</h2>
+    <div class="explain">
+      It's not enough to fetch data—you’ll want to show it on your own site. You’ll use DOM manipulation to put the fetched result in a list, table, or card.
+    </div>
+    <pre><code>
+fetch('https://jsonplaceholder.typicode.com/users')
+  .then(res =&gt; res.json())
+  .then(users =&gt; {
+    let html = users
+      .map(user =&gt; '&lt;li&gt;' + user.name + '&lt;/li&gt;')
+      .join("");
+    document.getElementById("userList").innerHTML = html;
+  });
+    </code></pre>
+    <div class="demo-output">
+      <ul id="userList">Loading...</ul>
+      <script>
+        fetch('https://jsonplaceholder.typicode.com/users')
+          .then(res => res.json())
+          .then(users => {
+            let html = users
+              .slice(0, 4)
+              .map(user => `<li>${user.name}</li>`)
+              .join("");
+            document.getElementById("userList").innerHTML = html;
+          })
+          .catch(() => {
+            document.getElementById("userList").innerHTML = "Could not load users";
+          });
+      </script>
+    </div>
+    <div class="explain">
+      You get a JS array, so you can use <code>map()</code> and friends, just like with any local data—but now it’s live!
+    </div>
+  </section>
+
+  <section id="post" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-upload"></i>Sending Data: POST Requests</h2>
+    <div class="explain">
+      To send info to a server (like submitting a form or adding a to-do), give fetch a second argument—an options object. You almost always send JSON from JS.
+    </div>
+    <pre><code>
+fetch('https://jsonplaceholder.typicode.com/posts', {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    title: "Learn Fetch",
+    body: "APIs are fun",
+    userId: 8
+  })
+})
+.then(res =&gt; res.json())
+.then(data =&gt; {
+  console.log(data); // the new thing you created
+});
+    </code></pre>
+    <div class="tutor-note">
+      Always set <b>Content-Type: application/json</b> when sending JSON data. Many real APIs will ignore your request if you don’t.
+    </div>
+    <div class="explain">
+      The <b>body</b> property must be a string. Use <code>JSON.stringify()</code> to convert your JS object into a data string.
+    </div>
+  </section>
+
+  <section id="headers" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-bookmark-check"></i>Headers, Authentication, and Advanced Fetch</h2>
+    <div class="explain">
+      Most APIs require special <b>headers</b> for security, permissions, or tracking. Common uses:
+      <ul class="list-disc ml-7">
+        <li><strong>Authorization:</strong> Include a user token or API key</li>
+        <li><strong>Accept:</strong> Request a specific data format (<code>application/json</code>, <code>application/xml</code>, etc.)</li>
+        <li><strong>X-Custom-Header:</strong> Extra info for advanced APIs</li>
+      </ul>
+    </div>
+    <pre><code>
+// Example: fetch with a token in the header
+fetch('https://myapi.com/profile', {
+  headers: {
+    "Authorization": "Bearer my-secret-token-123",
+    "Accept": "application/json"
+  }
+});
+    </code></pre>
+    <div class="tutor-note">
+      Never share secret keys or tokens in public code—keep them hidden or store them in a secure backend.
+    </div>
+    <div class="explain">
+      For protected APIs, you'll usually need to get a token by logging in, then include it with fetch for every future call.
+    </div>
+  </section>
+
+  <section id="error" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-bug"></i>Dealing With Errors</h2>
+    <div class="explain">
+      Not all API calls go smoothly! You might lose your network, or the server may refuse your data. Always handle errors so your users don’t get stuck or confused.
+    </div>
+    <pre><code>
+fetch('https://jsonplaceholder.typicode.com/404stuff')
+  .then(res =&gt; {
+    if (!res.ok) throw new Error("Request failed: " + res.status);
+    return res.json();
+  })
+  .then(data =&gt; console.log("Fetched:", data))
+  .catch(err =&gt; console.error("Something went wrong:", err.message));
+    </code></pre>
+    <div class="explain">
+      <b>fetch</b> does <u>not</u> fail on 404/500 by default; you must check <span class="highlight">res.ok</span> to see if it worked.
+    </div>
+    <div class="tutor-note">
+      Show helpful messages to users instead of raw JS errors.
+    </div>
+  </section>
+
+  <section id="best" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-hammer"></i>Best Practices for APIs & Fetch</h2>
+    <ul class="list-decimal ml-8 mb-3 text-sky-800">
+      <li>Always handle both <code>.then</code> <b>and</b> <code>.catch</code> when using fetch. Don’t assume success.</li>
+      <li>Show the user when data is loading, and handle “empty” or “error” states gracefully.</li>
+      <li>Never trust incoming data. Always validate or check it is what you expect before displaying!</li>
+      <li>Don’t leak API keys in your frontend code or to GitHub repos.</li>
+      <li>For repeated fetch patterns or large codebases, use wrapper functions to avoid repeating yourself.</li>
+      <li>Remember CORS: Modern browsers block some requests to protect users; only fetch from CORS-enabled APIs.</li>
+    </ul>
+    <div class="tutor-note">
+      Learn more by exploring APIs with your browser tools (Network tab) to see requests, responses, and errors in real time.
+    </div>
+  </section>
+
+  <section id="practice" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Practice (with Hidden Solutions)</h2>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        1. Use fetch to load the first to-do item (from https://jsonplaceholder.typicode.com/todos/1) and display its title.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol1')">Show Solution</button>
+      <div id="sol1" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="todo1"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+      .then(res =&gt; res.json())
+      .then(data =&gt; {
+        document.getElementById('todo1').textContent = data.title;
+      });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        2. Fetch the user with id=3 and display both their name and email.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol2')">Show Solution</button>
+      <div id="sol2" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="user3"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    fetch('https://jsonplaceholder.typicode.com/users/3')
+      .then(res =&gt; res.json())
+      .then(data =&gt; {
+        document.getElementById('user3').textContent = data.name + " (" + data.email + ")";
+      });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        3. Write a fetch POST request to https://jsonplaceholder.typicode.com/posts with a sample title and body, then print the response's id.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol3')">Show Solution</button>
+      <div id="sol3" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="postId"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ title: "Test", body: "Demo", userId: 1 })
+    })
+    .then(res =&gt; res.json())
+    .then(data =&gt; {
+      document.getElementById('postId').textContent = "Created post id: " + data.id;
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        4. Try fetching a non-existent resource and display a “Not found” or error message (hint: res.ok).
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol4')">Show Solution</button>
+      <div id="sol4" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="errorOut"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    fetch('https://jsonplaceholder.typicode.com/notfound')
+      .then(res =&gt; {
+        if (!res.ok) throw new Error("Not found");
+        return res.json();
+      })
+      .then(data =&gt; {
+        document.getElementById('errorOut').textContent = JSON.stringify(data);
+      })
+      .catch(e =&gt; {
+        document.getElementById('errorOut').textContent = e.message;
+      });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <script>
+      function toggleSolution(id) {
+        var el = document.getElementById(id);
+        el.classList.toggle('hidden');
+      }
+    </script>
+    <div class="explain mb-2">
+      Try each task before peeking. Building real projects means using fetch for almost every dynamic feature!
+    </div>
+  </section>
+  <div class="text-center pt-4">
+    <a href="resource.html" class="inline-block px-5 py-2 rounded bg-sky-700 text-white font-semibold hover:bg-sky-800 transition">
+      <i class="bi bi-arrow-left"></i> Back to Resources
+    </a>
+  </div>
+
+</main>
+<footer class="text-center py-6 text-sm text-sky-600 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+  CODECX INSTITUTE &copy; 2025. All rights reserved.
+</footer>
+</body>
+</html>
