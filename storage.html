@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Local Storage & Session Storage | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.965);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(59,130,246,.10), 0 2px 8px rgba(0,0,0,.03);
+      border: 1px solid #a7f3d0;
+    }
+    pre, .solution-code {
+      border-radius: 0.7rem;
+      background: #23272e;
+      color: #34d399;
+      padding: 1em;
+      font-size: 1em;
+      overflow-x: auto;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      margin-top: 0.6em;
+    }
+    .highlight {
+      background: #bbf7d0;
+      color: #047857;
+      border-radius: 0.3rem;
+      padding: 0.08em 0.24em;
+      font-weight: bold;
+    }
+    .explain { color: #0f5132; margin-bottom: 1.15em; }
+    .demo-output {
+      background: #d1fae5;
+      color: #047857;
+      border-radius: 0.5rem;
+      padding: 0.7em 1.2em;
+      font-weight: 600;
+      margin: 0.5em 0 1.2em 0;
+      border: 1px solid #6ee7b7;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.02em;
+      min-width: 140px;
+      line-height: 1.65;
+    }
+    .show-btn {
+      background: #10b981;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      padding: 0.3em 1.1em;
+      border-radius: 0.5em;
+      margin: 0.5em 0 0.3em 0;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .show-btn:hover { background: #047857; }
+    .hidden { display: none; }
+    h1, h2, h3 { color: #065f46; }
+    @media (max-width:900px) {
+      .glass-card, pre, .solution-code { font-size: 0.98em; }
+      .demo-output { font-size: 0.96em; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-emerald-50 via-green-100 to-white min-h-screen">
+
+<header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <i class="bi bi-cloud text-3xl text-emerald-600"></i>
+    <h1 class="text-2xl font-extrabold tracking-tight">
+      Browser Storage: Local &amp; Session Storage
+    </h1>
+  </div>
+  <nav class="mt-2 flex gap-2 text-sm flex-wrap text-emerald-700">
+    <a href="resource.html" class="hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    <a href="#what" class="hover:underline flex items-center gap-1"><i class="bi bi-database-up"></i>What is Local/Session Storage?</a>
+    <a href="#choose" class="hover:underline flex items-center gap-1"><i class="bi bi-shuffle"></i>When To Use Each</a>
+    <a href="#basic" class="hover:underline flex items-center gap-1"><i class="bi bi-journal-plus"></i>How To Use</a>
+    <a href="#json" class="hover:underline flex items-center gap-1"><i class="bi bi-arrow-bar-right"></i>Storing Arrays &amp; Objects</a>
+    <a href="#clear" class="hover:underline flex items-center gap-1"><i class="bi bi-x-circle"></i>Updating &amp; Removing</a>
+    <a href="#best" class="hover:underline flex items-center gap-1"><i class="bi bi-award"></i>Tips &amp; Best Practices</a>
+    <a href="#practice" class="hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Practice</a>
+  </nav>
+</header>
+<main class="max-w-3xl mx-auto pt-10 pb-16 px-2 sm:px-4">
+  <section id="what" class="glass-card p-6 mb-7">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2"><i class="bi bi-database-up"></i>What is Browser Storage?</h2>
+    <div class="explain">
+      <strong>Local Storage</strong> and <strong>Session Storage</strong> let your JavaScript code save text inside the browser. It stays put even if the user leaves or reloads your page (for localStorage), or until the browser tab closes (for sessionStorage). This allows you to:
+      <ul class="list-disc ml-7 mt-1">
+        <li>Remember login or theme settings</li>
+        <li>Save a shopping cart or form data in progress</li>
+        <li>Cache fetched API data for faster returns</li>
+        <li>Build offline-friendly experiences</li>
+      </ul>
+    </div>
+    <div class="demo-output">
+      <b>localStorage:</b> Keeps data after a page reload or browser restart<br>
+      <b>sessionStorage:</b> Removes data when the tab/window closes
+    </div>
+  </section>
+
+  <section id="choose" class="glass-card p-6 mb-7">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-shuffle"></i>When Do You Use Each?</h2>
+    <table style="background:#ecfdf5;border-radius:0.5em;margin-bottom:1em;width:100%;border-collapse:collapse;">
+      <tr><th style="padding:0.6em 1.2em;">Feature</th><th>localStorage</th><th>sessionStorage</th></tr>
+      <tr><td style="padding:0.6em 1.2em;">Available After Reload?</td><td>Yes</td><td>No</td></tr>
+      <tr><td style="padding:0.6em 1.2em;">Lasts After Browser Closed?</td><td>Yes</td><td>No</td></tr>
+      <tr><td style="padding:0.6em 1.2em;">Typical Use</td><td>Theme, login, cart, saved preferences</td>
+        <td>Wizards, temp logs, session state</td></tr>
+      <tr><td style="padding:0.6em 1.2em;">Max Storage</td><td>5-10 MB</td><td>5 MB</td></tr>
+    </table>
+    <div class="explain">
+      Pick <b>localStorage</b> for "remember tomorrow" data, and <b>sessionStorage</b> for "just remember while I'm here"!
+    </div>
+  </section>
+
+  <section id="basic" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-journal-plus"></i>Reading & Writing Simple Data</h2>
+    <div class="explain">
+      Both APIs use simple string methods:
+    </div>
+    <pre><code>
+// Store data
+localStorage.setItem("theme", "dark");
+sessionStorage.setItem("user", "Lizzy");
+
+// Get data
+let myTheme = localStorage.getItem("theme");      // "dark"
+let tempUser = sessionStorage.getItem("user");    // "Lizzy"
+
+// Remove data
+localStorage.removeItem("theme");                 // deletes "theme"
+sessionStorage.clear();                           // clears all sessionStorage
+
+// Check if a value is saved
+if(localStorage.getItem("theme")) {
+  // theme is saved
+}
+    </code></pre>
+    <div class="demo-output">
+      <button id="savetheme" class="show-btn" style="background:#34d399">Save theme "dark"</button>
+      <button id="gettheme" class="show-btn" style="background:#0ea5e9">Show saved theme</button>
+      <span id="themeOut"></span>
+      <script>
+        document.getElementById("savetheme").onclick = function() {
+          localStorage.setItem("theme", "dark");
+          document.getElementById("themeOut").textContent = "Theme saved!";
+        }
+        document.getElementById("gettheme").onclick = function() {
+          let t = localStorage.getItem("theme");
+          document.getElementById("themeOut").textContent = "Theme: " + (t||"none");
+        }
+      </script>
+    </div>
+    <div class="explain">
+      All stored values are always <span class="highlight">strings</span>. Numbers and booleans must be converted (using .toString()/parseInt()/parseFloat()).
+    </div>
+  </section>
+
+  <section id="json" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-arrow-bar-right"></i>Saving Objects &amp; Arrays (with JSON)</h2>
+    <div class="explain">
+      JavaScript objects and arrays can't go into browser storage directly; you have to turn them into JSON strings first, and turn them back into objects when you read them.
+    </div>
+    <pre><code>
+// Save an array
+let cart = ["rice", "beans", "bread"];
+localStorage.setItem("cart", JSON.stringify(cart));
+
+// Get the array back
+let myCart = JSON.parse(localStorage.getItem("cart")); // ["rice","beans","bread"]
+
+// Save an object
+let profile = { name:"Jay", loggedIn:true };
+sessionStorage.setItem("profile", JSON.stringify(profile));
+// Fetch
+let saved = JSON.parse(sessionStorage.getItem("profile"));
+    </code></pre>
+    <div class="demo-output">
+      <button id="savecart" class="show-btn" style="background:#34d399">Save Cart ["rice","beans"]</button>
+      <button id="showcart" class="show-btn" style="background:#0ea5e9">Show Cart</button>
+      <span id="cartOut"></span>
+      <script>
+        document.getElementById("savecart").onclick = function() {
+          localStorage.setItem("cart", JSON.stringify(["rice", "beans"]));
+          document.getElementById("cartOut").textContent = "Cart saved!";
+        }
+        document.getElementById("showcart").onclick = function() {
+          let c = localStorage.getItem("cart");
+          document.getElementById("cartOut").textContent = "Cart: " + (c ? JSON.parse(c).join(", ") : "none");
+        }
+      </script>
+    </div>
+  </section>
+
+  <section id="clear" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-x-circle"></i>Updating, Removing &amp; Clearing Data</h2>
+    <div class="explain">
+      To update, just set the same key again. To delete one item, use <b>removeItem</b>. To delete everything, call <b>clear()</b>.
+    </div>
+    <pre><code>
+// Update profile
+localStorage.setItem("profile", JSON.stringify({name:"Liz",score:8}));
+
+// Remove a single item
+localStorage.removeItem("profile");
+
+// Clear all localStorage data
+localStorage.clear();
+    </code></pre>
+    <div class="demo-output">
+      <button class="show-btn" id="updateBtn" style="background:#34d399">Update score</button>
+      <button class="show-btn" id="clearBtn" style="background:#f87171">Clear All</button>
+      <span id="updOut"></span>
+      <script>
+        document.getElementById("updateBtn").onclick = function() {
+          localStorage.setItem("score", "12");
+          document.getElementById("updOut").textContent = "Score updated!";
+        }
+        document.getElementById("clearBtn").onclick = function() {
+          localStorage.clear();
+          document.getElementById("updOut").textContent = "Cleared all!";
+        }
+      </script>
+    </div>
+  </section>
+
+  <section id="best" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-award"></i>Tips &amp; Best Practices</h2>
+    <ul class="list-disc ml-8 text-emerald-900 mb-2">
+      <li>Don’t put passwords, tokens or very sensitive info in browser storage (it’s not secure).</li>
+      <li>Always <span class="highlight">JSON.stringify()</span> arrays/objects before saving, and <span class="highlight">JSON.parse()</span> when reading them.</li>
+      <li>Each domain/site has its own storage. Data is not shared across sites.</li>
+      <li>Watch the size: both options are for small/intermediate data only (5-10 MB limit).</li>
+      <li>Use <b>clear()</b> to let users log out or reset easily.</li>
+      <li>To see stored data: open browser DevTools &gt; Application tab.</li>
+    </ul>
+  </section>
+
+  <section id="practice" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Practice (Show Hidden Solutions)</h2>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        1. Save a username "Chika" in localStorage. Read it and display it on a webpage.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol1')">Show Solution</button>
+      <div id="sol1" class="hidden solution-code">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="name"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    localStorage.setItem("username", "Chika");
+    document.getElementById('name').textContent = localStorage.getItem("username");
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        2. Save an array of favorite colors <code>["green", "blue", "gold"]</code> in sessionStorage and show as a comma-separated string.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol2')">Show Solution</button>
+      <div id="sol2" class="hidden solution-code">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="favcol"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    sessionStorage.setItem("favColors", JSON.stringify(["green", "blue", "gold"]));
+    let arr = JSON.parse(sessionStorage.getItem("favColors"));
+    document.getElementById('favcol').textContent = arr.join(", ");
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        3. Update one of the colors in the array above and display the updated array.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol3')">Show Solution</button>
+      <div id="sol3" class="hidden solution-code">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="setcol"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let arr = JSON.parse(sessionStorage.getItem("favColors"));
+    arr[2] = "purple";
+    sessionStorage.setItem("favColors", JSON.stringify(arr));
+    document.getElementById('setcol').textContent = arr.join(", ");
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        4. Remove the saved score from localStorage.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol4')">Show Solution</button>
+      <div id="sol4" class="hidden solution-code">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;script&gt;
+    localStorage.removeItem("score");
+  &lt;/script&gt;
+  &lt;div&gt;Score removed!&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <script>
+      function toggleSolution(id) {
+        var el = document.getElementById(id);
+        el.classList.toggle('hidden');
+      }
+    </script>
+    <div class="explain">
+      Try some <b>JSON.stringify()</b> and <b>JSON.parse()</b> combos with your own data—learning storage is a perfect way to make your JavaScript projects “remember” things, just like professional apps do!
+    </div>
+  </section>
+  <div class="text-center pt-4">
+    <a href="resource.html" class="inline-block px-5 py-2 rounded bg-emerald-700 text-white font-semibold hover:bg-emerald-800 transition">
+      <i class="bi bi-arrow-left"></i> Back to Resources
+    </a>
+  </div>
+</main>
+<footer class="text-center py-6 text-sm text-emerald-900 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+  CODECX INSTITUTE &copy; 2025. All rights reserved.
+</footer>
+</body>
+</html>
