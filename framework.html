@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Frameworks Overview: React, Vue, Angular | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(59,130,246,.09), 0 2px 8px rgba(0,0,0,.03);
+      border: 1px solid #d1d5db;
+    }
+    pre, .solution-code {
+      border-radius: 0.7rem;
+      background: #23272e;
+      color: #a5b4fc;
+      padding: 1em;
+      font-size: 1em;
+      overflow-x: auto;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      margin-top: 0.6em;
+    }
+    .demo-output {
+      background: #e0e7ff;
+      color: #3730a3;
+      border-radius: 0.5rem;
+      padding: 0.7em 1.2em;
+      font-weight: 600;
+      margin: 0.6em 0 1.2em 0;
+      border: 1px solid #818cf8;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.08em;
+      display: inline-block;
+      min-width: 160px;
+      line-height: 1.5;
+    }
+    .highlight {
+      background: #c7d2fe;
+      color: #3730a3;
+      border-radius: 0.3rem;
+      padding: 0.08em 0.24em;
+      font-weight: bold;
+    }
+    .tutor-note {
+      background: #e0e7ff;
+      border-left: 5px solid #818cf8;
+      color: #312e81;
+      padding: 0.6em 1em;
+      margin: 1em 0;
+      border-radius: 0.3em;
+      font-style: italic;
+    }
+    .explain { color: #37344c; margin-bottom: 1.2em; }
+    h1, h2, h3 { color: #3730a3; }
+    @media (max-width:900px) {
+      .glass-card, pre, .solution-code { font-size: 0.96em; }
+      .demo-output { font-size: 0.98em; }
+    }
+    @media (max-width: 640px) {
+      .glass-card, main { padding: 6px !important; }
+      .demo-output { font-size: 0.95em; padding: 0.5em; }
+    }
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    @media (max-width:900px) {
+      .framework-grid { grid-template-columns: 1fr; gap: 1.2rem;}
+    }
+    .framework-card {
+      background: #f1f5fa;
+      border-radius: 0.9rem;
+      border: 1px solid #e0e7ff;
+      box-shadow: 0 4px 18px rgba(30,41,59,.08);
+      padding: 1.3em 1.1em 1.1em 1.1em;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
+      transition: box-shadow 0.2s;
+    }
+    .framework-card:hover { box-shadow: 0 2px 20px #818cf83d;}
+    .framework-card h3 { color: #312e81; font-size: 1.24em; margin: 0.2em 0 0.4em 0; }
+    .framework-links a { color: #2563eb; font-size: 0.95em; margin-right:0.6em;}
+    .fw-logo { font-size:2.2em; margin-bottom: 0.06em;}
+    .fw-react { color: #60a5fa;}
+    .fw-vue { color: #4ade80;}
+    .fw-angular {color: #f87171;}
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-blue-100 to-white min-h-screen">
+
+<header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <i class="bi bi-cup-hot text-3xl text-indigo-500"></i>
+    <h1 class="text-2xl font-extrabold tracking-tight">
+      JavaScript Frameworks Overview: React, Vue, Angular
+    </h1>
+  </div>
+  <nav class="mt-2 flex gap-2 text-sm flex-wrap text-indigo-700">
+    <a href="resource.html" class="hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    <a href="#intro" class="hover:underline flex items-center gap-1"><i class="bi bi-lightbulb"></i>What & Why</a>
+    <a href="#compare" class="hover:underline flex items-center gap-1"><i class="bi bi-arrows-angle-contract"></i>Comparing the Big 3</a>
+    <a href="#react" class="hover:underline flex items-center gap-1"><i class="bi bi-react fw-react"></i>React</a>
+    <a href="#vue" class="hover:underline flex items-center gap-1"><i class="bi bi-check-circle fw-vue"></i>Vue</a>
+    <a href="#angular" class="hover:underline flex items-center gap-1"><i class="bi bi-record-circle fw-angular"></i>Angular</a>
+    <a href="#which" class="hover:underline flex items-center gap-1"><i class="bi bi-question-circle"></i>Which To Learn?</a>
+    <a href="#practice" class="hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Practice</a>
+  </nav>
+</header>
+<main class="max-w-4xl mx-auto pt-10 pb-16 px-3 sm:px-4">
+
+  <section id="intro" class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-3 flex items-center gap-2"><i class="bi bi-lightbulb"></i>What Are JavaScript Frameworks?</h2>
+    <div class="explain">
+      As your projects grow, you’ll eventually reach limits with plain HTML, CSS, and JS. Frameworks help you build user interfaces faster, keep code organized, and reuse features without reinventing the wheel each time.<br>
+      <span class="highlight">React</span>, <span class="highlight">Vue</span>, and <span class="highlight">Angular</span> are the most popular frameworks for building modern web apps. They came about to make complicated UIs, state, and components easier for everyone, from hobbyists to big teams.
+    </div>
+    <div class="framework-grid">
+      <div class="framework-card">
+        <span class="fw-logo fw-react"><i class="bi bi-react"></i></span>
+        <h3>React</h3>
+        <div>Component-based UI library built by Meta (Facebook). Very flexible, huge ecosystem, sometimes minimal by default.</div>
+        <div class="framework-links mt-2">
+          <a href="https://react.dev/" target="_blank">Docs</a>
+          <a href="https://codesandbox.io/s/new" target="_blank">Try Online</a>
+        </div>
+      </div>
+      <div class="framework-card">
+        <span class="fw-logo fw-vue"><i class="bi bi-check-circle"></i></span>
+        <h3>Vue</h3>
+        <div>Lightweight, progressive, and beginner-friendly. Simple syntax, fast to prototype, used widely in Asia and startups.</div>
+        <div class="framework-links mt-2">
+          <a href="https://vuejs.org/" target="_blank">Docs</a>
+          <a href="https://sfc.vuejs.org/" target="_blank">Playground</a>
+        </div>
+      </div>
+      <div class="framework-card">
+        <span class="fw-logo fw-angular"><i class="bi bi-record-circle"></i></span>
+        <h3>Angular</h3>
+        <div>Full-featured framework from Google. Batteries-included for large projects, big on TypeScript and structure.</div>
+        <div class="framework-links mt-2">
+          <a href="https://angular.io/" target="_blank">Docs</a>
+          <a href="https://stackblitz.com/fork/angular" target="_blank">Try Online</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="compare" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-arrows-angle-contract"></i>React vs. Vue vs. Angular (Quick Table)</h2>
+    <div class="overflow-x-auto" style="width:100%;">
+      <table class="fake-api-table" style="min-width:620px;">
+        <tr>
+          <th></th>
+          <th>React</th>
+          <th>Vue</th>
+          <th>Angular</th>
+        </tr>
+        <tr>
+          <td>Release</td>
+          <td>2013</td>
+          <td>2014</td>
+          <td>2016 (rewrite)</td>
+        </tr>
+        <tr>
+          <td>Company / Creator</td>
+          <td>Meta (Facebook)</td>
+          <td>Evan You &amp; Open source</td>
+          <td>Google</td>
+        </tr>
+        <tr>
+          <td>Main Language</td>
+          <td>JavaScript (JSX), supports TypeScript</td>
+          <td>JavaScript, supports TypeScript</td>
+          <td>TypeScript (primarily), supports JS</td>
+        </tr>
+        <tr>
+          <td>Design</td>
+          <td>UI Library (flexible)</td>
+          <td>UI Framework (progressive)</td>
+          <td>Full MVC Framework</td>
+        </tr>
+        <tr>
+          <td>Learning Curve</td>
+          <td>Easy to start, some complexity later</td>
+          <td>Very gentle</td>
+          <td>Steep, lots to learn up front</td>
+        </tr>
+        <tr>
+          <td>Ecosystem Size</td>
+          <td>Huge</td>
+          <td>Medium</td>
+          <td>Very Large</td>
+        </tr>
+        <tr>
+          <td>Best For</td>
+          <td>All kinds of UIs, big and small</td>
+          <td>Personal, startup, creative apps</td>
+          <td>Enterprise, large-scale SPAs</td>
+        </tr>
+        <tr>
+          <td>Style</td>
+          <td>JSX (JS + HTML together)</td>
+          <td>HTML templates + JS</td>
+          <td>HTML templates, TypeScript, extra files</td>
+        </tr>
+      </table>
+    </div>
+    <div class="explain">
+      These are only starting points. You can build nearly anything with all 3, but the developer experience and community can feel quite different.
+    </div>
+  </section>
+
+  <section id="react" class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2 fw-react"><i class="bi bi-react"></i>React: The Flexible UI Library</h2>
+    <div class="explain">
+      React is all about building UIs from small, reusable pieces called <b>components</b>. You describe how your UI should look using a syntax called <b>JSX</b> (JavaScript + HTML together). React is just the view layer, so you add other libraries for routing and state management as needed.
+    </div>
+    <pre><code>
+// React component example
+function Hello(props) {
+  return &lt;h2&gt;Hello, {props.name}!&lt;/h2&gt;;
+}
+
+// Rendering in your app
+&lt;Hello name="Tolu" /&gt;
+    </code></pre>
+    <div class="explain">
+      Use <b>useState</b> and <b>useEffect</b> hooks to manage data and effects in modern React apps. A quick demo:
+    </div>
+    <pre><code>
+import { useState } from 'react';
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={()=>setCount(count+1)}&gt;Add&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+    </code></pre>
+    <div class="tutor-note">
+      React is used almost everywhere, and learning it opens doors in the job market. You'll see JSX, components, hooks, and often integrate with libraries like Redux or React Router.
+    </div>
+  </section>
+
+  <section id="vue" class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2 fw-vue"><i class="bi bi-check-circle"></i>Vue: Fast, Friendly, and Flexible</h2>
+    <div class="explain">
+      Vue tries to keep things simple but powerful. You build <b>components</b> using HTML, CSS, and JS in the same file. The syntax is clean and approachable, and you can scale from small experiments to big apps.
+    </div>
+    <pre><code>
+// Vue Single File Component Example
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;h2&gt;{{ message }}&lt;/h2&gt;
+    &lt;button @click="message = 'Hello, Vue!'"&gt;Change&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      message: "Welcome to Vue"
+    };
+  }
+};
+&lt;/script&gt;
+    </code></pre>
+    <div class="explain">
+      Vue has built-in two-way data binding (great for forms), and its composition API lets you build more organized large apps as your skills grow.
+    </div>
+    <div class="tutor-note">
+      Vue is great for quick prototypes, “sprinkling” on existing sites, and teams that want readable code with less setup.
+    </div>
+  </section>
+
+  <section id="angular" class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2 fw-angular"><i class="bi bi-record-circle"></i>Angular: Full-Powered and Structured</h2>
+    <div class="explain">
+      Angular is a full web application framework. It uses TypeScript by default for extra type safety and structure, and includes tools for everything: forms, HTTP, routing, state, and more—no need for many third-party libraries.
+    </div>
+    <pre><code>
+// Angular component example (TypeScript)
+import { Component } from '@angular/core';
+@Component({
+  selector: 'app-hello',
+  template: `&lt;h2&gt;Hello, {{name}}!&lt;/h2&gt;`
+})
+export class HelloComponent {
+  name = 'Fatima';
+}
+    </code></pre>
+    <div class="explain">
+      Angular uses <span class="highlight">modules</span> (groups of related code) and <span class="highlight">services</span> (for reusable logic and state).
+    </div>
+    <div class="tutor-note">
+      If you’re going into large companies, government, or big “enterprise” apps, Angular is still a top pick. There's more setup, but also more “out of the box.”
+    </div>
+  </section>
+
+  <section id="which" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-question-circle"></i>Which Should I Learn?</h2>
+    <div class="explain">
+      <ul class="list-disc ml-7 mb-3">
+        <li><b>React</b> if you want maximum job options and like to “pick your own tools”</li>
+        <li><b>Vue</b> for a gentle start, fast personal apps, or if you prefer HTML/JS separation</li>
+        <li><b>Angular</b> if you want a full toolbox for big projects and don't mind strong structure</li>
+      </ul>
+      Many companies use more than one. If you learn one well, picking up the others gets much easier, because the core ideas—<b>components, props, state, events, lifecycle</b>—are similar.
+    </div>
+    <div class="tutor-note">
+      Don't get stuck choosing! All three are good, and learning any will sharpen your JavaScript skills for life.
+    </div>
+  </section>
+
+  <section id="practice" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Practice / Research Prompts (with Solutions)</h2>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        1. Find and link to a starter “Hello World” project template for React, Vue or Angular.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('fpsol1')">Show Solution</button>
+      <div id="fpsol1" class="hidden solution-code">
+        React: <a href="https://react.dev/learn/start-a-new-react-project" target="_blank">Official Getting Started</a> or <a href="https://codesandbox.io/s/new" target="_blank">Sandbox</a><br>
+        Vue: <a href="https://vuejs.org/guide/quick-start.html#creating-a-vue-application" target="_blank">Official Guide</a> or <a href="https://sfc.vuejs.org/" target="_blank">Vue Playground</a><br>
+        Angular: <a href="https://angular.io/start" target="_blank">Official Angular Start</a> or <a href="https://stackblitz.com/fork/angular" target="_blank">StackBlitz</a>
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        2. What is a “component” in these frameworks? Write a one-sentence definition for each.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('fpsol2')">Show Solution</button>
+      <div id="fpsol2" class="hidden solution-code">
+        <ul>
+          <li><b>React:</b> A reusable function (or class) that returns JSX and manages its own logic and data.</li>
+          <li><b>Vue:</b> An object describing a chunk of UI, its data, and its behavior, usually in a single .vue file.</li>
+          <li><b>Angular:</b> A TypeScript class with attached HTML template and styling, representing a piece of your UI.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        3. Research: What’s the difference between “props” in React and “props” in Vue?
+      </div>
+      <button class="show-btn" onclick="toggleSolution('fpsol3')">Show Solution</button>
+      <div id="fpsol3" class="hidden solution-code">
+        Both <b>React</b> and <b>Vue</b> use “props” to let parents pass data down to child components.<br>
+        In React, props are part of the function’s argument and are read-only.<br>
+        In Vue, props are defined in a props list or option and can be type-checked, but are also read-only inside the child.
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        4. Pick any framework and write a simple component that takes a <code>name</code> prop and shows “Hello, Name!”. Try it in a playground if you want!
+      </div>
+      <button class="show-btn" onclick="toggleSolution('fpsol4')">Show Solution</button>
+      <div id="fpsol4" class="hidden solution-code">
+        <b>React:</b>
+        <pre><code>
+function Hello(props) {
+  return &lt;h2&gt;Hello, {props.name}!&lt;/h2&gt;;
+}
+        </code></pre>
+        <b>Vue:</b>
+        <pre><code>
+&lt;template&gt;
+  &lt;h2&gt;Hello, {{ name }}!&lt;/h2&gt;
+&lt;/template&gt;
+&lt;script&gt;
+export default { props: ["name"] };
+&lt;/script&gt;
+        </code></pre>
+        <b>Angular:</b>
+        <pre><code>
+@Component({
+  selector: "app-hello",
+  template: "&lt;h2&gt;Hello, {{ name }}!&lt;/h2&gt;"
+})
+export class HelloComponent {
+  @Input() name: string = "";
+}
+        </code></pre>
+      </div>
+    </div>
+    <script>
+      function toggleSolution(id) {
+        var el = document.getElementById(id);
+        el.classList.toggle('hidden');
+      }
+    </script>
+    <div class="explain mb-2">
+      Go beyond! Most framework learning comes from tweaking online sandboxes, reading docs, and building small projects.
+    </div>
+  </section>
+  <div class="text-center pt-4">
+    <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-700 text-white font-semibold hover:bg-indigo-800 transition">
+      <i class="bi bi-arrow-left"></i> Back to Resources
+    </a>
+  </div>
+</main>
+<footer class="text-center py-6 text-sm text-indigo-500 bg-white border-t glass-card max-w-4xl mx-auto mb-8">
+  CODECX INSTITUTE &copy; 2025. All rights reserved.
+</footer>
+</body>
+</html>
