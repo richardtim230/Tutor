@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modern JavaScript: let, const & Arrow Functions | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(99,102,241,.11), 0 2px 8px rgba(30,64,175,.06);
+      border: 1px solid #e0e7ff;
+    }
+    pre, .solution-code {
+      border-radius: 0.7rem;
+      background: #23272e;
+      color: #a5b4fc;
+      padding: 1em;
+      font-size: 1em;
+      overflow-x: auto;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      margin-top: 0.6em;
+    }
+    .demo-output {
+      background: #c7d2fe;
+      color: #4338ca;
+      border-radius: 0.5rem;
+      padding: 0.7em 1.2em;
+      font-weight: 600;
+      margin: 0.6em 0 1.2em 0;
+      border: 1px solid #a5b4fc;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.08em;
+      display: inline-block;
+    }
+    .show-btn {
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      padding: 0.3em 1.1em;
+      border-radius: 0.5em;
+      margin: 0.5em 0 0.3em 0;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .show-btn:hover { background: #312e81; }
+    .hidden { display: none; }
+    .highlight {
+      background: #a5b4fc;
+      color: #312e81;
+      border-radius: 0.3rem;
+      padding: 0.08em 0.24em;
+      font-weight: bold;
+    }
+    .tutor-note {
+      background: #f1f5ff;
+      border-left: 5px solid #6366f1;
+      color: #373999;
+      padding: 0.6em 1em;
+      margin: 1em 0;
+      border-radius: 0.3em;
+      font-style: italic;
+    }
+    .explain { color: #33334c; margin-bottom: 1.2em; }
+    h1, h2, h3 { color: #312e81; }
+    @media (max-width:900px) {
+      .glass-card, pre, .solution-code { font-size: 0.97em; }
+      .demo-output { font-size: 1em; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+
+<header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <i class="bi bi-boxes text-3xl text-indigo-500"></i>
+    <h1 class="text-2xl font-extrabold tracking-tight">
+      Modern JS: let, const & Arrow Functions
+    </h1>
+  </div>
+  <nav class="mt-2 flex gap-2 text-sm flex-wrap text-indigo-700">
+    <a href="resource.html" class="hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    <a href="#var-let-const" class="hover:underline flex items-center gap-1"><i class="bi bi-layers"></i>var, let, const</a>
+    <a href="#scope" class="hover:underline flex items-center gap-1"><i class="bi bi-easel2"></i>What is Scope?</a>
+    <a href="#blockscope" class="hover:underline flex items-center gap-1"><i class="bi bi-bounding-box"></i>Block Scope Visualized</a>
+    <a href="#const-objects-arrays" class="hover:underline flex items-center gap-1"><i class="bi bi-database"></i>const, Objects & Arrays</a>
+    <a href="#arrow" class="hover:underline flex items-center gap-1"><i class="bi bi-lightning-charge"></i>Arrow Functions</a>
+    <a href="#compare" class="hover:underline flex items-center gap-1"><i class="bi bi-arrow-left-right"></i>Function Styles</a>
+    <a href="#practice" class="hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Practice</a>
+  </nav>
+</header>
+
+<main class="max-w-3xl mx-auto pt-10 pb-16 px-2 sm:px-4">
+
+  <section id="var-let-const" class="glass-card p-6 mb-7">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2"><i class="bi bi-layers"></i>var, let, and const - What’s the Difference?</h2>
+    <div class="explain mb-3">
+      In older JavaScript, every variable started with <code>var</code>. It works, but it can cause problems because it ignores modern “scope” rules. <br>
+      Today, <span class="highlight">let</span> and <span class="highlight">const</span> replace var. They help you keep things tidy and prevent accidental mistakes (like overwriting the wrong variable or having one “stick around” too long).
+    </div>
+    <div class="tutor-note">
+      Think of <b>let</b> as your “changeable” storage and <b>const</b> as your “locked box.” <br>Use <b>let</b> when you plan to update the value, <b>const</b> if you never want it to change.
+    </div>
+    <pre><code>
+// Using var
+var user = "Mimi";
+user = "Sam";
+var user = "Josh";   // This is allowed—confusing!
+
+// Using let
+let age = 20;        // lets you update (age = 21;)
+let age = 25;        // Not allowed—no redeclaration in same scope
+
+// Using const
+const PI = 3.1416;   // never changes
+// PI = 3.15;        // this would fail
+
+let total = 10;
+total = total + 5;   // allowed
+    </code></pre>
+    <div class="demo-output" id="varLetConstDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let msg = '';
+        var user = "Mimi";
+        user = "Sam";
+        var user = "Josh";
+        msg += "var: user = " + user + "<br>";
+        let age = 20;
+        age = 21;
+        msg += "let: age = " + age + "<br>";
+        const PI = 3.1416;
+        msg += "const: PI = " + PI;
+        document.getElementById("varLetConstDemo").innerHTML = msg;
+      });
+    </script>
+    <div class="explain">
+      <b>Summary:</b>
+      <ul class="list-disc ml-7">
+        <li>Use <b>let</b> if a value could change</li>
+        <li>Use <b>const</b> if a value should never change</li>
+        <li>Avoid <b>var</b> unless you’re fixing old code</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="scope" class="glass-card p-6 mb-7">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2"><i class="bi bi-easel2"></i>What is Scope?</h2>
+    <div class="explain mb-3">
+      <b>Scope</b> means “where in your code does this thing exist?” <br>
+      Use <b>let</b> and <b>const</b> inside functions, conditionals, or loops, and they’ll only be visible right where you defined them. That prevents bugs where two different pieces of code use the same variable by accident.
+    </div>
+    <pre><code>
+function showMessage() {
+  let msg = "Hello!";
+  if (true) {
+    let innerMsg = "Hi!";
+    console.log(innerMsg); // shows "Hi!"
+  }
+  // console.log(innerMsg); // error: innerMsg is not visible here
+  console.log(msg);        // shows "Hello!"
+}
+    </code></pre>
+    <div class="demo-output" id="scopeDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let output = "";
+        function showMessage() {
+          let msg = "Hello!";
+          if (true) {
+            let innerMsg = "Hi!";
+            output += innerMsg + "<br>";
+          }
+          output += msg;
+        }
+        showMessage();
+        document.getElementById("scopeDemo").innerHTML = output;
+      });
+    </script>
+    <div class="explain">
+      <b>Tutor Note:</b> Most bugs from <b>var</b> show up because it ignores block scope. Modern <b>let</b> and <b>const</b> always obey <code>{ }</code>.
+    </div>
+  </section>
+
+  <section id="blockscope" class="glass-card p-6 mb-7">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2"><i class="bi bi-bounding-box"></i>Block Scope Visualized</h2>
+    <div class="explain mb-3">
+      Whenever you write code inside <code>{ }</code> braces (functions, <code>if</code>, <code>for</code>), variables made with <strong>let</strong> and <strong>const</strong> are NOT visible outside.
+    </div>
+    <pre><code>
+for (let i = 0; i &lt; 3; i++) {
+  // i = 0, then 1, then 2
+  console.log(i);
+}
+// console.log(i); // ERROR: i doesn't exist outside loop
+    </code></pre>
+    <div class="demo-output" id="blockscopeDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let output = "";
+        for (let i = 0; i < 3; i++) {
+          output += "i = " + i + "<br>";
+        }
+        output += "(Outside loop: i is undefined)";
+        document.getElementById("blockscopeDemo").innerHTML = output;
+      });
+    </script>
+    <div class="tutor-note">
+      If you used <b>var</b> instead, you could still access <code>i</code> outside the loop—which is rarely what you want.
+    </div>
+  </section>
+
+  <section id="const-objects-arrays" class="glass-card p-6 mb-7">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2"><i class="bi bi-database"></i>const with Objects and Arrays</h2>
+    <div class="explain mb-3">
+      <b>const</b> prevents changing the variable itself, but you can still update what’s inside if it’s an object or array.
+    </div>
+    <pre><code>
+const user = { name: "Zara" };
+user.name = "Joy"; // allowed
+
+const colors = ["red", "blue"];
+colors.push("green"); // allowed
+// user = {};         // ERROR: cannot reassign a new object
+    </code></pre>
+    <div class="demo-output" id="constObjDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const user = { name: "Zara" };
+        user.name = "Joy";
+        const colors = ["red", "blue"];
+        colors.push("green");
+        document.getElementById("constObjDemo").innerHTML =
+          "User: " + user.name + "<br>Colors: " + colors.join(", ");
+      });
+    </script>
+    <div class="tutor-note">
+      If you want the contents to never change either, you should use <code>Object.freeze()</code> (not common for beginners).
+    </div>
+  </section>
+
+  <section id="arrow" class="glass-card p-6 mb-7">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2"><i class="bi bi-lightning-charge"></i>Arrow Functions</h2>
+    <div class="explain mb-3">
+      Arrow functions are a modern shortcut for creating functions, especially useful with arrays. They don’t have their own <b>this</b>, so don’t use them for object methods.
+    </div>
+    <pre><code>
+// Function Declaration (classic)
+function greet(name) {
+  return "Hello, " + name;
+}
+greet("Tola");
+
+// Arrow Function (modern)
+const greet2 = (name) => {
+  return "Hello, " + name;
+};
+
+// One-liner Arrow Function
+const square = n => n * n;
+
+let nums = [1,2,3,4];
+let squares = nums.map(x => x * x); // [1,4,9,16]
+    </code></pre>
+    <div class="demo-output" id="arrowDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const greet2 = (name) => "Hello, " + name;
+        const square = n => n * n;
+        const nums = [1,2,3,4];
+        const squares = nums.map(x => x*x);
+        document.getElementById("arrowDemo").innerHTML = greet2("Tola") + " | squares: " + squares.join(", ");
+      });
+    </script>
+    <div class="tutor-note">
+      If you want to access <b>this</b> inside an object method, use the old function syntax, not arrow functions.
+    </div>
+  </section>
+
+  <section id="compare" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-arrow-left-right"></i>All Together: Examples Compared</h2>
+    <div class="explain">
+      Need to double a number? Here are different ways:
+    </div>
+    <pre><code>
+// Classic (declaration)
+function double(n) { return n * 2; }
+double(5);
+
+// Expression (as a variable)
+const double2 = function(n) { return n * 2; };
+double2(7);
+
+// Arrow function
+const double3 = n => n * 2;
+double3(9);
+
+// Used in an array map
+[2,4,6].map(n => n * 2); // [4,8,12]
+    </code></pre>
+    <div class="demo-output" id="compareDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        function double(n) { return n*2; }
+        const double2 = function(n) { return n*2; };
+        const double3 = n => n*2;
+        const mapped = [2,4,6].map(n=>n*2);
+        document.getElementById("compareDemo").innerHTML =
+          double(5) + " | " + double2(7) + " | " + double3(9) +
+          " | map: " + mapped.join(", ");
+      });
+    </script>
+  </section>
+
+  <section id="practice" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Practice (with Hidden Solutions)</h2>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        1. Create a <b>let</b> variable, update it twice, then log the final value.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol1')">Show Solution</button>
+      <div id="sol1" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="out1"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let score = 10;
+    score += 5;
+    score -= 2;
+    document.getElementById('out1').textContent = score;
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        2. Make a <b>const</b> array with two items, push two more, show the result.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol2')">Show Solution</button>
+      <div id="sol2" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="out2"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const myArr = [1, 2];
+    myArr.push(3);
+    myArr.push(4);
+    document.getElementById('out2').textContent = myArr.join(", ");
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        3. Write an arrow function to triple a number. Use it with 7, show the answer.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol3')">Show Solution</button>
+      <div id="sol3" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="out3"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const triple = n =&gt; n * 3;
+    document.getElementById('out3').textContent = triple(7);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        4. Use an arrow function inside filter to get odd numbers from <code>[4,5,7,8,10,11]</code>.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol4')">Show Solution</button>
+      <div id="sol4" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="out4"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let values = [4,5,7,8,10,11];
+    let odds = values.filter(n =&gt; n % 2 != 0);
+    document.getElementById('out4').textContent = odds.join(", ");
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <script>
+      function toggleSolution(id) {
+        var el = document.getElementById(id);
+        el.classList.toggle('hidden');
+      }
+    </script>
+    <div class="explain mb-2">
+      Try first, then peek if you feel stuck—that’s how growth happens.
+    </div>
+  </section>
+
+  <div class="text-center pt-4">
+    <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-700 text-white font-semibold hover:bg-indigo-800 transition">
+      <i class="bi bi-arrow-left"></i> Back to Resources
+    </a>
+  </div>
+
+</main>
+<footer class="text-center py-6 text-sm text-indigo-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+  CODECX INSTITUTE &copy; 2025. All rights reserved.
+</footer>
+</body>
+</html>
