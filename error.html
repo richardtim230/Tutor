@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Error Handling & Debugging | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(99,102,241,.10), 0 2px 8px rgba(30,64,175,.04);
+      border: 1px solid #e0e7ff;
+    }
+    pre, .solution-code {
+      border-radius: 0.7rem;
+      background: #23272e;
+      color: #facc15;
+      padding: 1.02em;
+      font-size: 1em;
+      overflow-x: auto;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      margin-top: 0.6em;
+    }
+    .demo-output {
+      background: #fef08a;
+      color: #a16207;
+      border-radius: 0.5rem;
+      padding: 0.7em 1.2em;
+      font-weight: 600;
+      margin: 0.6em 0 1.2em 0;
+      border: 1px solid #fde047;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.08em;
+      min-width: 160px;
+    }
+    .show-btn {
+      background: #facc15;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      padding: 0.29em 1.1em;
+      border-radius: 0.5em;
+      margin: 0.5em 0 0.3em 0;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .show-btn:hover { background: #a16207; }
+    .hidden { display: none; }
+    .highlight {
+      background: #fdba74;
+      color: #92400e;
+      border-radius: 0.3rem;
+      padding: 0.08em 0.2em;
+      font-weight: bold;
+    }
+    .tutor-note {
+      background: #fefce8;
+      border-left: 5px solid #fde047;
+      color: #b45309;
+      padding: 0.6em 1em;
+      margin: 1em 0;
+      border-radius: 0.3em;
+      font-style: italic;
+    }
+    .explain { color: #713f12; margin-bottom: 1.1em; }
+    h1, h2, h3 { color: #a16207; }
+    @media (max-width:900px) {
+      .glass-card, pre, .solution-code { font-size: 0.97em; }
+      .demo-output { font-size: 1em; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-yellow-50 via-yellow-100 to-white min-h-screen">
+<header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <i class="bi bi-shield-lock text-3xl text-yellow-500"></i>
+    <h1 class="text-2xl font-extrabold tracking-tight">
+      JavaScript: Error Handling & Debugging
+    </h1>
+  </div>
+  <nav class="mt-2 flex gap-2 text-sm flex-wrap text-yellow-700">
+    <a href="resource.html" class="hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    <a href="#concept" class="hover:underline flex items-center gap-1"><i class="bi bi-lightbulb"></i>Why Handle Errors?</a>
+    <a href="#types" class="hover:underline flex items-center gap-1"><i class="bi bi-bug"></i>JS Error Types</a>
+    <a href="#trycatch" class="hover:underline flex items-center gap-1"><i class="bi bi-shield-lock"></i>try...catch</a>
+    <a href="#throw" class="hover:underline flex items-center gap-1"><i class="bi bi-flag"></i>Throwing Errors</a>
+    <a href="#debug" class="hover:underline flex items-center gap-1"><i class="bi bi-terminal"></i>Debugging Tips</a>
+    <a href="#practice" class="hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Practice</a>
+  </nav>
+</header>
+<main class="max-w-3xl mx-auto pt-10 pb-14 px-2 sm:px-4">
+
+  <section id="concept" class="glass-card p-6 mb-7">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Why Worry About Errors?</h2>
+    <div class="explain mb-2">
+      Errors are part of programming. Typos, invalid data, server issues, or unexpected input can and do happen. Ignore them and your page can break or your data may be lost. Good developers expect problems and write code that handles them in useful ways—showing messages, logging details, or using safe defaults.
+    </div>
+  </section>
+
+  <section id="types" class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-3 flex items-center gap-2"><i class="bi bi-bug"></i>Error Types in JavaScript</h2>
+    <div class="explain">
+      <b>Common errors you’ll run into:</b>
+      <ul class="list-disc ml-7">
+        <li><b>ReferenceError:</b> You used a variable that wasn’t declared</li>
+        <li><b>TypeError:</b> You tried something not allowed (like calling a non-function, or doing math with undefined)</li>
+        <li><b>SyntaxError:</b> You wrote invalid JS code (missing a curly brace or comma)</li>
+        <li><b>RangeError:</b> Number out of bounds, or .repeat() called with a huge number</li>
+        <li><b>Custom Error:</b> Any error you define and throw yourself</li>
+      </ul>
+    </div>
+    <div class="tutor-note">
+      Your browser’s Console panel will usually tell you what kind of error happened, and (roughly) where.
+    </div>
+    <pre><code>
+// Examples:
+let foo = 1;
+console.log(bar);    // ReferenceError: bar is not defined
+let x = null;
+x();                // TypeError: x is not a function
+let json = "abc";
+JSON.parse(json);   // SyntaxError: Unexpected token a...
+    </code></pre>
+    <div class="explain">
+      Don’t panic—read the error messages! They will usually show you the first place to look.
+    </div>
+  </section>
+
+  <section id="trycatch" class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-3 flex items-center gap-2"><i class="bi bi-shield-lock"></i>try...catch: Handling Mistakes in Code</h2>
+    <div class="explain">
+      <span class="highlight">try...catch</span> lets you “try” running code, but if anything fails (throws), the browser will jump to your <b>catch</b> block to handle it.
+    </div>
+    <pre><code>
+try {
+  let json = JSON.parse('{"valid": true}');
+  console.log(json.valid);
+} catch (error) {
+  console.log("Something went wrong:", error.message);
+}
+    </code></pre>
+    <div class="demo-output" id="catchDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let output = "";
+        try {
+          let json = JSON.parse('{"valid": true}');
+          output = "valid = " + json.valid;
+        } catch(error) {
+          output = "Error: " + error.message;
+        }
+        document.getElementById("catchDemo").innerHTML = output;
+      });
+    </script>
+    <div class="explain">
+      Your <b>catch(error)</b> block gets an error object, so you can print, log, or act based on what happened.
+    </div>
+    <div class="tutor-note">
+      Place <code>try...catch</code> around <b>only</b> the code that might fail, not the whole app. Otherwise you might hide bugs.
+    </div>
+  </section>
+
+  <section id="throw" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-flag"></i>Throwing Your Own Errors</h2>
+    <div class="explain">
+      You can make your program “fail on purpose” with <span class="highlight">throw</span>—if a value isn’t what you expect, “throw” an error with your own message.
+    </div>
+    <pre><code>
+function divide(a, b) {
+  if (b === 0) throw new Error("Division by zero!");
+  return a / b;
+}
+try {
+  let result = divide(8, 0);
+} catch(e) {
+  console.log(e.message); // "Division by zero!"
+}
+    </code></pre>
+    <div class="explain">
+      Use this pattern to guard against bad input or impossible situations.
+    </div>
+  </section>
+
+  <section id="debug" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-terminal"></i>Debugging: Fixing Errors, Understanding Problems</h2>
+    <div class="explain">
+      <b>Debugging</b> is about rooting out mistakes and understanding where your code goes wrong. Tools and habits for catching and fixing issues:
+      <ul class="list-disc ml-7">
+        <li><b>Console.log:</b> Print out values to follow what your code is doing</li>
+        <li><b>Browser DevTools:</b> Check Console tab for errors, Sources for breakpoints (step-by-step), and Network for failed requests</li>
+        <li><b>Debuggers:</b> The <code>debugger;</code> statement can pause JS anywhere for inspection</li>
+        <li><b>Isolation:</b> Test small chunks of code in the console before adding to your main program</li>
+        <li><b>Read errors slowly:</b> Don’t guess; error messages are clues</li>
+        <li><b>Comment out parts:</b> Use <code>//</code> or <code>/* ... */</code> to hide code and narrow the problem</li>
+      </ul>
+    </div>
+    <pre><code>
+// Example debugging with console.log
+function greet(name) {
+  console.log("Name received:", name);
+  return "Hi, " + name;
+}
+greet("Gift");
+    </code></pre>
+    <div class="explain">
+      <span class="highlight">DevTools:</span> Right-click your page, pick "Inspect" > "Console" to open a panel and see errors live as you code.
+    </div>
+  </section>
+  
+  <section id="practice" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Practice & Debug Tasks (with Hidden Solutions)</h2>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        1. Write a function that tries to parse <code>'{"age":23}'</code> as JSON, handles any error, and prints the age or a message.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol1')">Show Solution</button>
+      <div id="sol1" class="hidden solution-code">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="parseOut"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function showAge(jsonStr) {
+      try {
+        let obj = JSON.parse(jsonStr);
+        document.getElementById('parseOut').textContent = obj.age;
+      } catch(e) {
+        document.getElementById('parseOut').textContent = "Invalid JSON";
+      }
+    }
+    showAge('{"age":23}');
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        2. Fill in a function that divides two numbers and throws if division by zero is attempted. Display a helpful error or the answer.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol2')">Show Solution</button>
+      <div id="sol2" class="hidden solution-code">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="divOut"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function safeDivide(a, b) {
+      if (b === 0) throw new Error("Cannot divide by zero");
+      return a / b;
+    }
+    try {
+      document.getElementById('divOut').textContent = safeDivide(10, 2); // shows 5
+    } catch(e) {
+      document.getElementById('divOut').textContent = e.message;
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;        
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        3. In the code below, find and fix both bugs (one is a ReferenceError, one a TypeError).<br>
+        <pre><code>
+function showUser(user) {
+  console.log(users.name.toUpperCase());
+}
+showUser({ name: "lizzy" });
+        </code></pre>
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol3')">Show Solution</button>
+      <div id="sol3" class="hidden solution-code">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="bugfix"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function showUser(user) {
+      // users.name → user.name (ReferenceError fix)
+      // Might be non-string (TypeError guard):
+      if (!user.name || typeof user.name !== "string") {
+        document.getElementById('bugfix').textContent = "Invalid user name";
+        return;
+      }
+      document.getElementById('bugfix').textContent = user.name.toUpperCase();
+    }
+    showUser({ name: "lizzy" });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-6">
+      <div class="explain mb-1">
+        4. Debugging task: Open your browser console, try running <code>debugger;</code> in a function, and step through line by line.
+        <br>(No hidden solution for this. Try in DevTools console!)
+      </div>
+    </div>
+    <script>
+      function toggleSolution(id) {
+        var el = document.getElementById(id);
+        el.classList.toggle('hidden');
+      }
+    </script>
+    <div class="explain mb-2">
+      Struggling is part of becoming a real coder. Practice reading error messages out loud. Google errors—every developer does.  
+    </div>
+  </section>
+  <div class="text-center pt-4">
+    <a href="resource.html" class="inline-block px-5 py-2 rounded bg-yellow-600 text-white font-semibold hover:bg-yellow-700 transition">
+      <i class="bi bi-arrow-left"></i> Back to Resources
+    </a>
+  </div>
+</main>
+<footer class="text-center py-6 text-sm text-yellow-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+  CODECX INSTITUTE &copy; 2025. All rights reserved.
+</footer>
+</body>
+</html>
