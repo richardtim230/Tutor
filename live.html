@@ -15,7 +15,6 @@
     #monaco { width: 100%; height: 340px; border-radius: 10px; }
     .scroll-area { overflow-y: auto; max-height: 180px;}
     .resource-link:hover { text-decoration: underline;}
-    .chat-tip { font-size: 13px; color: #555; background: #eef; border-radius: 5px; padding: 3px 7px; margin-top: 2px; }
   </style>
 </head>
 <body class="bg-gradient-to-tr from-indigo-50 via-purple-50 to-white min-h-screen">
@@ -57,9 +56,10 @@
           </select>
         </div>
         <div id="monaco"></div>
-        <div class="text-xs text-gray-500 mt-2">
-          Edits here are <strong>live and real-time</strong> for everyone in the class.<br>
-          <span class="font-bold">Tip:</span> Try writing code together and see updates instantly!
+        <div class="text-xs text-gray-600 mt-2">
+          Type in the editor. Everyone sees what you type.
+          <br/>
+          <span class="text-indigo-500">[Ctrl+S]</span> Save, <span class="text-indigo-500">[Tab]</span> Indent, <span class="text-indigo-500">[Shift+Tab]</span> Unindent.  
         </div>
       </section>
 
@@ -71,6 +71,7 @@
           <button id="uploadBtn" class="bg-indigo-600 text-white px-3 py-2 rounded">Upload file</button>
         </div>
         <ul class="pl-4" id="resourceList"></ul>
+        <div id="uploadStatus" class="text-sm text-red-500 mt-1"></div>
       </section>
 
     </section>
@@ -81,17 +82,16 @@
       <section class="bg-white rounded-lg shadow p-4 flex flex-col h-[320px]">
         <h2 class="font-bold text-lg text-indigo-700 mb-1">Class Chat</h2>
         <div class="flex-1 mb-2 border rounded px-2 py-1 bg-gray-50 scroll-area" id="chatArea"></div>
-        <form class="flex gap-1 mt-1" id="chatForm" autocomplete="off" onsubmit="return false">
-          <textarea id="chatInput" rows="1" placeholder="Type a message. Enter = Send, Shift+Enter = Newline" class="flex-1 border rounded px-2 py-1 resize-none" style="min-height:36px;max-height:88px"></textarea>
-          <button type="button" id="chatSend" class="bg-indigo-700 text-white px-4 rounded">Send</button>
+        <form class="flex gap-1 mt-1" id="chatForm" autocomplete="off">
+          <textarea id="chatInput" rows="1" placeholder="Type message... (Enter: send, Shift+Enter: newline)" class="flex-1 border rounded px-2 py-1 resize-none"></textarea>
+          <button type="submit" id="sendBtn" class="bg-indigo-700 text-white px-4 rounded">Send</button>
         </form>
-        <div class="chat-tip">Tip: <kbd>Enter</kbd> to send, <kbd>Shift</kbd>+<kbd>Enter</kbd> for newline</div>
       </section>
       <!-- POLL Q&A -->
       <section class="bg-gray-50 rounded-lg shadow p-4" id="pollQA">
-        <h2 class="font-bold text-gray-700 mb-2">Live Q&amp;A (Poll)</h2>
+        <h2 class="font-bold text-gray-700 mb-2">Live Q&amp;A / Polls</h2>
         <form id="pollForm" class="mb-2">
-          <input name="question" type="text" placeholder="Ask a poll question..." class="border rounded px-2 py-1 mb-1 w-full" required />
+          <input name="question" type="text" placeholder="Start a poll: Your question..." class="border rounded px-2 py-1 mb-1 w-full" required />
           <input name="opt1" type="text" placeholder="Option 1" class="border rounded px-2 py-1 mb-1 w-full" required />
           <input name="opt2" type="text" placeholder="Option 2" class="border rounded px-2 py-1 mb-1 w-full" required />
           <input name="opt3" type="text" placeholder="Option 3" class="border rounded px-2 py-1 mb-1 w-full" required />
@@ -103,96 +103,114 @@
     </aside>
   </main>
   <script>
+    // -- BACKEND CONFIG
     const BACKEND = "https://examguard-jmvj.onrender.com";
 
     // --- 1. Authentication & Setup ---
-    let token = localStorage.getItem("codecx_token") || sessionStorage.getItem("codecx_token");
+    let token = localStorage.getItem("codecx_token");
+    if(!token) token = sessionStorage.getItem("codecx_token");
     if(!token) token = prompt("Provide login token:");
     if(!token) { alert("Login required!"); location.href='login.html'; }
     function decodeJWT(token) {
       try { return JSON.parse(atob(token.split('.')[1])); } catch(e) { return {}; }
     }
     let user = decodeJWT(token);
-    let role = (user.role === "admin" || user.role === "instructor") ? "instructor" : "student";
-    document.getElementById("userRole").textContent =
-      (user.fullName || user.username || user.matricNumber || "Student") + " (" + role + ")";
+    let displayName =
+      user.fullName || user.username || user.matricNumber || "Guest";
+    document.getElementById("userRole").textContent = displayName;
 
     // --- 2. Socket.io real-time connection ---
-    const socket = io(BACKEND, {
-      query: { token },
-      path: "/liveclass-socket",
-      transports: ["websocket"],
-      withCredentials: true
+    const socket = io(BACKEND, { 
+      query: { token }, 
+      path: "/liveclass-socket", 
+      transports: ["websocket"], 
+      withCredentials: true 
     });
 
-    // --- 3. Chat (multiline/Enter-friendly, prevent page refresh) ---
+    // --- 3. Class Chat ---
     let chatArea = document.getElementById('chatArea');
-    let chatInput = document.getElementById('chatInput');
-    function sendChatMsg() {
+    let chatInput = document.getElementById("chatInput");
+    let sendBtn = document.getElementById("sendBtn");
+
+    // Allow Shift+Enter for newline, Enter for send
+    chatInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+    document.getElementById('chatForm').onsubmit = e => {
+      e.preventDefault();
       let msg = chatInput.value.trim();
       if(msg) {
-        socket.emit("chat:message", {
-          user: user.fullName || user.username || "User",
-          message: msg,
-          time: new Date().toISOString()
+        socket.emit("chat:message", { 
+          user: displayName, 
+          message: msg, 
+          time: new Date().toISOString() 
         });
         chatInput.value = "";
         chatInput.rows = 1;
       }
-    }
-    chatInput.addEventListener("keydown", function(ev){
-      if(ev.key==="Enter" && !ev.shiftKey) { ev.preventDefault(); sendChatMsg(); }
+    };
+    chatInput.addEventListener("input", function() {
+      // dynamically size textarea to content
+      chatInput.rows = Math.min(6, chatInput.value.split("\n").length);
     });
-    document.getElementById("chatSend").onclick = sendChatMsg;
-    socket.on("chat:message", msg => {
+    socket.on("chat:message", msg=>{
       let div = document.createElement("div");
-      div.innerHTML = `<span class="font-semibold text-indigo-700">${msg.user}</span>: <span>${msg.message.replace(/\n/g,"<br>")}</span> <span class="text-xs ml-2 text-gray-400">${new Date(msg.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>`;
+      div.innerHTML = `<span class="font-semibold text-indigo-700">${msg.user}</span>: <span>${msg.message.replace(/\n/g, "<br/>")}</span> <span class="text-xs ml-2 text-gray-400">${new Date(msg.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>`;
       chatArea.appendChild(div); chatArea.scrollTop = chatArea.scrollHeight;
     });
 
-    // --- 4. Monaco Editor (robust init, always populated, collaborative) ---
+    // --- 4. MONACO CODE EDITOR with full collaborative sync ---
     let editor, codeModel, codeModelIgnore = false;
     let monacoLang = "javascript";
-    let codeInitReceived = false;
     document.getElementById('codeLang').onchange = function() {
       let newLang = this.value;
       monacoLang = newLang;
-      if(codeModel) monaco.editor.setModelLanguage(codeModel, newLang);
+      if (codeModel) monaco.editor.setModelLanguage(codeModel, newLang);
     };
+    // Monaco load
     require.config({ paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs" }});
     require(['vs/editor/editor.main'], function () {
-      // init with placeholder, then update when state received
-      codeModel = monaco.editor.createModel("// Write or edit code here for the whole class", monacoLang);
+      // Always show a starter code even if backend doesn't send one yet
+      let starterCode = "<!-- Welcome to CODECX Collaborative Code. Start Coding! -->";
+      codeModel = monaco.editor.createModel(starterCode, monacoLang);
+
       editor = monaco.editor.create(document.getElementById('monaco'), {
         model: codeModel,
         theme: "vs-dark",
         fontSize: 16, minimap: { enabled: false }
       });
+
+      // Collaborative: broadcast on change
       editor.onDidChangeModelContent(() => {
         if(editor.isFocused() && !codeModelIgnore) {
           socket.emit("code:update", codeModel.getValue());
         }
       });
+
+      // Sync code from server (prevents feedback loops)
       socket.on("code:update", code=>{
-        if(code !== codeModel.getValue()){
+        if(code !== codeModel.getValue()) {
           codeModelIgnore = true;
           codeModel.setValue(code);
           codeModelIgnore = false;
         }
       });
+
+      // On initial connection or rejoin, get the latest code from others
       socket.on("code:init", code=>{
-        if(code && code !== codeModel.getValue()){
-          codeModelIgnore = true;
+        if(code && code !== codeModel.getValue()) {
           codeModel.setValue(code);
-          codeModelIgnore = false;
         }
-        codeInitReceived = true;
       });
     });
 
-    // --- 5. Poll/Q&A (anyone can create a poll/answer) ---
+    // --- 5. Poll/Q&A (with results for ALL) ---
     let pollForm = document.getElementById("pollForm"),
         pollLive = document.getElementById("pollLive");
+    pollForm.classList.remove("hidden"); // anyone can start a poll!
     pollForm.onsubmit = function(e) {
       e.preventDefault();
       const q = pollForm.question.value.trim(),
@@ -206,7 +224,9 @@
       pollLive.innerHTML =
         `<div class="font-semibold mb-1">${d.q}</div>` +
         d.opts.map((o,i)=>
-          `<button data-i="${i}" class="bg-indigo-100 px-2 m-1 rounded text-indigo-800 poll-opt-btn">${String.fromCharCode(65+i)}. ${o}</button><br>`).join("");
+          `<button data-i="${i}" class="bg-indigo-100 px-2 m-1 rounded text-indigo-800 poll-opt-btn">${String.fromCharCode(65+i)}. ${o}</button><br>`
+        ).join("") +
+        `<div id="pollResults" class="mt-2"></div>`;
       pollLive.querySelectorAll(".poll-opt-btn").forEach(btn=>{
         btn.onclick = function() {
           let idx = btn.getAttribute("data-i");
@@ -217,13 +237,14 @@
       });
     });
     socket.on("quiz:results", counts=>{
-      Object.keys(counts).forEach(i=>{
-        let el = document.getElementById("c"+i);
-        if(el) el.textContent = counts[i];
-      });
+      let pollResults = document.getElementById("pollResults");
+      if (!pollResults) return;
+      pollResults.innerHTML = Object.entries(counts)
+        .map(([i, v]) => `<div>${String.fromCharCode(65+parseInt(i))}: <b>${v}</b> vote${v==1?"":"s"}</div>`)
+        .join("");
     });
 
-    // --- 6. File upload by anyone ---
+    // --- 6. File upload/download sharing (everyone can upload files) ---
     let uploadBtn = document.getElementById("uploadBtn");
     let fileInput = document.getElementById("fileInput");
     uploadBtn.onclick = ()=>fileInput.click();
@@ -232,16 +253,23 @@
       if (!file) return;
       uploadBtn.disabled = true;
       uploadBtn.textContent = "Uploading...";
+      let uploadStatus = document.getElementById('uploadStatus');
+      uploadStatus.textContent = "";
       try {
         let form = new FormData();
         form.append("file", file);
         let res = await fetch(BACKEND+"/api/liveclass/files/upload", { method:"POST", headers:{"Authorization":"Bearer "+token}, body:form });
         let data = await res.json();
-        if(data.url) socket.emit("file:uploaded", { name: file.name, url: data.url });
-      } catch(e) { alert("Upload failed: "+e.message); }
+        if(data.url) {
+          socket.emit("file:uploaded", { name: file.name, url: data.url });
+        } else if(data.message) {
+          uploadStatus.textContent = "Failed: "+data.message;
+        }
+      } catch(e) { 
+        uploadStatus.textContent = "Upload failed! Network or permissions error.";
+      }
       uploadBtn.disabled = false;
       uploadBtn.textContent = "Upload file";
-      fileInput.value = "";
     }
     let resourceList = document.getElementById("resourceList");
     socket.on("file:uploaded", ({name, url})=>{
@@ -250,9 +278,9 @@
       resourceList.appendChild(li);
     });
 
-    // --- 7. Page errors ---
+    // --- 7. Error Handling
     socket.on("connect_error", (err)=>{
-      alert("Failed to connect to LIVE class backend: "+(err&&err.message?err.message:err));
+      alert("Failed to connect to class server: "+(err&&err.message?err.message:err));
     });
 
   </script>
