@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript: Promises & Async/Await | CODECX Institute</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body { max-width: 100vw; overflow-x: hidden; }
+    .glass-card {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(5px);
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(99,102,241,.11), 0 2px 8px rgba(30,64,175,.06);
+      border: 1px solid #e0e7ff;
+    }
+    pre, .solution-code {
+      border-radius: 0.7rem;
+      background: #23272e;
+      color: #a5b4fc;
+      padding: 1em;
+      font-size: 1em;
+      overflow-x: auto;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      margin-top: 0.6em;
+    }
+    .demo-output {
+      background: #c7d2fe;
+      color: #4338ca;
+      border-radius: 0.5rem;
+      padding: 0.7em 1.2em;
+      font-weight: 600;
+      margin: 0.6em 0 1.2em 0;
+      border: 1px solid #a5b4fc;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.08em;
+      display: inline-block;
+      min-width: 160px;
+    }
+    .show-btn {
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      padding: 0.3em 1.1em;
+      border-radius: 0.5em;
+      margin: 0.5em 0 0.3em 0;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .show-btn:hover { background: #312e81; }
+    .hidden { display: none; }
+    .highlight {
+      background: #a5b4fc;
+      color: #312e81;
+      border-radius: 0.3rem;
+      padding: 0.08em 0.24em;
+      font-weight: bold;
+    }
+    .tutor-note {
+      background: #f1f5ff;
+      border-left: 5px solid #6366f1;
+      color: #373999;
+      padding: 0.6em 1em;
+      margin: 1em 0;
+      border-radius: 0.3em;
+      font-style: italic;
+    }
+    .explain { color: #33334c; margin-bottom: 1.2em; }
+    h1, h2, h3 { color: #312e81; }
+    @media (max-width:900px) {
+      .glass-card, pre, .solution-code { font-size: 0.97em; }
+      .demo-output { font-size: 1em; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-indigo-100 to-white min-h-screen">
+
+<header class="bg-white shadow px-6 py-4 sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <i class="bi bi-arrow-repeat text-3xl text-indigo-500"></i>
+    <h1 class="text-2xl font-extrabold tracking-tight">
+      Async JavaScript: Promises & Async/Await
+    </h1>
+  </div>
+  <nav class="mt-2 flex gap-2 text-sm flex-wrap text-indigo-700">
+    <a href="resource.html" class="hover:underline flex items-center gap-1"><i class="bi bi-arrow-left"></i> Back to Resources</a>
+    <a href="#why" class="hover:underline flex items-center gap-1"><i class="bi bi-lightbulb"></i>Why Async?</a>
+    <a href="#promises" class="hover:underline flex items-center gap-1"><i class="bi bi-hourglass-split"></i>Promises</a>
+    <a href="#chaining" class="hover:underline flex items-center gap-1"><i class="bi bi-link"></i>Chaining</a>
+    <a href="#asyncawait" class="hover:underline flex items-center gap-1"><i class="bi bi-lightning-charge"></i>Async/Await</a>
+    <a href="#errors" class="hover:underline flex items-center gap-1"><i class="bi bi-shield-lock"></i>Error Handling</a>
+    <a href="#practice" class="hover:underline flex items-center gap-1"><i class="bi bi-flask"></i>Practice</a>
+  </nav>
+</header>
+
+<main class="max-w-3xl mx-auto pt-10 pb-16 px-2 sm:px-4">
+
+  <section id="why" class="glass-card p-6 mb-7">
+    <h2 class="text-xl font-bold mb-2 flex items-center gap-2"><i class="bi bi-lightbulb"></i>Why Do We Need Asynchronous Code?</h2>
+    <div class="explain mb-2">
+      In JavaScript, most code runs one line after the next. But sometimes, you have to wait for something: a server response, a file to load, a timer to finish, or the user to click. You don’t want your whole program to pause and freeze while waiting.<br>
+      <b>Asynchronous ("async") code lets you keep your app smooth and responsive, even when waiting for slow things like the internet or a database.</b>
+    </div>
+    <div class="tutor-note">
+      Whenever you see <span class="highlight">fetch()</span>, <span class="highlight">setTimeout()</span>, or anything with "await", you’re dealing with async JavaScript.
+    </div>
+    <pre><code>
+console.log("Start");
+setTimeout(() => {
+  console.log("This happens later");
+}, 1000);
+console.log("End");
+// Output:
+// Start
+// End
+// This happens later
+    </code></pre>
+    <div class="demo-output" id="simpleAsyncDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let logs = "Start<br>";
+        setTimeout(() => {
+          logs += "This happens later<br>";
+          document.getElementById("simpleAsyncDemo").innerHTML = logs + "End";
+        }, 600);
+        logs += "End<br>";
+        document.getElementById("simpleAsyncDemo").innerHTML = logs;
+      });
+    </script>
+  </section>
+
+  <section id="promises" class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-3 flex items-center gap-2"><i class="bi bi-hourglass-split"></i>Promises: What Are They?</h2>
+    <div class="explain">
+      A <span class="highlight">Promise</span> is like a placeholder for a value you’ll have in the future—like a ticket for a bus that hasn’t arrived yet. You use promises to run code after something slow (like an HTTP request) finishes.
+    </div>
+    <pre><code>
+let promise = new Promise(function(resolve, reject) {
+  // Do something slow:
+  setTimeout(() => {
+    resolve("Done!");  // Could reject("Error!") if something fails
+  }, 800);
+});
+
+promise.then(result => {
+  console.log(result);  // Prints "Done!" after delay
+});
+    </code></pre>
+    <div class="demo-output" id="promiseDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        let res = "Waiting...";
+        document.getElementById("promiseDemo").innerHTML = res;
+        let promise = new Promise((resolve, reject) => {
+          setTimeout(() => resolve("Done!"), 900);
+        });
+        promise.then(result => {
+          document.getElementById("promiseDemo").innerHTML = result;
+        });
+      });
+    </script>
+    <div class="explain">
+      <b>A promise can be:</b>
+      <ul class="list-disc ml-7">
+        <li><b>Pending</b>: still waiting for work to finish</li>
+        <li><b>Resolved</b>: finished successfully, delivered a value</li>
+        <li><b>Rejected</b>: failed, returned an error</li>
+      </ul>
+      <div class="tutor-note">
+        If you use <span class="highlight">fetch()</span> for web requests or <span class="highlight">.then()</span> anywhere, you’re already using promises.
+      </div>
+    </div>
+  </section>
+
+  <section id="chaining" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-link"></i>Chaining .then() for Sequence</h2>
+    <div class="explain mb-3">
+      You can use <code>.then()</code> repeatedly to run code in order, passing results along, or to handle the next step after each async action.
+    </div>
+    <pre><code>
+function waitAndAdd(n) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(n + 2), 1000);
+  });
+}
+waitAndAdd(3)
+  .then(res => {
+    console.log(res);      // 5
+    return waitAndAdd(res);
+  })
+  .then(next => {
+    console.log(next);     // 7
+  });
+    </code></pre>
+    <div class="explain">
+      <b>Why chain?</b> When you want to do several async actions in a specific order. Each .then waits for the previous one to finish.
+    </div>
+  </section>
+
+  <section id="asyncawait" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-lightning-charge"></i>Async/Await: Smoother Syntax for Promises</h2>
+    <div class="explain mb-3">
+      <span class="highlight">async</span> and <span class="highlight">await</span> are new keywords that let you write async code that reads like regular, step-by-step code, but still doesn’t block your app while waiting.
+    </div>
+    <pre><code>
+function wait(n) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(n * 2), 1000);
+  });
+}
+
+async function example() {
+  let x = await wait(5);
+  console.log(x);  // prints 10 after delay
+}
+example();
+    </code></pre>
+    <div class="demo-output" id="awaitDemo"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        function wait(n) {
+          return new Promise(resolve => setTimeout(() => resolve(n * 2), 600));
+        }
+        async function demo() {
+          let x = await wait(5);
+          document.getElementById("awaitDemo").innerHTML = "Result: " + x;
+        }
+        demo();
+      });
+    </script>
+    <div class="explain">
+      <ul class="list-disc ml-7">
+        <li>Any function with <span class="highlight">async</span> in front returns a promise.</li>
+        <li>Use <span class="highlight">await</span> inside async functions to “pause” until a promise is done, then get its value.</li>
+      </ul>
+      <div class="tutor-note">
+        This is the style you’ll use most for modern projects, especially with <span class="highlight">fetch()</span> and API calls.
+      </div>
+    </div>
+  </section>
+  
+  <section id="errors" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-shield-lock"></i>Error Handling with Promises & Async</h2>
+    <div class="explain">
+      Always handle errors—things go wrong! Use <code>.catch()</code> with promises, or <code>try...catch</code> blocks inside async functions.
+    </div>
+    <pre><code>
+let failPromise = new Promise((resolve, reject) => {
+  reject("Something went wrong!");
+});
+
+failPromise
+  .then(res => { /* won't run */ })
+  .catch(err => {
+    console.log(err); // Handles error
+  });
+    </code></pre>
+    <pre><code>
+async function catchError() {
+  try {
+    let value = await Promise.reject("Oops!");
+  } catch(e) {
+    console.log("Caught: " + e);
+  }
+}
+catchError();
+    </code></pre>
+    <div class="explain">
+      With <b>async/await</b>, errors act like in normal code: use <b>try/catch</b> for clarity and control.
+    </div>
+  </section>
+
+  <section id="practice" class="glass-card p-6 mb-8">
+    <h2 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="bi bi-flask"></i>Practice (with Hidden Solutions)</h2>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        1. Make a promise that resolves with “Hello, CODECX!” after 1 second, then log the result.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol1')">Show Solution</button>
+      <div id="sol1" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="out1"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let p = new Promise(resolve =&gt; setTimeout(() =&gt; resolve("Hello, CODECX!"), 1000));
+    p.then(result =&gt; document.getElementById('out1').textContent = result);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        2. Write a function using <b>async/await</b> that waits 1 second, then returns “Finished!”. Show the output.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol2')">Show Solution</button>
+      <div id="sol2" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="out2"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    function wait() {
+      return new Promise(r =&gt; setTimeout(() =&gt; r("Finished!"), 1000));
+    }
+    async function show() {
+      let msg = await wait();
+      document.getElementById('out2').textContent = msg;
+    }
+    show();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        3. Use <b>fetch()</b> and <b>async/await</b> to load JSON from https://jsonplaceholder.typicode.com/todos/1 and show the <code>title</code> (note: works only in browsers).
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol3')">Show Solution</button>
+      <div id="sol3" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="out3"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    async function getTitle() {
+      let res = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+      let json = await res.json();
+      document.getElementById('out3').textContent = json.title;
+    }
+    getTitle();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="explain mb-1">
+        4. Make a promise that rejects after 1 second. Catch and display the error.
+      </div>
+      <button class="show-btn" onclick="toggleSolution('sol4')">Show Solution</button>
+      <div id="sol4" class="hidden solution-code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+  &lt;div id="out4"&gt;&lt;/div&gt;
+  &lt;script&gt;
+    let p = new Promise((_, reject) =&gt; setTimeout(() =&gt; reject("Failed!"), 1000));
+    p.catch(e =&gt; document.getElementById('out4').textContent = e);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+    <script>
+      function toggleSolution(id) {
+        var el = document.getElementById(id);
+        el.classList.toggle('hidden');
+      }
+    </script>
+    <div class="explain mb-2">
+      Try these yourself before revealing the answers—knowing how async code flows is a must for web work.
+    </div>
+  </section>
+
+  <div class="text-center pt-4">
+    <a href="resource.html" class="inline-block px-5 py-2 rounded bg-indigo-700 text-white font-semibold hover:bg-indigo-800 transition">
+      <i class="bi bi-arrow-left"></i> Back to Resources
+    </a>
+  </div>
+
+</main>
+<footer class="text-center py-6 text-sm text-indigo-500 bg-white border-t glass-card max-w-3xl mx-auto mb-8">
+  CODECX INSTITUTE &copy; 2025. All rights reserved.
+</footer>
+</body>
+</html>
