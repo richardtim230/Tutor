@@ -2,287 +2,426 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CODECX | Live Coding Class</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- TailwindCSS CDN for quick styling -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <!-- Monaco Editor (VS Code) -->
-  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.min.js"></script>
-  <!-- Socket.io client -->
-  <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.7.5/dist/socket.io.min.js"></script>
+  <title>CODECX Live Class</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8/normalize.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/@codemirror/theme-one-dark@6.2.0/theme-one-dark.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
   <style>
-    html, body { height: 100%; margin: 0; }
-    #monaco { width: 100%; height: 340px; border-radius: 10px; }
-    .scroll-area { overflow-y: auto; max-height: 180px;}
-    .resource-link:hover { text-decoration: underline;}
+    body { font-family: 'Segoe UI', Roboto, Arial, sans-serif; background: #f6f8fc; margin: 0; color: #23272f;}
+    .main-container { max-width: 1280px; margin: 0 auto; background: #fff; display: flex; min-height: 100vh; }
+    aside { background: #23272f; color: #fff; width: 280px; padding: 32px 18px 18px 18px; box-shadow: 1px 0 8px rgba(3,11,28,0.1);}
+    aside h2 { margin: 0 0 18px 0; font-weight: bold; font-size: 1.3rem;}
+    aside .user { display:flex; align-items:center; gap:12px; font-size:1.1rem;}
+    aside .user img { width:38px; height:38px; border-radius:50%; object-fit:cover;}
+    aside .file-upload {margin:22px 0;}
+    aside input[type="file"] {display:none;}
+    aside label {background:#389af0;color:#fff;padding:8px 16px; border-radius:6px; cursor:pointer;}
+    aside hr {border:0;height:1px;background:#404955;margin:28px 0 12px;}
+    aside .section-title {font-weight:bold;margin:12px 0 4px 0;font-size:.98rem}
+    aside ul {list-style:none;padding:0;margin:0;}
+    aside li {margin-bottom:11px; font-size:.97rem;}
+    main {flex: 1; display: flex; flex-direction: column;}
+    .class-header {padding:20px 36px;background:#1e2b45;color:#fff;border-bottom:2px solid #e7eeff;display:flex;align-items:center;justify-content:space-between;}
+    .class-header .logo {font-size:2rem; font-weight:900; letter-spacing:1px; color:#ffcd43; display: flex; align-items: center;}
+    .class-header .live-indicator {background:#ee374a; border-radius:4px; color:#fff; padding:4px 12px; margin-left:18px; font-weight:600; font-size:.91rem;}
+    .class-header .topic {font-size:1.18rem; margin-left:38px;}
+    .live-flex {flex:1; display:flex; min-height:0;}
+    .editor-chat-pane {flex:1;display:flex;flex-direction:column;}
+    .editor-container {flex:2;min-width:330px;border-right:1.5px solid #e8eef7; background: #23272f;}
+    .editor-toolbar {background:#21283a;color:#fff;padding:7px 18px;display:flex;align-items:center;gap:18px;font-size:.98rem;}
+    .editor-toolbar select, .editor-toolbar button {margin-right:10px;}
+    .editor-toolbar button {border:none;background:#276EF1;color:#fff;padding:6px 12px;border-radius:5px;cursor:pointer;font-size:.95rem;}
+    .editor-toolbar button:active {background:#163862;}
+    #editor {height:57vh; min-height:310px; font-size:1.08rem; outline:none; border:none;}
+    .output-panel {background:#191c24;color:#b7eac9;font-family:monospace;font-size:1.09rem;padding:14px;height:90px;overflow:auto;border-top:1px solid #2b2e35;}
+    .chat-pane {flex:1.3;display:flex;flex-direction:column;min-width:315px;}
+    .chat-messages {flex:1;overflow-y:auto;padding:13px 17px 0;}
+    .chat-msg {margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;}
+      .chat-msg.me .msg-bubble {background:#276ef1;color:#fff;align-self:flex-end;}
+      .chat-msg .msg-bubble { background:#eff2fa; border-radius:13px;padding:7.5px 15px;max-width:350px;box-shadow:0 1px 4px #276ef11a;font-size:1.05rem;}
+      .chat-msg .avatar { width:28px; height:28px; border-radius:50%; object-fit:cover;}
+      .chat-msg .chat-uname {font-size:.93rem;color:#274d8b;font-weight:600;}
+    .chat-form {display:flex;align-items:center;padding:8px 13px;background:#f6f7f9;border-top:1px solid #e4e7ef;}
+    .chat-form input {flex:1;padding:10px 14px;border-radius:9px;border:1px solid #dde3ed; font-size:1.05rem;}
+    .chat-form button {background:#276ef1;color:#fff;border:none;padding:9px 14px;border-radius:8px;margin-left:11px;cursor:pointer;font-size:1.06rem;}
+    .chat-form button:active {background:#1848a6;}
+    .quiz-poll { background: #fffcf7; border: 1.5px solid #ffd483; border-radius: 9px; padding: 18px; margin: 16px 23px; }
+    .quiz-poll h3 {margin-top:0;}
+    .quiz-opt {margin-bottom:11px;}
+    .quiz-result-bar {height:13px;background:#ffe18a;border-radius:5px;margin:4px 0;}
+    .resources {padding:14px 0;}
+    .resource-file {display:flex;align-items:center;gap:12px;border-bottom:1px solid #eee;padding:7px 0;}
+    .resource-file a {color:#276ef1; font-weight:500;}
+    .hidden {display:none!important;}
+    @media (max-width: 900px) {
+      .main-container { flex-direction: column; }
+      aside { width: 100%; box-shadow: none; padding: 18px 8px; }
+      .live-flex { flex-direction: column; }
+      .chat-pane { min-width: 0; }
+      .editor-container { min-width: 0; }
+    }
+    @media (max-width: 650px) {
+      .main-container { min-width: 0; }
+      aside { padding:8px; }
+      .class-header { flex-direction: column; gap: 12px; }
+      .editor-toolbar { flex-wrap: wrap; gap: 6px;}
+    }
   </style>
 </head>
-<body class="bg-gradient-to-tr from-indigo-50 via-purple-50 to-white min-h-screen">
-  <header class="flex items-center bg-white shadow px-8 py-4 justify-between sticky top-0 z-50">
-    <div class="flex items-center gap-4">
-      <img src="logo.png" alt="Codecx" class="h-10 w-10 rounded-full" />
-      <h1 class="font-extrabold text-2xl text-indigo-800">Live Coding Class</h1>
+<body>
+<div class="main-container">
+  <aside>
+    <h2><i class="fas fa-graduation-cap"></i> Live Panel</h2>
+    <div class="user" id="userProfile">
+      <img id="profilePic" src="/logo.png" alt="User" />
+      <span id="userName">Not logged in</span>
     </div>
-    <div class="flex items-center gap-3">
-      <span id="userRole" class="inline-block bg-indigo-100 px-4 py-2 rounded-lg font-bold text-indigo-700"></span>
+    <div class="file-upload">
+      <label for="fileResource"><i class="fas fa-upload"></i> Upload Resource</label>
+      <input type="file" id="fileResource" accept="*/*">
+      <ul class="resources" id="resources"></ul>
     </div>
-  </header>
-  <main class="flex flex-col xl:flex-row gap-8 max-w-7xl mx-auto px-4 pt-8 pb-16">
-    <!-- Left/Class Section -->
-    <section class="flex-1 flex flex-col gap-7">
-
-      <!-- VIDEO (Jitsi Embed) -->
-      <div class="bg-gray-50 p-4 rounded-lg shadow">
-        <h2 class="text-lg font-bold text-indigo-800 mb-2">Live Class Video & Audio</h2>
-        <iframe
-          id="jitsi"
-          src="https://meet.jit.si/codecxliveclass"
-          allow="camera; microphone; fullscreen; display-capture"
-          style="width: 100%; height: 360px; border-radius: 8px;"
-          allowfullscreen
-        ></iframe>
+    <hr>
+    <div class="section-title">Live Students</div>
+    <ul id="userList">
+      <li>Loading...</li>
+    </ul>
+  </aside>
+  <main>
+    <div class="class-header">
+      <div class="logo">
+        <img src="/logo.png" alt="LOGO" style="height:40px;border-radius:8px;margin-right:12px;"> CODECX
+        <span class="live-indicator">LIVE</span>
       </div>
-
-      <!-- MONACO CODE EDITOR -->
-      <section class="bg-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center mb-2">
-          <h2 class="font-bold text-lg text-indigo-700">Shared Live Code Editor</h2>
-          <select id="codeLang" class="border px-2 py-1 rounded ml-auto">
-            <option value="javascript">JavaScript</option>
-            <option value="python">Python</option>
-            <option value="html">HTML</option>
-            <option value="css">CSS</option>
-            <option value="java">Java</option>
-          </select>
+      <div class="topic" id="liveTopic">Live Coding Class</div>
+      <button id="logoutBtn" style="background:#ee374a;border:none;color:#fff;border-radius:8px;padding:8px 18px;font-size:.98rem;cursor:pointer;">Logout</button>
+    </div>
+    <div class="live-flex">
+      <div class="editor-chat-pane">
+        <div class="editor-container">
+          <div class="editor-toolbar">
+            <span><i class="fas fa-code"></i> Language</span>
+            <select id="langSelect">
+              <option value="javascript">JavaScript</option>
+              <option value="python">Python</option>
+              <option value="htmlmixed" selected>HTML/CSS/JS</option>
+              <option value="text">Text</option>
+            </select>
+            <button id="runBtn"><i class="fas fa-play"></i> Run Code</button>
+            <span id="runStatus"></span>
+          </div>
+          <textarea id="editor"></textarea>
+          <div class="output-panel" id="outputPanel"></div>
         </div>
-        <div id="monaco"></div>
-        <div class="text-xs text-gray-600 mt-2">
-          Type in the editor. Everyone sees what you type.
-          <br/>
-          <span class="text-indigo-500">[Ctrl+S]</span> Save, <span class="text-indigo-500">[Tab]</span> Indent, <span class="text-indigo-500">[Shift+Tab]</span> Unindent.  
-        </div>
-      </section>
-
-      <!-- RESOURCES: FILE SHARE -->
-      <section class="bg-gray-50 rounded-lg shadow p-4 mt-0">
-        <div class="flex items-center gap-4 mb-2 justify-between">
-          <h2 class="font-bold text-gray-700">Shared Resources / Downloads</h2>
-          <input type="file" id="fileInput" class="hidden"/>
-          <button id="uploadBtn" class="bg-indigo-600 text-white px-3 py-2 rounded">Upload file</button>
-        </div>
-        <ul class="pl-4" id="resourceList"></ul>
-        <div id="uploadStatus" class="text-sm text-red-500 mt-1"></div>
-      </section>
-
-    </section>
-
-    <!-- Right CHAT/Q&A Section -->
-    <aside class="w-full xl:w-[370px] flex flex-col gap-6">
-      <!-- CLASS CHAT -->
-      <section class="bg-white rounded-lg shadow p-4 flex flex-col h-[320px]">
-        <h2 class="font-bold text-lg text-indigo-700 mb-1">Class Chat</h2>
-        <div class="flex-1 mb-2 border rounded px-2 py-1 bg-gray-50 scroll-area" id="chatArea"></div>
-        <form class="flex gap-1 mt-1" id="chatForm" autocomplete="off">
-          <textarea id="chatInput" rows="1" placeholder="Type message... (Enter: send, Shift+Enter: newline)" class="flex-1 border rounded px-2 py-1 resize-none"></textarea>
-          <button type="submit" id="sendBtn" class="bg-indigo-700 text-white px-4 rounded">Send</button>
+      </div>
+      <div class="chat-pane" style="border-left:1.5px solid #e8eef7;">
+        <div class="chat-messages" id="chatMessages"></div>
+        <form class="chat-form" id="chatForm" autocomplete="off">
+          <input type="text" id="chatInput" placeholder="Type a message..." maxlength="500" />
+          <button type="submit"><i class="fas fa-paper-plane"></i></button>
         </form>
-      </section>
-      <!-- POLL Q&A -->
-      <section class="bg-gray-50 rounded-lg shadow p-4" id="pollQA">
-        <h2 class="font-bold text-gray-700 mb-2">Live Q&amp;A / Polls</h2>
-        <form id="pollForm" class="mb-2">
-          <input name="question" type="text" placeholder="Start a poll: Your question..." class="border rounded px-2 py-1 mb-1 w-full" required />
-          <input name="opt1" type="text" placeholder="Option 1" class="border rounded px-2 py-1 mb-1 w-full" required />
-          <input name="opt2" type="text" placeholder="Option 2" class="border rounded px-2 py-1 mb-1 w-full" required />
-          <input name="opt3" type="text" placeholder="Option 3" class="border rounded px-2 py-1 mb-1 w-full" required />
-          <input name="opt4" type="text" placeholder="Option 4" class="border rounded px-2 py-1 mb-1 w-full" required />
-          <button type="submit" class="bg-indigo-800 text-white px-3 py-1 rounded">Send Poll</button>
-        </form>
-        <div id="pollLive" class="text-sm"></div>
-      </section>
-    </aside>
+        <div class="quiz-poll hidden" id="quizPoll"></div>
+      </div>
+    </div>
   </main>
-  <script>
-    // -- BACKEND CONFIG
-    const BACKEND = "https://examguard-jmvj.onrender.com";
+</div>
 
-    // --- 1. Authentication & Setup ---
-    let token = localStorage.getItem("codecx_token");
-    if(!token) token = sessionStorage.getItem("codecx_token");
-    if(!token) token = prompt("Provide login token:");
-    if(!token) { alert("Login required!"); location.href='login.html'; }
-    function decodeJWT(token) {
-      try { return JSON.parse(atob(token.split('.')[1])); } catch(e) { return {}; }
+<!-- Modals -->
+<div id="loginModal" style="position:fixed;z-index:90001;top:0;left:0;width:100vw;height:100vh;background:rgba(36,47,68,0.97);display:flex;align-items:center;justify-content:center">
+  <form style="background:#fff;padding:38px 34px 26px 34px;border-radius:17px;box-shadow:0 4px 18px #2a3c691f;min-width:340px;display:flex;flex-direction:column;gap:19px;align-items:center;max-width:90vw;" id="loginForm">
+    <img src="/logo.png" alt="Logo" style="width:66px;border-radius:13px;box-shadow:0 1px 4px #276ef116;"/>
+    <h2 style="margin-bottom:3px;">Login to Live Class</h2>
+    <input placeholder="Username or matric/email" name="username" required style="width:100%;padding:13px 12px;font-size:1.10rem;border-radius:8px;border:1.5px solid #dde3f0"/>
+    <input placeholder="Password" type="password" name="password" required style="width:100%;padding:13px 12px;font-size:1.10rem;border-radius:8px;border:1.5px solid #dde3f0"/>
+    <button style="background:#276EF1;color:#fff;padding:13px 3px;border-radius:7px;width:100%;margin-top:9px;font-size:1.09rem;font-weight:600;border:none;">Enter Class</button>
+    <div id="loginError" style="color:#ec1d45;margin:10px 0 0 0;font-size:.99rem;display:none;"></div>
+  </form>
+</div>
+
+<!-- JS and 3rd party dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js" integrity="sha512-KqmKjDIPP/J1rISGjI/4/wl5+NGy2i/oVtkVnC3lmzi9qo+SitQG6fD+i7W4TtvQY0DOtCLNlkdeABxSHHCn7A==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.14/lib/codemirror.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.14/lib/codemirror.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.14/mode/javascript/javascript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.14/mode/python/python.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.14/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.14/mode/xml/xml.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.14/mode/css/css.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.14/addon/edit/closebrackets.min.js"></script>
+
+<script>
+const BACKEND_URL = "https://examguard-jmvj.onrender.com"; // Only change this if backend moves
+
+let token = localStorage.getItem('jwt') || "";
+let user = null;
+let socket = null;
+let editor = null;
+
+// --- Authentication ---
+async function loginUser(username, password) {
+  const res = await fetch(`${BACKEND_URL}/api/codecxreg/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+  if (!res.ok) throw new Error((await res.json()).message || "Login failed");
+  const data = await res.json();
+  localStorage.setItem("jwt", data.token);
+  return data.token;
+}
+
+async function fetchUser() {
+  const res = await fetch(`${BACKEND_URL}/api/codecxreg/me`, {
+    headers: { "Authorization": "Bearer " + token }
+  });
+  if (!res.ok) throw new Error("Not logged in");
+  return await res.json();
+}
+
+async function doLogout() {
+  localStorage.removeItem("jwt");
+  location.reload();
+}
+
+// --- UI Initialization ---
+function showLoginModal(show = true) {
+  document.getElementById('loginModal').style.display = show ? "flex" : "none";
+}
+document.getElementById("logoutBtn").onclick = doLogout;
+
+// --- CodeMirror Editor Setup ---
+function createEditor(language = "htmlmixed") {
+  if (editor) editor.toTextArea();
+  editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+    lineNumbers: true,
+    mode: language,
+    theme: "one-dark",
+    autoCloseBrackets: true,
+    indentUnit: 2,
+    matchBrackets: true,
+    tabSize: 2
+  });
+  editor.setSize("100%", "51vh");
+  editor.on("change", () => {
+    if (socket) socket.emit("code:update", editor.getValue());
+  });
+}
+
+// --- Live Socket Initialization ---
+function connectSocket() {
+  socket = io(`${BACKEND_URL}/liveclass-socket`, {
+    query: { token },
+    transports: ["websocket"],
+  });
+
+  // --- Live Code, Chat, Polls, Files, Presence ---
+  socket.on("connect", () => {
+    document.getElementById("runStatus").textContent = "Connected";
+    // Optionally can announce join
+  });
+  socket.on("disconnect", () => {
+    document.getElementById("runStatus").textContent = "Disconnected. Retry…";
+  });
+  socket.on("code:update", code => {
+    if (editor && code !== editor.getValue()) editor.setValue(code); // Avoid recursion
+  });
+  socket.on("chat:message", m => addChatMsg(m));
+  socket.on("quiz:question", poll => showQuizPoll(poll));
+  socket.on("quiz:results", results => showQuizResults(results));
+  socket.on("file:uploaded", file => addResourceItem(file));
+
+  // Fetch initial user list (optionally simulated)
+  updateUserList([{name:user.fullName||user.username, avatar:user.passportBase64}]); // Add yourself
+}
+
+// --- File Resource upload ---
+document.getElementById("fileResource").addEventListener("change", async function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await fetch(`${BACKEND_URL}/api/liveclass/files/upload`, {
+    method: "POST",
+    headers: { "Authorization":"Bearer "+token },
+    body: formData
+  });
+  if (res.ok) {
+    const result = await res.json();
+    if (socket) socket.emit("file:uploaded", result);
+    addResourceItem(result);
+  } else {
+    alert("File upload failed");
+  }
+  e.target.value = ""; // reset for next upload
+});
+
+// --- Resource/File List ---
+function addResourceItem(file) {
+  const ul = document.getElementById("resources");
+  const li = document.createElement("li");
+  li.className = "resource-file";
+  li.innerHTML = `<i class="fas fa-file"></i> <a href="${file.url}" target="_blank">${file.name || "Resource"}</a>`;
+  ul.appendChild(li);
+}
+
+// --- User List Panel (for demo: local, not backend presence yet) ---
+function updateUserList(users) {
+  const ul = document.getElementById("userList");
+  ul.innerHTML = "";
+  users.forEach(u => {
+    const avatar = u.avatar ? `<img src="${u.avatar}" class="avatar" style="width:23px;height:23px;margin-right:5px;">` : '<i class="fa fa-user"></i>';
+    const name = u.name || "Student";
+    ul.innerHTML += `<li>${avatar} ${name.split(" ")[0]}</li>`;
+  });
+}
+
+// --- Editor language selection and code execution ---
+function updateLanguageMode(lang) {
+  let mode = lang;
+  if (lang === "python") mode = "python";
+  if (lang === "htmlmixed") mode = "htmlmixed";
+  if (lang === "text") mode = "text/plain";
+  if (lang === "javascript") mode = "javascript";
+  editor.setOption("mode", mode);
+}
+document.getElementById("langSelect").addEventListener("change", function() {
+  updateLanguageMode(this.value);
+});
+
+// --- Run Code Button ---
+document.getElementById("runBtn").onclick = async function() {
+  const code = editor.getValue();
+  const lang = document.getElementById("langSelect").value;
+  let output = "";
+  try {
+    if (lang === "javascript") {
+      output = eval(code);
+      if (output === undefined) output = "(No output)";
     }
-    let user = decodeJWT(token);
-    let displayName =
-      user.fullName || user.username || user.matricNumber || "Guest";
-    document.getElementById("userRole").textContent = displayName;
-
-    // --- 2. Socket.io real-time connection ---
-    const socket = io(BACKEND, { 
-      query: { token }, 
-      path: "/liveclass-socket", 
-      transports: ["websocket"], 
-      withCredentials: true 
-    });
-
-    // --- 3. Class Chat ---
-    let chatArea = document.getElementById('chatArea');
-    let chatInput = document.getElementById("chatInput");
-    let sendBtn = document.getElementById("sendBtn");
-
-    // Allow Shift+Enter for newline, Enter for send
-    chatInput.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendBtn.click();
-      }
-    });
-    document.getElementById('chatForm').onsubmit = e => {
-      e.preventDefault();
-      let msg = chatInput.value.trim();
-      if(msg) {
-        socket.emit("chat:message", { 
-          user: displayName, 
-          message: msg, 
-          time: new Date().toISOString() 
-        });
-        chatInput.value = "";
-        chatInput.rows = 1;
-      }
-    };
-    chatInput.addEventListener("input", function() {
-      // dynamically size textarea to content
-      chatInput.rows = Math.min(6, chatInput.value.split("\n").length);
-    });
-    socket.on("chat:message", msg=>{
-      let div = document.createElement("div");
-      div.innerHTML = `<span class="font-semibold text-indigo-700">${msg.user}</span>: <span>${msg.message.replace(/\n/g, "<br/>")}</span> <span class="text-xs ml-2 text-gray-400">${new Date(msg.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>`;
-      chatArea.appendChild(div); chatArea.scrollTop = chatArea.scrollHeight;
-    });
-
-    // --- 4. MONACO CODE EDITOR with full collaborative sync ---
-    let editor, codeModel, codeModelIgnore = false;
-    let monacoLang = "javascript";
-    document.getElementById('codeLang').onchange = function() {
-      let newLang = this.value;
-      monacoLang = newLang;
-      if (codeModel) monaco.editor.setModelLanguage(codeModel, newLang);
-    };
-    // Monaco load
-    require.config({ paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs" }});
-    require(['vs/editor/editor.main'], function () {
-      // Always show a starter code even if backend doesn't send one yet
-      let starterCode = "<!-- Welcome to CODECX Collaborative Code. Start Coding! -->";
-      codeModel = monaco.editor.createModel(starterCode, monacoLang);
-
-      editor = monaco.editor.create(document.getElementById('monaco'), {
-        model: codeModel,
-        theme: "vs-dark",
-        fontSize: 16, minimap: { enabled: false }
-      });
-
-      // Collaborative: broadcast on change
-      editor.onDidChangeModelContent(() => {
-        if(editor.isFocused() && !codeModelIgnore) {
-          socket.emit("code:update", codeModel.getValue());
-        }
-      });
-
-      // Sync code from server (prevents feedback loops)
-      socket.on("code:update", code=>{
-        if(code !== codeModel.getValue()) {
-          codeModelIgnore = true;
-          codeModel.setValue(code);
-          codeModelIgnore = false;
-        }
-      });
-
-      // On initial connection or rejoin, get the latest code from others
-      socket.on("code:init", code=>{
-        if(code && code !== codeModel.getValue()) {
-          codeModel.setValue(code);
-        }
-      });
-    });
-
-    // --- 5. Poll/Q&A (with results for ALL) ---
-    let pollForm = document.getElementById("pollForm"),
-        pollLive = document.getElementById("pollLive");
-    pollForm.classList.remove("hidden"); // anyone can start a poll!
-    pollForm.onsubmit = function(e) {
-      e.preventDefault();
-      const q = pollForm.question.value.trim(),
-        opts = [pollForm.opt1.value, pollForm.opt2.value, pollForm.opt3.value, pollForm.opt4.value];
-      if(q && opts.every(o=>o.trim())) {
-        socket.emit("quiz:question", { q, opts });
-        pollForm.reset();
-      }
-    };
-    socket.on("quiz:question", d => {
-      pollLive.innerHTML =
-        `<div class="font-semibold mb-1">${d.q}</div>` +
-        d.opts.map((o,i)=>
-          `<button data-i="${i}" class="bg-indigo-100 px-2 m-1 rounded text-indigo-800 poll-opt-btn">${String.fromCharCode(65+i)}. ${o}</button><br>`
-        ).join("") +
-        `<div id="pollResults" class="mt-2"></div>`;
-      pollLive.querySelectorAll(".poll-opt-btn").forEach(btn=>{
-        btn.onclick = function() {
-          let idx = btn.getAttribute("data-i");
-          socket.emit("quiz:answer", parseInt(idx));
-          pollLive.innerHTML += `<div class="text-green-700 mt-2">Answered (${String.fromCharCode(65+parseInt(idx))})</div>`;
-          pollLive.querySelectorAll(".poll-opt-btn").forEach(b=>b.disabled = true);
-        };
-      });
-    });
-    socket.on("quiz:results", counts=>{
-      let pollResults = document.getElementById("pollResults");
-      if (!pollResults) return;
-      pollResults.innerHTML = Object.entries(counts)
-        .map(([i, v]) => `<div>${String.fromCharCode(65+parseInt(i))}: <b>${v}</b> vote${v==1?"":"s"}</div>`)
-        .join("");
-    });
-
-    // --- 6. File upload/download sharing (everyone can upload files) ---
-    let uploadBtn = document.getElementById("uploadBtn");
-    let fileInput = document.getElementById("fileInput");
-    uploadBtn.onclick = ()=>fileInput.click();
-    fileInput.onchange = async function() {
-      let file = fileInput.files[0];
-      if (!file) return;
-      uploadBtn.disabled = true;
-      uploadBtn.textContent = "Uploading...";
-      let uploadStatus = document.getElementById('uploadStatus');
-      uploadStatus.textContent = "";
-      try {
-        let form = new FormData();
-        form.append("file", file);
-        let res = await fetch(BACKEND+"/api/liveclass/files/upload", { method:"POST", headers:{"Authorization":"Bearer "+token}, body:form });
-        let data = await res.json();
-        if(data.url) {
-          socket.emit("file:uploaded", { name: file.name, url: data.url });
-        } else if(data.message) {
-          uploadStatus.textContent = "Failed: "+data.message;
-        }
-      } catch(e) { 
-        uploadStatus.textContent = "Upload failed! Network or permissions error.";
-      }
-      uploadBtn.disabled = false;
-      uploadBtn.textContent = "Upload file";
+    else if (lang === "htmlmixed") {
+      output = `<iframe style="width:99%;height:70px;border:none" sandbox="allow-scripts allow-same-origin" srcdoc="${encodeURIComponent(code)}"></iframe>`;
     }
-    let resourceList = document.getElementById("resourceList");
-    socket.on("file:uploaded", ({name, url})=>{
-      let li = document.createElement("li");
-      li.innerHTML = `<a href="${url}" class="text-indigo-700 font-semibold resource-link" target="_blank" download>${name}</a>`;
-      resourceList.appendChild(li);
-    });
+    else {
+      output = "Run feature is only enabled for JavaScript and HTML/CSS/JS.";
+    }
+  } catch (e) {
+    output = "Error: " + e.message;
+  }
+  document.getElementById("outputPanel").innerHTML = output;
+};
 
-    // --- 7. Error Handling
-    socket.on("connect_error", (err)=>{
-      alert("Failed to connect to class server: "+(err&&err.message?err.message:err));
-    });
+// --- Chat Implementation ---
+document.getElementById("chatForm").onsubmit = function(e) {
+  e.preventDefault();
+  const input = document.getElementById("chatInput");
+  const msg = input.value.trim();
+  if (!msg) return;
+  const m = {
+    me:true,
+    sender: user.fullName||user.loginUsername||user.username,
+    avatar: user.passportBase64,
+    text: msg,
+    date: new Date().toISOString()
+  };
+  addChatMsg(m);
+  if (socket) socket.emit("chat:message", m);
+  input.value = "";
+};
 
-  </script>
+function addChatMsg(m) {
+  const chatBox = document.getElementById("chatMessages");
+  const div = document.createElement("div");
+  div.className = "chat-msg" + (m.me ? " me" : "");
+  div.innerHTML = `
+    ${m.avatar ? `<img class="avatar" src="${m.avatar}" loading="lazy">` : `<div style="width:29px;"></div>`}
+    <div>
+      <div class="chat-uname">${m.sender||'Student'}</div>
+      <div class="msg-bubble">${escapeHtml(m.text)}</div>
+      <div style="font-size:.84rem;color:#7b8496;">${formatTime(m.date)}</div>
+    </div>`;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+function formatTime(dateStr) {
+  let d = new Date(dateStr);
+  return d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+}
+function escapeHtml(txt) {
+  const map = {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"};
+  return txt.replace(/[&<>"']/g, m => map[m]);
+}
+
+// --- Polling/Quiz Panel ---
+function showQuizPoll(poll) {
+  const div = document.getElementById("quizPoll");
+  div.innerHTML = `
+    <h3><i class="fas fa-question-circle"></i> ${poll.q||"Quiz/Question"} </h3>
+    <form id="voteForm">
+      ${poll.opts.map((o,i)=>`<div class="quiz-opt"><input type="radio" name="opt" value="${i}" id="qopt${i}" /><label for="qopt${i}">${o}</label></div>`).join("")}
+      <button type="submit" style="margin-top:9px;background:#f9be11;color:#222;font-weight:600;border-radius:7px;padding:7px 15px;border:none;">Submit Answer</button>
+    </form>
+    <div id="quizResults"></div>
+  `;
+  div.classList.remove("hidden");
+  document.getElementById("voteForm").onsubmit = function(e) {
+    e.preventDefault();
+    const idx = Array.prototype.indexOf.call(this.elements,opt=>opt.checked);
+    let val = null;
+    for (let el of this.elements) if (el.checked) val = el.value;
+    if (val!==null && socket) socket.emit("quiz:answer", parseInt(val));
+    div.querySelector("form").classList.add("hidden");
+  }
+}
+function showQuizResults(results) {
+  const div = document.getElementById("quizResults");
+  if (!div) return;
+  const totalVotes = Object.values(results).reduce((a,b)=>a+b,0);
+  div.innerHTML = "Results:<br>"+Object.keys(results).map(idx=>
+    `<div>${parseInt(idx)+1}. <span class="quiz-result-bar" style="width:${(results[idx]/(totalVotes || 1))*95}%"></span>
+     <b>${results[idx]||0}</b> votes</div>`).join("");
+}
+
+// --- Main Initialization + Auth logic ---
+async function appMain() {
+  // Try to authenticate user
+  try {
+    token = localStorage.getItem("jwt") || "";
+    if (!token) throw new Error("Not logged");
+    user = await fetchUser();
+    // Update UI
+    document.getElementById("userName").textContent = user.fullName || user.username || user.loginUsername || "NO NAME";
+    if (user.passportBase64) document.getElementById("profilePic").src = user.passportBase64;
+    showLoginModal(false);
+    // Create editor, connect socket
+    createEditor("htmlmixed");
+    connectSocket();
+  } catch (e) {
+    showLoginModal(true);
+  }
+}
+document.getElementById("loginForm").onsubmit = async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const username = form.elements["username"].value.trim();
+  const password = form.elements["password"].value;
+  form.querySelector("button").disabled = true;
+  document.getElementById("loginError").style.display = "none";
+  try {
+    token = await loginUser(username, password);
+    user = await fetchUser();
+    document.getElementById("userName").textContent = user.fullName || user.username || user.loginUsername || "NO NAME";
+    if (user.passportBase64) document.getElementById("profilePic").src = user.passportBase64;
+    showLoginModal(false);
+    createEditor("htmlmixed");
+    connectSocket();
+  } catch (err) {
+    document.getElementById("loginError").textContent = err.message;
+    document.getElementById("loginError").style.display = "block";
+  }
+  form.querySelector("button").disabled = false;
+};
+window.onload = appMain;
+</script>
 </body>
 </html>
