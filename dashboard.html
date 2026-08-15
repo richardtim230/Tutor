@@ -1,348 +1,402 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CODECX Institute Student Dashboard</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism.css">
-  
-  <link rel="stylesheet" href="styles.css">
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CODECX Student Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <header class="bg-white shadow px-4 py-4 flex flex-wrap items-center justify-between gap-2 min-w-0">
-    <h1 class="text-2xl font-bold text-indigo-800 flex-1 min-w-0 truncate">
-      CODECX INSTITUTE FOR DEVELOPERS Student Dashboard
-      <span class="feature-badge ml-2">Web Developer Program</span>
-    </h1>
-    <div class="flex items-center gap-2 min-w-0 flex-shrink-0">
-      <img id="studentAvatar" class="w-10 h-10 rounded-full flex-shrink-0" src="" alt="avatar" />
-      <span id="studentNameHeader" class="font-semibold truncate max-w-[110px]"></span>
-      <button onclick="logout()" class="ml-1 px-4 py-1 bg-red-600 text-white rounded hover:bg-red-700 flex-shrink-0">Logout</button>
-    </div>
-  </header>
-  <main class="max-w-4xl mx-auto py-8 px-2">
-    <!-- Profile -->
-    <section class="bg-white rounded shadow p-6 mb-8" id="profileSection">
-      <h2 class="text-xl font-semibold mb-4">Profile</h2>
-      <div class="flex items-center mb-4 flex-wrap gap-3 min-w-0">
-        <img id="studentPassport" class="w-20 h-20 rounded-full border mr-6" src="" alt="Passport"/>
-        <div class="min-w-0">
-          <div id="studentFullName" class="text-lg font-bold truncate"></div>
-          <div id="studentMatric" class="text-sm text-gray-500 truncate"></div>
-          <div id="studentEmail" class="text-sm text-gray-600 truncate"></div>
-          <div id="studentPhone" class="text-sm text-gray-600 truncate"></div>
-          <div id="studentStatus" class="text-sm mt-2"></div>
-        </div>
-      </div>
-    </section>
-    <!-- Masterclass Features (locked if unpaid) -->
-    <section id="masterclassSection" class="feature-section bg-white rounded shadow p-6 mb-8">
-      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-        Masterclass Features
-        <span class="feature-badge"></span>
-      </h2>
-      <div class="grid grid-cols-2 gap-6">
-        <div class="resource-card">
-          <div class="title"><i class="bi bi-camera-video mr-2"></i> Live Coding Sessions</div>
-          <div class="desc">Join weekly live interactive coding classes with top instructors. Participate, ask questions, and build projects together.</div>
-          <div class="link">Next session: <span id="nextSession"></span></div>
-        </div>
-        <div class="resource-card">
-          <div class="title"><i class="bi bi-collection-play mr-2"></i> Video Library</div>
-          <div class="desc">Access a library of recorded masterclass lessons & practical walk-throughs, available 24/7.</div>
-          <a href="video-resources.html" class="link" id="videoLibraryLink" target="_blank">Browse videos</a>
-        </div>
-        <div class="resource-card">
-          <div class="title"><i class="bi bi-code-slash mr-2"></i> Challenge & Projects</div>
-          <div class="desc">Take part in exclusive coding challenges, hackathons, and practical projects for certificates and portfolio.</div>
-          <a href="challenge.html" class="link" id="challengesLink" target="_blank">See current challenge</a>
-        </div>
-        <div class="resource-card">
-          <div class="title"><i class="bi bi-journal-richtext mr-2"></i> Developer's Notes & Resources</div>
-          <div class="desc">Download handouts, cheatsheets, and curated learning resources from top instructors for web devs.</div>
-          <a href="resource.html" class="link" id="resourcesLink" target="_blank">Access Resources</a>
-        </div>
-      </div>
-      <i class="bi bi-lock-fill padlock-icon" style="display:none"></i>
-      <div id="unlockMessage" class="mt-5 text-center text-indigo-700 font-semibold hidden">
-        <i class="bi bi-lock-fill"></i> These features are locked. Please complete payment to unlock full access!
-      </div>
-      <div class="mt-6 text-center">
-        <button id="whatsappGroupBtn"
-          class="px-4 py-2 rounded font-semibold bg-green-600 text-white shadow hover:bg-green-700 transition disabled:opacity-60 disabled:pointer-events-none"
-          style="min-width: 190px;">
-          <i class="bi bi-whatsapp mr-1"></i> Join WhatsApp Group
-        </button>
-        <div id="whatsappNote" class="text-xs text-gray-600 mt-1"></div>
-      </div>
-    </section>
-    <!-- Chat/Community -->
-    <section class="bg-white rounded shadow p-6 mb-8">
-      <h2 class="text-xl font-semibold mb-4">Community & Chat</h2>
-      <div class="scroll-area" id="chatArea">
-        <!-- Messages here -->
-      </div>
-      <form id="chatForm" class="flex gap-2">
-        <input id="chatInput" type="text" placeholder="Type your message..." class="flex-1 px-3 py-2 border rounded" autocomplete="off"/>
-        <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded">Send</button>
-      </form>
-    </section>
-    <!-- Courses, Progress, Payments, Activity -->
-    <section class="bg-white rounded shadow p-6 mb-8" id="coursesSection">
-      <h2 class="text-xl font-semibold mb-4">Courses</h2>
-      <div id="coursesList" class="flex flex-wrap gap-3 mb-4"></div>
-      <div class="flex gap-2 flex-wrap">
-        <select id="courseSelect" class="px-2 py-1 border rounded bg-white">
-          <option value="">-- Select a Course --</option>
-          <option value="HTML Only">HTML Only</option>
-          <option value="CSS Only">CSS Only</option>
-          <option value="JavaScript Only">JavaScript Only</option>
-          <option value="HTML and CSS only">HTML and CSS only</option>
-          <option value="HTML and JavaScript only">HTML and JavaScript only</option>
-          <option value="CSS and JavaScript Only">CSS and JavaScript Only</option>
-          <option value="All three">All three (HTML, CSS, JS)</option>
-          <option value="Full Backend">Full Backend</option>
-          <option value="FullStack">FullStack</option>
-          <option value="Coupon Code">Coupon Code</option>
-        </select>
-        <button onclick="addCourse()" class="px-3 py-1 bg-indigo-600 text-white rounded">Add Course</button>
-      </div>
-    </section>
+<body class="text-slate-800 antialiased pb-28 min-h-screen">
 
-    <section class="bg-white rounded shadow p-6 mb-8" id="paymentsSection">
-      <h2 class="text-xl font-semibold mb-4">Payments</h2>
-      <div id="paymentStatus" class="mb-2"></div>
-      <table class="min-w-full text-sm">
-        <thead>
-          <tr>
-            <th class="px-2 py-1 border">Date</th>
-            <th class="px-2 py-1 border">Amount</th>
-            <th class="px-2 py-1 border">Status</th>
-            <th class="px-2 py-1 border">Ref</th>
-          </tr>
-        </thead>
-        <tbody id="paymentsTable"></tbody>
-      </table>
-      <button id="payNowBtn" class="mt-3 px-3 py-1 bg-indigo-600 text-white rounded">Pay Now</button>
-    </section>
-    <!-- Payment Modal -->
-    <div class="custom-modal-bg" id="paymentModalBg">
-      <div class="custom-modal" id="paymentModal">
-        <button class="close-modal" onclick="closePaymentModal()">&times;</button>
-        <div class="modal-title"><i class="bi bi-credit-card-2-front mr-2"></i> Pay for Masterclass</div>
-        <div class="modal-message">Complete your payment securely with Paystack. Your dashboard will be updated automatically after successful payment.</div>
-        <div class="modal-actions">
-          <a href="https://paystack.shop/pay/codec" target="_blank" class="modal-btn" id="paystackProceedBtn">
-            <i class="bi bi-arrow-right-circle mr-1"></i> Proceed to Paystack
-          </a>
-          <button class="modal-btn secondary" onclick="closePaymentModal()">Cancel</button>
+    <!-- TOP HEADER NAVBAR -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center justify-between shadow-xs">
+        <div class="flex items-center gap-3">
+            <button id="hamburgerBtn" class="text-slate-600 hover:text-slate-900 p-1.5 rounded-lg">
+                <i class="fa-solid fa-bars-staggered text-xl"></i>
+            </button>
+            <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md shadow-indigo-200">
+                    C
+                </div>
+                <div>
+                    <h1 class="font-bold text-base leading-tight text-slate-900">CODECX</h1>
+                    <p class="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">Institute</p>
+                </div>
+            </div>
         </div>
-        <div class="mt-4 text-xs text-gray-500">After payment, you will be redirected for verification.</div>
-      </div>
-    </div>
-    <!-- Modal for Day Quiz -->
-    <div class="custom-modal-bg" id="dayQuizModalBg" style="display:none">
-      <div class="custom-modal" id="dayQuizModal">
-        <button class="close-modal" onclick="closeDayQuizModal()">&times;</button>
-        <div id="dayQuizContent"></div>
-      </div>
-    </div>
-    <!-- Modal for Receipt/Payment -->
-    <div id="receiptModal" class="fixed inset-0 z-30 bg-black bg-opacity-60 flex items-center justify-center hidden">
-      <div class="bg-white p-6 rounded shadow relative max-w-lg w-full">
-        <button onclick="closeReceipt()" class="absolute top-2 right-2 text-lg font-bold">&times;</button>
-        <div id="receiptModalContent"></div>
-      </div>
-    </div>
-<section class="bg-white rounded-xl shadow p-6 mb-8" id="assignmentSection">
-  <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
-    <i class="bi bi-upload mr-2 text-indigo-600"></i> Assignment Submission
-  </h2>
-  <form id="assignmentForm" class="flex flex-wrap gap-3 items-center mb-5">
-    <input id="assignmentInput" type="file" class="block rounded border p-2 bg-gray-50 flex-1" />
-    <button type="button" onclick="submitAssignment()" class="px-4 py-2 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700 flex-shrink-0">
-      <i class="bi bi-cloud-arrow-up mr-1"></i> Submit Assignment
-    </button>
-    <span id="assignmentStatus" class="ml-2 text-green-700 font-semibold"></span>
-  </form>
-  <div class="mt-2">
-    <h3 class="text-lg font-semibold mb-3 text-gray-700 flex items-center gap-1">
-      <i class="bi bi-clock-history mr-1 text-indigo-400"></i> Submission History
-    </h3>
-    <div id="assignmentHistory" class="space-y-4">
-      <!-- Assignment items will be rendered here -->
-    </div>
-    <div id="assignmentPagination" class="flex justify-center items-center gap-2 mt-4"></div>
-  </div>
-</section>
-    <!-- Progress Section - with Progress Bar -->
-    <section class="bg-white rounded shadow p-6 mb-8" id="progressSection">
-      <h2 class="text-xl font-semibold mb-4">Progress</h2>
-      <div id="progressBar" class="w-full bg-gray-200 rounded-full h-4 mb-6 shadow">
-        <div id="progressBarFill" class="bg-indigo-600 h-4 rounded-full" style="width: 0%;"></div>
-      </div>
-      <div id="progressSummary" class="mb-4 font-semibold text-indigo-800"></div>
-      <div id="progressGrid" class="grid grid-cols-2 md:grid-cols-4 gap-3 overflow-x-auto" style="min-width: 0;"></div>
-    </section>
-    <section class="bg-white rounded shadow p-6" id="notesSection">
-      <h2 class="text-xl font-semibold mb-4">Admin Notes</h2>
-      <div id="adminNote" class="text-gray-700"></div>
-    </section>
-        <section class="bg-white rounded shadow p-6 mb-8" id="activitySection">
-      <h2 class="text-xl font-semibold mb-4">Activity</h2>
-      <table class="min-w-full text-sm mb-2">
-        <thead>
-          <tr>
-            <th class="px-2 py-1 border">Date</th>
-            <th class="px-2 py-1 border">Activity</th>
-            <th class="px-2 py-1 border">Status</th>
-          </tr>
-        </thead>
-        <tbody id="activityTable"></tbody>
-      </table>
-      <div class="flex gap-2 mt-4">
-        <span id="attendanceStatus" class="ml-3 font-semibold"></span>
-      </div>
 
-    </section>
-    <!-- Welcome Modal HTML (to be placed at the end of <body> in dashboard.html) -->
-<div id="welcomeModalBg" class="fixed inset-0 z-50 bg-black bg-opacity-30 flex items-center justify-center hidden">
-  <div id="welcomeModal" class="bg-white rounded-2xl shadow-2xl px-6 py-8 max-w-lg w-full relative animate-fadeIn">
-    <button aria-label="Close" onclick="closeWelcomeModal()" class="absolute top-3 right-4 text-2xl text-gray-400 hover:text-indigo-600 transition-colors font-bold">&times;</button>
-    <div id="welcomeSlides">
-      <!-- Slides will be dynamically injected -->
-    </div>
-    <div class="flex justify-between items-center mt-6">
-      <button id="welcomePrevBtn" onclick="welcomePrevSlide()" class="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-indigo-100 transition" style="min-width:90px;display:none">Previous</button>
-      <button id="welcomeNextBtn" onclick="welcomeNextSlide()" class="px-4 py-2 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition" style="min-width:90px;">Next</button>
-    </div>
-    <div class="flex justify-center mt-5">
-      <div id="welcomeDots" class="flex gap-2"></div>
-    </div>
-  </div>
-</div>
-<style>
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px);}
-  to { opacity: 1; transform: translateY(0);}
-}
-.animate-fadeIn { animation: fadeIn 0.5s; }
-#welcomeModal h2 {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #4338ca;
-  margin-bottom: 0.7rem;
-}
-#welcomeModal p {
-  color: #374151;
-  font-size: 1.07rem;
-  margin-bottom: 0.5rem;
-}
-#welcomeDots .dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: #e0e7ff; transition: background 0.2s;
-  border: 1.5px solid #6366f1;
-  display: inline-block;
-}
-#welcomeDots .dot.active { background: #6366f1; }
-</style>
-<script>
-// Welcome modal slides content
-const welcomeSlides = [
-  {
-    title: "Welcome to CODECX Student Dashboard!",
-    body: `<p>Hi <span id="welcomeStudentName" class="font-bold text-indigo-700"></span> 👋, we're thrilled to have you at CODECX Institute for Developers!</p>
-    <p>This dashboard is your all-in-one portal for your learning journey.</p>`
-  },
-  {
-    title: "Explore Your Dashboard",
-    body: `<ul class="list-disc pl-5 mb-2 text-gray-700">
-      <li><b>Profile:</b> View and update your details.</li>
-      <li><b>Masterclass Features:</b> Join live sessions, access videos, and download resources (unlocked after payment).</li>
-      <li><b>Community & Chat:</b> Interact with peers, ask questions, and get instant help.</li>
-      <li><b>Assignments:</b> Submit and track your assignment submissions easily.</li>
-      <li><b>Progress:</b> Monitor your progress, course completion, and achievements.</li>
-    </ul>`
-  },
-  {
-    title: "Next Steps",
-    body: `<p>
-      <b>1.</b> <span class="text-indigo-700">Complete your profile</span> for a personalized experience.<br>
-      <b>2.</b> <span class="text-indigo-700">Make payment</span> to unlock masterclass features and join the WhatsApp group.<br>
-      <b>3.</b> <span class="text-indigo-700">Start learning!</span> Join live classes, participate in challenges, and build your portfolio.
-    </p>
-    <p class="mt-3 text-green-700 font-semibold">We're here to support you at every step. Enjoy your learning!</p>`
-  }
-];
+        <div class="flex items-center gap-2.5">
+            <!-- Notifications Button -->
+            <button class="relative w-10 h-10 rounded-full bg-slate-50 border border-slate-200/80 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition">
+                <i class="fa-regular fa-bell text-lg"></i>
+                <span class="absolute top-1.5 right-1.5 w-4 h-4 bg-indigo-600 text-white text-[10px] font-extrabold rounded-full flex items-center justify-center border-2 border-white">3</span>
+            </button>
+            <!-- Profile Avatar / Initial -->
+            <button onclick="window.location.href='#profile-section'" class="w-10 h-10 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center ring-2 ring-indigo-100 overflow-hidden shadow-sm">
+                <img id="studentAvatar" src="" alt="User" class="w-full h-full object-cover hidden" onerror="this.classList.add('hidden')">
+                <span id="avatarInitials" class="text-xs font-extrabold uppercase">ST</span>
+            </button>
+        </div>
+    </header>
 
-let welcomeCurrentSlide = 0;
-function showWelcomeModal(studentName = "") {
-  // Only show for first login
-  if (!localStorage.getItem('codecx_welcome_shown')) {
-    renderWelcomeSlide();
-    document.getElementById('welcomeModalBg').classList.remove('hidden');
-    // Set student name dynamically
-    setTimeout(() => {
-      const el = document.getElementById('welcomeStudentName');
-      if (el && studentName) el.textContent = studentName;
-    }, 0);
-    localStorage.setItem('codecx_welcome_shown', '1');
-  }
-}
-function closeWelcomeModal() {
-  document.getElementById('welcomeModalBg').classList.add('hidden');
-}
-function renderWelcomeSlide() {
-  const slide = welcomeSlides[welcomeCurrentSlide];
-  document.getElementById('welcomeSlides').innerHTML = `
-    <h2>${slide.title}</h2>
-    <div>${slide.body}</div>
-  `;
-  // Dots
-  let dots = '';
-  for (let i = 0; i < welcomeSlides.length; i++) {
-    dots += `<span class="dot${i === welcomeCurrentSlide ? ' active' : ''}"></span>`;
-  }
-  document.getElementById('welcomeDots').innerHTML = dots;
-  // Button states
-  document.getElementById('welcomePrevBtn').style.display = (welcomeCurrentSlide === 0) ? "none" : "";
-  document.getElementById('welcomeNextBtn').textContent = (welcomeCurrentSlide === welcomeSlides.length - 1) ? "Finish" : "Next";
-}
-function welcomeNextSlide() {
-  if (welcomeCurrentSlide < welcomeSlides.length - 1) {
-    welcomeCurrentSlide++;
-    renderWelcomeSlide();
-  } else {
-    closeWelcomeModal();
-  }
-}
-function welcomePrevSlide() {
-  if (welcomeCurrentSlide > 0) {
-    welcomeCurrentSlide--;
-    renderWelcomeSlide();
-  }
-}
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-md mx-auto px-4 pt-5 space-y-6">
 
-// Show modal after login if needed
-document.addEventListener("DOMContentLoaded", function() {
-  // Place student name if available
-  setTimeout(() => {
-    let name =
-      (window.student && window.student.fullName) ||
-      localStorage.getItem('studentName') ||
-      '';
-    showWelcomeModal(name);
-  }, 1100); // show shortly after dashboard is loaded
-});
-</script>
-  </main>
-      <script src="script.js"></script>
+        <!-- GREETING SECTION -->
+        <div>
+            <h2 class="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+                Good Day, <span id="studentNameHeader" class="truncate">Student</span>! 👋
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">Let's make today productive and keep coding.</p>
+        </div>
+
+        <!-- FEATURED HERO CARD (Daily Challenge / Masterclass) -->
+        <div id="masterclassSection" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-blue-700 p-6 text-white shadow-xl shadow-indigo-500/20">
+            <!-- Background Graphic Elements -->
+            <div class="absolute -right-6 -bottom-6 w-36 h-36 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+            <div class="absolute right-10 top-4 opacity-20 pointer-events-none">
+                <i class="fa-solid fa-code text-8xl"></i>
+            </div>
+
+            <div class="relative z-10 space-y-3">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[11px] font-semibold tracking-wide border border-white/20">
+                    <i class="fa-solid fa-bolt text-amber-300"></i>
+                    <span>Daily Progress Challenge</span>
+                </div>
+                
+                <h3 class="text-xl font-extrabold leading-snug">Track Progress & Earn EG Points</h3>
+                <p class="text-xs text-indigo-100/90 leading-relaxed max-w-[80%]">Complete your daily quizzes, mark attendance, and upload submitted assignments.</p>
+
+                <div class="pt-2 flex items-center gap-3">
+                    <button onclick="document.getElementById('quizzes-section').scrollIntoView({behavior:'smooth'})" class="py-3 px-5 bg-white text-indigo-700 hover:bg-slate-50 font-bold rounded-2xl text-xs sm:text-sm shadow-md transition flex items-center gap-2 active:scale-95">
+                        <span>Start Today's Quiz</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2x2 ACTION/FEATURE GRID CARDS -->
+        <div class="grid grid-cols-2 gap-3.5">
+            <!-- Card 1: Daily Quizzes -->
+            <div onclick="document.getElementById('quizzes-section').scrollIntoView({behavior:'smooth'})" class="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between h-36 relative group">
+                <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-file-signature"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm">Quizzes</h4>
+                    <p class="text-[11px] text-slate-400 font-medium mt-0.5">Test & practice</p>
+                </div>
+                <div class="absolute bottom-4 right-4 text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition">
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Card 2: My Courses -->
+            <div onclick="document.getElementById('courses-section').scrollIntoView({behavior:'smooth'})" class="bg-emerald-50/40 p-4 rounded-2xl border border-emerald-100/60 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between h-36 relative group">
+                <div class="w-11 h-11 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg shadow-sm">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm">My Courses</h4>
+                    <p class="text-[11px] text-slate-500 font-medium mt-0.5">Manage tracks</p>
+                </div>
+                <div class="absolute bottom-4 right-4 text-slate-300 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition">
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Card 3: Assignments -->
+            <div onclick="document.getElementById('assignment-section').scrollIntoView({behavior:'smooth'})" class="bg-purple-50/40 p-4 rounded-2xl border border-purple-100/60 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between h-36 relative group">
+                <div class="w-11 h-11 rounded-xl bg-purple-600 text-white flex items-center justify-center text-lg shadow-sm">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm">Assignments</h4>
+                    <p class="text-[11px] text-slate-500 font-medium mt-0.5">Submit tasks</p>
+                </div>
+                <div class="absolute bottom-4 right-4 text-slate-300 group-hover:text-purple-600 group-hover:translate-x-0.5 transition">
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Card 4: Payments -->
+            <div onclick="document.getElementById('payments-section').scrollIntoView({behavior:'smooth'})" class="bg-amber-50/40 p-4 rounded-2xl border border-amber-100/60 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between h-36 relative group">
+                <div class="w-11 h-11 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg shadow-sm">
+                    <i class="fa-solid fa-receipt"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm">Payments</h4>
+                    <p class="text-[11px] text-slate-500 font-medium mt-0.5">Receipts & status</p>
+                </div>
+                <div class="absolute bottom-4 right-4 text-slate-300 group-hover:text-amber-600 group-hover:translate-x-0.5 transition">
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- WHATSAPP / COMMUNITY BANNER CARD -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm text-center space-y-4 relative overflow-hidden">
+            <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mx-auto shadow-xs">
+                <i class="fa-brands fa-whatsapp"></i>
+            </div>
+
+            <div class="space-y-1">
+                <h4 class="font-extrabold text-slate-900 text-base">Community WhatsApp Group</h4>
+                <p id="whatsappNote" class="text-xs text-slate-500 leading-relaxed max-w-xs mx-auto">
+                    Access to the exclusive group is reserved for verified paid masterclass students.
+                </p>
+            </div>
+
+            <button id="whatsappGroupBtn" class="w-full py-3 px-6 bg-indigo-600 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold rounded-2xl text-xs sm:text-sm shadow-md shadow-indigo-200 transition flex items-center justify-center gap-2 active:scale-95">
+                <span>Join Official Group</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+        </div>
+
+        <!-- SECTION: QUIZZES & PROGRESS -->
+        <section id="quizzes-section" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-chart-line text-indigo-600"></i> Daily Progress & Quizzes
+                </h3>
+            </div>
+            <p id="progressSummary" class="text-xs text-slate-500 font-medium">Loading session data...</p>
+
+            <div id="progressGrid" class="space-y-3">
+                <!-- Dynamically populated from JS -->
+            </div>
+        </section>
+
+        <!-- SECTION: REGISTERED COURSES -->
+        <section id="courses-section" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+            <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                <i class="fa-solid fa-graduation-cap text-indigo-600"></i> Registered Courses
+            </h3>
+
+            <div class="flex items-center gap-2">
+                <select id="courseSelect" class="flex-1 bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 rounded-xl p-3 outline-none focus:ring-2 focus:ring-indigo-500">
+                    <option value="">-- Select Course --</option>
+                    <option value="HTML Fundamentals">HTML Fundamentals</option>
+                    <option value="CSS Styling Mastery">CSS Styling Mastery</option>
+                    <option value="JavaScript Essentials">JavaScript Essentials</option>
+                    <option value="Full-Stack Web Development">Full-Stack Web Development</option>
+                </select>
+                <button onclick="addCourse()" class="py-3 px-4 bg-indigo-600 text-white font-bold text-xs rounded-xl hover:bg-indigo-700 transition">
+                    Add
+                </button>
+            </div>
+
+            <div id="coursesList" class="flex flex-wrap gap-2 pt-1">
+                <!-- Dynamically populated tags -->
+            </div>
+        </section>
+
+        <!-- SECTION: ASSIGNMENTS & UPLOAD -->
+        <section id="assignment-section" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+            <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                <i class="fa-solid fa-upload text-indigo-600"></i> Submit Assignment
+            </h3>
+
+            <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-200 text-center space-y-3">
+                <input type="file" id="assignmentInput" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"/>
+                <button onclick="submitAssignment()" class="w-full py-2.5 bg-indigo-600 text-white font-bold text-xs rounded-xl shadow-xs hover:bg-indigo-700 transition">
+                    Upload & Submit
+                </button>
+                <div id="assignmentStatus" class="text-xs text-emerald-600 font-bold"></div>
+            </div>
+
+            <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400">Submission History</h4>
+            <div id="assignmentHistory" class="space-y-2">
+                <!-- Dynamically populated assignments -->
+            </div>
+            <div id="assignmentPagination" class="flex items-center justify-between text-xs pt-2"></div>
+        </section>
+
+        <!-- SECTION: PAYMENTS -->
+        <section id="payments-section" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-wallet text-indigo-600"></i> Payment Details
+                </h3>
+                <button id="payNowBtn" class="py-1.5 px-3 bg-emerald-600 text-white font-bold text-xs rounded-xl shadow-xs">
+                    Pay Now
+                </button>
+            </div>
+
+            <div id="paymentStatus" class="text-xs text-slate-500 font-medium"></div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-100">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-100">
+                        <tr>
+                            <th class="p-2.5">Date</th>
+                            <th class="p-2.5">Amount</th>
+                            <th class="p-2.5">Status</th>
+                            <th class="p-2.5">Ref</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentsTable" class="divide-y divide-slate-100 text-slate-700">
+                        <!-- Dynamically populated payment rows -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- STUDENT PROFILE SUMMARY CARD -->
+        <section id="profile-section" class="bg-slate-900 text-white p-6 rounded-3xl space-y-4 shadow-xl">
+            <div class="flex items-center gap-4">
+                <img id="studentPassport" src="" alt="Passport" class="w-14 h-14 rounded-2xl object-cover bg-slate-800 border border-slate-700">
+                <div class="min-w-0">
+                    <h3 id="studentFullName" class="font-extrabold text-base truncate">--</h3>
+                    <p id="studentMatric" class="text-xs text-indigo-300 font-mono">--</p>
+                    <div id="studentStatus" class="mt-1 inline-block text-[10px] font-bold"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-2 text-xs text-slate-300 pt-2 border-t border-slate-800">
+                <p><span class="text-slate-500">Email:</span> <span id="studentEmail">--</span></p>
+                <p><span class="text-slate-500">Phone:</span> <span id="studentPhone">--</span></p>
+                <p><span class="text-slate-500">Notice:</span> <span id="adminNote" class="text-amber-300">--</span></p>
+            </div>
+
+            <button onclick="logout()" class="w-full py-2.5 bg-red-500/20 hover:bg-red-500/30 text-red-300 font-bold rounded-xl text-xs transition border border-red-500/30">
+                <i class="fa-solid fa-right-from-bracket mr-1"></i> Log Out
+            </button>
+        </section>
+
+    </main>
+
+    <!-- SLIDING QUICK ACTIONS BOTTOM SHEET MODAL -->
+    <div id="quickActionsModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-end justify-center">
+        <div class="bg-white w-full max-w-md rounded-t-3xl p-6 space-y-5 transform transition-all shadow-2xl border-t border-slate-100">
+            <!-- Modal Grab Bar -->
+            <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto"></div>
+
+            <div class="text-center space-y-1">
+                <h3 class="text-lg font-extrabold text-slate-900">Quick Actions</h3>
+                <p class="text-xs text-slate-500">Select what you would like to manage or perform</p>
+            </div>
+
+            <!-- Full-width Dark Header Bar -->
+            <div class="bg-slate-900 text-white rounded-2xl p-3.5 flex items-center justify-between text-xs font-bold tracking-wider uppercase">
+                <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 rounded-lg bg-amber-500 flex items-center justify-center text-slate-900">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <span>Academic Actions</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-slate-400"></i>
+            </div>
+
+            <!-- Quick Action Cards Grid (Inspired by Screenshot 2) -->
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="toggleQuickActions(); document.getElementById('quizzes-section').scrollIntoView()" class="p-4 bg-amber-50/50 hover:bg-amber-50 border border-amber-100 rounded-2xl text-left space-y-2 group">
+                    <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center text-sm shadow-xs">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-slate-900 text-xs">Practice Quizzes</h5>
+                        <p class="text-[10px] text-slate-500">Take daily test quizzes</p>
+                    </div>
+                </button>
+
+                <button onclick="toggleQuickActions(); document.getElementById('assignment-section').scrollIntoView()" class="p-4 bg-purple-50/50 hover:bg-purple-50 border border-purple-100 rounded-2xl text-left space-y-2 group">
+                    <div class="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center text-sm shadow-xs">
+                        <i class="fa-solid fa-file-arrow-up"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-slate-900 text-xs">Upload Homework</h5>
+                        <p class="text-[10px] text-slate-500">Submit assignments</p>
+                    </div>
+                </button>
+
+                <button onclick="toggleQuickActions(); document.getElementById('courses-section').scrollIntoView()" class="p-4 bg-emerald-50/50 hover:bg-emerald-50 border border-emerald-100 rounded-2xl text-left space-y-2 group">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-sm shadow-xs">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-slate-900 text-xs">Add Course</h5>
+                        <p class="text-[10px] text-slate-500">Enroll new modules</p>
+                    </div>
+                </button>
+
+                <button onclick="toggleQuickActions(); document.getElementById('payments-section').scrollIntoView()" class="p-4 bg-blue-50/50 hover:bg-blue-50 border border-blue-100 rounded-2xl text-left space-y-2 group">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center text-sm shadow-xs">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-slate-900 text-xs">Make Payment</h5>
+                        <p class="text-[10px] text-slate-500">Unlock full access</p>
+                    </div>
+                </button>
+            </div>
+
+            <button onclick="toggleQuickActions()" class="w-full py-3 bg-slate-100 text-slate-700 font-bold text-xs rounded-2xl hover:bg-slate-200 transition">
+                Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- STICKY BOTTOM NAVIGATION BAR -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-100 py-2 px-6">
+        <div class="max-w-md mx-auto flex items-center justify-between relative">
+            <a href="#" class="flex flex-col items-center gap-1 text-indigo-600">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span class="text-[10px] font-bold">Home</span>
+            </a>
+
+            <a href="#quizzes-section" class="flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600 transition">
+                <i class="fa-solid fa-file-pen text-lg"></i>
+                <span class="text-[10px] font-bold">Exams</span>
+            </a>
+
+            <!-- CENTER FLOATING ACTION SHIELD BUTTON -->
+            <div class="relative -top-5">
+                <button onclick="toggleQuickActions()" class="w-13 h-13 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-lg shadow-indigo-400/50 ring-4 ring-white active:scale-95 transition">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </button>
+            </div>
+
+            <a href="#assignment-section" class="flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600 transition">
+                <i class="fa-regular fa-comment-dots text-lg"></i>
+                <span class="text-[10px] font-bold">Tasks</span>
+            </a>
+
+            <a href="#profile-section" class="flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600 transition">
+                <i class="fa-regular fa-user text-lg"></i>
+                <span class="text-[10px] font-bold">Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- JS QUICK ACTION TOGGLE -->
+    <script>
+        function toggleQuickActions() {
+            const modal = document.getElementById('quickActionsModal');
+            modal.classList.toggle('hidden');
+        }
+    </script>
+  <script src="script.js"></script>
     
 </body>
+  
 </html>
