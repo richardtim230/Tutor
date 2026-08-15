@@ -94,7 +94,7 @@
             <img id="studentAvatar" class="w-9 h-9 rounded-full object-cover ring-2 ring-indigo-500/20" src="https://ui-avatars.com/api/?name=User" alt="avatar" />
             <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full ring-2 ring-white"></span>
           </div>
-          <span id="studentNameHeader" class="hidden sm:inline text-xs font-semibold text-slate-700 truncate max-w-[90px]"></span>
+          <span id="studentNameHeader" class="hidden sm:inline text-xs font-semibold text-slate-700 truncate max-w-[90px]">Loading...</span>
           <button onclick="logout()" title="Logout" class="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition">
             <i class="bi bi-box-arrow-right text-lg"></i>
           </button>
@@ -132,14 +132,13 @@
             <i class="bi bi-arrow-right"></i>
           </button>
         </div>
-        <!-- Decorative 3D Illustration Graphic Placeholder -->
         <div class="absolute -right-2 -bottom-4 w-40 h-40 pointer-events-none opacity-90">
           <div class="w-full h-full bg-gradient-to-tr from-purple-400/30 to-indigo-300/20 rounded-full blur-2xl"></div>
           <i class="bi bi-code-square text-9xl text-white/10 absolute top-2 right-2"></i>
         </div>
       </div>
 
-      <!-- 2x2 FEATURE GRID CARDS (Matching Screenshot 1) -->
+      <!-- 2x2 FEATURE GRID CARDS -->
       <div class="grid grid-cols-2 gap-3.5">
         
         <!-- Card 1: Masterclass & Labs -->
@@ -200,7 +199,7 @@
 
       </div>
 
-      <!-- WHATSAPP & ACCESS BANNER (Account Manager Style) -->
+      <!-- WHATSAPP & ACCESS BANNER -->
       <div id="masterclassSection" class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 text-center relative overflow-hidden">
         <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3">
           <i class="bi bi-shield-lock-fill"></i>
@@ -429,7 +428,7 @@
         <span class="text-[10px] font-medium">Learning</span>
       </button>
 
-      <!-- CENTER FLOATING ACTION SHIELD BUTTON (Matching Screenshot 1 & 2) -->
+      <!-- CENTER FLOATING ACTION BUTTON -->
       <div class="relative -top-5">
         <button onclick="openQuickActions()" class="w-13 h-13 bg-indigo-600 text-white rounded-full p-3.5 shadow-xl shadow-indigo-300 ring-4 ring-slate-50 flex items-center justify-center hover:bg-indigo-700 transition transform active:scale-95">
           <i class="bi bi-shield-fill-check text-2xl"></i>
@@ -451,7 +450,7 @@
     </div>
   </nav>
 
-  <!-- ================= QUICK ACTIONS BOTTOM SHEET MODAL (Matching Screenshot 2) ================= -->
+  <!-- ================= QUICK ACTIONS BOTTOM SHEET MODAL ================= -->
   <div id="quickActionsModal" class="fixed inset-0 z-50 modal-blur flex items-end justify-center hidden">
     <div class="bg-white w-full max-w-xl rounded-t-3xl p-6 shadow-2xl animate-slide-up relative">
       <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-4"></div>
@@ -461,7 +460,6 @@
         <p class="text-xs text-slate-500">Select what you would like to do or access</p>
       </div>
 
-      <!-- Category Pill -->
       <div class="bg-slate-900 text-white rounded-2xl p-3.5 mb-4 flex items-center justify-between">
         <div class="flex items-center gap-2.5">
           <div class="w-7 h-7 rounded-xl bg-amber-500 text-white flex items-center justify-center text-sm font-bold">
@@ -472,9 +470,7 @@
         <i class="bi bi-chevron-right text-slate-400 text-sm"></i>
       </div>
 
-      <!-- Action Grid -->
       <div class="grid grid-cols-2 gap-3 mb-5">
-        
         <button onclick="closeQuickActions(); switchTab('tab-courses')" class="bg-amber-50/60 p-3.5 rounded-2xl border border-amber-100 text-left hover:bg-amber-100/50 transition">
           <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg mb-2">
             <i class="bi bi-question-circle-fill"></i>
@@ -506,12 +502,32 @@
           <h5 class="font-bold text-xs text-slate-900">Payments & Ref</h5>
           <p class="text-[10px] text-slate-500">Manage subscriptions</p>
         </button>
-
       </div>
 
       <button onclick="closeQuickActions()" class="w-full py-3 bg-slate-100 text-slate-700 rounded-2xl font-bold text-xs hover:bg-slate-200 transition">
         Cancel
       </button>
+    </div>
+  </div>
+
+  <!-- ================= ASSIGNMENT PREVIEW MODAL ================= -->
+  <div id="previewModal" class="fixed inset-0 z-50 modal-blur flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden relative">
+      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
+        <div class="flex items-center gap-2.5 min-w-0 pr-4">
+          <i class="bi bi-file-earmark-text text-indigo-600 text-xl flex-shrink-0"></i>
+          <h3 id="previewTitle" class="text-sm font-bold text-slate-900 truncate">Document Preview</h3>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <a id="previewDownloadBtn" href="#" target="_blank" download class="px-3 py-1.5 bg-indigo-50 text-indigo-600 hover:bg-indigo-100 rounded-xl font-bold text-xs flex items-center gap-1.5 transition">
+            <i class="bi bi-download"></i> Download
+          </a>
+          <button onclick="closePreviewModal()" class="p-1.5 text-slate-400 hover:text-slate-600 rounded-xl transition text-xl font-bold leading-none">&times;</button>
+        </div>
+      </div>
+      <div id="previewModalContent" class="p-5 flex-1 overflow-y-auto flex items-center justify-center bg-slate-100/50 min-h-[320px]">
+        <!-- Preview dynamic content -->
+      </div>
     </div>
   </div>
 
@@ -565,15 +581,26 @@
     </div>
   </div>
 
-  <!-- ================= JARS & LOGIC SCRIPT (COMPLETE & UNTOUCHED API LOGIC) ================= -->
+  <!-- ================= SCRIPT & LOGIC ================= -->
   <script>
-    // Tab switching logic
-    function switchTab(tabId) {
+    const API_BASE = "https://examguide.onrender.com/api/codecxreg";
+    const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
+    let token = localStorage.getItem('codecx_token');
+    
+    // In-memory data cache to prevent refetching
+    const cache = {
+      profile: null,
+      assignments: null,
+      quizzes: null
+    };
+
+    // Lazy load & Tab Switching
+    async function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
 
       document.querySelectorAll('.nav-btn').forEach(btn => {
-        if(btn.dataset.tab === tabId) {
+        if (btn.dataset.tab === tabId) {
           btn.classList.add('text-indigo-600');
           btn.classList.remove('text-slate-400');
           btn.querySelector('span').classList.add('font-bold');
@@ -583,94 +610,28 @@
           btn.querySelector('span').classList.remove('font-bold');
         }
       });
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
-    // Quick Actions Modal
-    function openQuickActions() {
-      document.getElementById('quickActionsModal').classList.remove('hidden');
-    }
-    function closeQuickActions() {
-      document.getElementById('quickActionsModal').classList.add('hidden');
-    }
-
-    // Welcome modal slides content
-    const welcomeSlides = [
-      {
-        title: "Welcome to CODECX Student Dashboard!",
-        body: `<p>Hi <span id="welcomeStudentName" class="font-bold text-indigo-700"></span> 👋, we're thrilled to have you at CODECX Institute for Developers!</p>
-        <p class="mt-2 text-xs text-slate-500">This dashboard is your all-in-one portal for your learning journey.</p>`
-      },
-      {
-        title: "Explore Your Dashboard",
-        body: `<ul class="list-disc pl-5 mb-2 text-xs text-slate-600 space-y-1">
-          <li><b>Profile:</b> View and update your details.</li>
-          <li><b>Masterclass Features:</b> Join live sessions, access videos, and download resources.</li>
-          <li><b>Community & Chat:</b> Interact with peers, ask questions, and get instant help.</li>
-          <li><b>Assignments:</b> Submit and track your assignment submissions easily.</li>
-          <li><b>Progress:</b> Monitor your progress, course completion, and achievements.</li>
-        </ul>`
-      },
-      {
-        title: "Next Steps",
-        body: `<p class="text-xs text-slate-600 space-y-1">
-          <b>1.</b> <span class="text-indigo-700">Complete your profile</span> for a personalized experience.<br>
-          <b>2.</b> <span class="text-indigo-700">Make payment</span> to unlock masterclass features and join the WhatsApp group.<br>
-          <b>3.</b> <span class="text-indigo-700">Start learning!</span> Join live classes and participate in challenges.
-        </p>
-        <p class="mt-3 text-emerald-700 font-semibold text-xs">We're here to support you at every step. Enjoy your learning!</p>`
-      }
-    ];
-
-    let welcomeCurrentSlide = 0;
-    function showWelcomeModal(studentName = "") {
-      if (!localStorage.getItem('codecx_welcome_shown')) {
-        renderWelcomeSlide();
-        document.getElementById('welcomeModalBg').classList.remove('hidden');
-        setTimeout(() => {
-          const el = document.getElementById('welcomeStudentName');
-          if (el && studentName) el.textContent = studentName;
-        }, 0);
-        localStorage.setItem('codecx_welcome_shown', '1');
-      }
-    }
-    function closeWelcomeModal() {
-      document.getElementById('welcomeModalBg').classList.add('hidden');
-    }
-    function renderWelcomeSlide() {
-      const slide = welcomeSlides[welcomeCurrentSlide];
-      document.getElementById('welcomeSlides').innerHTML = `
-        <h3 class="text-base font-bold text-indigo-700 mb-2">${slide.title}</h3>
-        <div>${slide.body}</div>
-      `;
-      let dots = '';
-      for (let i = 0; i < welcomeSlides.length; i++) {
-        dots += `<span class="w-2 h-2 rounded-full ${i === welcomeCurrentSlide ? 'bg-indigo-600' : 'bg-slate-200'}"></span>`;
-      }
-      document.getElementById('welcomeDots').innerHTML = dots;
-      document.getElementById('welcomePrevBtn').style.display = (welcomeCurrentSlide === 0) ? "none" : "";
-      document.getElementById('welcomeNextBtn').textContent = (welcomeCurrentSlide === welcomeSlides.length - 1) ? "Finish" : "Next";
-    }
-    function welcomeNextSlide() {
-      if (welcomeCurrentSlide < welcomeSlides.length - 1) {
-        welcomeCurrentSlide++;
-        renderWelcomeSlide();
-      } else {
-        closeWelcomeModal();
-      }
-    }
-    function welcomePrevSlide() {
-      if (welcomeCurrentSlide > 0) {
-        welcomeCurrentSlide--;
-        renderWelcomeSlide();
+      // Lazy fetch designated tab data on click if not cached
+      if (tabId === 'tab-courses') {
+        await loadCoursesAndProgressTab();
+      } else if (tabId === 'tab-assignments') {
+        await loadAssignmentsTab();
+      } else if (tabId === 'tab-profile') {
+        await loadProfileTab();
       }
     }
 
-    const API_BASE = "https://examguide.onrender.com/api/codecxreg";
+    // Modal Control Helper
+    function openQuickActions() { document.getElementById('quickActionsModal').classList.remove('hidden'); }
+    function closeQuickActions() { document.getElementById('quickActionsModal').classList.add('hidden'); }
+
+    // Loader controls
     function showStudentLoader() {
       if (document.getElementById('studentDataLoader')) return;
       const loaderHtml = `
-        <div id="studentDataLoader" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md flex items-center justify-center">
+        <div id="studentDataLoader" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md flex items-center justify-center transition-opacity duration-300">
           <div class="bg-white p-6 rounded-3xl shadow-2xl text-center">
             <div class="inline-block mb-3">
               <svg width="48" height="48" viewBox="0 0 50 50" class="animate-spin">
@@ -678,7 +639,7 @@
               </svg>
             </div>
             <div class="text-sm font-bold text-indigo-600">Loading your dashboard...</div>
-            <div class="text-xs text-slate-400 mt-1">Fetching student records</div>
+            <div class="text-xs text-slate-400 mt-1">Fetching student profile</div>
           </div>
         </div>
       `;
@@ -693,93 +654,156 @@
       }
     }
 
+    // Skeleton renderers
+    function renderCoursesSkeleton() {
+      document.getElementById("coursesList").innerHTML = `
+        <div class="flex gap-2 animate-pulse">
+          <div class="h-7 w-20 bg-slate-200 rounded-2xl"></div>
+          <div class="h-7 w-28 bg-slate-200 rounded-2xl"></div>
+        </div>`;
+    }
+
+    function renderProgressSkeleton() {
+      document.getElementById("progressGrid").innerHTML = `
+        <div class="space-y-3 animate-pulse">
+          <div class="h-16 bg-slate-100 rounded-2xl w-full"></div>
+          <div class="h-16 bg-slate-100 rounded-2xl w-full"></div>
+          <div class="h-16 bg-slate-100 rounded-2xl w-full"></div>
+        </div>`;
+    }
+
+    function renderAssignmentsSkeleton() {
+      document.getElementById("assignmentHistory").innerHTML = `
+        <div class="space-y-3 animate-pulse">
+          <div class="h-14 bg-slate-100 rounded-2xl w-full"></div>
+          <div class="h-14 bg-slate-100 rounded-2xl w-full"></div>
+          <div class="h-14 bg-slate-100 rounded-2xl w-full"></div>
+        </div>`;
+    }
+
+    function renderProfileSkeletons() {
+      document.getElementById("paymentsTable").innerHTML = `
+        <tr class="animate-pulse">
+          <td colspan="4" class="py-3"><div class="h-4 bg-slate-100 rounded-xl w-full"></div></td>
+        </tr>
+        <tr class="animate-pulse">
+          <td colspan="4" class="py-3"><div class="h-4 bg-slate-100 rounded-xl w-full"></div></td>
+        </tr>`;
+      document.getElementById("activityTable").innerHTML = `
+        <tr class="animate-pulse">
+          <td colspan="3" class="py-3"><div class="h-4 bg-slate-100 rounded-xl w-full"></div></td>
+        </tr>
+        <tr class="animate-pulse">
+          <td colspan="3" class="py-3"><div class="h-4 bg-slate-100 rounded-xl w-full"></div></td>
+        </tr>`;
+    }
+
+    // Main initial loader - Wait until profile is loaded
+    async function initDashboard() {
+      if (!token) { logout(); return; }
+      showStudentLoader();
+
+      try {
+        const studentData = await fetchStudentProfile(token);
+        cache.profile = studentData;
+        window.student = studentData;
+
+        populateProfileHeader(studentData);
+        populateHomeTab(studentData);
+
+      } catch (err) {
+        console.error("Dashboard Init Error:", err);
+        showToast("Failed to fetch user data: " + err.message, "error");
+        logout();
+      } finally {
+        // Unhide loader only after user data fetching completes
+        hideStudentLoader();
+      }
+    }
+
     function fetchStudentProfile(token) {
       return fetch(`${API_BASE}/me`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { "Authorization": "Bearer " + token }
       })
       .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch profile');
+        if (!res.ok) throw new Error("Authentication failed");
         return res.json();
       });
     }
 
-    function fetchAssignments(token) {
-      return fetchStudentProfile(token).then(profile => profile.assignmentHistory || []);
+    function populateProfileHeader(student) {
+      localStorage.setItem('matricNumber', student.matricNumber);
+
+      const avatarUrl = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
+      document.getElementById("studentAvatar").src = avatarUrl;
+      document.getElementById("studentPassport").src = avatarUrl;
+      document.getElementById("studentFullName").textContent = student.fullName || "Student";
+      document.getElementById("studentNameHeader").textContent = student.fullName || "Student";
+      
+      const greetingEl = document.getElementById("studentGreetingName");
+      if (greetingEl) greetingEl.textContent = (student.fullName || "Developer").split(' ')[0];
+
+      document.getElementById("studentMatric").textContent = student.matricNumber || "";
+      document.getElementById("studentEmail").textContent = student.email || "";
+      document.getElementById("studentPhone").textContent = student.phone || "";
+      document.getElementById("studentStatus").innerHTML = student.hasPaid
+        ? `<span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Paid & Active</span>`
+        : `<span class="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold">Unpaid</span>`;
     }
 
-    function fetchPayments(token) {
-      return fetchStudentProfile(token).then(profile => profile.payments || []);
+    function populateHomeTab(student) {
+      updateWhatsAppBtn(student);
+      const locked = !student.hasPaid;
+      document.getElementById("masterclassSection").classList.toggle("locked", locked);
+      document.querySelector("#masterclassSection .padlock-icon").style.display = locked ? "block" : "none";
+      document.getElementById("unlockMessage").classList.toggle("hidden", !locked);
+      document.getElementById("adminNote").textContent = student.adminNote || "No current announcements.";
     }
 
-    function loadDashboardData(token) {
-      showStudentLoader();
-      Promise.all([
-        fetchStudentProfile(token),
-        fetchAssignments(token),
-        fetchPayments(token)
-      ])
-      .then(([profile, assignments, payments]) => {
-        try {
-          window.student = profile;
-          window.assignments = assignments;
-          window.payments = payments;
-          renderAssignmentHistoryPaginated(assignments);
-          renderCourses();
-          renderPayments();
-          renderProgressSection();
-        } catch (err) {
-          console.error('Render error:', err);
-          showToast('Failed to render dashboard: ' + err, 'error');
-        }
-      })
-      .catch(err => {
-        console.error('Error loading dashboard:', err);
-        showToast('Failed to load dashboard: ' + err, 'error');
-      })
-      .finally(() => {
-        hideStudentLoader();
-      });
+    // Lazy load handler for Learning/Courses
+    async function loadCoursesAndProgressTab() {
+      if (!cache.profile) return;
+      renderCourses();
+      
+      if (!cache.quizzes) {
+        renderProgressSkeleton();
+        await renderProgressSection();
+        cache.quizzes = true;
+      }
     }
 
-    const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
-    let student = {};
-    let token = localStorage.getItem('codecx_token');
+    // Lazy load handler for Assignments
+    async function loadAssignmentsTab() {
+      if (cache.assignments) {
+        renderAssignmentHistoryPaginated(cache.assignments);
+        return;
+      }
+      renderAssignmentsSkeleton();
 
-    function showToast(msg, type = "info") {
-      Toastify({
-        text: msg,
-        duration: 8000,
-        gravity: "top",
-        position: "center",
-        backgroundColor: type === "success" ? "#16a34a" : type === "error" ? "#dc2626" : "#6366f1"
-      }).showToast();
+      try {
+        const studentData = cache.profile || await fetchStudentProfile(token);
+        cache.assignments = studentData.assignmentHistory || [];
+        renderAssignmentHistoryPaginated(cache.assignments);
+      } catch (err) {
+        showToast("Error loading assignments: " + err.message, "error");
+      }
     }
 
-    function logout() {
-      localStorage.removeItem('codecx_token');
-      localStorage.removeItem('matricNumber');
-      window.location.href = "login.html";
+    // Lazy load handler for Profile & Payments
+    async function loadProfileTab() {
+      renderProfileSkeletons();
+      if (!cache.profile) {
+        cache.profile = await fetchStudentProfile(token);
+      }
+      renderPayments();
+      renderActivity();
     }
 
-    function showReceiptModal(html) {
-      document.getElementById("receiptModalContent").innerHTML = html;
-      document.getElementById("receiptModal").classList.remove("hidden");
-    }
-    function closeReceipt() {
-      document.getElementById("receiptModal").classList.add("hidden");
-    }
-
-    document.getElementById("payNowBtn").onclick = function () {
-      document.getElementById("paymentModalBg").classList.remove("hidden");
-    };
-    function closePaymentModal() {
-      document.getElementById("paymentModalBg").classList.add("hidden");
-    }
-
-    function updateWhatsAppBtn() {
+    // WhatsApp button logic
+    function updateWhatsAppBtn(studentData = window.student) {
       const btn = document.getElementById("whatsappGroupBtn");
       const note = document.getElementById("whatsappNote");
-      if (student.hasPaid) {
+      if (studentData && studentData.hasPaid) {
         btn.disabled = false;
         btn.onclick = () => window.open(WS_GROUP_LINK, "_blank");
         note.textContent = "Access to the closed WhatsApp group is reserved for paid students.";
@@ -790,16 +814,67 @@
       }
     }
 
-    function formatDate(dt) {
-      const date = new Date(dt);
-      if (isNaN(date)) return "";
-      return date.toLocaleString();
+    // Course features
+    function renderCourses() {
+      const list = document.getElementById("coursesList");
+      list.innerHTML = "";
+      const courses = (window.student?.courses) || [];
+      if(!courses.length) {
+        list.innerHTML = `<span class="text-xs text-slate-400 italic">No enrolled courses added yet.</span>`;
+        return;
+      }
+      courses.forEach(c => {
+        list.innerHTML += `<span class="px-3 py-1.5 rounded-2xl bg-indigo-50 text-indigo-700 text-xs font-bold flex items-center gap-1.5">
+          ${c.name}
+          <button class="text-rose-500 hover:text-rose-700" onclick="removeCourse('${c.name}')">&times;</button>
+        </span>`;
+      });
     }
 
+    async function addCourse() {
+      const select = document.getElementById("courseSelect");
+      const courseName = select.value;
+      if (!courseName) { showToast("Select a course first", "error"); return; }
+      try {
+        const resp = await fetch(`${API_BASE}/courses`, {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+          body: JSON.stringify({ courseName })
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.message);
+        cache.profile = null; // Invalidate profile cache
+        await initDashboard();
+        renderCourses();
+        showToast("Course added successfully!", "success");
+      } catch (err) {
+        showToast(err.message, "error");
+      }
+    }
+
+    async function removeCourse(courseName) {
+      try {
+        const resp = await fetch(`${API_BASE}/courses`, {
+          method: "DELETE",
+          headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+          body: JSON.stringify({ courseName })
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.message);
+        cache.profile = null; // Invalidate profile cache
+        await initDashboard();
+        renderCourses();
+        showToast("Course removed!", "success");
+      } catch (err) {
+        showToast(err.message, "error");
+      }
+    }
+
+    // Quiz & Learning Progress
     function getQuizStatus(day) {
-      if (!student.activities) return { quiz: false, attendance: false };
-      const quizAct = student.activities.find(a => a.activity.startsWith(`Quiz completed - Day ${day}`));
-      const attAct = student.activities.find(a => a.activity === `Attendance marked - Day ${day}`);
+      const activities = window.student?.activities || [];
+      const quizAct = activities.find(a => a.activity.startsWith(`Quiz completed - Day ${day}`));
+      const attAct = activities.find(a => a.activity === `Attendance marked - Day ${day}`);
       return { quiz: !!quizAct, attendance: !!attAct };
     }
 
@@ -811,7 +886,6 @@
         const quiz = data.days.find(q => Number(q.day) === Number(day));
         return quiz || null;
       } catch (error) {
-        console.error('Error fetching quiz:', error);
         return null;
       }
     }
@@ -940,8 +1014,10 @@
 
             setTimeout(() => {
               closeDayQuizModal();
-              reloadDashboard();
-            }, 3000);
+              cache.profile = null;
+              cache.quizzes = null;
+              initDashboard();
+            }, 2000);
           } catch (err) {
             showToast(err.message, "error");
             submitBtn.disabled = false;
@@ -953,31 +1029,21 @@
     }
 
     async function markQuizCompletedWithScore(day, score) {
-      try {
-        const resp = await fetch(`${API_BASE}/activities`, {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer " + token,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ activity: `Quiz completed - Day ${day} (Score: ${score})` })
-        });
-        const data = await resp.json();
-        if (!resp.ok) throw new Error(data.message);
-        return true;
-      } catch (err) {
-        throw new Error("Failed to record quiz completion: " + err.message);
-      }
+      const resp = await fetch(`${API_BASE}/activities`, {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+        body: JSON.stringify({ activity: `Quiz completed - Day ${day} (Score: ${score})` })
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.message);
+      return true;
     }
 
     async function markAttendance(day, auto = false) {
       try {
         const resp = await fetch(`${API_BASE}/activities`, {
           method: "POST",
-          headers: {
-            "Authorization": "Bearer " + token,
-            "Content-Type": "application/json"
-          },
+          headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
           body: JSON.stringify({ activity: `Attendance marked - Day ${day}` })
         });
         const data = await resp.json();
@@ -989,124 +1055,9 @@
       }
     }
 
-    function closeDayQuizModal() {
-      document.getElementById("dayQuizModalBg").classList.add("hidden");
-    }
+    function closeDayQuizModal() { document.getElementById("dayQuizModalBg").classList.add("hidden"); }
 
-    async function reloadDashboard() {
-      if (!token) { logout(); return; }
-      try {
-        const resp = await fetch(`${API_BASE}/me`, {
-          headers: { "Authorization": "Bearer " + token }
-        });
-        const data = await resp.json();
-        if (!resp.ok) throw new Error(data.message);
-        student = data;
-        window.student = student;
-
-        localStorage.setItem('matricNumber', student.matricNumber);
-
-        const avatarUrl = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
-        document.getElementById("studentAvatar").src = avatarUrl;
-        document.getElementById("studentPassport").src = avatarUrl;
-        document.getElementById("studentFullName").textContent = student.fullName;
-        document.getElementById("studentNameHeader").textContent = student.fullName;
-        
-        // Update greeting banner name
-        const greetingEl = document.getElementById("studentGreetingName");
-        if(greetingEl) greetingEl.textContent = student.fullName.split(' ')[0] || student.fullName;
-
-        document.getElementById("studentMatric").textContent = student.matricNumber;
-        document.getElementById("studentEmail").textContent = student.email;
-        document.getElementById("studentPhone").textContent = student.phone;
-        document.getElementById("studentStatus").innerHTML = student.hasPaid
-          ? `<span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Paid & Active</span>`
-          : `<span class="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold">Unpaid</span>`;
-        
-        updateWhatsAppBtn();
-
-        const locked = !student.hasPaid;
-        document.getElementById("masterclassSection").classList.toggle("locked", locked);
-        document.querySelector("#masterclassSection .padlock-icon").style.display = locked ? "block" : "none";
-        document.getElementById("unlockMessage").classList.toggle("hidden", !locked);
-
-        renderAssignmentHistoryPaginated(student.assignmentHistory || []);
-        renderCourses();
-        renderActivity();
-        renderPayments();
-        renderProgressSection();
-
-        document.getElementById("adminNote").textContent = student.adminNote || "No current announcements.";
-
-      } catch (err) {
-        showToast("Error loading dashboard: " + err.message, "error");
-        logout();
-      }
-    }
-
-    function renderCourses() {
-      const list = document.getElementById("coursesList");
-      list.innerHTML = "";
-      (student.courses || []).forEach(c => {
-        list.innerHTML += `<span class="px-3 py-1.5 rounded-2xl bg-indigo-50 text-indigo-700 text-xs font-bold flex items-center gap-1.5">
-          ${c.name}
-          <button class="text-rose-500 hover:text-rose-700" onclick="removeCourse('${c.name}')">&times;</button>
-        </span>`;
-      });
-    }
-
-    async function addCourse() {
-      const select = document.getElementById("courseSelect");
-      const courseName = select.value;
-      if (!courseName) { showToast("Select a course first", "error"); return; }
-      try {
-        const resp = await fetch(`${API_BASE}/courses`, {
-          method: "POST",
-          headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
-          body: JSON.stringify({ courseName })
-        });
-        const data = await resp.json();
-        if (!resp.ok) throw new Error(data.message);
-        await reloadDashboard();
-        showToast("Course added successfully!", "success");
-      } catch (err) {
-        showToast(err.message, "error");
-      }
-    }
-
-    async function removeCourse(courseName) {
-      try {
-        const resp = await fetch(`${API_BASE}/courses`, {
-          method: "DELETE",
-          headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
-          body: JSON.stringify({ courseName })
-        });
-        const data = await resp.json();
-        if (!resp.ok) throw new Error(data.message);
-        await reloadDashboard();
-        showToast("Course removed!", "success");
-      } catch (err) {
-        showToast(err.message, "error");
-      }
-    }
-
-    function renderActivity() {
-      const table = document.getElementById("activityTable");
-      table.innerHTML = "";
-      (student.activities || []).slice(-8).reverse().forEach(act => {
-        table.innerHTML += `
-          <tr class="text-slate-600">
-            <td class="py-2 px-1">${formatDate(act.date)}</td>
-            <td class="py-2 px-1 font-medium">${act.activity}</td>
-            <td class="py-2 px-1">${act.status || 'Done'}</td>
-          </tr>
-        `;
-      });
-      let latestAttendance = (student.activities || []).filter(a => /^Attendance marked - Day \d+$/.test(a.activity)).slice(-1)[0];
-      document.getElementById("attendanceStatus").textContent =
-        latestAttendance ? `Last attendance: ${formatDate(latestAttendance.date)}` : "No attendance marked yet.";
-    }
-
+    // Assignment Upload & Preview Logic
     async function submitAssignment() {
       const inp = document.getElementById("assignmentInput");
       if (!inp.files[0]) { showToast("Select a file to upload.", "error"); return; }
@@ -1131,30 +1082,15 @@
 
         document.getElementById("assignmentStatus").textContent = "Submitted successfully!";
         inp.value = "";
-        await reloadDashboard();
+        
+        // Invalidate assignments cache
+        cache.assignments = null;
+        cache.profile = null;
+        await loadAssignmentsTab();
         showToast("Assignment submitted!", "success");
       } catch (err) {
         showToast(err.message, "error");
       }
-    }
-
-    function renderPayments() {
-      const tb = document.getElementById("paymentsTable");
-      tb.innerHTML = "";
-      (student.payments || []).slice(-6).reverse().forEach(p => {
-        tb.innerHTML += `
-          <tr class="text-slate-600">
-            <td class="py-2 px-1">${formatDate(p.date)}</td>
-            <td class="py-2 px-1 font-bold">₦${p.amount}</td>
-            <td class="py-2 px-1 text-emerald-600 font-medium">${p.status}</td>
-            <td class="py-2 px-1 font-mono">${p.ref}</td>
-          </tr>
-        `;
-      });
-      document.getElementById("paymentStatus").textContent =
-        student.hasPaid
-          ? `Last payment: ₦${student.payments?.slice(-1)[0]?.amount || ""} (Ref: ${student.lastPaymentRef || ""})`
-          : "No payment recorded yet.";
     }
 
     const ASSIGNMENTS_PER_PAGE = 5;
@@ -1180,9 +1116,9 @@
         <div class="flex items-center justify-between bg-slate-50 rounded-2xl p-3 border border-slate-100">
           <div class="min-w-0 flex-1 pr-2">
             <div class="font-bold text-xs text-indigo-700 truncate">${a.title || a.fileName || "Assignment"}</div>
-            <div class="text-[10px] text-slate-400">${a.historyDate ? new Date(a.historyDate).toLocaleString() : ""}</div>
+            <div class="text-[10px] text-slate-400">${a.historyDate ? new Date(a.historyDate).toLocaleString() : (a.date ? new Date(a.date).toLocaleString() : "")}</div>
           </div>
-          <button class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-xl font-bold text-xs hover:bg-indigo-100" onclick="previewAssignmentHistory(${startIdx + idx})">
+          <button class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-xl font-bold text-xs hover:bg-indigo-100 transition" onclick="previewAssignmentHistory(${startIdx + idx})">
             Preview
           </button>
         </div>
@@ -1190,9 +1126,9 @@
 
       if (pagination) {
         pagination.innerHTML = totalAssignmentPages > 1 ? `
-          <button class="px-3 py-1 rounded-xl bg-slate-100 font-bold" onclick="assignmentPrevPage()" ${assignmentCurrentPage === 1 ? 'disabled' : ''}>Prev</button>
+          <button class="px-3 py-1 rounded-xl bg-slate-100 font-bold hover:bg-slate-200" onclick="assignmentPrevPage()" ${assignmentCurrentPage === 1 ? 'disabled' : ''}>Prev</button>
           <span class="font-bold text-slate-600">Page ${assignmentCurrentPage} of ${totalAssignmentPages}</span>
-          <button class="px-3 py-1 rounded-xl bg-slate-100 font-bold" onclick="assignmentNextPage()" ${assignmentCurrentPage === totalAssignmentPages ? 'disabled' : ''}>Next</button>
+          <button class="px-3 py-1 rounded-xl bg-slate-100 font-bold hover:bg-slate-200" onclick="assignmentNextPage()" ${assignmentCurrentPage === totalAssignmentPages ? 'disabled' : ''}>Next</button>
         ` : "";
       }
     }
@@ -1200,38 +1136,162 @@
     function assignmentPrevPage() {
       if (assignmentCurrentPage > 1) {
         assignmentCurrentPage--;
-        renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
+        renderAssignmentHistoryPaginated(cache.assignments || window.student?.assignmentHistory || []);
       }
     }
     function assignmentNextPage() {
       if (assignmentCurrentPage < totalAssignmentPages) {
         assignmentCurrentPage++;
-        renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
+        renderAssignmentHistoryPaginated(cache.assignments || window.student?.assignmentHistory || []);
       }
+    }
+
+    // PREVIEW MODAL FOR ALL UPLOADED ASSIGNMENTS
+    function previewAssignmentHistory(index) {
+      const assignmentList = cache.assignments || window.student?.assignmentHistory || [];
+      const assignment = assignmentList[index];
+      if (!assignment) return;
+
+      const title = assignment.title || assignment.fileName || "Assignment Document";
+      const url = assignment.fileUrl || assignment.url || assignment.filePath || "";
+      
+      document.getElementById("previewTitle").textContent = title;
+      const downloadBtn = document.getElementById("previewDownloadBtn");
+      downloadBtn.href = url || "#";
+      if (!url) {
+        downloadBtn.classList.add("hidden");
+      } else {
+        downloadBtn.classList.remove("hidden");
+      }
+
+      const contentArea = document.getElementById("previewModalContent");
+      contentArea.innerHTML = `<div class="text-xs font-semibold text-slate-400 animate-pulse">Loading preview...</div>`;
+      document.getElementById("previewModal").classList.remove("hidden");
+
+      const ext = (url.split('.').pop() || '').toLowerCase();
+      const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext) || url.startsWith('data:image/');
+      const isPdf = ext === 'pdf';
+      const isVideo = ['mp4', 'webm', 'ogg'].includes(ext);
+      const isAudio = ['mp3', 'wav', 'aac'].includes(ext);
+      const isCode = ['js', 'html', 'css', 'json', 'py', 'txt', 'md'].includes(ext);
+
+      if (isImage) {
+        contentArea.innerHTML = `<img src="${url}" alt="${escapeHtml(title)}" class="max-h-[60vh] max-w-full object-contain rounded-2xl shadow-sm"/>`;
+      } else if (isPdf) {
+        contentArea.innerHTML = `<iframe src="${url}" class="w-full h-[60vh] rounded-2xl border-0"></iframe>`;
+      } else if (isVideo) {
+        contentArea.innerHTML = `<video src="${url}" controls class="max-h-[60vh] w-full rounded-2xl shadow-sm"></video>`;
+      } else if (isAudio) {
+        contentArea.innerHTML = `<audio src="${url}" controls class="w-full max-w-md p-4 bg-white rounded-2xl shadow-sm"></audio>`;
+      } else if (isCode) {
+        fetch(url)
+          .then(res => res.text())
+          .then(codeText => {
+            contentArea.innerHTML = `<pre class="w-full max-h-[55vh] overflow-auto bg-slate-900 text-slate-100 p-4 rounded-2xl text-xs"><code class="language-${ext}">${escapeHtml(codeText)}</code></pre>`;
+            if (window.Prism) Prism.highlightAll();
+          })
+          .catch(() => {
+            contentArea.innerHTML = `<div class="text-center p-6 bg-white rounded-2xl border border-slate-200">
+              <i class="bi bi-file-earmark-code text-4xl text-indigo-500 mb-2 block"></i>
+              <p class="text-xs font-semibold text-slate-700 mb-2">${escapeHtml(title)}</p>
+              <a href="${url}" target="_blank" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold inline-block">Open File Directly</a>
+            </div>`;
+          });
+      } else if (url) {
+        // Fallback for Office Documents or General files using Google Docs Viewer
+        contentArea.innerHTML = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" class="w-full h-[60vh] rounded-2xl border-0"></iframe>`;
+      } else {
+        contentArea.innerHTML = `<div class="text-center p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
+          <i class="bi bi-file-earmark-check text-4xl text-indigo-500 mb-2 block"></i>
+          <p class="text-xs font-bold text-slate-800">${escapeHtml(title)}</p>
+          <p class="text-[11px] text-slate-400 mt-1">Assignment submitted. Dynamic preview URL unavailable.</p>
+        </div>`;
+      }
+    }
+
+    function closePreviewModal() {
+      document.getElementById("previewModal").classList.add("hidden");
+    }
+
+    // Profile & Payments Renderers
+    function renderPayments() {
+      const tb = document.getElementById("paymentsTable");
+      tb.innerHTML = "";
+      const payments = (window.student?.payments) || [];
+      if(!payments.length) {
+        tb.innerHTML = `<tr><td colspan="4" class="py-3 text-center text-slate-400">No payment history found.</td></tr>`;
+      } else {
+        payments.slice(-6).reverse().forEach(p => {
+          tb.innerHTML += `
+            <tr class="text-slate-600">
+              <td class="py-2 px-1">${formatDate(p.date)}</td>
+              <td class="py-2 px-1 font-bold">₦${p.amount}</td>
+              <td class="py-2 px-1 text-emerald-600 font-medium">${p.status}</td>
+              <td class="py-2 px-1 font-mono">${p.ref}</td>
+            </tr>`;
+        });
+      }
+      document.getElementById("paymentStatus").textContent =
+        window.student?.hasPaid
+          ? `Last payment: ₦${payments.slice(-1)[0]?.amount || ""} (Ref: ${window.student?.lastPaymentRef || ""})`
+          : "No payment recorded yet.";
+    }
+
+    function renderActivity() {
+      const table = document.getElementById("activityTable");
+      table.innerHTML = "";
+      const activities = (window.student?.activities) || [];
+      if(!activities.length) {
+        table.innerHTML = `<tr><td colspan="3" class="py-3 text-center text-slate-400">No recent activity.</td></tr>`;
+      } else {
+        activities.slice(-8).reverse().forEach(act => {
+          table.innerHTML += `
+            <tr class="text-slate-600">
+              <td class="py-2 px-1">${formatDate(act.date)}</td>
+              <td class="py-2 px-1 font-medium">${act.activity}</td>
+              <td class="py-2 px-1">${act.status || 'Done'}</td>
+            </tr>`;
+        });
+      }
+      let latestAttendance = activities.filter(a => /^Attendance marked - Day \d+$/.test(a.activity)).slice(-1)[0];
+      document.getElementById("attendanceStatus").textContent =
+        latestAttendance ? `Last attendance: ${formatDate(latestAttendance.date)}` : "No attendance marked yet.";
+    }
+
+    // Utility Helpers
+    function formatDate(dt) {
+      const date = new Date(dt);
+      if (isNaN(date)) return "";
+      return date.toLocaleString();
     }
 
     function escapeHtml(text) {
       return text ? text.replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m]) : "";
     }
 
-    function previewAssignmentHistory(index) {
-      const assignment = (window.student?.assignmentHistory || [])[index];
-      if (!assignment) return;
-      alert(`Previewing: ${assignment.title || assignment.fileName}`);
+    function showToast(msg, type = "info") {
+      Toastify({
+        text: msg,
+        duration: 5000,
+        gravity: "top",
+        position: "center",
+        backgroundColor: type === "success" ? "#16a34a" : type === "error" ? "#dc2626" : "#6366f1"
+      }).showToast();
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-      const token = localStorage.getItem('codecx_token');
-      if (token) {
-        loadDashboardData(token);
-      } else {
-        window.location.href = "login.html";
-      }
+    function logout() {
+      localStorage.removeItem('codecx_token');
+      localStorage.removeItem('matricNumber');
+      window.location.href = "login.html";
+    }
 
-      setTimeout(() => {
-        let name = (window.student && window.student.fullName) || localStorage.getItem('studentName') || '';
-        showWelcomeModal(name);
-      }, 1200);
+    // Modal Triggers
+    document.getElementById("payNowBtn").onclick = () => document.getElementById("paymentModalBg").classList.remove("hidden");
+    function closePaymentModal() { document.getElementById("paymentModalBg").classList.add("hidden"); }
+
+    // On DOM Ready
+    document.addEventListener("DOMContentLoaded", function() {
+      initDashboard();
     });
   </script>
 </body>
