@@ -5,12 +5,9 @@
   <title>CODECX INSTITUTE - Subjects & Courses</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.850">
   
-  <!-- Tailwind CSS v3 via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Flowbite CDN -->
   <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
-  <!-- Bootstrap Icons CDN -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   
   <style>
@@ -29,13 +26,11 @@
     }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white pb-24">
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white pb-28">
 
-  <!-- Fixed Sticky Header Nav -->
   <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-800 shadow-lg">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
       
-      <!-- Brand & Back Button -->
       <div class="flex items-center gap-3">
         <a href="dashboard.html" class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700/80 flex items-center justify-center text-white hover:bg-slate-700 transition-all shrink-0">
           <i class="bi bi-chevron-left text-sm"></i>
@@ -51,7 +46,6 @@
         </div>
       </div>
 
-      <!-- Profile Container -->
       <div id="profileContainer" class="candidate-details flex items-center gap-2.5 bg-slate-800/90 px-3 py-1.5 rounded-full border border-slate-700/80 shadow-sm">
         <div id="profileSkeleton" class="flex items-center gap-2 animate-pulse">
           <div class="w-6 h-6 rounded-full bg-slate-700"></div>
@@ -66,7 +60,6 @@
     </div>
   </header>
 
-  <!-- Hero Title Banner Section -->
   <section class="bg-slate-900 text-white pt-8 pb-12 px-4 sm:px-6 relative overflow-hidden">
     <div class="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-overlay pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80')"></div>
     <div class="max-w-4xl mx-auto relative z-10 space-y-2">
@@ -80,16 +73,12 @@
     </div>
   </section>
 
-  <!-- Main Content Container -->
   <main class="relative z-20 -mt-6 max-w-4xl mx-auto w-full px-4 sm:px-6 flex-1">
     
-    <!-- Outer Card Shell -->
     <div class="bg-white rounded-3xl p-4 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-100 space-y-6">
       
-      <!-- Top Search & Category Filter Controls (Hidden when a course is expanded) -->
       <div id="filterSection" class="space-y-4">
         
-        <!-- Search Field -->
         <div class="flex items-center gap-2">
           <div class="relative flex-1">
             <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -107,7 +96,6 @@
           </button>
         </div>
 
-        <!-- Filter Category Pills -->
         <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
           <button onclick="filterCategory('all')" class="category-pill px-4 py-2 rounded-full text-xs font-bold bg-blue-600 text-white shadow-md shadow-blue-500/20 shrink-0 transition-all">All Courses</button>
           <button onclick="filterCategory('frontend')" class="category-pill px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">Frontend</button>
@@ -118,7 +106,6 @@
 
       </div>
 
-      <!-- Skeleton Loader -->
       <div id="resourcesSkeleton" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50/50 animate-pulse space-y-3">
           <div class="flex items-center gap-3">
@@ -140,10 +127,8 @@
         </div>
       </div>
 
-      <!-- All Courses Grid -->
       <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
 
-        <!-- Course 1: HTML Resources -->
         <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
              data-category="frontend" 
              data-title="html resources markup tags frontend web"
@@ -168,7 +153,6 @@
           </div>
         </div>
 
-        <!-- Course 2: CSS Styling -->
         <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
              data-category="frontend" 
              data-title="css styling flexbox grid layout tailwind design"
@@ -193,7 +177,6 @@
           </div>
         </div>
 
-        <!-- Course 3: JavaScript -->
         <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-amber-300 hover:shadow-lg hover:shadow-amber-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
              data-category="frontend" 
              data-title="javascript js es6 dom functions promises async"
@@ -218,7 +201,6 @@
           </div>
         </div>
 
-        <!-- Course 4: React Development -->
         <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-sky-300 hover:shadow-lg hover:shadow-sky-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
              data-category="frontend" 
              data-title="react framework jsx hooks state props frontend"
@@ -243,7 +225,6 @@
           </div>
         </div>
 
-        <!-- Course 5: Node.js & Express -->
         <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
              data-category="backend" 
              data-title="node.js backend express api rest middleware auth"
@@ -268,7 +249,6 @@
           </div>
         </div>
 
-        <!-- Course 6: Databases & SQL / MongoDB -->
         <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-purple-300 hover:shadow-lg hover:shadow-purple-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
              data-category="database" 
              data-title="databases sql mongodb database mongoose queries relational"
@@ -293,7 +273,6 @@
           </div>
         </div>
 
-        <!-- Course 7: Python Programming -->
         <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
              data-category="backend" 
              data-title="python programming script backend data object oriented"
@@ -318,7 +297,6 @@
           </div>
         </div>
 
-        <!-- Course 8: General Web Dev & Tools -->
         <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-slate-300 hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer group" 
              data-category="general" 
              data-title="general git github version control terminal devops deployment"
@@ -345,10 +323,8 @@
 
       </div>
 
-      <!-- ================= SINGLE EXPANDED COURSE VIEW ================= -->
       <div id="expandedCourseContainer" class="hidden space-y-6">
         
-        <!-- Back Navigation Button -->
         <div class="flex items-center justify-between border-b border-slate-100 pb-4">
           <button onclick="closeCourseView()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all">
             <i class="bi bi-arrow-left text-sm"></i>
@@ -357,34 +333,27 @@
           <span class="text-xs font-semibold text-slate-400">Course View</span>
         </div>
 
-        <!-- Selected Course Banner Header -->
         <div id="activeCourseBanner" class="p-5 rounded-2xl bg-slate-900 text-white space-y-3 shadow-lg">
-          <!-- Dynamically Populated by JS -->
         </div>
 
-        <!-- Dropdown Accordion Section for Topics -->
         <div class="space-y-3">
           <div class="flex items-center justify-between">
             <h4 class="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Course Modules & Topics</h4>
             <span class="text-[11px] text-slate-400 font-medium">Click a module to toggle details</span>
           </div>
 
-          <!-- Dynamic Accordion Target -->
           <div id="topicsAccordion" class="space-y-2">
-            <!-- Topics rendered here by JS -->
           </div>
         </div>
 
       </div>
 
-      <!-- Pagination Footer -->
       <div id="paginationFooter" class="pt-4 flex flex-col items-center gap-3 border-t border-slate-100">
         <span id="subjectCountText" class="text-xs font-semibold text-slate-400">Showing 8 subjects</span>
       </div>
 
     </div>
 
-    <!-- "Can't find what you're looking for?" Section -->
     <div class="mt-6 rounded-3xl bg-blue-50/70 border border-blue-100 p-6 space-y-4 shadow-sm">
       <div class="w-10 h-10 rounded-2xl bg-white text-blue-600 flex items-center justify-center shadow-sm text-lg">
         <i class="bi bi-bag"></i>
@@ -402,37 +371,43 @@
 
   </main>
 
-  <!-- Bottom Navigation Bar -->
-  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-4 py-2.5 flex items-center justify-around shadow-lg">
-    <a href="dashboard.html" class="flex flex-col items-center text-slate-400 hover:text-blue-600 text-[10px] font-semibold transition-colors">
-      <i class="bi bi-house text-lg"></i>
-      Home
-    </a>
-    <a href="#" class="flex flex-col items-center text-slate-400 hover:text-blue-600 text-[10px] font-semibold transition-colors">
-      <i class="bi bi-book text-lg"></i>
-      My Library
-    </a>
-    <a href="#" class="flex flex-col items-center text-blue-600 text-[10px] font-bold transition-colors">
-      <i class="bi bi-grid-fill text-lg"></i>
-      Courses
-    </a>
-    <a href="#" class="flex flex-col items-center text-slate-400 hover:text-blue-600 text-[10px] font-semibold transition-colors">
-      <i class="bi bi-cloud-arrow-up text-lg"></i>
-      Exams
-    </a>
-    <a href="#" class="flex flex-col items-center text-slate-400 hover:text-blue-600 text-[10px] font-semibold transition-colors">
-      <i class="bi bi-person text-lg"></i>
-      Profile
-    </a>
+  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-2 py-2 shadow-lg">
+    <div class="max-w-md mx-auto grid grid-cols-5 items-center text-center">
+      
+      <a href="dashboard.html" class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-600 text-[10px] font-medium transition-colors py-1 group">
+        <i class="bi bi-house text-xl group-hover:scale-110 transition-transform"></i>
+        <span class="mt-0.5">Home</span>
+      </a>
+
+      <a href="#" class="flex flex-col items-center justify-center text-blue-600 text-[10px] font-bold transition-colors py-1 group">
+        <i class="bi bi-journal-text text-xl group-hover:scale-110 transition-transform"></i>
+        <span class="mt-0.5">Learning</span>
+      </a>
+
+      <div class="relative flex justify-center items-center -mt-7">
+        <button type="button" class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-blue-500/40 ring-4 ring-white active:scale-95 transition-all">
+          <i class="bi bi-shield-check"></i>
+        </button>
+      </div>
+
+      <a href="#" class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-600 text-[10px] font-medium transition-colors py-1 group">
+        <i class="bi bi-chat-dots text-xl group-hover:scale-110 transition-transform"></i>
+        <span class="mt-0.5">Community</span>
+      </a>
+
+      <a href="#" class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-600 text-[10px] font-medium transition-colors py-1 group">
+        <i class="bi bi-person text-xl group-hover:scale-110 transition-transform"></i>
+        <span class="mt-0.5">Profile</span>
+      </a>
+
+    </div>
   </nav>
 
-  <!-- JavaScript Logic -->
   <script>
     const API_PROFILE_ENDPOINT = "https://examguide.onrender.com/api/codecxreg/me";
     const LOGIN_PAGE = "login.html";
     const token = localStorage.getItem('codecx_token');
 
-    // Comprehensive Topic Data for each Course
     const COURSES_DATA = {
       htmlCourse: {
         title: "HTML Resources",
@@ -752,7 +727,6 @@
       return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || "Student")}&background=2563eb&color=fff`;
     }
 
-    // Load Profile
     async function loadStudentProfile() {
       try {
         if (!token) throw new Error("No login token");
@@ -787,21 +761,17 @@
       }, 400);
     }
 
-    // Open Single Course View and Render Accordion
     function openCourseView(courseKey) {
       const course = COURSES_DATA[courseKey];
       if (!course) return;
 
-      // Hide grid & filter search section
       document.getElementById("coursesGrid").classList.add("hidden");
       document.getElementById("filterSection").classList.add("hidden");
       document.getElementById("paginationFooter").classList.add("hidden");
 
-      // Show expanded view container
       const container = document.getElementById("expandedCourseContainer");
       container.classList.remove("hidden");
 
-      // Render Active Banner
       const banner = document.getElementById("activeCourseBanner");
       banner.innerHTML = `
         <div class="flex items-center gap-3">
@@ -816,7 +786,6 @@
         <p class="text-xs text-slate-300 leading-relaxed">${course.description}</p>
       `;
 
-      // Render Accordion Dropdowns
       const accordion = document.getElementById("topicsAccordion");
       accordion.innerHTML = "";
 
@@ -851,7 +820,6 @@
       window.scrollTo({ top: 120, behavior: 'smooth' });
     }
 
-    // Accordion Toggler
     function toggleAccordion(bodyId, iconId) {
       const body = document.getElementById(bodyId);
       const icon = document.getElementById(iconId);
@@ -865,7 +833,6 @@
       }
     }
 
-    // Close Single Course View
     function closeCourseView() {
       document.getElementById("expandedCourseContainer").classList.add("hidden");
       document.getElementById("coursesGrid").classList.remove("hidden");
@@ -873,7 +840,6 @@
       document.getElementById("paginationFooter").classList.remove("hidden");
     }
 
-    // Filter Categories
     function filterCategory(category) {
       document.querySelectorAll('.category-pill').forEach(btn => {
         btn.classList.remove('bg-blue-600', 'text-white', 'shadow-md', 'shadow-blue-500/20');
@@ -898,7 +864,6 @@
       document.getElementById('subjectCountText').textContent = `Showing ${visibleCount} subjects`;
     }
 
-    // Search Filter
     document.getElementById('resourceSearch').addEventListener('input', function(e) {
       const term = e.target.value.toLowerCase().trim();
       const cards = document.querySelectorAll('.subject-card');
