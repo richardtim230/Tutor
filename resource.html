@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>CODECX INSTITUTE - Subjects, Videos & Code Studio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=0.850">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet" />
@@ -34,7 +34,7 @@
 
   <!-- TOP HEADER -->
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-800 shadow-lg">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
       
       <div class="flex items-center gap-3">
         <a href="dashboard.html" class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700/80 flex items-center justify-center text-white hover:bg-slate-700 transition-all shrink-0">
@@ -65,24 +65,21 @@
     </div>
   </header>
 
-  <!-- HERO SECTION (Dynamic Header Content) -->
+  <!-- HERO SECTION -->
   <section id="heroSection" class="bg-slate-900 text-white pt-8 pb-12 px-4 sm:px-6 relative overflow-hidden">
     <div class="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-overlay pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80')"></div>
-    <div class="max-w-4xl mx-auto relative z-10 space-y-2">
+    <div class="max-w-6xl mx-auto relative z-10 space-y-2">
       <div class="flex items-center gap-2">
         <span id="heroBadge" class="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold tracking-wider uppercase border border-blue-500/30">Learning Portal</span>
       </div>
       <h2 id="heroTitle" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Subjects & Courses</h2>
-      <p id="heroDesc" class="text-slate-300 text-xs sm:text-sm max-w-xl">
-        Explore interactive subjects, access structured study modules, and master modern software engineering topics.
-      </p>
     </div>
   </section>
 
   <!-- MAIN CONTENT CONTAINER -->
-  <main class="relative z-20 -mt-6 max-w-4xl mx-auto w-full px-4 sm:px-6 flex-1">
+  <main class="relative z-20 -mt-6 max-w-6xl mx-auto w-full px-4 sm:px-6 flex-1">
     
-    <!-- SECTION 1: COURSES & SUBJECTS (Default Visible) -->
+    <!-- SECTION 1: COURSES & SUBJECTS -->
     <div id="coursesTabContent" class="space-y-6">
       
       <div class="bg-white rounded-3xl p-4 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-100 space-y-6">
@@ -116,7 +113,7 @@
 
         </div>
 
-        <div id="resourcesSkeleton" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div id="resourcesSkeleton" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50/50 animate-pulse space-y-3">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 rounded-2xl bg-slate-200"></div>
@@ -137,7 +134,7 @@
           </div>
         </div>
 
-        <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
+        <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 hidden">
 
           <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
                data-category="frontend" 
@@ -370,9 +367,6 @@
         </div>
         <div>
           <h3 class="text-base font-extrabold text-slate-900">Can't find what you're looking for?</h3>
-          <p class="text-xs font-medium text-slate-500 mt-1 leading-relaxed">
-            Request a topic or book and our academic team will notify you when it becomes available.
-          </p>
         </div>
         <button class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition-all">
           Request for Resource <i class="bi bi-chevron-right text-xs"></i>
@@ -381,7 +375,7 @@
 
     </div>
 
-    <!-- SECTION 2: VIDEO RESOURCES (Hidden by Default) -->
+    <!-- SECTION 2: VIDEO RESOURCES -->
     <div id="videoTabContent" class="hidden space-y-6">
       
       <div class="bg-white rounded-3xl p-4 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-100 space-y-6">
@@ -394,18 +388,17 @@
           <button onclick="filterVideos('backend')" class="vid-pill px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">Node & Backend</button>
         </div>
 
-        <div id="videoGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <!-- Video Cards render via JS -->
+        <div id="videoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         </div>
 
       </div>
 
     </div>
 
-    <!-- SECTION 3: LIVE CODING TERMINAL & PREVIEW (Hidden by Default) -->
+    <!-- SECTION 3: LIVE CODING TERMINAL & PREVIEW -->
     <div id="terminalTabContent" class="hidden space-y-6">
       
-      <div class="bg-slate-900 rounded-3xl p-4 sm:p-6 shadow-2xl border border-slate-800 space-y-4">
+      <div id="terminalContainer" class="bg-slate-900 rounded-3xl p-4 sm:p-6 shadow-2xl border border-slate-800 space-y-5 transition-all">
         
         <!-- Terminal Header Controls -->
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
@@ -415,7 +408,7 @@
               <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
               <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
             </div>
-            <span class="text-xs font-bold text-slate-400 font-mono">CODECX Live Studio v2.0</span>
+            <span class="text-xs font-bold text-slate-300 font-mono">CODECX Live Studio v2.0</span>
           </div>
 
           <div class="flex items-center gap-2">
@@ -423,6 +416,12 @@
               <i class="bi bi-play-fill text-sm"></i>
               <span>Run Code</span>
             </button>
+
+            <button id="fullPageBtn" onclick="toggleStudioFullscreen()" class="px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 border border-blue-500 shadow-md transition-all">
+              <i id="fullscreenIcon" class="bi bi-arrows-angle-expand"></i>
+              <span id="fullscreenText">Full Page</span>
+            </button>
+
             <button onclick="resetTerminalCode()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700 transition-all">
               <i class="bi bi-arrow-counterclockwise"></i>
               <span>Reset</span>
@@ -430,55 +429,61 @@
           </div>
         </div>
 
-        <!-- Code Input Tabs -->
-        <div class="flex items-center gap-2 bg-slate-950 p-1 rounded-2xl border border-slate-800">
-          <button onclick="switchEditorTab('html')" id="tabBtn-html" class="flex-1 py-2 text-xs font-bold rounded-xl text-white bg-blue-600 shadow-md transition-all flex items-center justify-center gap-1.5">
-            <i class="bi bi-filetype-html text-amber-400 text-sm"></i>
-            <span>HTML</span>
-          </button>
-          <button onclick="switchEditorTab('css')" id="tabBtn-css" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1.5">
-            <i class="bi bi-filetype-css text-sky-400 text-sm"></i>
-            <span>CSS</span>
-          </button>
-          <button onclick="switchEditorTab('js')" id="tabBtn-js" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1.5">
-            <i class="bi bi-filetype-js text-yellow-400 text-sm"></i>
-            <span>JavaScript</span>
-          </button>
-        </div>
-
-        <!-- Textarea Code Editors -->
-        <div class="relative bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden min-h-[260px]">
+        <!-- Editor & Preview Grid Container -->
+        <div id="studioLayoutGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-5">
           
-          <textarea id="htmlEditor" class="w-full h-64 p-4 bg-transparent text-emerald-400 font-mono text-xs sm:text-sm leading-relaxed focus:outline-none resize-none" spellcheck="false" placeholder="<!-- Write your HTML code here -->"></textarea>
-          
-          <textarea id="cssEditor" class="hidden w-full h-64 p-4 bg-transparent text-sky-300 font-mono text-xs sm:text-sm leading-relaxed focus:outline-none resize-none" spellcheck="false" placeholder="/* Write your CSS rules here */"></textarea>
-          
-          <textarea id="jsEditor" class="hidden w-full h-64 p-4 bg-transparent text-amber-300 font-mono text-xs sm:text-sm leading-relaxed focus:outline-none resize-none" spellcheck="false" placeholder="// Write your JavaScript logic here"></textarea>
+          <!-- LEFT COLUMN: CODE EDITOR CONTAINER -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-2 bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
+              <button onclick="switchEditorTab('html')" id="tabBtn-html" class="flex-1 py-2 text-xs font-bold rounded-xl text-white bg-blue-600 shadow-md transition-all flex items-center justify-center gap-1.5">
+                <i class="bi bi-filetype-html text-amber-400 text-sm"></i>
+                <span>HTML</span>
+              </button>
+              <button onclick="switchEditorTab('css')" id="tabBtn-css" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1.5">
+                <i class="bi bi-filetype-css text-sky-400 text-sm"></i>
+                <span>CSS</span>
+              </button>
+              <button onclick="switchEditorTab('js')" id="tabBtn-js" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-white transition-all flex items-center justify-center gap-1.5">
+                <i class="bi bi-filetype-js text-yellow-400 text-sm"></i>
+                <span>JavaScript</span>
+              </button>
+            </div>
 
-        </div>
+            <div class="relative bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden min-h-[320px] sm:min-h-[420px]">
+              
+              <textarea id="htmlEditor" oninput="debounceRunCode()" class="w-full h-80 sm:h-[420px] p-4 bg-transparent text-emerald-400 font-mono text-xs sm:text-sm leading-relaxed focus:outline-none resize-none" spellcheck="false" placeholder="<!-- Write your HTML code here -->"></textarea>
+              
+              <textarea id="cssEditor" oninput="debounceRunCode()" class="hidden w-full h-80 sm:h-[420px] p-4 bg-transparent text-sky-300 font-mono text-xs sm:text-sm leading-relaxed focus:outline-none resize-none" spellcheck="false" placeholder="/* Write your CSS rules here */"></textarea>
+              
+              <textarea id="jsEditor" oninput="debounceRunCode()" class="hidden w-full h-80 sm:h-[420px] p-4 bg-transparent text-amber-300 font-mono text-xs sm:text-sm leading-relaxed focus:outline-none resize-none" spellcheck="false" placeholder="// Write your JavaScript logic here"></textarea>
 
-        <!-- Live Preview Output Frame -->
-        <div class="space-y-2 pt-2">
-          <div class="flex items-center justify-between text-xs font-bold text-slate-400 px-1">
-            <span class="flex items-center gap-2">
-              <i class="bi bi-eye-fill text-blue-400"></i>
-              <span>Live Output Preview</span>
-            </span>
-            <span class="text-[10px] text-slate-500 uppercase tracking-wider font-mono">Sandboxed Canvas</span>
+            </div>
           </div>
 
-          <div class="bg-white rounded-2xl border border-slate-700/80 overflow-hidden shadow-inner h-64 relative">
-            <iframe id="livePreviewIframe" class="w-full h-full border-0 bg-white" sandbox="allow-scripts allow-modals"></iframe>
+          <!-- RIGHT COLUMN: LIVE OUTPUT PREVIEW & CONSOLE -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-slate-400 px-1 py-2">
+              <span class="flex items-center gap-2 text-slate-200">
+                <i class="bi bi-eye-fill text-blue-400"></i>
+                <span>Live Output Preview</span>
+              </span>
+              <span class="text-[10px] text-slate-500 uppercase tracking-wider font-mono">Sandboxed Canvas</span>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-700/80 overflow-hidden shadow-inner h-80 sm:h-[420px] relative">
+              <iframe id="livePreviewIframe" class="w-full h-full border-0 bg-white" sandbox="allow-scripts allow-modals"></iframe>
+            </div>
           </div>
+
         </div>
 
         <!-- Embedded Console Log Feed -->
-        <div class="space-y-1.5 pt-2">
+        <div class="space-y-1.5 pt-2 border-t border-slate-800">
           <div class="flex items-center justify-between text-[11px] font-bold text-slate-400 px-1 font-mono">
             <span><i class="bi bi-terminal me-1 text-emerald-400"></i>Console Log</span>
             <button onclick="clearConsoleLog()" class="text-slate-500 hover:text-slate-300 transition-colors">Clear</button>
           </div>
-          <div id="consoleLogContainer" class="bg-slate-950 rounded-xl p-3 border border-slate-800 font-mono text-xs text-slate-300 h-24 overflow-y-auto space-y-1">
+          <div id="consoleLogContainer" class="bg-slate-950 rounded-xl p-3 border border-slate-800 font-mono text-xs text-slate-300 h-28 overflow-y-auto space-y-1">
             <div class="text-slate-500 text-[11px] italic">Console output will appear here...</div>
           </div>
         </div>
@@ -492,7 +497,7 @@
   <!-- VIDEO PLAYER MODAL -->
   <div id="videoPlayerModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4">
     <div onclick="closeVideoModal()" class="absolute inset-0"></div>
-    <div class="relative w-full max-w-3xl bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-800 z-10 space-y-0">
+    <div class="relative w-full max-w-4xl bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-800 z-10 space-y-0">
       
       <div class="flex items-center justify-between px-5 py-4 border-b border-slate-800 bg-slate-900/90 text-white">
         <h3 id="videoModalTitle" class="text-xs sm:text-sm font-extrabold truncate pr-4">Video Lesson</h3>
@@ -551,7 +556,6 @@
       
       <div class="text-center space-y-1">
         <h3 class="text-base font-extrabold text-slate-900 tracking-tight">Quick Actions</h3>
-        <p class="text-xs font-medium text-slate-500">Select what you would like to do or access</p>
       </div>
 
       <a href="#" class="flex items-center justify-between p-4 rounded-2xl bg-slate-900 text-white shadow-md hover:bg-slate-800 transition-colors">
@@ -571,7 +575,6 @@
           </div>
           <div>
             <h4 class="text-xs font-bold text-slate-900">Take Daily Quizzes</h4>
-            <p class="text-[10px] font-medium text-slate-500 mt-0.5">Practice questions & tests</p>
           </div>
         </a>
 
@@ -581,7 +584,6 @@
           </div>
           <div>
             <h4 class="text-xs font-bold text-slate-900">Upload Assignment</h4>
-            <p class="text-[10px] font-medium text-slate-500 mt-0.5">Submit homework files</p>
           </div>
         </a>
 
@@ -591,7 +593,6 @@
           </div>
           <div>
             <h4 class="text-xs font-bold text-slate-900">Study Resources</h4>
-            <p class="text-[10px] font-medium text-slate-500 mt-0.5">Handouts & cheat sheets</p>
           </div>
         </a>
 
@@ -601,7 +602,6 @@
           </div>
           <div>
             <h4 class="text-xs font-bold text-slate-900">Payments & Ref</h4>
-            <p class="text-[10px] font-medium text-slate-500 mt-0.5">Manage subscriptions</p>
           </div>
         </a>
       </div>
@@ -625,7 +625,6 @@
         badge: "Frontend Architecture",
         icon: "bi-file-earmark-code",
         colorClass: "indigo",
-        description: "Complete guide to building semantic, structured, accessible, and SEO-optimized web documents.",
         modules: [
           { title: "HTML Structure, Syntax & Document Flow", desc: "Understand doctypes, head elements, tags, attributes, and page skeleton layout.", link: "topic-one.html" },
           { title: "Semantic HTML5 Markup", desc: "Proper utilization of <header>, <nav>, <article>, <section>, <aside>, and <footer> tags.", link: "topic-two.html" },
@@ -642,7 +641,6 @@
         badge: "Styling & Layouts",
         icon: "bi-palette",
         colorClass: "emerald",
-        description: "Design responsive, visually appealing, and interactive web interfaces with modern CSS.",
         modules: [
           { title: "Selectors, Specificity & Cascade Rules", desc: "Master class combinations, ID priority, pseudo-classes, and specificity calculations.", link: "#" },
           { title: "The CSS Box Model & Sizing", desc: "Margin, border, padding, content, box-sizing border-box, and overflow handling.", link: "#" },
@@ -659,7 +657,6 @@
         badge: "Core Programming",
         icon: "bi-code-slash",
         colorClass: "amber",
-        description: "Master modern ECMAScript features, dynamic scripting, DOM control, and async execution.",
         modules: [
           { title: "Variables, Scope & Data Types", desc: "Understand let, const, var, hoisting, temporal dead zone, and primitive vs reference types.", link: "variable.html" },
           { title: "Functions, Arrow Expressions & Closures", desc: "Scope chains, lexical scoping, higher-order functions, and callback routines.", link: "function.html" },
@@ -676,7 +673,6 @@
         badge: "Frontend Framework",
         icon: "bi-cpu",
         colorClass: "sky",
-        description: "Build fast, component-driven single page web applications using React.",
         modules: [
           { title: "JSX & Component Architecture", desc: "Functional components, JSX embedding, nested component rendering, and conditional UI.", link: "#" },
           { title: "State & Props Management", desc: "Passing immutable data via props and maintaining dynamic local state with useState.", link: "#" },
@@ -691,7 +687,6 @@
         badge: "Backend Engineering",
         icon: "bi-server",
         colorClass: "teal",
-        description: "Develop scalable server-side backend applications and RESTful HTTP APIs.",
         modules: [
           { title: "Node.js Architecture & Event Loop", desc: "Non-blocking I/O model, asynchronous runtime, file system (fs), and path modules.", link: "#" },
           { title: "Express.js Server Setup & Routing", desc: "Setting up HTTP servers, route parameters, query strings, and controller handlers.", link: "#" },
@@ -705,7 +700,6 @@
         badge: "Data Persistence",
         icon: "bi-database",
         colorClass: "purple",
-        description: "Store, query, index, and manage application data in relational and NoSQL databases.",
         modules: [
           { title: "Relational DBs vs NoSQL Architecture", desc: "Comparing structured tables/SQL with document-based JSON databases.", link: "#" },
           { title: "SQL Fundamentals & Queries", desc: "Writing SELECT, INSERT, UPDATE, DELETE, WHERE, JOINs, and GROUP BY statements.", link: "#" },
@@ -718,7 +712,6 @@
         badge: "Programming Language",
         icon: "bi-terminal",
         colorClass: "blue",
-        description: "Learn clean Python syntax, data structures, and object-oriented programming.",
         modules: [
           { title: "Python Syntax & Basic Data Structures", desc: "Variables, numbers, strings, lists, tuples, dictionaries, and set operations.", link: "#" },
           { title: "Control Flow, Loops & Functions", desc: "If-else conditions, for/while loops, function args, and lambda functions.", link: "#" },
@@ -732,7 +725,6 @@
         badge: "Developer Utilities",
         icon: "bi-journal-bookmark-fill",
         colorClass: "slate",
-        description: "Essential workflow tools, command line terminal basics, and version control.",
         modules: [
           { title: "Git Version Control Essentials", desc: "git init, commit, status, log, diff, and tracking changes across codebases.", link: "#" },
           { title: "GitHub Collaboration & Branching", desc: "Branching strategies, pull requests, resolving merge conflicts, and remote pushes.", link: "#" },
@@ -785,8 +777,8 @@
     // DEFAULT TERMINAL BOILERPLATE CODE
     const DEFAULT_CODE = {
       html: `<div class="card">\n  <h1>Hello, CODECX! 🚀</h1>\n  <p>Edit the code above and see live changes instantly.</p>\n  <button id="demoBtn">Click Me!</button>\n</div>`,
-      css: `body {\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh;\n  margin: 0;\n  background: #0f172a;\n  color: #f8fafc;\n}\n.card {\n  background: #1e293b;\n  padding: 2.5rem;\n  border-radius: 1.5rem;\n  text-align: center;\n  border: 1px solid #334155;\n  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);\n}\nh1 {\n  color: #38bdf8;\n  margin-top: 0;\n}\nbutton {\n  background: #2563eb;\n  color: white;\n  border: none;\n  padding: 0.75rem 1.5rem;\n  border-radius: 0.75rem;\n  font-weight: bold;\n  cursor: pointer;\n  transition: all 0.2s;\n}\nbutton:hover {\n  background: #1d4ed8;\n  transform: translateY(-2px);\n}`,
-      js: `// Interactive JavaScript logic\nconst btn = document.getElementById('demoBtn');\n\nbtn.addEventListener('click', () => {\n  alert('Awesome! CODECX Terminal is running smoothly.');\n  console.log('User clicked the interactive demo button!');\n});\n\nconsole.log('CODECX Studio Initialized Successfully.');`
+      css: `body {\n  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh;\n  margin: 0;\n  background: #0f172a;\n  color: #f8fafc;\n}\n.card {\n  background: #1e293b;\n  padding: 2.5rem;\n  border-radius: 1.5rem;\n  text-align: center;\n  border: 1px solid #334155;\n  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);\n}\nh1 {\n  color: #38bdf8;\n  margin-top: 0;\n}\nbutton {\n  background: #2563eb;\n  color: white;\n  border: none;\n  padding: 0.75rem 1.5rem;\n  border-radius: 0.75rem;\n  font-weight: bold;\n  cursor: pointer;\n  transition: all 0.2s;\n}\nbutton:hover {\n  background: #1d4ed8;\n  transform: translateY(-2px);\n}`,
+      js: `// Interactive JavaScript logic\nconst btn = document.getElementById('demoBtn');\n\nif (btn) {\n  btn.addEventListener('click', () => {\n    alert('Awesome! CODECX Terminal is running smoothly.');\n    console.log('User clicked the interactive demo button!');\n  });\n}\n\nconsole.log('CODECX Studio Initialized Successfully.');`
     };
 
     // STUDENT PROFILE LOADER
@@ -836,7 +828,6 @@
 
       const heroBadge = document.getElementById("heroBadge");
       const heroTitle = document.getElementById("heroTitle");
-      const heroDesc = document.getElementById("heroDesc");
 
       // Reset all bottom nav highlights
       document.querySelectorAll(".nav-item").forEach(btn => {
@@ -856,7 +847,6 @@
 
         heroBadge.textContent = "Learning Portal";
         heroTitle.textContent = "Subjects & Courses";
-        heroDesc.textContent = "Explore interactive subjects, access structured study modules, and master modern software engineering topics.";
       } 
       else if (tabName === 'videos') {
         videoTab.classList.remove("hidden");
@@ -865,7 +855,6 @@
 
         heroBadge.textContent = "Video Library";
         heroTitle.textContent = "Video Lectures & Tutorials";
-        heroDesc.textContent = "Watch curated, step-by-step video lessons recorded by senior software engineering instructors.";
 
         renderVideos('all');
       } 
@@ -876,9 +865,7 @@
 
         heroBadge.textContent = "Live Sandbox";
         heroTitle.textContent = "Interactive Code Studio";
-        heroDesc.textContent = "Write HTML, CSS, and JavaScript in real-time with instant sandboxed live output preview.";
 
-        // Run default code if empty
         if (!document.getElementById("htmlEditor").value) {
           resetTerminalCode();
         } else {
@@ -1008,6 +995,14 @@
       container.scrollTop = container.scrollHeight;
     }
 
+    let runTimer;
+    function debounceRunCode() {
+      clearTimeout(runTimer);
+      runTimer = setTimeout(() => {
+        runCode();
+      }, 350);
+    }
+
     function runCode() {
       const html = document.getElementById("htmlEditor").value;
       const css = document.getElementById("cssEditor").value;
@@ -1016,45 +1011,62 @@
       clearConsoleLog();
 
       const iframe = document.getElementById("livePreviewIframe");
-      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
 
-      const fullSource = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <style>
-            ${css}
-          </style>
-        </head>
-        <body>
-          ${html}
-          <script>
-            (function() {
-              const oldLog = console.log;
-              const oldErr = console.error;
-              console.log = function(...args) {
-                oldLog.apply(console, args);
-                window.parent.postMessage({ type: 'CONSOLE_LOG', text: args.join(' ') }, '*');
-              };
-              console.error = function(...args) {
-                oldErr.apply(console, args);
-                window.parent.postMessage({ type: 'CONSOLE_LOG_ERR', text: args.join(' ') }, '*');
-              };
-            })();
-            try {
-              ${js}
-            } catch (err) {
-              console.error(err.message);
-            }
-          <\/script>
-        </body>
-        </html>
-      `;
+      const fullSource = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    ${css}
+  </style>
+</head>
+<body>
+  ${html}
+  <script>
+    (function() {
+      const oldLog = console.log;
+      const oldErr = console.error;
+      console.log = function(...args) {
+        oldLog.apply(console, args);
+        window.parent.postMessage({ type: 'CONSOLE_LOG', text: args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ') }, '*');
+      };
+      console.error = function(...args) {
+        oldErr.apply(console, args);
+        window.parent.postMessage({ type: 'CONSOLE_LOG_ERR', text: args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ') }, '*');
+      };
+    })();
+    try {
+      ${js}
+    } catch (err) {
+      console.error(err.message);
+    }
+  <\/script>
+</body>
+</html>`;
 
-      iframeDoc.open();
-      iframeDoc.write(fullSource);
-      iframeDoc.close();
+      iframe.srcdoc = fullSource;
+    }
+
+    // Full Screen Toggle Logic for Code Studio
+    function toggleStudioFullscreen() {
+      const studio = document.getElementById("terminalContainer");
+      const icon = document.getElementById("fullscreenIcon");
+      const text = document.getElementById("fullscreenText");
+
+      if (studio.classList.contains("fixed")) {
+        studio.classList.remove("fixed", "inset-0", "z-50", "m-0", "rounded-none", "overflow-y-auto", "h-screen", "p-6");
+        studio.classList.add("rounded-3xl", "p-4", "sm:p-6");
+        icon.className = "bi bi-arrows-angle-expand";
+        text.textContent = "Full Page";
+        document.body.classList.remove("overflow-hidden");
+      } else {
+        studio.classList.add("fixed", "inset-0", "z-50", "m-0", "rounded-none", "overflow-y-auto", "h-screen", "p-6");
+        studio.classList.remove("rounded-3xl", "p-4");
+        icon.className = "bi bi-arrows-angle-contract";
+        text.textContent = "Exit Full Page";
+        document.body.classList.add("overflow-hidden");
+      }
     }
 
     // Listen to console log messages from sandboxed iframe
@@ -1094,7 +1106,6 @@
             <h3 class="text-lg font-extrabold text-white mt-1">${course.title}</h3>
           </div>
         </div>
-        <p class="text-xs text-slate-300 leading-relaxed">${course.description}</p>
       `;
 
       const accordion = document.getElementById("topicsAccordion");
