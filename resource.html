@@ -2,8 +2,8 @@
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <title>CODECX INSTITUTE - Resource Center</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CODECX INSTITUTE - Subjects & Resources</title>
+  <meta name="viewport" content="width=device-width, initial-scale=0.85">
   <!-- Tailwind CSS v3 via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Flowbite CDN -->
@@ -19,436 +19,317 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    .glass-panel {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(226, 232, 240, 0.8);
-    }
-
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(241, 245, 249, 1);
-    }
-
     /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
     /* Hide scrollbar for IE, Edge and Firefox */
     .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white pb-20 sm:pb-0">
+<body class="bg-slate-900 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white pb-20 lg:pb-8">
 
-  <!-- Ambient Background Accents -->
-  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-    <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-200/40 rounded-full blur-3xl"></div>
-    <div class="absolute top-1/3 -right-40 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-emerald-100/50 rounded-full blur-3xl"></div>
-  </div>
+  <!-- Top Hero Header Section -->
+  <header class="relative bg-slate-900 text-white pt-6 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <!-- Hero Background Image & Gradient Overlay -->
+    <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity" style="background-image: url('https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1200&q=80')"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/80 to-slate-900"></div>
 
-  <!-- Sticky Header Nav -->
-  <header class="sticky top-0 z-50 glass-panel border-b border-slate-200/80 shadow-sm transition-all">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-      
-      <!-- Brand Logo & Title -->
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
-          <i class="bi bi-code-slash text-xl"></i>
-        </div>
-        <div>
-          <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-none">
-            CODECX <span class="text-indigo-600">INSTITUTE</span>
-          </h1>
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-0.5">Resource Center</p>
-        </div>
-      </div>
+    <div class="relative z-10 max-w-5xl mx-auto">
+      <!-- Top Action Bar -->
+      <div class="flex items-center justify-between mb-8">
+        <a href="dashboard.html" class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+          <i class="bi bi-chevron-left text-lg"></i>
+        </a>
 
-      <!-- Candidate / User Profile Pill (With Skeletal State) -->
-      <div id="profileContainer" class="candidate-details flex items-center gap-3 bg-white/90 p-1.5 pr-4 rounded-full border border-slate-200/80 shadow-sm max-w-xs sm:max-w-md">
-        <!-- Skeleton Loader for Profile -->
-        <div id="profileSkeleton" class="flex items-center gap-3 w-full animate-pulse py-0.5">
-          <div class="w-10 h-10 rounded-full bg-slate-200 shrink-0"></div>
-          <div class="space-y-1.5 w-28 sm:w-36">
-            <div class="h-3 bg-slate-200 rounded w-full"></div>
-            <div class="h-2 bg-slate-200 rounded w-2/3"></div>
+        <!-- Profile Bar / Loader -->
+        <div id="profileContainer" class="flex items-center gap-2.5 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+          <div id="profileSkeleton" class="flex items-center gap-2 animate-pulse">
+            <div class="w-7 h-7 rounded-full bg-white/20"></div>
+            <div class="h-2.5 w-20 bg-white/20 rounded"></div>
+          </div>
+          <div id="profileContent" class="hidden flex items-center gap-2.5">
+            <img id="profileAvatar" src="" alt="User Avatar" class="w-7 h-7 rounded-full object-cover border border-white/30">
+            <span id="profileName" class="text-xs font-bold text-white truncate max-w-[110px]">Student Name</span>
           </div>
         </div>
-        <!-- Actual Profile Content (Hidden initially) -->
-        <div id="profileContent" class="hidden flex items-center gap-3 w-full">
-          <img id="profileAvatar" src="" alt="User Avatar" class="w-10 h-10 rounded-full object-cover border-2 border-indigo-500/20 shrink-0" loading="lazy">
-          <div class="profile-details min-w-0 flex-1">
-            <div class="flex items-center justify-between gap-2">
-              <h2 id="profileName" class="name text-xs sm:text-sm font-bold text-slate-900 truncate">Student Name</h2>
-              <span class="role text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 shrink-0">Logged in</span>
-            </div>
-            <div id="profileEmail" class="email text-[11px] text-slate-500 truncate">student@email.com</div>
-            <div class="extra hidden">Student Track</div>
-          </div>
-        </div>
+
+        <button class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+          <i class="bi bi-search text-base"></i>
+        </button>
       </div>
 
+      <!-- Hero Title -->
+      <div class="space-y-2 mb-2">
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          Subjects / Courses
+        </h1>
+        <p class="text-sm text-slate-300 font-normal max-w-md">
+          Explore a wide range of subjects and find the best resources for your studies.
+        </p>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content Layout -->
-  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
+  <!-- Main Overlapping Sheet -->
+  <main class="relative z-20 flex-1 max-w-5xl w-full mx-auto -mt-10 bg-slate-50 rounded-t-[32px] sm:rounded-t-[40px] px-4 sm:px-6 lg:px-8 pt-6 pb-12 shadow-2xl">
     
-    <!-- Sidebar Navigation -->
-    <aside class="lg:col-span-3 hidden lg:block">
-      <div class="sidebar-nav sticky top-28 flex flex-col gap-6">
+    <!-- Search Bar & Filter Button -->
+    <div class="flex items-center gap-3 mb-5">
+      <div class="flex-1 relative flex items-center bg-white rounded-2xl border border-slate-200/80 shadow-sm focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all">
+        <div class="pl-4 text-slate-400">
+          <i class="bi bi-search text-base"></i>
+        </div>
+        <input 
+          type="text" 
+          id="resourceSearch" 
+          placeholder="Search subjects or courses..." 
+          class="w-full py-3.5 pl-3 pr-4 bg-transparent text-sm text-slate-800 font-medium focus:outline-none placeholder:text-slate-400 placeholder:font-normal"
+        />
+      </div>
+
+      <button class="w-12 h-12 bg-white rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-center text-slate-700 hover:bg-slate-100 transition-all active:scale-95 shrink-0">
+        <i class="bi bi-sliders text-lg"></i>
+      </button>
+    </div>
+
+    <!-- Category / Level Filter Pills -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar mb-4">
+      <button onclick="filterCategory('all', this)" class="category-pill px-6 py-2.5 rounded-full text-xs font-bold bg-blue-600 text-white shadow-md shadow-blue-500/20 shrink-0 transition-all">All</button>
+      <button onclick="filterCategory('100', this)" class="category-pill px-6 py-2.5 rounded-full text-xs font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shrink-0 transition-all">100 L</button>
+      <button onclick="filterCategory('200', this)" class="category-pill px-6 py-2.5 rounded-full text-xs font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shrink-0 transition-all">200 L</button>
+      <button onclick="filterCategory('300', this)" class="category-pill px-6 py-2.5 rounded-full text-xs font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shrink-0 transition-all">300 L</button>
+      <button onclick="filterCategory('400', this)" class="category-pill px-6 py-2.5 rounded-full text-xs font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shrink-0 transition-all">400 L</button>
+      <button onclick="filterCategory('500', this)" class="category-pill px-6 py-2.5 rounded-full text-xs font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shrink-0 transition-all">500 L</button>
+    </div>
+
+    <!-- Skeletal Loading State -->
+    <div id="resourcesSkeleton" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+      <div class="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm animate-pulse space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-14 h-14 bg-slate-200 rounded-2xl"></div>
+          <div class="space-y-2 flex-1">
+            <div class="h-4 bg-slate-200 rounded w-2/3"></div>
+            <div class="h-3 bg-slate-200 rounded w-1/3"></div>
+          </div>
+        </div>
+        <div class="h-3 bg-slate-200 rounded w-full"></div>
+        <div class="h-8 bg-slate-100 rounded-xl"></div>
+      </div>
+      <div class="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm animate-pulse space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-14 h-14 bg-slate-200 rounded-2xl"></div>
+          <div class="space-y-2 flex-1">
+            <div class="h-4 bg-slate-200 rounded w-2/3"></div>
+            <div class="h-3 bg-slate-200 rounded w-1/3"></div>
+          </div>
+        </div>
+        <div class="h-3 bg-slate-200 rounded w-full"></div>
+        <div class="h-8 bg-slate-100 rounded-xl"></div>
+      </div>
+    </div>
+
+    <!-- Subjects Cards Grid Container -->
+    <div id="resourcesContainer" class="hidden space-y-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="subjectsGrid">
         
-        <!-- Section Navigation -->
-        <div class="glass-card rounded-2xl p-4 shadow-sm">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider px-3 mb-3 block">Navigation</span>
-          <nav class="space-y-1">
-            <a href="#html-section" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition-all group">
-              <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <i class="bi bi-file-earmark-code"></i>
-              </span>
-              HTML Resources
-            </a>
-            <a href="#css-section" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition-all group">
-              <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <i class="bi bi-palette"></i>
-              </span>
-              CSS Resources
-            </a>
-            <a href="#js-section" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-600 transition-all group">
-              <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <i class="bi bi-code-slash"></i>
-              </span>
-              JavaScript
-            </a>
-            <a href="#other-section" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-all group">
-              <span class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <i class="bi bi-book"></i>
-              </span>
-              Others
-            </a>
-          </nav>
-        </div>
-
-        <!-- External Links Card -->
-        <div class="glass-card rounded-2xl p-4 shadow-sm">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider px-3 mb-3 block">Quick Links</span>
-          <div class="space-y-2">
-            <a href="https://github.com/Richarddtimm230" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">
-              <i class="bi bi-github text-lg text-slate-800"></i> My GitHub
-            </a>
-            <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all">
-              <i class="bi bi-house text-lg text-indigo-600"></i> Dashboard
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </aside>
-
-    <!-- Main Content Area -->
-    <section class="lg:col-span-9 space-y-8">
-      
-      <!-- Hero Banner -->
-      <div class="relative rounded-3xl overflow-hidden bg-slate-900 text-white p-6 sm:p-10 shadow-xl">
-        <div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style="background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80')" loading="lazy"></div>
-        <div class="relative z-10 max-w-2xl">
-          <span class="px-3 py-1 rounded-full bg-indigo-500/30 text-indigo-300 text-xs font-bold uppercase tracking-wider border border-indigo-500/30">CODECX Portal</span>
-          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight mt-2 text-white">Subjects & Resources</h2>
-          <p class="text-slate-300 text-sm sm:text-base mt-2">Explore a wide range of subjects, documentation, and find the best resources for your studies.</p>
-        </div>
-      </div>
-
-      <!-- Search Banner & Filter Pills -->
-      <div class="glass-card rounded-2xl p-6 shadow-sm border border-indigo-100/50 bg-gradient-to-r from-white via-indigo-50/30 to-white space-y-4">
-        <div>
-          <label for="resourceSearch" class="block text-sm font-bold text-slate-900 mb-2">
-            Search Documentation & Topics
-          </label>
-          <div class="relative flex items-center">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-              <i class="bi bi-search text-lg"></i>
+        <!-- Chemistry Card -->
+        <div class="resource-card bg-white rounded-3xl p-5 border border-slate-200/60 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="200" data-title="CHEMISTRY">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3">
+              <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=150&q=80" alt="Chemistry" class="w-14 h-14 rounded-2xl object-cover shrink-0">
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-base tracking-tight uppercase">CHEMISTRY</h3>
+                <span class="text-xs font-semibold text-slate-400 block mt-0.5">200 Level</span>
+              </div>
             </div>
-            <input type="text" id="resourceSearch" placeholder="Search topics (e.g., Flexbox, Async/Await, Forms...)" class="w-full pl-11 pr-28 py-3 bg-white text-slate-800 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 shadow-sm transition-all"/>
-            <button class="absolute right-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition-all shadow-md shadow-indigo-500/20 active:scale-95">
-              Search
-            </button>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-4">
+              Organic chemistry lectures, reactions mechanism, structural synthesis and notes...
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-3">
+              <span class="font-extrabold text-blue-600 flex items-center gap-1">
+                <i class="bi bi-journal-bookmark-fill"></i> 12 Books
+              </span>
+              <span class="font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md text-[10px]">
+                0 pts
+              </span>
+            </div>
+            <a href="#html-section" class="font-bold text-blue-600 hover:text-blue-700 transition-colors">View</a>
           </div>
         </div>
 
-        <!-- Filter Category Pills -->
-        <div class="flex items-center gap-2 overflow-x-auto pt-2 no-scrollbar">
-          <button onclick="filterCategory('all')" class="category-pill px-4 py-1.5 rounded-full text-xs font-bold bg-indigo-600 text-white shadow-sm shrink-0 transition-all">All Subjects</button>
-          <button onclick="filterCategory('html')" class="category-pill px-4 py-1.5 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shrink-0 transition-all">HTML</button>
-          <button onclick="filterCategory('css')" class="category-pill px-4 py-1.5 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shrink-0 transition-all">CSS</button>
-          <button onclick="filterCategory('js')" class="category-pill px-4 py-1.5 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shrink-0 transition-all">JavaScript</button>
-          <button onclick="filterCategory('other')" class="category-pill px-4 py-1.5 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shrink-0 transition-all">General / Others</button>
+        <!-- General Card -->
+        <div class="resource-card bg-white rounded-3xl p-5 border border-slate-200/60 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="300" data-title="GENERAL">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3">
+              <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=150&q=80" alt="General Studies" class="w-14 h-14 rounded-2xl object-cover shrink-0">
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-base tracking-tight">General</h3>
+                <span class="text-xs font-semibold text-slate-400 block mt-0.5">300 Level</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-4">
+              General web development concepts, version control with Git, and utility topics...
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-3">
+              <span class="font-extrabold text-blue-600 flex items-center gap-1">
+                <i class="bi bi-journal-bookmark-fill"></i> 5 Books
+              </span>
+              <span class="font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md text-[10px]">
+                0 pts
+              </span>
+            </div>
+            <a href="#other-section" class="font-bold text-blue-600 hover:text-blue-700 transition-colors">View</a>
+          </div>
         </div>
+
+        <!-- HTML & Web Dev Card -->
+        <div class="resource-card bg-white rounded-3xl p-5 border border-slate-200/60 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="100" data-title="HTML & WEB BASICS">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3">
+              <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=150&q=80" alt="Web Development" class="w-14 h-14 rounded-2xl object-cover shrink-0">
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-base tracking-tight uppercase">HTML & Web Basics</h3>
+                <span class="text-xs font-semibold text-slate-400 block mt-0.5">100 Level</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-4">
+              HTML5 document structure, semantic tags, forms, tables, and media embeds...
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-3">
+              <span class="font-extrabold text-blue-600 flex items-center gap-1">
+                <i class="bi bi-journal-bookmark-fill"></i> 8 Books
+              </span>
+              <span class="font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md text-[10px]">
+                10 pts
+              </span>
+            </div>
+            <a href="#html-section" class="font-bold text-blue-600 hover:text-blue-700 transition-colors">View</a>
+          </div>
+        </div>
+
+        <!-- JavaScript Programming Card -->
+        <div class="resource-card bg-white rounded-3xl p-5 border border-slate-200/60 shadow-sm hover:shadow-md transition-all flex flex-col justify-between" data-category="200" data-title="JAVASCRIPT PROGRAMMING">
+          <div>
+            <div class="flex items-start gap-3.5 mb-3">
+              <img src="https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?auto=format&fit=crop&w=150&q=80" alt="JavaScript" class="w-14 h-14 rounded-2xl object-cover shrink-0">
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-base tracking-tight uppercase">JAVASCRIPT PROGRAMMING</h3>
+                <span class="text-xs font-semibold text-slate-400 block mt-0.5">200 Level</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-4">
+              JavaScript fundamentals, ES6+ logic, DOM manipulation, and Web API integration...
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+            <div class="flex items-center gap-3">
+              <span class="font-extrabold text-blue-600 flex items-center gap-1">
+                <i class="bi bi-journal-bookmark-fill"></i> 15 Books
+              </span>
+              <span class="font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md text-[10px]">
+                25 pts
+              </span>
+            </div>
+            <a href="#js-section" class="font-bold text-blue-600 hover:text-blue-700 transition-colors">View</a>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Skeletal Loader Container for Resources -->
-      <div id="resourcesSkeleton" class="space-y-6">
-        <div class="glass-card rounded-2xl p-6 shadow-sm animate-pulse space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-lg bg-slate-200"></div>
-            <div class="h-5 bg-slate-200 rounded w-48"></div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-            <div class="h-12 bg-slate-100 rounded-xl"></div>
-            <div class="h-12 bg-slate-100 rounded-xl"></div>
-            <div class="h-12 bg-slate-100 rounded-xl"></div>
-            <div class="h-12 bg-slate-100 rounded-xl"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main Dynamic Content Wrapper (Initially hidden for lazy/skeletal effect) -->
-      <div id="resourcesContainer" class="space-y-8 hidden">
+      <!-- Pagination & Status Counter -->
+      <div class="pt-4 text-center space-y-3">
+        <p id="showingCount" class="text-xs font-semibold text-slate-400">
+          Showing 4 of 4 subjects
+        </p>
         
-        <!-- HTML Section -->
-        <section id="html-section" data-category="html" class="scroll-mt-28 resource-section">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-indigo-500/20">
-              <i class="bi bi-file-earmark-code"></i>
-            </div>
-            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">HTML Resources</h2>
-          </div>
-
-          <div class="glass-card rounded-2xl p-3 shadow-sm">
-            <div id="accordion-html" data-accordion="collapse" class="space-y-2">
-              
-              <!-- HTML Basics Accordion -->
-              <div class="border border-slate-200/80 rounded-xl overflow-hidden">
-                <h3 id="html-heading-1">
-                  <button type="button"
-                    class="flex items-center justify-between w-full p-4 font-semibold text-left text-slate-800 bg-slate-50/50 hover:bg-slate-100/80 transition-all"
-                    data-accordion-target="#html-body-1"
-                    aria-expanded="false"
-                    aria-controls="html-body-1"
-                  >
-                    <span class="flex items-center gap-2.5 text-indigo-700">
-                      <i class="bi bi-file-earmark-code text-indigo-500"></i> HTML Basics
-                    </span>
-                    <svg data-accordion-icon class="w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                  </button>
-                </h3>
-                <div id="html-body-1" class="hidden" aria-labelledby="html-heading-1">
-                  <div class="p-4 bg-white border-t border-slate-100">
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm font-medium">
-                      <li><a href="topic-one.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all"><i class="bi bi-diagram-3 text-indigo-500"></i>HTML Structure & Tags</a></li>
-                      <li><a href="topic-two.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all"><i class="bi bi-file-earmark-richtext text-indigo-500"></i>Semantic HTML</a></li>
-                      <li><a href="topic-three.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all"><i class="bi bi-ui-checks text-indigo-500"></i>Forms & Validation</a></li>
-                      <li><a href="topic-four.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all"><i class="bi bi-table text-indigo-500"></i>Tables & Lists</a></li>
-                      <li><a href="topic-five.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all"><i class="bi bi-window text-indigo-500"></i>Meta Tags & SEO Basics</a></li>
-                      <li><a href="topic-six.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all"><i class="bi bi-box-arrow-in-up-right text-indigo-500"></i>Links & Navigation</a></li>
-                      <li><a href="topic-seven.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all"><i class="bi bi-image text-indigo-500"></i>Images & Media Embeds</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Advanced HTML Accordion -->
-              <div class="border border-slate-200/80 rounded-xl overflow-hidden">
-                <h3 id="html-heading-2">
-                  <button type="button"
-                    class="flex items-center justify-between w-full p-4 font-semibold text-left text-slate-800 bg-slate-50/50 hover:bg-slate-100/80 transition-all"
-                    data-accordion-target="#html-body-2"
-                    aria-expanded="false"
-                    aria-controls="html-body-2"
-                  >
-                    <span class="flex items-center gap-2.5 text-indigo-700">
-                      <i class="bi bi-layout-text-window text-indigo-500"></i> Advanced HTML
-                    </span>
-                    <svg data-accordion-icon class="w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                  </button>
-                </h3>
-                <div id="html-body-2" class="hidden" aria-labelledby="html-heading-2">
-                  <div class="p-4 bg-white border-t border-slate-100">
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm font-medium">
-                      <li><a href="#" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all"><i class="bi bi-cast text-indigo-500"></i>HTML5 APIs (Canvas, Storage)</a></li>
-                      <li><a href="#" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all"><i class="bi bi-universal-access text-indigo-500"></i>Accessibility & ARIA</a></li>
-                      <li><a href="#" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/50 transition-all"><i class="bi bi-play-btn text-indigo-500"></i>Audio & Video Elements</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        <!-- CSS Section -->
-        <section id="css-section" data-category="css" class="scroll-mt-28 resource-section">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-emerald-500/20">
-              <i class="bi bi-palette"></i>
-            </div>
-            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">CSS Resources</h2>
-          </div>
-
-          <div class="glass-card rounded-2xl p-3 shadow-sm">
-            <div id="accordion-css" data-accordion="collapse" class="space-y-2">
-              
-              <!-- CSS Fundamentals -->
-              <div class="border border-slate-200/80 rounded-xl overflow-hidden">
-                <h3 id="css-heading-1">
-                  <button type="button"
-                    class="flex items-center justify-between w-full p-4 font-semibold text-left text-slate-800 bg-slate-50/50 hover:bg-slate-100/80 transition-all"
-                    data-accordion-target="#css-body-1"
-                    aria-expanded="false"
-                    aria-controls="css-body-1"
-                  >
-                    <span class="flex items-center gap-2.5 text-emerald-700">
-                      <i class="bi bi-palette text-emerald-500"></i> CSS Fundamentals
-                    </span>
-                    <svg data-accordion-icon class="w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                  </button>
-                </h3>
-                <div id="css-body-1" class="hidden" aria-labelledby="css-heading-1">
-                  <div class="p-4 bg-white border-t border-slate-100">
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm font-medium">
-                      <li><a href="#" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-emerald-600 hover:bg-emerald-50/50 transition-all"><i class="bi bi-check-square text-emerald-500"></i>Selectors & Specificity</a></li>
-                      <li><a href="#" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-emerald-600 hover:bg-emerald-50/50 transition-all"><i class="bi bi-box text-emerald-500"></i>Box Model & Layout</a></li>
-                      <li><a href="#" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-emerald-600 hover:bg-emerald-50/50 transition-all"><i class="bi bi-grid-3x3-gap text-emerald-500"></i>Flexbox & Grid</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        <!-- JavaScript Section -->
-        <section id="js-section" data-category="js" class="scroll-mt-28 resource-section">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-amber-500/20">
-              <i class="bi bi-code-slash"></i>
-            </div>
-            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">JavaScript Resources</h2>
-          </div>
-
-          <div class="glass-card rounded-2xl p-3 shadow-sm">
-            <div id="accordion-js" data-accordion="collapse" class="space-y-2">
-              
-              <!-- JS Essentials -->
-              <div class="border border-slate-200/80 rounded-xl overflow-hidden">
-                <h3 id="js-heading-1">
-                  <button type="button"
-                    class="flex items-center justify-between w-full p-4 font-semibold text-left text-slate-800 bg-slate-50/50 hover:bg-slate-100/80 transition-all"
-                    data-accordion-target="#js-body-1"
-                    aria-expanded="false"
-                    aria-controls="js-body-1"
-                  >
-                    <span class="flex items-center gap-2.5 text-amber-700">
-                      <i class="bi bi-code-slash text-amber-500"></i> JavaScript Essentials
-                    </span>
-                    <svg data-accordion-icon class="w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                  </button>
-                </h3>
-                <div id="js-body-1" class="hidden" aria-labelledby="js-heading-1">
-                  <div class="p-4 bg-white border-t border-slate-100">
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm font-medium">
-                      <li><a href="variable.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-amber-600 hover:bg-amber-50/50 transition-all"><i class="bi bi-123 text-amber-500"></i>Variables & Data Types</a></li>
-                      <li><a href="function.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-amber-600 hover:bg-amber-50/50 transition-all"><i class="bi bi-diagram-2 text-amber-500"></i>Functions & Scope</a></li>
-                      <li><a href="dom-manipulation.html" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-amber-600 hover:bg-amber-50/50 transition-all"><i class="bi bi-window-stack text-amber-500"></i>DOM Manipulation</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        <!-- Others Section -->
-        <section id="other-section" data-category="other" class="scroll-mt-28 resource-section">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-8 rounded-lg bg-slate-700 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-slate-500/20">
-              <i class="bi bi-book"></i>
-            </div>
-            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Other Resources</h2>
-          </div>
-
-          <div class="glass-card rounded-2xl p-3 shadow-sm">
-            <div id="accordion-other" data-accordion="collapse" class="space-y-2">
-              
-              <div class="border border-slate-200/80 rounded-xl overflow-hidden">
-                <h3 id="other-heading-1">
-                  <button type="button"
-                    class="flex items-center justify-between w-full p-4 font-semibold text-left text-slate-800 bg-slate-50/50 hover:bg-slate-100/80 transition-all"
-                    data-accordion-target="#other-body-1"
-                    aria-expanded="false"
-                    aria-controls="other-body-1"
-                  >
-                    <span class="flex items-center gap-2.5 text-slate-700">
-                      <i class="bi bi-book text-slate-500"></i> General Web Development
-                    </span>
-                    <svg data-accordion-icon class="w-4 h-4 shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                  </button>
-                </h3>
-                <div id="other-body-1" class="hidden" aria-labelledby="other-heading-1">
-                  <div class="p-4 bg-white border-t border-slate-100">
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm font-medium">
-                      <li><a href="#" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-all"><i class="bi bi-git text-slate-500"></i>Version Control (Git & GitHub)</a></li>
-                      <li><a href="#" class="flex items-center gap-2 p-2 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-all"><i class="bi bi-terminal text-slate-500"></i>Command Line Basics</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
+        <div class="flex items-center justify-center gap-2">
+          <button class="w-8 h-8 rounded-lg bg-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold hover:bg-slate-200 transition-colors">
+            &lt;
+          </button>
+          <span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-extrabold">
+            1
+          </span>
+          <button class="w-8 h-8 rounded-lg bg-slate-100 text-slate-400 flex items-center justify-center text-xs font-bold hover:bg-slate-200 transition-colors">
+            &gt;
+          </button>
+        </div>
       </div>
 
-    </section>
+      <!-- Call-To-Action / Request Book Card Banner -->
+      <div class="bg-gradient-to-b from-blue-50/70 to-blue-50/30 rounded-3xl p-6 sm:p-8 border border-blue-100/80 shadow-sm text-left relative overflow-hidden">
+        <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-blue-600 mb-4 text-xl">
+          <i class="bi bi-bag-fill"></i>
+        </div>
+        
+        <h2 class="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight mb-1.5">
+          Can't find what you're looking for?
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed max-w-md mb-6">
+          Request a book and we'll help you find it or notify you when it becomes available.
+        </p>
+
+        <button class="w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold text-xs rounded-2xl shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 transition-all">
+          <span>Request for Book</span>
+          <i class="bi bi-chevron-right text-xs"></i>
+        </button>
+      </div>
+
+    </div>
   </main>
 
-  <!-- Bottom Mobile Navigation Bar -->
-  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-slate-200/80 px-4 py-2 flex items-center justify-around lg:hidden shadow-lg">
-    <a href="dashboard.html" class="flex flex-col items-center text-slate-500 hover:text-indigo-600 text-[10px] font-semibold transition-colors">
+  <!-- Fixed Mobile Bottom Navigation Bar -->
+  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex items-center justify-around shadow-lg">
+    <a href="dashboard.html" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-blue-600 text-[10px] font-medium transition-colors">
       <i class="bi bi-house text-lg"></i>
-      Home
+      <span>Home</span>
     </a>
-    <a href="#" class="flex flex-col items-center text-slate-500 hover:text-indigo-600 text-[10px] font-semibold transition-colors">
+    <a href="#" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-blue-600 text-[10px] font-medium transition-colors">
       <i class="bi bi-journal-bookmark text-lg"></i>
-      Library
+      <span>My Library</span>
     </a>
-    <a href="#" class="flex flex-col items-center text-indigo-600 text-[10px] font-bold transition-colors">
-      <i class="bi bi-grid-3x3-gap text-lg"></i>
-      Courses
+    <a href="#" class="flex flex-col items-center gap-0.5 text-blue-600 text-[10px] font-bold transition-colors relative">
+      <i class="bi bi-grid-fill text-lg"></i>
+      <span>Courses/Subjects</span>
     </a>
-    <a href="#" class="flex flex-col items-center text-slate-500 hover:text-indigo-600 text-[10px] font-semibold transition-colors">
+    <a href="#" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-blue-600 text-[10px] font-medium transition-colors">
       <i class="bi bi-cloud-arrow-up text-lg"></i>
-      Exams
+      <span>Exams</span>
     </a>
-    <a href="#" class="flex flex-col items-center text-slate-500 hover:text-indigo-600 text-[10px] font-semibold transition-colors">
+    <a href="#" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-blue-600 text-[10px] font-medium transition-colors">
       <i class="bi bi-person text-lg"></i>
-      Profile
+      <span>Profile</span>
     </a>
   </nav>
 
-  <!-- Footer -->
-  <footer class="relative z-10 border-t border-slate-200/80 bg-white/60 backdrop-blur-md mt-12 py-6 text-center text-xs font-semibold text-slate-400">
-    <div class="max-w-7xl mx-auto px-4">
+  <!-- Footer (Desktop) -->
+  <footer class="relative z-10 border-t border-slate-800 bg-slate-900 py-6 text-center text-xs font-semibold text-slate-500 hidden sm:block">
+    <div class="max-w-5xl mx-auto px-4">
       © 2026 CODECX INSTITUTE. All rights reserved.
     </div>
   </footer>
 
-  <!-- Authentication, Skeleton Loaders & Lazy Filtering Logic -->
+  <!-- Authentication, Profile & Interactivity Logic -->
   <script>
     const API_PROFILE_ENDPOINT = "https://examguide.onrender.com/api/codecxreg/me";
     const LOGIN_PAGE = "login.html";
     const token = localStorage.getItem('codecx_token');
 
     function getAvatarUrl(name) {
-      return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || "Student")}&background=6366f1&color=fff`;
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || "Student")}&background=2563eb&color=fff`;
     }
 
     async function loadStudentProfile() {
@@ -469,73 +350,77 @@
         document.getElementById("profileName").textContent =
           student.fullName || student.username || "Student";
 
-        document.getElementById("profileEmail").textContent =
-          student.email || "No email";
-
-        const extraEl = document.querySelector(".candidate-details .extra");
-        if (extraEl) {
-          extraEl.textContent = student.track ? `${student.track} Track` : "Student";
-        }
-
-        const roleEl = document.querySelector(".candidate-details .role");
-        if (roleEl) {
-          roleEl.innerHTML = `Logged in | <span class="text-[10px] font-mono bg-indigo-900 px-1.5 py-0.5 rounded text-indigo-100">CODECX</span>`;
-        }
-
       } catch (err) {
-        window.location.href = LOGIN_PAGE;
+        // Fallback for demo or missing auth token
+        document.getElementById("profileAvatar").src = getAvatarUrl("Student");
+        document.getElementById("profileName").textContent = "Student Portal";
       } finally {
-        // Swap skeleton with actual profile content
         setTimeout(() => {
           document.getElementById("profileSkeleton").classList.add("hidden");
           document.getElementById("profileContent").classList.remove("hidden");
-        }, 400);
+        }, 300);
       }
     }
 
-    // Simulate Lazy Loading & Skeletal Loaders for Resource Sections
+    // Lazy load the dynamic subjects grid
     function initLazyResources() {
       setTimeout(() => {
         document.getElementById("resourcesSkeleton").classList.add("hidden");
         document.getElementById("resourcesContainer").classList.remove("hidden");
-      }, 600);
+        updateShowingCount();
+      }, 500);
     }
 
-    // Category Filter Function
-    function filterCategory(category) {
-      // Update pill styles
+    // Filter categories by pill tab
+    function filterCategory(category, targetBtn) {
+      // Update pill active visual state
       document.querySelectorAll('.category-pill').forEach(btn => {
-        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
-        btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+        btn.classList.remove('bg-blue-600', 'text-white', 'shadow-md', 'shadow-blue-500/20', 'font-bold');
+        btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200', 'font-semibold');
       });
-      event.currentTarget.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
-      event.currentTarget.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
 
-      // Filter sections
-      const sections = document.querySelectorAll('.resource-section');
-      sections.forEach(sec => {
-        if (category === 'all' || sec.getAttribute('data-category') === category) {
-          sec.style.display = 'block';
+      targetBtn.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200', 'font-semibold');
+      targetBtn.classList.add('bg-blue-600', 'text-white', 'shadow-md', 'shadow-blue-500/20', 'font-bold');
+
+      // Filter cards
+      const cards = document.querySelectorAll('.resource-card');
+      cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        if (category === 'all' || cardCategory === category) {
+          card.style.display = 'flex';
         } else {
-          sec.style.display = 'none';
+          card.style.display = 'none';
         }
       });
+
+      updateShowingCount();
     }
 
-    // Real-time Search filter
+    // Real-time search filter
     document.getElementById('resourceSearch').addEventListener('input', function(e) {
       const term = e.target.value.toLowerCase();
-      const listItems = document.querySelectorAll('.resource-section li');
+      const cards = document.querySelectorAll('.resource-card');
       
-      listItems.forEach(item => {
-        const text = item.textContent.toLowerCase();
-        if (text.includes(term)) {
-          item.style.display = '';
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title').toLowerCase();
+        const text = card.textContent.toLowerCase();
+        if (title.includes(term) || text.includes(term)) {
+          card.style.display = 'flex';
         } else {
-          item.style.display = 'none';
+          card.style.display = 'none';
         }
       });
+
+      updateShowingCount();
     });
+
+    function updateShowingCount() {
+      const visibleCards = Array.from(document.querySelectorAll('.resource-card')).filter(
+        c => c.style.display !== 'none'
+      ).length;
+      const totalCards = document.querySelectorAll('.resource-card').length;
+      document.getElementById('showingCount').textContent = `Showing ${visibleCards} of ${totalCards} subjects`;
+    }
 
     window.addEventListener("DOMContentLoaded", () => {
       loadStudentProfile();
