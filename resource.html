@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>CODECX INSTITUTE - Subjects & Courses</title>
-  <meta name="viewport" content="width=device-width, initial-scale=0.850">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Tailwind CSS v3 via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,253 +20,383 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
-    /* Hide scrollbar for IE, Edge and Firefox */
     .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white pb-24">
 
-  <!-- Top Hero Header with Overlay -->
-  <header class="relative bg-slate-900 text-white pt-6 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
-    <!-- Hero Image Background -->
-    <div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80')"></div>
-    <div class="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-900/40 to-slate-900/90"></div>
-
-    <div class="relative z-10 max-w-3xl mx-auto space-y-6">
+  <!-- Fixed Sticky Header Nav -->
+  <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-800 shadow-lg">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
       
-      <!-- Top Actions Bar (Back & Profile/Search Trigger) -->
-      <div class="flex items-center justify-between">
-        <a href="dashboard.html" class="w-10 h-10 rounded-full bg-slate-800/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-slate-800 transition-all">
-          <i class="bi bi-chevron-left text-lg"></i>
+      <!-- Brand & Back Button -->
+      <div class="flex items-center gap-3">
+        <a href="dashboard.html" class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700/80 flex items-center justify-center text-white hover:bg-slate-700 transition-all shrink-0">
+          <i class="bi bi-chevron-left text-sm"></i>
         </a>
-        
-        <!-- User Profile Pill (Dynamic Fetch) -->
-        <div id="profileContainer" class="candidate-details flex items-center gap-2.5 bg-slate-800/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 shadow-sm">
-          <div id="profileSkeleton" class="flex items-center gap-2 animate-pulse">
-            <div class="w-7 h-7 rounded-full bg-slate-600"></div>
-            <div class="h-2.5 bg-slate-600 rounded w-20"></div>
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/30">
+            <i class="bi bi-code-slash text-base"></i>
           </div>
-          <div id="profileContent" class="hidden flex items-center gap-2.5">
-            <img id="profileAvatar" src="" alt="User Avatar" class="w-7 h-7 rounded-full object-cover border border-white/20">
-            <span id="profileName" class="text-xs font-semibold text-slate-100 truncate max-w-[120px]">Student</span>
+          <div>
+            <h1 class="text-sm sm:text-base font-extrabold tracking-tight leading-none text-white">CODECX</h1>
+            <p class="text-[10px] font-semibold text-blue-400 uppercase tracking-wider mt-0.5">Resource Hub</p>
           </div>
         </div>
       </div>
 
-      <!-- Title & Subtitle -->
-      <div class="space-y-2 pt-2">
-        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">Subjects / Courses</h1>
-        <p class="text-slate-300 text-xs sm:text-sm font-medium leading-relaxed max-w-xl">
-          Explore a wide range of subjects and find the best resources for your studies.
-        </p>
+      <!-- Profile Container -->
+      <div id="profileContainer" class="candidate-details flex items-center gap-2.5 bg-slate-800/90 px-3 py-1.5 rounded-full border border-slate-700/80 shadow-sm">
+        <div id="profileSkeleton" class="flex items-center gap-2 animate-pulse">
+          <div class="w-6 h-6 rounded-full bg-slate-700"></div>
+          <div class="h-2.5 bg-slate-700 rounded w-16"></div>
+        </div>
+        <div id="profileContent" class="hidden flex items-center gap-2">
+          <img id="profileAvatar" src="" alt="User Avatar" class="w-6 h-6 rounded-full object-cover border border-blue-400/30">
+          <span id="profileName" class="text-xs font-semibold text-slate-200 truncate max-w-[100px] sm:max-w-[140px]">Student</span>
+        </div>
       </div>
 
     </div>
   </header>
 
-  <!-- Main Overlapping Card Section -->
-  <main class="relative z-20 -mt-6 max-w-3xl mx-auto w-full px-4 sm:px-6">
-    <div class="bg-white rounded-t-3xl rounded-b-2xl p-4 sm:p-6 shadow-xl shadow-slate-200/50 border border-slate-100 space-y-6">
-      
-      <!-- Search Input & Filter Button Row -->
+  <!-- Hero Title Banner Section -->
+  <section class="bg-slate-900 text-white pt-8 pb-12 px-4 sm:px-6 relative overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-overlay pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80')"></div>
+    <div class="max-w-4xl mx-auto relative z-10 space-y-2">
       <div class="flex items-center gap-2">
-        <div class="relative flex-1">
-          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-            <i class="bi bi-search text-base"></i>
-          </div>
-          <input 
-            type="text" 
-            id="resourceSearch" 
-            placeholder="Search subjects or courses..." 
-            class="w-full pl-10 pr-4 py-3 bg-slate-100/80 text-slate-800 text-sm font-medium rounded-2xl border-0 focus:outline-none focus:ring-2 focus:ring-blue-600 placeholder:text-slate-400 transition-all"
-          />
-        </div>
-        <button class="w-11 h-11 bg-slate-100/80 hover:bg-slate-200 text-slate-700 rounded-2xl flex items-center justify-center transition-all shrink-0">
-          <i class="bi bi-sliders text-base"></i>
-        </button>
+        <span class="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold tracking-wider uppercase border border-blue-500/30">Learning Portal</span>
       </div>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Subjects & Courses</h2>
+      <p class="text-slate-300 text-xs sm:text-sm max-w-xl">
+        Explore interactive subjects, access structured study modules, and master modern software engineering topics.
+      </p>
+    </div>
+  </section>
 
-      <!-- Filter Pills Row -->
-      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-        <button onclick="filterCategory('all')" class="category-pill px-5 py-2 rounded-full text-xs font-bold bg-blue-600 text-white shadow-md shadow-blue-500/20 shrink-0 transition-all">All</button>
-        <button onclick="filterCategory('100')" class="category-pill px-5 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">100 L</button>
-        <button onclick="filterCategory('200')" class="category-pill px-5 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">200 L</button>
-        <button onclick="filterCategory('300')" class="category-pill px-5 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">300 L</button>
-        <button onclick="filterCategory('400')" class="category-pill px-5 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">400 L</button>
-        <button onclick="filterCategory('500')" class="category-pill px-5 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">500 L</button>
+  <!-- Main Content Container -->
+  <main class="relative z-20 -mt-6 max-w-4xl mx-auto w-full px-4 sm:px-6 flex-1">
+    
+    <!-- Outer Card Shell -->
+    <div class="bg-white rounded-3xl p-4 sm:p-6 shadow-xl shadow-slate-200/60 border border-slate-100 space-y-6">
+      
+      <!-- Top Search & Category Filter Controls (Hidden when a course is expanded) -->
+      <div id="filterSection" class="space-y-4">
+        
+        <!-- Search Field -->
+        <div class="flex items-center gap-2">
+          <div class="relative flex-1">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <i class="bi bi-search text-sm"></i>
+            </div>
+            <input 
+              type="text" 
+              id="resourceSearch" 
+              placeholder="Search subjects or topics..." 
+              class="w-full pl-10 pr-4 py-3 bg-slate-100/80 text-slate-800 text-xs sm:text-sm font-medium rounded-2xl border-0 focus:outline-none focus:ring-2 focus:ring-blue-600 placeholder:text-slate-400 transition-all"
+            />
+          </div>
+          <button id="resetSearchBtn" onclick="clearSearch()" class="w-11 h-11 bg-slate-100/80 hover:bg-slate-200 text-slate-600 rounded-2xl flex items-center justify-center transition-all shrink-0">
+            <i class="bi bi-arrow-clockwise text-base"></i>
+          </button>
+        </div>
+
+        <!-- Filter Category Pills -->
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+          <button onclick="filterCategory('all')" class="category-pill px-4 py-2 rounded-full text-xs font-bold bg-blue-600 text-white shadow-md shadow-blue-500/20 shrink-0 transition-all">All Courses</button>
+          <button onclick="filterCategory('frontend')" class="category-pill px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">Frontend</button>
+          <button onclick="filterCategory('backend')" class="category-pill px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">Backend</button>
+          <button onclick="filterCategory('database')" class="category-pill px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">Databases</button>
+          <button onclick="filterCategory('general')" class="category-pill px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 shrink-0 transition-all">General Dev</button>
+        </div>
+
       </div>
 
       <!-- Skeleton Loader -->
-      <div id="resourcesSkeleton" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div id="resourcesSkeleton" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50/50 animate-pulse space-y-3">
           <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-xl bg-slate-200"></div>
+            <div class="w-12 h-12 rounded-2xl bg-slate-200"></div>
             <div class="space-y-1.5 flex-1">
               <div class="h-4 bg-slate-200 rounded w-2/3"></div>
               <div class="h-3 bg-slate-200 rounded w-1/3"></div>
             </div>
           </div>
-          <div class="h-3 bg-slate-200 rounded w-full"></div>
         </div>
         <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50/50 animate-pulse space-y-3">
           <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-xl bg-slate-200"></div>
+            <div class="w-12 h-12 rounded-2xl bg-slate-200"></div>
             <div class="space-y-1.5 flex-1">
               <div class="h-4 bg-slate-200 rounded w-2/3"></div>
               <div class="h-3 bg-slate-200 rounded w-1/3"></div>
             </div>
           </div>
-          <div class="h-3 bg-slate-200 rounded w-full"></div>
         </div>
       </div>
 
-      <!-- Courses & Subjects Cards Grid -->
-      <div id="resourcesContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 hidden">
+      <!-- All Courses Grid -->
+      <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
 
-        <!-- Card 1: HTML (100 Level) -->
-        <div class="subject-card rounded-2xl border border-slate-100 bg-white p-4 hover:shadow-md transition-all flex flex-col justify-between" data-level="100" data-title="html resources">
+        <!-- Course 1: HTML Resources -->
+        <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
+             data-category="frontend" 
+             data-title="html resources markup tags frontend web"
+             onclick="openCourseView('htmlCourse')">
           <div class="space-y-3">
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-sm">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
                 <i class="bi bi-file-earmark-code"></i>
               </div>
               <div class="min-w-0 flex-1">
-                <h3 class="text-sm font-extrabold text-slate-900 uppercase tracking-tight truncate">HTML Resources</h3>
-                <p class="text-xs font-semibold text-slate-400">100 Level</p>
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight group-hover:text-indigo-600 transition-colors">HTML Resources</h3>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-bold">8 Modules</span>
               </div>
             </div>
-            <p class="text-xs text-slate-500 line-clamp-2">
-              HTML structure, semantic markup, web forms, media embeds, and web standard best practices.
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              Master page layout, semantic tags, modern web forms, media elements, accessibility standards, and HTML5 storage.
             </p>
           </div>
-
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold">
-            <div class="flex items-center gap-1.5 text-blue-600">
-              <i class="bi bi-book-half"></i>
-              <span>7 Topics</span>
-            </div>
-            <span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-700 text-[10px] font-bold">0 pts</span>
-            <button data-modal-target="htmlModal" data-modal-toggle="htmlModal" class="text-blue-600 hover:underline">View</button>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-indigo-600">
+            <span>Explore Modules</span>
+            <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
           </div>
         </div>
 
-        <!-- Card 2: CSS (200 Level) -->
-        <div class="subject-card rounded-2xl border border-slate-100 bg-white p-4 hover:shadow-md transition-all flex flex-col justify-between" data-level="200" data-title="css resources">
+        <!-- Course 2: CSS Styling -->
+        <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
+             data-category="frontend" 
+             data-title="css styling flexbox grid layout tailwind design"
+             onclick="openCourseView('cssCourse')">
           <div class="space-y-3">
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-sm">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
                 <i class="bi bi-palette"></i>
               </div>
               <div class="min-w-0 flex-1">
-                <h3 class="text-sm font-extrabold text-slate-900 uppercase tracking-tight truncate">CSS Resources</h3>
-                <p class="text-xs font-semibold text-slate-400">200 Level</p>
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight group-hover:text-emerald-600 transition-colors">CSS Resources</h3>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-bold">8 Modules</span>
               </div>
             </div>
-            <p class="text-xs text-slate-500 line-clamp-2">
-              Styling fundamentals, CSS Box Model, Flexbox, Grid, keyframe animations, and responsiveness.
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              Learn styling fundamentals, Box Model, Flexbox, Grid, CSS animations, Tailwind CSS, and responsive layouts.
             </p>
           </div>
-
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold">
-            <div class="flex items-center gap-1.5 text-blue-600">
-              <i class="bi bi-book-half"></i>
-              <span>3 Topics</span>
-            </div>
-            <span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-700 text-[10px] font-bold">0 pts</span>
-            <button data-modal-target="cssModal" data-modal-toggle="cssModal" class="text-blue-600 hover:underline">View</button>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-emerald-600">
+            <span>Explore Modules</span>
+            <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
           </div>
         </div>
 
-        <!-- Card 3: JavaScript (300 Level) -->
-        <div class="subject-card rounded-2xl border border-slate-100 bg-white p-4 hover:shadow-md transition-all flex flex-col justify-between" data-level="300" data-title="javascript resources">
+        <!-- Course 3: JavaScript -->
+        <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-amber-300 hover:shadow-lg hover:shadow-amber-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
+             data-category="frontend" 
+             data-title="javascript js es6 dom functions promises async"
+             onclick="openCourseView('jsCourse')">
           <div class="space-y-3">
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-sm">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform">
                 <i class="bi bi-code-slash"></i>
               </div>
               <div class="min-w-0 flex-1">
-                <h3 class="text-sm font-extrabold text-slate-900 uppercase tracking-tight truncate">JavaScript</h3>
-                <p class="text-xs font-semibold text-slate-400">300 Level</p>
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight group-hover:text-amber-600 transition-colors">JavaScript Engine</h3>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-amber-50 text-amber-600 text-[10px] font-bold">8 Modules</span>
               </div>
             </div>
-            <p class="text-xs text-slate-500 line-clamp-2">
-              Variables, functions, DOM manipulation, asynchronous JavaScript, APIs, and modern ES6+.
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              Dive deep into data types, functions, closures, DOM manipulation, ES6+ features, promises, and async execution.
             </p>
           </div>
-
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold">
-            <div class="flex items-center gap-1.5 text-blue-600">
-              <i class="bi bi-book-half"></i>
-              <span>3 Topics</span>
-            </div>
-            <span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-700 text-[10px] font-bold">0 pts</span>
-            <button data-modal-target="jsModal" data-modal-toggle="jsModal" class="text-blue-600 hover:underline">View</button>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-amber-600">
+            <span>Explore Modules</span>
+            <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
           </div>
         </div>
 
-        <!-- Card 4: General Dev (100 Level) -->
-        <div class="subject-card rounded-2xl border border-slate-100 bg-white p-4 hover:shadow-md transition-all flex flex-col justify-between" data-level="100" data-title="general web development">
+        <!-- Course 4: React Development -->
+        <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-sky-300 hover:shadow-lg hover:shadow-sky-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
+             data-category="frontend" 
+             data-title="react framework jsx hooks state props frontend"
+             onclick="openCourseView('reactCourse')">
           <div class="space-y-3">
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-2xl bg-slate-800 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-sm">
+              <div class="w-12 h-12 rounded-2xl bg-sky-500 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">
+                <i class="bi bi-cpu"></i>
+              </div>
+              <div class="min-w-0 flex-1">
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight group-hover:text-sky-600 transition-colors">React Development</h3>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-sky-50 text-sky-600 text-[10px] font-bold">6 Modules</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              Component-driven UI, JSX syntax, State management, custom React Hooks, React Router, and context API.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-sky-600">
+            <span>Explore Modules</span>
+            <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- Course 5: Node.js & Express -->
+        <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
+             data-category="backend" 
+             data-title="node.js backend express api rest middleware auth"
+             onclick="openCourseView('nodeCourse')">
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-md shadow-teal-500/20 group-hover:scale-105 transition-transform">
+                <i class="bi bi-server"></i>
+              </div>
+              <div class="min-w-0 flex-1">
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight group-hover:text-teal-600 transition-colors">Node.js & Backend</h3>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-teal-50 text-teal-600 text-[10px] font-bold">5 Modules</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              Server-side JavaScript, Express routing, RESTful architecture, middleware, authentication, and API security.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-teal-600">
+            <span>Explore Modules</span>
+            <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- Course 6: Databases & SQL / MongoDB -->
+        <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-purple-300 hover:shadow-lg hover:shadow-purple-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
+             data-category="database" 
+             data-title="databases sql mongodb database mongoose queries relational"
+             onclick="openCourseView('dbCourse')">
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-purple-600 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
+                <i class="bi bi-database"></i>
+              </div>
+              <div class="min-w-0 flex-1">
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight group-hover:text-purple-600 transition-colors">Databases & SQL</h3>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-purple-50 text-purple-600 text-[10px] font-bold">4 Modules</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              Relational databases, SQL queries, NoSQL with MongoDB, Mongoose schema modeling, and indexing.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-purple-600">
+            <span>Explore Modules</span>
+            <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- Course 7: Python Programming -->
+        <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-500/5 transition-all flex flex-col justify-between cursor-pointer group" 
+             data-category="backend" 
+             data-title="python programming script backend data object oriented"
+             onclick="openCourseView('pythonCourse')">
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                <i class="bi bi-terminal"></i>
+              </div>
+              <div class="min-w-0 flex-1">
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">Python Fundamentals</h3>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 text-[10px] font-bold">5 Modules</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              Python syntax, data structures, Object-Oriented Programming (OOP), file handling, and scripting basics.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600">
+            <span>Explore Modules</span>
+            <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- Course 8: General Web Dev & Tools -->
+        <div class="subject-card rounded-2xl border border-slate-200/80 bg-white p-4 hover:border-slate-300 hover:shadow-lg transition-all flex flex-col justify-between cursor-pointer group" 
+             data-category="general" 
+             data-title="general git github version control terminal devops deployment"
+             onclick="openCourseView('generalCourse')">
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-slate-800 text-white flex items-center justify-center font-bold text-xl shrink-0 shadow-md group-hover:scale-105 transition-transform">
                 <i class="bi bi-journal-bookmark-fill"></i>
               </div>
               <div class="min-w-0 flex-1">
-                <h3 class="text-sm font-extrabold text-slate-900 uppercase tracking-tight truncate">General Dev</h3>
-                <p class="text-xs font-semibold text-slate-400">100 Level</p>
+                <h3 class="text-sm font-extrabold text-slate-900 tracking-tight group-hover:text-slate-700 transition-colors">Git & General Dev Tools</h3>
+                <span class="inline-block px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold">4 Modules</span>
               </div>
             </div>
-            <p class="text-xs text-slate-500 line-clamp-2">
-              Version control with Git & GitHub, command line tools, terminal basics, and workflow strategies.
+            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              Version control with Git, GitHub workflows, CLI tools, basic terminal commands, and deployment strategies.
             </p>
           </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-700">
+            <span>Explore Modules</span>
+            <i class="bi bi-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
 
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold">
-            <div class="flex items-center gap-1.5 text-blue-600">
-              <i class="bi bi-book-half"></i>
-              <span>2 Topics</span>
-            </div>
-            <span class="px-2 py-0.5 rounded-md bg-amber-100 text-amber-700 text-[10px] font-bold">0 pts</span>
-            <button data-modal-target="otherModal" data-modal-toggle="otherModal" class="text-blue-600 hover:underline">View</button>
+      </div>
+
+      <!-- ================= SINGLE EXPANDED COURSE VIEW ================= -->
+      <div id="expandedCourseContainer" class="hidden space-y-6">
+        
+        <!-- Back Navigation Button -->
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <button onclick="closeCourseView()" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all">
+            <i class="bi bi-arrow-left text-sm"></i>
+            <span>Back to All Courses</span>
+          </button>
+          <span class="text-xs font-semibold text-slate-400">Course View</span>
+        </div>
+
+        <!-- Selected Course Banner Header -->
+        <div id="activeCourseBanner" class="p-5 rounded-2xl bg-slate-900 text-white space-y-3 shadow-lg">
+          <!-- Dynamically Populated by JS -->
+        </div>
+
+        <!-- Dropdown Accordion Section for Topics -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Course Modules & Topics</h4>
+            <span class="text-[11px] text-slate-400 font-medium">Click a module to toggle details</span>
+          </div>
+
+          <!-- Dynamic Accordion Target -->
+          <div id="topicsAccordion" class="space-y-2">
+            <!-- Topics rendered here by JS -->
           </div>
         </div>
 
       </div>
 
       <!-- Pagination Footer -->
-      <div class="pt-4 flex flex-col items-center gap-3 border-t border-slate-100">
-        <span id="subjectCountText" class="text-xs font-semibold text-slate-400">Showing 4 of 4 subjects</span>
-        
-        <div class="flex items-center gap-2 text-xs font-bold text-slate-500">
-          <span>Page</span>
-          <button class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all">&lt;</button>
-          <span class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">1</span>
-          <button class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-all">&gt;</button>
-        </div>
+      <div id="paginationFooter" class="pt-4 flex flex-col items-center gap-3 border-t border-slate-100">
+        <span id="subjectCountText" class="text-xs font-semibold text-slate-400">Showing 8 subjects</span>
       </div>
 
     </div>
 
     <!-- "Can't find what you're looking for?" Section -->
-    <div class="mt-6 rounded-3xl bg-blue-50/60 border border-blue-100 p-6 space-y-4">
+    <div class="mt-6 rounded-3xl bg-blue-50/70 border border-blue-100 p-6 space-y-4 shadow-sm">
       <div class="w-10 h-10 rounded-2xl bg-white text-blue-600 flex items-center justify-center shadow-sm text-lg">
         <i class="bi bi-bag"></i>
       </div>
       <div>
         <h3 class="text-base font-extrabold text-slate-900">Can't find what you're looking for?</h3>
         <p class="text-xs font-medium text-slate-500 mt-1 leading-relaxed">
-          Request a book and we'll help you find it or notify you when it becomes available.
+          Request a topic or book and our academic team will notify you when it becomes available.
         </p>
       </div>
       <button class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition-all">
-        Request for Book <i class="bi bi-chevron-right text-xs"></i>
+        Request for Resource <i class="bi bi-chevron-right text-xs"></i>
       </button>
     </div>
 
@@ -284,7 +414,7 @@
     </a>
     <a href="#" class="flex flex-col items-center text-blue-600 text-[10px] font-bold transition-colors">
       <i class="bi bi-grid-fill text-lg"></i>
-      Courses/Subjects
+      Courses
     </a>
     <a href="#" class="flex flex-col items-center text-slate-400 hover:text-blue-600 text-[10px] font-semibold transition-colors">
       <i class="bi bi-cloud-arrow-up text-lg"></i>
@@ -296,95 +426,333 @@
     </a>
   </nav>
 
-  <!-- Modal 1: HTML Topics -->
-  <div id="htmlModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-      <div class="relative bg-white rounded-3xl shadow-2xl p-6 space-y-4">
-        <div class="flex items-center justify-between border-b pb-3">
-          <h3 class="text-base font-bold text-slate-900">HTML Topics & Resources</h3>
-          <button type="button" class="text-slate-400 hover:text-slate-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center" data-modal-hide="htmlModal">
-            <i class="bi bi-x-lg"></i>
-          </button>
-        </div>
-        <ul class="space-y-2 text-xs font-semibold">
-          <li><a href="topic-one.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-diagram-3 text-blue-600"></i>HTML Structure & Tags</a></li>
-          <li><a href="topic-two.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-file-earmark-richtext text-blue-600"></i>Semantic HTML</a></li>
-          <li><a href="topic-three.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-ui-checks text-blue-600"></i>Forms & Validation</a></li>
-          <li><a href="topic-four.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-table text-blue-600"></i>Tables & Lists</a></li>
-          <li><a href="topic-five.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-window text-blue-600"></i>Meta Tags & SEO Basics</a></li>
-          <li><a href="topic-six.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-box-arrow-in-up-right text-blue-600"></i>Links & Navigation</a></li>
-          <li><a href="topic-seven.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-image text-blue-600"></i>Images & Media Embeds</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 2: CSS Topics -->
-  <div id="cssModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-      <div class="relative bg-white rounded-3xl shadow-2xl p-6 space-y-4">
-        <div class="flex items-center justify-between border-b pb-3">
-          <h3 class="text-base font-bold text-slate-900">CSS Topics & Resources</h3>
-          <button type="button" class="text-slate-400 hover:text-slate-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center" data-modal-hide="cssModal">
-            <i class="bi bi-x-lg"></i>
-          </button>
-        </div>
-        <ul class="space-y-2 text-xs font-semibold">
-          <li><a href="#" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-check-square text-emerald-600"></i>Selectors & Specificity</a></li>
-          <li><a href="#" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-box text-emerald-600"></i>Box Model & Layout</a></li>
-          <li><a href="#" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-grid-3x3-gap text-emerald-600"></i>Flexbox & Grid</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 3: JS Topics -->
-  <div id="jsModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-      <div class="relative bg-white rounded-3xl shadow-2xl p-6 space-y-4">
-        <div class="flex items-center justify-between border-b pb-3">
-          <h3 class="text-base font-bold text-slate-900">JavaScript Topics</h3>
-          <button type="button" class="text-slate-400 hover:text-slate-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center" data-modal-hide="jsModal">
-            <i class="bi bi-x-lg"></i>
-          </button>
-        </div>
-        <ul class="space-y-2 text-xs font-semibold">
-          <li><a href="variable.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-123 text-amber-500"></i>Variables & Data Types</a></li>
-          <li><a href="function.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-diagram-2 text-amber-500"></i>Functions & Scope</a></li>
-          <li><a href="dom-manipulation.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-window-stack text-amber-500"></i>DOM Manipulation</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 4: General Dev Topics -->
-  <div id="otherModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-      <div class="relative bg-white rounded-3xl shadow-2xl p-6 space-y-4">
-        <div class="flex items-center justify-between border-b pb-3">
-          <h3 class="text-base font-bold text-slate-900">General Web Resources</h3>
-          <button type="button" class="text-slate-400 hover:text-slate-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center" data-modal-hide="otherModal">
-            <i class="bi bi-x-lg"></i>
-          </button>
-        </div>
-        <ul class="space-y-2 text-xs font-semibold">
-          <li><a href="#" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-git text-slate-600"></i>Version Control (Git & GitHub)</a></li>
-          <li><a href="#" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 text-slate-700"><i class="bi bi-terminal text-slate-600"></i>Command Line Basics</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
   <!-- JavaScript Logic -->
   <script>
     const API_PROFILE_ENDPOINT = "https://examguide.onrender.com/api/codecxreg/me";
     const LOGIN_PAGE = "login.html";
     const token = localStorage.getItem('codecx_token');
 
+    // Comprehensive Topic Data for each Course
+    const COURSES_DATA = {
+      htmlCourse: {
+        title: "HTML Resources",
+        badge: "Frontend Architecture",
+        icon: "bi-file-earmark-code",
+        colorClass: "indigo",
+        description: "Complete guide to building semantic, structured, accessible, and SEO-optimized web documents.",
+        modules: [
+          {
+            title: "HTML Structure, Syntax & Document Flow",
+            desc: "Understand doctypes, head elements, tags, attributes, and page skeleton layout.",
+            link: "topic-one.html"
+          },
+          {
+            title: "Semantic HTML5 Markup",
+            desc: "Proper utilization of <header>, <nav>, <article>, <section>, <aside>, and <footer> tags.",
+            link: "topic-two.html"
+          },
+          {
+            title: "Web Forms, Controls & Validation",
+            desc: "Input types, fieldsets, labels, custom validation rules, and accessibility guidelines.",
+            link: "topic-three.html"
+          },
+          {
+            title: "Tables, Structured Data & Lists",
+            desc: "Ordered and unordered lists, nested menus, data table formatting, and colgroup rules.",
+            link: "topic-four.html"
+          },
+          {
+            title: "Meta Tags, SEO Basics & Social Sharing",
+            desc: "Configure viewports, OpenGraph meta tags, Twitter cards, and search indexing rules.",
+            link: "topic-five.html"
+          },
+          {
+            title: "Hyperlinks, URLs & Deep Navigation",
+            desc: "Relative vs absolute paths, target attributes, anchor links, and email/tel links.",
+            link: "topic-six.html"
+          },
+          {
+            title: "Images, Audio, Video & Embeds",
+            desc: "Responsive picture elements, WebM/MP4 embeds, vector SVGs, and iFrames.",
+            link: "topic-seven.html"
+          },
+          {
+            title: "HTML5 Canvas API & Local Web Storage",
+            desc: "Drawing graphics dynamically via JavaScript and storing state with localStorage/sessionStorage.",
+            link: "topic-eight.html"
+          }
+        ]
+      },
+      cssCourse: {
+        title: "CSS Resources",
+        badge: "Styling & Layouts",
+        icon: "bi-palette",
+        colorClass: "emerald",
+        description: "Design responsive, visually appealing, and interactive web interfaces with modern CSS.",
+        modules: [
+          {
+            title: "Selectors, Specificity & Cascade Rules",
+            desc: "Master class combinations, ID priority, pseudo-classes, and specificity calculations.",
+            link: "#"
+          },
+          {
+            title: "The CSS Box Model & Sizing",
+            desc: "Margin, border, padding, content, box-sizing border-box, and overflow handling.",
+            link: "#"
+          },
+          {
+            title: "Flexbox Layout Architecture",
+            desc: "Main axis vs cross axis, justify-content, align-items, flex-grow, and flex-wrap.",
+            link: "#"
+          },
+          {
+            title: "CSS Grid & Complex Layouts",
+            desc: "Grid templates, gap properties, fractional units (fr), minmax, and auto-fit rules.",
+            link: "#"
+          },
+          {
+            title: "Transitions, Keyframe Animations & Transforms",
+            desc: "Smooth hover transitions, transform scale/rotate, and @keyframes sequences.",
+            link: "#"
+          },
+          {
+            title: "Utility-First Styling with Tailwind CSS",
+            desc: "Configuring Tailwind CDN/builds, typography, dark mode, and custom component abstractions.",
+            link: "#"
+          },
+          {
+            title: "CSS Variables (Custom Properties)",
+            desc: "Creating theme switchers, dynamic variables, and scoping CSS custom properties.",
+            link: "#"
+          },
+          {
+            title: "Responsive Web Design & Media Queries",
+            desc: "Mobile-first breakpoint strategies, device orientation queries, and fluid typography.",
+            link: "#"
+          }
+        ]
+      },
+      jsCourse: {
+        title: "JavaScript Engine",
+        badge: "Core Programming",
+        icon: "bi-code-slash",
+        colorClass: "amber",
+        description: "Master modern ECMAScript features, dynamic scripting, DOM control, and async execution.",
+        modules: [
+          {
+            title: "Variables, Scope & Data Types",
+            desc: "Understand let, const, var, hoisting, temporal dead zone, and primitive vs reference types.",
+            link: "variable.html"
+          },
+          {
+            title: "Functions, Arrow Expressions & Closures",
+            desc: "Scope chains, lexical scoping, higher-order functions, and callback routines.",
+            link: "function.html"
+          },
+          {
+            title: "DOM Manipulation & Event Handling",
+            desc: "Query selectors, element creation, event listener delegation, and event bubbling.",
+            link: "dom-manipulation.html"
+          },
+          {
+            title: "Asynchronous JS: Promises & Async/Await",
+            desc: "Handle API calls cleanly using the Fetch API, async functions, and try/catch blocks.",
+            link: "#"
+          },
+          {
+            title: "ES6+ Modern Syntax Essentials",
+            desc: "Destructuring arrays/objects, spread operator, rest parameters, and template literals.",
+            link: "#"
+          },
+          {
+            title: "Array Methods & Functional Patterns",
+            desc: "Master .map(), .filter(), .reduce(), .find(), .some(), and .every().",
+            link: "#"
+          },
+          {
+            title: "JavaScript Modules & Imports",
+            desc: "Organizing scalable scripts using ES Modules export/import syntax.",
+            link: "#"
+          },
+          {
+            title: "Error Handling & Debugging Techniques",
+            desc: "Using the browser DevTools console, breakpoints, and custom error boundaries.",
+            link: "#"
+          }
+        ]
+      },
+      reactCourse: {
+        title: "React Development",
+        badge: "Frontend Framework",
+        icon: "bi-cpu",
+        colorClass: "sky",
+        description: "Build fast, component-driven single page web applications using React.",
+        modules: [
+          {
+            title: "JSX & Component Architecture",
+            desc: "Functional components, JSX embedding, nested component rendering, and conditional UI.",
+            link: "#"
+          },
+          {
+            title: "State & Props Management",
+            desc: "Passing immutable data via props and maintaining dynamic local state with useState.",
+            link: "#"
+          },
+          {
+            title: "React Hooks Deep Dive",
+            desc: "useEffect lifecycle, useRef DOM references, useMemo, and useCallback optimization.",
+            link: "#"
+          },
+          {
+            title: "Form Handling & Controlled Components",
+            desc: "Managing multi-input forms, validation state, and submit handlers in React.",
+            link: "#"
+          },
+          {
+            title: "Routing with React Router",
+            desc: "Setting up browser routers, dynamic parameters, nested routes, and navigation links.",
+            link: "#"
+          },
+          {
+            title: "Context API & Global State",
+            desc: "Sharing state across complex component trees without prop drilling.",
+            link: "#"
+          }
+        ]
+      },
+      nodeCourse: {
+        title: "Node.js & Express",
+        badge: "Backend Engineering",
+        icon: "bi-server",
+        colorClass: "teal",
+        description: "Develop scalable server-side backend applications and RESTful HTTP APIs.",
+        modules: [
+          {
+            title: "Node.js Architecture & Event Loop",
+            desc: "Non-blocking I/O model, asynchronous runtime, file system (fs), and path modules.",
+            link: "#"
+          },
+          {
+            title: "Express.js Server Setup & Routing",
+            desc: "Setting up HTTP servers, route parameters, query strings, and controller handlers.",
+            link: "#"
+          },
+          {
+            title: "Middleware Architecture",
+            desc: "Writing custom request logging, CORS configuration, body parsing, and error handlers.",
+            link: "#"
+          },
+          {
+            title: "RESTful API Design Standards",
+            desc: "Designing clean endpoint structures, HTTP verb conventions, and JSON response formatting.",
+            link: "#"
+          },
+          {
+            title: "JWT Authentication & Security",
+            desc: "Securing routes using JSON Web Tokens, password hashing with bcrypt, and auth headers.",
+            link: "#"
+          }
+        ]
+      },
+      dbCourse: {
+        title: "Databases & SQL / MongoDB",
+        badge: "Data Persistence",
+        icon: "bi-database",
+        colorClass: "purple",
+        description: "Store, query, index, and manage application data in relational and NoSQL databases.",
+        modules: [
+          {
+            title: "Relational DBs vs NoSQL Architecture",
+            desc: "Comparing structured tables/SQL with document-based JSON databases.",
+            link: "#"
+          },
+          {
+            title: "SQL Fundamentals & Queries",
+            desc: "Writing SELECT, INSERT, UPDATE, DELETE, WHERE, JOINs, and GROUP BY statements.",
+            link: "#"
+          },
+          {
+            title: "MongoDB & Mongoose Schema Modeling",
+            desc: "Defining document schemas, data validation, models, and CRUD operations.",
+            link: "#"
+          },
+          {
+            title: "Database Indexing & Performance",
+            desc: "Improving lookup performance using indexes, compound keys, and aggregate pipelines.",
+            link: "#"
+          }
+        ]
+      },
+      pythonCourse: {
+        title: "Python Fundamentals",
+        badge: "Programming Language",
+        icon: "bi-terminal",
+        colorClass: "blue",
+        description: "Learn clean Python syntax, data structures, and object-oriented programming.",
+        modules: [
+          {
+            title: "Python Syntax & Basic Data Structures",
+            desc: "Variables, numbers, strings, lists, tuples, dictionaries, and set operations.",
+            link: "#"
+          },
+          {
+            title: "Control Flow, Loops & Functions",
+            desc: "If-else conditions, for/while loops, function args, and lambda functions.",
+            link: "#"
+          },
+          {
+            title: "Object-Oriented Programming (OOP)",
+            desc: "Classes, instances, inheritance, encapsulation, and special dunder methods.",
+            link: "#"
+          },
+          {
+            title: "File Handling & Input/Output",
+            desc: "Reading/writing local text and JSON files safely using context managers.",
+            link: "#"
+          },
+          {
+            title: "Modules, Packages & Virtual Environments",
+            desc: "Managing third-party libraries with pip and isolating projects using venv.",
+            link: "#"
+          }
+        ]
+      },
+      generalCourse: {
+        title: "Git & General Dev Tools",
+        badge: "Developer Utilities",
+        icon: "bi-journal-bookmark-fill",
+        colorClass: "slate",
+        description: "Essential workflow tools, command line terminal basics, and version control.",
+        modules: [
+          {
+            title: "Git Version Control Essentials",
+            desc: "git init, commit, status, log, diff, and tracking changes across codebases.",
+            link: "#"
+          },
+          {
+            title: "GitHub Collaboration & Branching",
+            desc: "Branching strategies, pull requests, resolving merge conflicts, and remote pushes.",
+            link: "#"
+          },
+          {
+            title: "Command Line Interface (CLI) Masterclass",
+            desc: "Navigating directories, manipulating files, environment variables, and shell scripts.",
+            link: "#"
+          },
+          {
+            title: "Web Hosting, Deployment & CI/CD Basics",
+            desc: "Deploying projects to Vercel, Netlify, Render, and setting up automated deployments.",
+            link: "#"
+          }
+        ]
+      }
+    };
+
     function getAvatarUrl(name) {
       return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || "Student")}&background=2563eb&color=fff`;
     }
 
+    // Load Profile
     async function loadStudentProfile() {
       try {
         if (!token) throw new Error("No login token");
@@ -415,12 +783,98 @@
     function initLazyResources() {
       setTimeout(() => {
         document.getElementById("resourcesSkeleton").classList.add("hidden");
-        document.getElementById("resourcesContainer").classList.remove("hidden");
-      }, 500);
+        document.getElementById("coursesGrid").classList.remove("hidden");
+      }, 400);
     }
 
-    // Filter by Level / Category Pills
-    function filterCategory(level) {
+    // Open Single Course View and Render Accordion
+    function openCourseView(courseKey) {
+      const course = COURSES_DATA[courseKey];
+      if (!course) return;
+
+      // Hide grid & filter search section
+      document.getElementById("coursesGrid").classList.add("hidden");
+      document.getElementById("filterSection").classList.add("hidden");
+      document.getElementById("paginationFooter").classList.add("hidden");
+
+      // Show expanded view container
+      const container = document.getElementById("expandedCourseContainer");
+      container.classList.remove("hidden");
+
+      // Render Active Banner
+      const banner = document.getElementById("activeCourseBanner");
+      banner.innerHTML = `
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-bold text-2xl shrink-0 shadow-md">
+            <i class="bi ${course.icon}"></i>
+          </div>
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold tracking-wider uppercase border border-blue-400/20">${course.badge}</span>
+            <h3 class="text-lg font-extrabold text-white mt-1">${course.title}</h3>
+          </div>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">${course.description}</p>
+      `;
+
+      // Render Accordion Dropdowns
+      const accordion = document.getElementById("topicsAccordion");
+      accordion.innerHTML = "";
+
+      course.modules.forEach((mod, idx) => {
+        const item = document.createElement("div");
+        item.className = "border border-slate-200/90 rounded-2xl overflow-hidden bg-white shadow-sm transition-all";
+        
+        item.innerHTML = `
+          <button type="button" 
+                  onclick="toggleAccordion('acc-body-${idx}', 'acc-icon-${idx}')" 
+                  class="w-full p-4 flex items-center justify-between text-left hover:bg-slate-50 transition-colors">
+            <div class="flex items-center gap-3 pr-2">
+              <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold shrink-0">${idx + 1}</span>
+              <span class="text-xs sm:text-sm font-bold text-slate-800">${mod.title}</span>
+            </div>
+            <i id="acc-icon-${idx}" class="bi bi-chevron-down text-slate-400 text-xs transition-transform duration-200"></i>
+          </button>
+          
+          <div id="acc-body-${idx}" class="hidden p-4 pt-0 border-t border-slate-100 bg-slate-50/50 space-y-3">
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">${mod.desc}</p>
+            <div class="flex justify-end pt-1">
+              <a href="${mod.link}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm">
+                <span>Start Learning</span>
+                <i class="bi bi-arrow-right text-xs"></i>
+              </a>
+            </div>
+          </div>
+        `;
+        accordion.appendChild(item);
+      });
+
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+
+    // Accordion Toggler
+    function toggleAccordion(bodyId, iconId) {
+      const body = document.getElementById(bodyId);
+      const icon = document.getElementById(iconId);
+      
+      if (body.classList.contains("hidden")) {
+        body.classList.remove("hidden");
+        icon.classList.add("rotate-180");
+      } else {
+        body.classList.add("hidden");
+        icon.classList.remove("rotate-180");
+      }
+    }
+
+    // Close Single Course View
+    function closeCourseView() {
+      document.getElementById("expandedCourseContainer").classList.add("hidden");
+      document.getElementById("coursesGrid").classList.remove("hidden");
+      document.getElementById("filterSection").classList.remove("hidden");
+      document.getElementById("paginationFooter").classList.remove("hidden");
+    }
+
+    // Filter Categories
+    function filterCategory(category) {
       document.querySelectorAll('.category-pill').forEach(btn => {
         btn.classList.remove('bg-blue-600', 'text-white', 'shadow-md', 'shadow-blue-500/20');
         btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200/80');
@@ -433,7 +887,7 @@
       let visibleCount = 0;
 
       cards.forEach(card => {
-        if (level === 'all' || card.getAttribute('data-level') === level) {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
           card.style.display = 'flex';
           visibleCount++;
         } else {
@@ -441,10 +895,10 @@
         }
       });
 
-      document.getElementById('subjectCountText').textContent = `Showing ${visibleCount} of ${cards.length} subjects`;
+      document.getElementById('subjectCountText').textContent = `Showing ${visibleCount} subjects`;
     }
 
-    // Real-time Search Filter
+    // Search Filter
     document.getElementById('resourceSearch').addEventListener('input', function(e) {
       const term = e.target.value.toLowerCase().trim();
       const cards = document.querySelectorAll('.subject-card');
@@ -462,8 +916,14 @@
         }
       });
 
-      document.getElementById('subjectCountText').textContent = `Showing ${visibleCount} of ${cards.length} subjects`;
+      document.getElementById('subjectCountText').textContent = `Showing ${visibleCount} subjects`;
     });
+
+    function clearSearch() {
+      const input = document.getElementById('resourceSearch');
+      input.value = "";
+      input.dispatchEvent(new Event('input'));
+    }
 
     window.addEventListener("DOMContentLoaded", () => {
       loadStudentProfile();
