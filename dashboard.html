@@ -1,1443 +1,1238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CODECX Student Dashboard</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f8fafc;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
-</head>
-<body class="text-slate-800 antialiased pb-28 min-h-screen">
-
-    <!-- TOP HEADER NAVBAR -->
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center justify-between shadow-xs">
-        <div class="flex items-center gap-3">
-            <button id="hamburgerBtn" class="text-slate-600 hover:text-slate-900 p-1.5 rounded-lg">
-                <i class="fa-solid fa-bars-staggered text-xl"></i>
-            </button>
-            <div class="flex items-center gap-2">
-                <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md shadow-indigo-200">
-                    C
-                </div>
-                <div>
-                    <h1 class="font-bold text-base leading-tight text-slate-900">CODECX</h1>
-                    <p class="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">Institute</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex items-center gap-2.5">
-            <!-- Notifications Button -->
-            <button class="relative w-10 h-10 rounded-full bg-slate-50 border border-slate-200/80 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition">
-                <i class="fa-regular fa-bell text-lg"></i>
-                <span class="absolute top-1.5 right-1.5 w-4 h-4 bg-indigo-600 text-white text-[10px] font-extrabold rounded-full flex items-center justify-center border-2 border-white">3</span>
-            </button>
-            <!-- Profile Avatar / Initial -->
-            <button onclick="window.location.href='#profile-section'" class="w-10 h-10 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center ring-2 ring-indigo-100 overflow-hidden shadow-sm">
-                <img id="studentAvatar" src="" alt="User" class="w-full h-full object-cover hidden" onerror="this.classList.add('hidden')">
-                <span id="avatarInitials" class="text-xs font-extrabold uppercase">ST</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- MAIN CONTAINER -->
-    <main class="max-w-md mx-auto px-4 pt-5 space-y-6">
-
-        <!-- GREETING SECTION -->
-        <div>
-            <h2 class="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-                Good Day, <span id="studentNameHeader" class="truncate">Student</span>! 👋
-            </h2>
-            <p class="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">Let's make today productive and keep coding.</p>
-        </div>
-
-        <!-- FEATURED HERO CARD (Daily Challenge / Masterclass) -->
-        <div id="masterclassSection" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-blue-700 p-6 text-white shadow-xl shadow-indigo-500/20">
-            <!-- Background Graphic Elements -->
-            <div class="absolute -right-6 -bottom-6 w-36 h-36 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
-            <div class="absolute right-10 top-4 opacity-20 pointer-events-none">
-                <i class="fa-solid fa-code text-8xl"></i>
-            </div>
-
-            <div class="relative z-10 space-y-3">
-                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[11px] font-semibold tracking-wide border border-white/20">
-                    <i class="fa-solid fa-bolt text-amber-300"></i>
-                    <span>Daily Progress Challenge</span>
-                </div>
-                
-                <h3 class="text-xl font-extrabold leading-snug">Track Progress & Earn EG Points</h3>
-                <p class="text-xs text-indigo-100/90 leading-relaxed max-w-[80%]">Complete your daily quizzes, mark attendance, and upload submitted assignments.</p>
-
-                <div class="pt-2 flex items-center gap-3">
-                    <button onclick="document.getElementById('quizzes-section').scrollIntoView({behavior:'smooth'})" class="py-3 px-5 bg-white text-indigo-700 hover:bg-slate-50 font-bold rounded-2xl text-xs sm:text-sm shadow-md transition flex items-center gap-2 active:scale-95">
-                        <span>Start Today's Quiz</span>
-                        <i class="fa-solid fa-arrow-right text-xs"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2x2 ACTION/FEATURE GRID CARDS -->
-        <div class="grid grid-cols-2 gap-3.5">
-            <!-- Card 1: Daily Quizzes -->
-            <div onclick="document.getElementById('quizzes-section').scrollIntoView({behavior:'smooth'})" class="bg-white p-4 rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between h-36 relative group">
-                <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
-                    <i class="fa-solid fa-file-signature"></i>
-                </div>
-                <div>
-                    <h4 class="font-bold text-slate-900 text-sm">Quizzes</h4>
-                    <p class="text-[11px] text-slate-400 font-medium mt-0.5">Test & practice</p>
-                </div>
-                <div class="absolute bottom-4 right-4 text-slate-300 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition">
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                </div>
-            </div>
-
-            <!-- Card 2: My Courses -->
-            <div onclick="document.getElementById('courses-section').scrollIntoView({behavior:'smooth'})" class="bg-emerald-50/40 p-4 rounded-2xl border border-emerald-100/60 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between h-36 relative group">
-                <div class="w-11 h-11 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg shadow-sm">
-                    <i class="fa-solid fa-book-open"></i>
-                </div>
-                <div>
-                    <h4 class="font-bold text-slate-900 text-sm">My Courses</h4>
-                    <p class="text-[11px] text-slate-500 font-medium mt-0.5">Manage tracks</p>
-                </div>
-                <div class="absolute bottom-4 right-4 text-slate-300 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition">
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                </div>
-            </div>
-
-            <!-- Card 3: Assignments -->
-            <div onclick="document.getElementById('assignment-section').scrollIntoView({behavior:'smooth'})" class="bg-purple-50/40 p-4 rounded-2xl border border-purple-100/60 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between h-36 relative group">
-                <div class="w-11 h-11 rounded-xl bg-purple-600 text-white flex items-center justify-center text-lg shadow-sm">
-                    <i class="fa-solid fa-laptop-code"></i>
-                </div>
-                <div>
-                    <h4 class="font-bold text-slate-900 text-sm">Assignments</h4>
-                    <p class="text-[11px] text-slate-500 font-medium mt-0.5">Submit tasks</p>
-                </div>
-                <div class="absolute bottom-4 right-4 text-slate-300 group-hover:text-purple-600 group-hover:translate-x-0.5 transition">
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                </div>
-            </div>
-
-            <!-- Card 4: Payments -->
-            <div onclick="document.getElementById('payments-section').scrollIntoView({behavior:'smooth'})" class="bg-amber-50/40 p-4 rounded-2xl border border-amber-100/60 shadow-xs hover:shadow-md transition cursor-pointer flex flex-col justify-between h-36 relative group">
-                <div class="w-11 h-11 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg shadow-sm">
-                    <i class="fa-solid fa-receipt"></i>
-                </div>
-                <div>
-                    <h4 class="font-bold text-slate-900 text-sm">Payments</h4>
-                    <p class="text-[11px] text-slate-500 font-medium mt-0.5">Receipts & status</p>
-                </div>
-                <div class="absolute bottom-4 right-4 text-slate-300 group-hover:text-amber-600 group-hover:translate-x-0.5 transition">
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- WHATSAPP / COMMUNITY BANNER CARD -->
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm text-center space-y-4 relative overflow-hidden">
-            <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mx-auto shadow-xs">
-                <i class="fa-brands fa-whatsapp"></i>
-            </div>
-
-            <div class="space-y-1">
-                <h4 class="font-extrabold text-slate-900 text-base">Community WhatsApp Group</h4>
-                <p id="whatsappNote" class="text-xs text-slate-500 leading-relaxed max-w-xs mx-auto">
-                    Access to the exclusive group is reserved for verified paid masterclass students.
-                </p>
-            </div>
-
-            <button id="whatsappGroupBtn" class="w-full py-3 px-6 bg-indigo-600 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold rounded-2xl text-xs sm:text-sm shadow-md shadow-indigo-200 transition flex items-center justify-center gap-2 active:scale-95">
-                <span>Join Official Group</span>
-                <i class="fa-solid fa-arrow-right text-xs"></i>
-            </button>
-        </div>
-
-        <!-- SECTION: QUIZZES & PROGRESS -->
-        <section id="quizzes-section" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
-            <div class="flex items-center justify-between">
-                <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
-                    <i class="fa-solid fa-chart-line text-indigo-600"></i> Daily Progress & Quizzes
-                </h3>
-            </div>
-            <p id="progressSummary" class="text-xs text-slate-500 font-medium">Loading session data...</p>
-
-            <div id="progressGrid" class="space-y-3">
-                <!-- Dynamically populated from JS -->
-            </div>
-        </section>
-
-        <!-- SECTION: REGISTERED COURSES -->
-        <section id="courses-section" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
-            <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
-                <i class="fa-solid fa-graduation-cap text-indigo-600"></i> Registered Courses
-            </h3>
-
-            <div class="flex items-center gap-2">
-                <select id="courseSelect" class="flex-1 bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 rounded-xl p-3 outline-none focus:ring-2 focus:ring-indigo-500">
-                    <option value="">-- Select Course --</option>
-                    <option value="HTML Fundamentals">HTML Fundamentals</option>
-                    <option value="CSS Styling Mastery">CSS Styling Mastery</option>
-                    <option value="JavaScript Essentials">JavaScript Essentials</option>
-                    <option value="Full-Stack Web Development">Full-Stack Web Development</option>
-                </select>
-                <button onclick="addCourse()" class="py-3 px-4 bg-indigo-600 text-white font-bold text-xs rounded-xl hover:bg-indigo-700 transition">
-                    Add
-                </button>
-            </div>
-
-            <div id="coursesList" class="flex flex-wrap gap-2 pt-1">
-                <!-- Dynamically populated tags -->
-            </div>
-        </section>
-
-        <!-- SECTION: ASSIGNMENTS & UPLOAD -->
-        <section id="assignment-section" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
-            <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
-                <i class="fa-solid fa-upload text-indigo-600"></i> Submit Assignment
-            </h3>
-
-            <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-200 text-center space-y-3">
-                <input type="file" id="assignmentInput" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"/>
-                <button onclick="submitAssignment()" class="w-full py-2.5 bg-indigo-600 text-white font-bold text-xs rounded-xl shadow-xs hover:bg-indigo-700 transition">
-                    Upload & Submit
-                </button>
-                <div id="assignmentStatus" class="text-xs text-emerald-600 font-bold"></div>
-            </div>
-
-            <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider text-slate-400">Submission History</h4>
-            <div id="assignmentHistory" class="space-y-2">
-                <!-- Dynamically populated assignments -->
-            </div>
-            <div id="assignmentPagination" class="flex items-center justify-between text-xs pt-2"></div>
-        </section>
-
-        <!-- SECTION: PAYMENTS -->
-        <section id="payments-section" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
-            <div class="flex items-center justify-between">
-                <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
-                    <i class="fa-solid fa-wallet text-indigo-600"></i> Payment Details
-                </h3>
-                <button id="payNowBtn" class="py-1.5 px-3 bg-emerald-600 text-white font-bold text-xs rounded-xl shadow-xs">
-                    Pay Now
-                </button>
-            </div>
-
-            <div id="paymentStatus" class="text-xs text-slate-500 font-medium"></div>
-
-            <div class="overflow-x-auto rounded-xl border border-slate-100">
-                <table class="w-full text-left text-xs">
-                    <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-100">
-                        <tr>
-                            <th class="p-2.5">Date</th>
-                            <th class="p-2.5">Amount</th>
-                            <th class="p-2.5">Status</th>
-                            <th class="p-2.5">Ref</th>
-                        </tr>
-                    </thead>
-                    <tbody id="paymentsTable" class="divide-y divide-slate-100 text-slate-700">
-                        <!-- Dynamically populated payment rows -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- STUDENT PROFILE SUMMARY CARD -->
-        <section id="profile-section" class="bg-slate-900 text-white p-6 rounded-3xl space-y-4 shadow-xl">
-            <div class="flex items-center gap-4">
-                <img id="studentPassport" src="" alt="Passport" class="w-14 h-14 rounded-2xl object-cover bg-slate-800 border border-slate-700">
-                <div class="min-w-0">
-                    <h3 id="studentFullName" class="font-extrabold text-base truncate">--</h3>
-                    <p id="studentMatric" class="text-xs text-indigo-300 font-mono">--</p>
-                    <div id="studentStatus" class="mt-1 inline-block text-[10px] font-bold"></div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 gap-2 text-xs text-slate-300 pt-2 border-t border-slate-800">
-                <p><span class="text-slate-500">Email:</span> <span id="studentEmail">--</span></p>
-                <p><span class="text-slate-500">Phone:</span> <span id="studentPhone">--</span></p>
-                <p><span class="text-slate-500">Notice:</span> <span id="adminNote" class="text-amber-300">--</span></p>
-            </div>
-
-            <button onclick="logout()" class="w-full py-2.5 bg-red-500/20 hover:bg-red-500/30 text-red-300 font-bold rounded-xl text-xs transition border border-red-500/30">
-                <i class="fa-solid fa-right-from-bracket mr-1"></i> Log Out
-            </button>
-        </section>
-
-    </main>
-
-    <!-- SLIDING QUICK ACTIONS BOTTOM SHEET MODAL -->
-    <div id="quickActionsModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-end justify-center">
-        <div class="bg-white w-full max-w-md rounded-t-3xl p-6 space-y-5 transform transition-all shadow-2xl border-t border-slate-100">
-            <!-- Modal Grab Bar -->
-            <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto"></div>
-
-            <div class="text-center space-y-1">
-                <h3 class="text-lg font-extrabold text-slate-900">Quick Actions</h3>
-                <p class="text-xs text-slate-500">Select what you would like to manage or perform</p>
-            </div>
-
-            <!-- Full-width Dark Header Bar -->
-            <div class="bg-slate-900 text-white rounded-2xl p-3.5 flex items-center justify-between text-xs font-bold tracking-wider uppercase">
-                <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 rounded-lg bg-amber-500 flex items-center justify-center text-slate-900">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                    </div>
-                    <span>Academic Actions</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-slate-400"></i>
-            </div>
-
-            <!-- Quick Action Cards Grid (Inspired by Screenshot 2) -->
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="toggleQuickActions(); document.getElementById('quizzes-section').scrollIntoView()" class="p-4 bg-amber-50/50 hover:bg-amber-50 border border-amber-100 rounded-2xl text-left space-y-2 group">
-                    <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center text-sm shadow-xs">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </div>
-                    <div>
-                        <h5 class="font-bold text-slate-900 text-xs">Practice Quizzes</h5>
-                        <p class="text-[10px] text-slate-500">Take daily test quizzes</p>
-                    </div>
-                </button>
-
-                <button onclick="toggleQuickActions(); document.getElementById('assignment-section').scrollIntoView()" class="p-4 bg-purple-50/50 hover:bg-purple-50 border border-purple-100 rounded-2xl text-left space-y-2 group">
-                    <div class="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center text-sm shadow-xs">
-                        <i class="fa-solid fa-file-arrow-up"></i>
-                    </div>
-                    <div>
-                        <h5 class="font-bold text-slate-900 text-xs">Upload Homework</h5>
-                        <p class="text-[10px] text-slate-500">Submit assignments</p>
-                    </div>
-                </button>
-
-                <button onclick="toggleQuickActions(); document.getElementById('courses-section').scrollIntoView()" class="p-4 bg-emerald-50/50 hover:bg-emerald-50 border border-emerald-100 rounded-2xl text-left space-y-2 group">
-                    <div class="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-sm shadow-xs">
-                        <i class="fa-solid fa-plus"></i>
-                    </div>
-                    <div>
-                        <h5 class="font-bold text-slate-900 text-xs">Add Course</h5>
-                        <p class="text-[10px] text-slate-500">Enroll new modules</p>
-                    </div>
-                </button>
-
-                <button onclick="toggleQuickActions(); document.getElementById('payments-section').scrollIntoView()" class="p-4 bg-blue-50/50 hover:bg-blue-50 border border-blue-100 rounded-2xl text-left space-y-2 group">
-                    <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center text-sm shadow-xs">
-                        <i class="fa-solid fa-credit-card"></i>
-                    </div>
-                    <div>
-                        <h5 class="font-bold text-slate-900 text-xs">Make Payment</h5>
-                        <p class="text-[10px] text-slate-500">Unlock full access</p>
-                    </div>
-                </button>
-            </div>
-
-            <button onclick="toggleQuickActions()" class="w-full py-3 bg-slate-100 text-slate-700 font-bold text-xs rounded-2xl hover:bg-slate-200 transition">
-                Cancel
-            </button>
-        </div>
-    </div>
-
-    <!-- STICKY BOTTOM NAVIGATION BAR -->
-    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-100 py-2 px-6">
-        <div class="max-w-md mx-auto flex items-center justify-between relative">
-            <a href="#" class="flex flex-col items-center gap-1 text-indigo-600">
-                <i class="fa-solid fa-house text-lg"></i>
-                <span class="text-[10px] font-bold">Home</span>
-            </a>
-
-            <a href="#quizzes-section" class="flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600 transition">
-                <i class="fa-solid fa-file-pen text-lg"></i>
-                <span class="text-[10px] font-bold">Exams</span>
-            </a>
-
-            <!-- CENTER FLOATING ACTION SHIELD BUTTON -->
-            <div class="relative -top-5">
-                <button onclick="toggleQuickActions()" class="w-13 h-13 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-lg shadow-indigo-400/50 ring-4 ring-white active:scale-95 transition">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </button>
-            </div>
-
-            <a href="#assignment-section" class="flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600 transition">
-                <i class="fa-regular fa-comment-dots text-lg"></i>
-                <span class="text-[10px] font-bold">Tasks</span>
-            </a>
-
-            <a href="#profile-section" class="flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600 transition">
-                <i class="fa-regular fa-user text-lg"></i>
-                <span class="text-[10px] font-bold">Profile</span>
-            </a>
-        </div>
-    </nav>
-
-    <!-- JS QUICK ACTION TOGGLE -->
-    <script>
-        const API_BASE = "https://examguide.onrender.com/api/codecxreg";
-function showStudentLoader() {
-  if (document.getElementById('studentDataLoader')) return;
-  const loaderHtml = `
-    <div id="studentDataLoader" style="
-      position:fixed;
-      top:0;left:0;width:100vw;height:100vh;
-      background:rgba(245,247,255,0.87);
-      z-index:9999;display:flex;
-      align-items:center;justify-content:center;
-      transition:opacity 0.3s;
-    ">
-      <div style="text-align:center;">
-        <div style="display:inline-block; margin-bottom:18px;">
-          <svg width="64" height="64" viewBox="0 0 50 50" style="animation:spin 1.3s linear infinite;">
-            <circle cx="25" cy="25" r="20" fill="none" stroke="#6366f1" stroke-width="6" stroke-linecap="round" stroke-dasharray="90,150">
-              <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1.3s" repeatCount="indefinite"/>
-            </circle>
-          </svg>
-        </div>
-        <div style="font-size:1.1rem;color:#6366f1;font-weight:600;">Loading your dashboard...</div>
-        <div style="color:#64748b;font-size:0.93rem;margin-top:8px;">Please wait while we fetch your data.</div>
-      </div>
-    </div>
-    <style>
-      @keyframes spin { 100% { transform: rotate(360deg); } }
-    </style>
-  `;
-  document.body.insertAdjacentHTML('beforeend', loaderHtml);
-}
-
-function hideStudentLoader() {
-  const loader = document.getElementById('studentDataLoader');
-  if (loader) {
-    loader.style.opacity = '0';
-    setTimeout(() => loader.remove(), 350);
-  }
-}
-
-
-// Fetch student profile (includes assignments and payments)
-function fetchStudentProfile(token) {
-  return fetch(`${API_BASE}/me`, {
-    headers: { Authorization: `Bearer ${token}` }
-  })
-  .then(res => {
-    if (!res.ok) throw new Error('Failed to fetch profile');
-    return res.json();
-  });
-}
-
-// Get assignments from profile
-function fetchAssignments(token) {
-  return fetchStudentProfile(token)
-    .then(profile => profile.assignmentHistory || []);
-}
-
-// Get payments from profile
-function fetchPayments(token) {
-  return fetchStudentProfile(token)
-    .then(profile => profile.payments || []);
-}
-
-// Usage in loadDashboardData:
-function loadDashboardData(token) {
-  showStudentLoader();
-  Promise.all([
-    fetchStudentProfile(token),
-    fetchAssignments(token),
-    fetchPayments(token)
-  ])
-  .then(([profile, assignments, payments]) => {
-    try {
-      window.student = profile;
-      window.assignments = assignments;
-      window.payments = payments;
-      renderAssignmentHistoryPaginated(assignments);
-      renderCourses();
-      renderPayments();
-      renderProgressSection();
-    } catch (err) {
-      console.error('Render error:', err);
-      showToast('Failed to render dashboard: ' + err, 'error');
-    }
-  })
-  .catch(err => {
-    console.error('Error loading dashboard:', err);
-    showToast('Failed to load dashboard: ' + err, 'error');
-  })
-  .finally(() => {
-    hideStudentLoader();
-  });
-}
-
-// Usage example (run after DOMContentLoaded):
-document.addEventListener("DOMContentLoaded", function() {
-  const token = localStorage.getItem('codecx_token');
-  if (token) {
-    loadDashboardData(token);
-  } else {
-    window.location.href = "login.html";
-  }
-});
-
-(function() {
-  // Inject toast modal HTML if not present
-  if (!document.getElementById('toastModalBg')) {
-    const modalBg = document.createElement('div');
-    modalBg.id = 'toastModalBg';
-    modalBg.className = 'fixed inset-0 z-50 bg-black bg-opacity-20 flex items-center justify-center hidden';
-    modalBg.innerHTML = `
-      <div id="toastModal" class="bg-white rounded-xl shadow-lg p-6 max-w-lg w-full text-center relative">
-        <div id="toastSpinner" class="mb-3" style="display:none;">
-          <div class="spin-anim inline-block w-8 h-8 border-4 border-indigo-400 border-t-transparent rounded-full"></div>
-        </div>
-        <div id="toastTitle" class="font-bold text-lg text-indigo-700 mb-2"></div>
-        <div id="toastMessage" class="text-gray-700 mb-4"></div>
-        <button id="toastCloseBtn" class="px-4 py-2 bg-indigo-600 text-white rounded font-semibold">Close</button>
-      </div>
-    `;
-    document.body.appendChild(modalBg);
-
-    // Add spinner animation style
-    if (!document.getElementById('spinAnimStyle')) {
-      const style = document.createElement('style');
-      style.id = 'spinAnimStyle';
-      style.textContent = `
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .spin-anim { animation: spin 1s linear infinite; }
-      `;
-      document.head.appendChild(style);
-    }
-    // Close button logic
-    document.getElementById('toastCloseBtn').onclick = function() {
-      modalBg.classList.add('hidden');
-    };
-    modalBg.onclick = function(e) {
-      if (e.target === modalBg) modalBg.classList.add('hidden');
-    };
-  }
-
-  // Expose global functions
-  window.showToastModal = function(title, message, type = "info", showSpinner = false) {
-    document.getElementById('toastTitle').textContent = title || '';
-    document.getElementById('toastMessage').innerHTML = message || ''; // <-- Use innerHTML here!
-    document.getElementById('toastSpinner').style.display = showSpinner ? 'block' : 'none';
-    document.getElementById('toastModalBg').classList.remove('hidden');
-    document.getElementById('toastTitle').style.color =
-      type === 'success' ? '#16a34a' :
-      type === 'error' ? '#dc2626' : '#6366f1';
-};
-  window.hideToastModal = function() {
-    document.getElementById('toastModalBg').classList.add('hidden');
-  };
-})();
-    
-const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
-let student = {};
-let token = localStorage.getItem('codecx_token');
-let chatPollingInterval = null;
-let ws = null, reconnectTimeout = null;
-
-// Toast utility
-function showToast(msg, type = "info") {
-  Toastify({
-    text: msg,
-    duration: 10000,
-    gravity: "top",
-    position: "center",
-    backgroundColor: type === "success" ? "#16a34a" :
-      type === "error" ? "#dc2626" : "#6366f1"
-  }).showToast();
-}
-function logout() {
-  localStorage.removeItem('codecx_token');
-  localStorage.removeItem('matricNumber');
-  window.location.href = "login.html";
-}
-
-    
-// Receipt Modal
-function showReceiptModal(html) {
-  document.getElementById("receiptModalContent").innerHTML = html;
-  document.getElementById("receiptModal").classList.remove("hidden");
-}
-function closeReceipt() {
-  document.getElementById("receiptModal").classList.add("hidden");
-}
-document.getElementById("receiptModal").addEventListener("click", function (e) {
-  if (e.target === this) closeReceipt();
-});
-
-// Payment Modal
-document.getElementById("payNowBtn").onclick = function () {
-  document.getElementById("paymentModalBg").classList.add("show");
-};
-function closePaymentModal() {
-  document.getElementById("paymentModalBg").classList.remove("show");
-}
-
-// WhatsApp Group Button Logic
-function updateWhatsAppBtn() {
-  const btn = document.getElementById("whatsappGroupBtn");
-  const note = document.getElementById("whatsappNote");
-  if (student.hasPaid) {
-    btn.disabled = false;
-    btn.onclick = () => window.open(WS_GROUP_LINK, "_blank");
-    note.textContent = "Access to the closed WhatsApp group is reserved for paid students.";
-  } else {
-    btn.disabled = true;
-    btn.onclick = null;
-    note.textContent = "Pay for the masterclass to access the exclusive WhatsApp group.";
-  }
-}
-
-// Loader & Toast Modal
-function showLoader(show = true) {
-  let loader = document.getElementById("globalLoaderModal");
-  if (!loader) {
-    loader = document.createElement("div");
-    loader.id = "globalLoaderModal";
-    loader.style = "position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:99999;background:rgba(60,72,128,0.16);";
-    loader.innerHTML = `<div style="padding:2.2rem 2.8rem;background:#fff;border-radius:1.2rem;box-shadow:0 6px 32px #6366f133;display:flex;flex-direction:column;align-items:center;">
-      <div class="spinner" style="width:44px;height:44px;border:5px solid #6366f1;border-top:5px solid #fff;border-radius:50%;animation:spin 1.1s linear infinite"></div>
-      <div style="font-size:1.1rem;color:#6366f1;font-weight:600;margin-top:1.2rem">Loading, please wait...</div>
-    </div>`;
-    document.body.appendChild(loader);
-    // Spinner CSS
-    if (!document.getElementById('globalSpinnerStyle')) {
-      const style = document.createElement('style');
-      style.id = 'globalSpinnerStyle';
-      style.textContent = '@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}';
-      document.head.appendChild(style);
-    }
-  }
-  loader.style.display = show ? 'flex' : 'none';
-}
-
-function showToastModal(title, message, type="info") {
-  let modal = document.getElementById("globalToastModal");
-  if (!modal) {
-    modal = document.createElement("div");
-    modal.id = "globalToastModal";
-    modal.style = "position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:99999;background:rgba(60,72,128,0.13);";
-    modal.innerHTML = `<div style="padding:2.4rem 2.5rem;background:#fff;border-radius:1.25rem;box-shadow:0 8px 40px #6366f155;display:flex;flex-direction:column;align-items:center;max-width:95vw;">
-      <div id="toastIcon" style="font-size:2.3rem;margin-bottom:0.7rem"></div>
-      <div id="toastTitle" style="font-size:1.23rem;font-weight:700;color:#6366f1;margin-bottom:0.7rem"></div>
-      <div id="toastMsg" style="font-size:1.07rem;color:#444;margin-bottom:1.2rem;text-align:center"></div>
-      <button onclick="document.getElementById('globalToastModal').style.display='none'" style="padding:0.6rem 2rem;background:#6366f1;color:#fff;border:none;border-radius:.7rem;font-weight:600;cursor:pointer;font-size:1.05rem">Close</button>
-    </div>`;
-    document.body.appendChild(modal);
-  }
-  document.getElementById("toastTitle").textContent = title;
-  document.getElementById("toastMsg").textContent = message;
-  let icon = "ℹ️";
-  if (type === "success") icon = "✅";
-  if (type === "error") icon = "❌";
-  document.getElementById("toastIcon").textContent = icon;
-  modal.style.display = "flex";
-}
-
-// Helper: Allowed topics based on registered courses
-function getAllowedTopics(courses) {
-  const courseStr = (courses || []).map(c => c.name.toLowerCase()).join(" ");
-  return {
-    HTML: /html/.test(courseStr),
-    CSS: /css/.test(courseStr),
-    JS: /javascript|js/.test(courseStr),
-  };
-}
-
-function formatDateUTC(date) {
-  const yyyy = date.getUTCFullYear();
-  const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
-  const dd = String(date.getUTCDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
-}
-
-// Set program start date (Monday 8th September 2025)
-const PROGRAM_START_DATE = new Date('2025-09-08T00:00:00');
-
-// Generate session dates for 60 days
-const sessions = [];
-for (let i = 0; i < 60; i++) {
-  const sessionDate = new Date(PROGRAM_START_DATE);
-  sessionDate.setDate(sessionDate.getDate() + i);
-  let topic = "";
-  if (i < 20) topic = `HTML: Day ${i + 1}`;
-  else if (i < 40) topic = `CSS: Day ${i - 19}`;
-  else topic = `JavaScript: Day ${i - 39}`;
-  sessions.push({
-    day: i + 1,
-    topic,
-    topicKey: i < 20 ? "HTML" : (i < 40 ? "CSS" : "JS"),
-    date: formatDate(sessionDate)
-  });
-}
-
-// Helper: Get quiz/attendance status for a day
-function getQuizStatus(day) {
-  if (!student.activities) return { quiz: false, attendance: false };
-  const quizAct = student.activities.find(a => a.activity.startsWith(`Quiz completed - Day ${day}`));
-  const attAct = student.activities.find(a => a.activity === `Attendance marked - Day ${day}`);
-  return {
-    quiz: !!quizAct,
-    attendance: !!attAct
-  };
-}
-
-
-async function fetchQuizForDay(day) {
-  try {
-    const response = await fetch('/quizzes.json');
-    if (!response.ok) throw new Error('Failed to load quizzes.json');
-    const data = await response.json();
-    // Ensure both are numbers for comparison
-    const quiz = data.days.find(q => Number(q.day) === Number(day));
-    return quiz || null;
-  } catch (error) {
-    console.error('Error fetching quiz:', error);
-    return null;
-  }
-}
-
-async function renderProgressSection() {
-  const PROGRAM_START_DATE = new Date('2025-09-08T00:00:00Z');
-  const now = new Date();
-  const diffDays = Math.floor((now - PROGRAM_START_DATE) / (1000 * 60 * 60 * 24)) + 1;
-
-  // Determine days to show (rolling window of 5 days)
-  const firstDayToShow = Math.max(1, diffDays - 20); // 5 quizzes max
-  const daysToShow = [];
-  for (let day = diffDays; day >= firstDayToShow; day--) {
-    daysToShow.push(day);
-  }
-
-  // Fetch quizzes for those days (in parallel)
-  const quizzes = await Promise.all(daysToShow.map(day => fetchQuizForDay(day)));
-
-  const progressSummary = document.getElementById("progressSummary");
-  const progressGrid = document.getElementById("progressGrid");
-
-  // Handle program not started or no quizzes found
-  if (now < PROGRAM_START_DATE) {
-    progressSummary.textContent = "The program has not started yet.";
-    progressGrid.innerHTML = "";
-    return;
-  }
-  if (!quizzes.some(q => q)) {
-    progressSummary.textContent = "No quizzes found for these days.";
-    progressGrid.innerHTML = "";
-    return;
-  }
-
-  // Render quiz cards for each day (most recent at top)
-  let html = quizzes.map((quiz, index) => {
-    const day = daysToShow[index];
-    if (!quiz) return `<div class="border rounded-lg p-4 bg-gray-50 min-w-0 mb-3">No quiz for Day ${day}</div>`;
-    const status = getQuizStatus(day);
-    let card = `<div class="border border-indigo-400 rounded-lg p-4 bg-gray-50 flex flex-col items-start relative min-w-0 mb-3" style="max-width:500px;">
-      <div class="font-bold text-lg mb-1">${quiz.topic}</div>
-      <div class="text-xs text-gray-500 mb-3">Day ${quiz.day}</div>
-      <div class="mb-3">`;
-    if (status.quiz) {
-      card += `<span class="text-green-700 flex items-center"><i class="bi bi-check-circle-fill mr-1"></i>Quiz Done</span>`;
-    } else {
-      card += `<button class="px-3 py-2 text-base bg-indigo-600 text-white rounded quiz-btn" data-day="${quiz.day}">Take Quiz</button>`;
-    }
-    card += `</div>`;
-    if (status.attendance) {
-      card += `<span class="text-green-700 flex items-center"><i class="bi bi-person-check-fill mr-1"></i>Attendance Marked</span>`;
-    } else if (status.quiz) {
-      card += `<button class="px-3 py-2 text-base bg-green-600 text-white rounded attendance-btn" data-day="${quiz.day}">Mark Attendance</button>`;
-    }
-    card += `</div>`;
-    return card;
-  }).join("");
-
-  progressSummary.textContent = `Showing quizzes for Days ${firstDayToShow} to ${diffDays}.`;
-  progressGrid.innerHTML = html;
-
-  // Quiz button event
-  document.querySelectorAll(".quiz-btn").forEach(btn => {
-    btn.onclick = async function () {
-      const day = parseInt(btn.getAttribute("data-day"), 10);
-      await showQuizModal(day);
-    };
-  });
-
-  // Attendance button event
-  document.querySelectorAll(".attendance-btn").forEach(btn => {
-    btn.onclick = async function () {
-      const day = parseInt(btn.getAttribute("data-day"), 10);
-      await markAttendance(day);
-    };
-  });
-}
-
-
-// ---- QUIZ MODAL LOGIC ----
-async function showQuizModal(day) {
-  showLoader(true);
-  try {
-    // Fetch from quizzes.json
-    let data = await fetchQuizForDay(day);
-    showLoader(false);
-    if (!data || !data.questions) {
-      showToastModal("Error Loading Quiz", "Could not load quiz", "error");
-      return;
-    }
-    let html = `<div class="modal-title">Day ${day} Quiz</div>
-      <form id="quizForm">
-        <div class="modal-quiz">`;
-    data.questions.forEach((q, i) => {
-      html += `<div class="mb-2"><b>Q${i + 1}:</b> ${escapeHtml(q.question)}</div>`;
-      if (q.code) {
-        html += `<pre class="bg-gray-100 rounded p-2 mb-2 overflow-x-auto">
-          <code class="language-html">${escapeHtml(q.code)}</code>
-        </pre>`;
-      }
-      html += `<div class="modal-quiz-options mb-4">` +
-        q.options.map((opt, idx) =>
-          `<label>
-            <input type="radio" name="q${i}" value="${escapeHtml(opt)}"/>
-            <span>${escapeHtml(opt)}</span>
-          </label>`
-        ).join("") + `</div>`;
-    });
-    html += `</div>
-      <div class="modal-actions">
-        <button type="submit" class="modal-btn" id="submitQuizBtn"><span>Submit Quiz</span></button>
-        <button type="button" class="modal-btn secondary" onclick="closeDayQuizModal()">Cancel</button>
-      </div>
-      </form>
-      <div id="quizResult" style="margin-top:1.2rem"></div>`;
-    document.getElementById("dayQuizContent").innerHTML = html;
-    document.getElementById("dayQuizModalBg").style.display = "flex";
-
-    // Highlight code blocks
-    setTimeout(() => { if (window.Prism) Prism.highlightAll(); }, 100);
-
-    document.getElementById("quizForm").onsubmit = async function (e) {
-      e.preventDefault();
-      showLoader(true);
-      const submitBtn = document.getElementById("submitQuizBtn");
-      submitBtn.disabled = true;
-      // Prepare answers
-      const answers = [];
-      for (let i = 0; i < data.questions.length; i++) {
-        const ansInput = document.querySelector(`input[name="q${i}"]:checked`);
-        answers.push(ansInput ? ansInput.value : "");
-      }
-
-      try {
-        // Grade quiz on client-side for .json quizzes
-        let score = 0;
-        let total = data.questions.length;
-        data.questions.forEach((q, idx) => {
-          if (answers[idx] === q.answer) score++;
-        });
-        const percent = Math.round((score / total) * 100);
-
-        // Correction/Review block
-        let reviewHtml = '<div class="mt-4"><b>Corrections:</b><ul style="list-style:decimal inside;">';
-        data.questions.forEach((q, idx) => {
-          const userAns = answers[idx];
-          const correctAns = q.answer;
-          const isCorrect = userAns === correctAns;
-          reviewHtml += `<li style="margin-bottom:0.7em;">
-            <div><b>Q${idx+1}:</b> ${escapeHtml(q.question)}</div>
-            ${q.code ? `<pre class="bg-gray-100 rounded p-2 mb-2 overflow-x-auto"><code class="language-html">${escapeHtml(q.code)}</code></pre>` : ""}
-            <div>Your answer: <span style="color:${isCorrect ? 'green' : 'red'};font-weight:bold;">${escapeHtml(userAns || 'No answer')}</span></div>
-            ${isCorrect ? `<div style="color:green;">Correct ✔️</div>` : `<div style="color:red;">Incorrect ❌. Correct answer: <span style="font-weight:bold;">${escapeHtml(correctAns)}</span></div>`}
-          </li>`;
-        });
-        reviewHtml += '</ul></div>';
-
-        showLoader(false);
-        document.getElementById("quizResult").innerHTML =
-          `<div class="font-bold text-green-700 mb-2"><i class="bi bi-award"></i> Quiz Score: ${score} / ${total} (${percent}%)</div>${reviewHtml}`;
-
-        // Record quiz completion (with score)
-        await markQuizCompletedWithScore(day, score);
-
-        // Auto-mark attendance
-        await markAttendance(day, true);
-
-        showToastModal("Quiz Submitted", `Your score: ${score} / ${total} (${percent}%). Attendance marked for Day ${day}.`, "success");
-
-        // Wait a bit for user to see score, then close modal & reload dashboard
-        setTimeout(() => {
-          closeDayQuizModal();
-          reloadDashboard();
-        }, 20000); // Increased to 6s for more time for review
-
-      } catch (err) {
-        showLoader(false);
-        showToastModal("Quiz Submission Error", err.message, "error");
-        submitBtn.disabled = false;
-      }
-    };
-  } catch (err) {
-    showLoader(false);
-    showToastModal("Quiz Modal Error", err.message, "error");
-  }
-}
-
-
-// Helper: Record quiz completed activity WITH score
-async function markQuizCompletedWithScore(day, score) {
-  showLoader(true);
-  try {
-    const resp = await fetch(`${API_BASE}/activities`, {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ activity: `Quiz completed - Day ${day} (Score: ${score})` })
-    });
-    const data = await resp.json();
-    showLoader(false);
-    if (!resp.ok) throw new Error(data.message);
-    return true;
-  } catch (err) {
-    showLoader(false);
-    showToastModal("Quiz Completion Error", err.message, "error");
-    throw new Error("Failed to record quiz completion: " + err.message);
-  }
-}
-
-// Helper: Mark attendance for day (optionally silent on error if auto)
-async function markAttendance(day, auto = false) {
-  showLoader(true);
-  try {
-    const resp = await fetch(`${API_BASE}/activities`, {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ activity: `Attendance marked - Day ${day}` })
-    });
-    const data = await resp.json();
-    showLoader(false);
-    if (!resp.ok) throw new Error(data.message);
-    return true;
-  } catch (err) {
-    showLoader(false);
-    if (!auto) showToastModal("Attendance Error", err.message, "error");
-    if (auto) console.warn("Auto attendance failed:", err.message);
-    return false;
-  }
-}
-
-// Helper: Close quiz modal
-function closeDayQuizModal() {
-  document.getElementById("dayQuizModalBg").style.display = "none";
-}
-
-
-async function reloadDashboard() {
-  if (!token) { logout(); return; }
-  try {
-    const resp = await fetch(`${API_BASE}/me`, {
-      headers: { "Authorization": "Bearer " + token }
-    });
-    const data = await resp.json();
-    if (!resp.ok) throw new Error(data.message);
-    student = data;
-
-window.student = student; // <-- Add this line!
-
-    localStorage.setItem('matricNumber', student.matricNumber);
-
-    document.getElementById("studentAvatar").src = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
-    document.getElementById("studentPassport").src = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
-    document.getElementById("studentFullName").textContent = student.fullName;
-    document.getElementById("studentNameHeader").textContent = student.fullName;
-    document.getElementById("studentMatric").textContent = student.matricNumber;
-    document.getElementById("studentEmail").textContent = student.email;
-    document.getElementById("studentPhone").textContent = student.phone;
-    document.getElementById("studentStatus").innerHTML = student.hasPaid
-      ? `<span class="bg-green-100 text-green-800">Paid & Active</span>`
-      : `<span class="bg-red-100 text-red-800">Unpaid (Limited Access)</span>`;
-    updateWhatsAppBtn();
-
-    // Lock masterclass features if unpaid
-    const locked = !student.hasPaid;
-    document.getElementById("masterclassSection").classList.toggle("locked", locked);
-    document.querySelector("#masterclassSection .padlock-icon").style.display = locked ? "block" : "none";
-    document.getElementById("unlockMessage").classList.toggle("hidden", !locked);
-    renderAssignmentHistoryPaginated(student.assignmentHistory || []);
+  <meta charset="UTF-8">
+  <title>CODECX Institute Student Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-    renderCourses();
-    renderActivity();
-    renderPayments();
-    renderProgressSection();
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Toastify & Bootstrap Icons -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Prism JS for Code Highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #F8FAFC;
+    }
     
-    document.getElementById("adminNote").textContent = student.adminNote || "";
-    
-  } catch (err) {
-    showToast("Error loading dashboard: " + err.message, "error");
-    logout();
-  }
-}
-document.addEventListener("DOMContentLoaded", reloadDashboard);
-// Courses
-function renderCourses() {
-  const list = document.getElementById("coursesList");
-  list.innerHTML = "";
-  (student.courses || []).forEach(c => {
-    list.innerHTML += `<span class="px-3 py-1 rounded bg-gray-200 text-indigo-800 font-semibold flex items-center gap-1">${c.name}
-      <button class="ml-2 text-red-700" style="font-size:1.1em" onclick="removeCourse('${c.name}')">&times;</button>
-    </span>`;
-  });
-}
-async function addCourse() {
-  const select = document.getElementById("courseSelect");
-  const courseName = select.value;
-  if (!courseName) {
-    if (window.showToastModal) {
-      showToastModal("Error", "Select a course to add.", "error");
-      setTimeout(hideToastModal, 2000);
-    } else {
-      showToast("Select a course to add.", "error");
+    /* Smooth tab transition */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out forwards;
     }
-    return;
-  }
-  // Show loader modal if available
-  if (window.showToastModal) showToastModal("Adding Course...", "Please wait while we add your course.", "info", true);
-  try {
-    const resp = await fetch(`${API_BASE}/courses`, {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ courseName })
-    });
-    const data = await resp.json();
-    if (!resp.ok) throw new Error(data.message);
-    await reloadDashboard();
-    if (window.showToastModal) {
-      showToastModal("Course Added!", "Your course was added successfully.", "success");
-      setTimeout(hideToastModal, 2000);
-    } else {
-      showToast("Course added!", "success");
-    }
-  } catch (err) {
-    if (window.showToastModal) {
-      showToastModal("Error", err.message, "error");
-      setTimeout(hideToastModal, 2000);
-    } else {
-      showToast(err.message, "error");
-    }
-  }
-}
-
-async function removeCourse(courseName) {
-  if (window.showToastModal) showToastModal("Removing Course...", "Please wait while we remove your course.", "info", true);
-  try {
-    const resp = await fetch(`${API_BASE}/courses`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ courseName })
-    });
-    const data = await resp.json();
-    if (!resp.ok) throw new Error(data.message);
-    await reloadDashboard();
-    if (window.showToastModal) {
-      showToastModal("Course Removed!", "Your course was removed successfully.", "success");
-      setTimeout(hideToastModal, 2000);
-    } else {
-      showToast("Course removed!", "success");
-    }
-  } catch (err) {
-    if (window.showToastModal) {
-      showToastModal("Error", err.message, "error");
-      setTimeout(hideToastModal, 2000);
-    } else {
-      showToast(err.message, "error");
-    }
-  }
-}
-// Activity
-function renderActivity() {
-  const table = document.getElementById("activityTable");
-  table.innerHTML = "";
-  (student.activities || []).slice(-12).reverse().forEach(act => {
-    table.innerHTML += `
-      <tr>
-        <td class="border px-2 py-1">${formatDate(act.date)}</td>
-        <td class="border px-2 py-1">${act.activity}</td>
-        <td class="border px-2 py-1">${act.status}</td>
-      </tr>
-    `;
-  });
-  // Attendance Status
-  let latestAttendance = (student.activities || []).filter(a => /^Attendance marked - Day \d+$/.test(a.activity)).slice(-1)[0];
-  document.getElementById("attendanceStatus").textContent =
-    latestAttendance ? `Last attendance: ${formatDate(latestAttendance.date)}` : "No attendance marked yet.";
-}
-
-async function submitAssignment() {
-  const inp = document.getElementById("assignmentInput");
-  if (!inp.files[0]) {
-    if (window.showToastModal) {
-      showToastModal("Error", "Select an assignment file to upload.", "error");
-      setTimeout(hideToastModal, 20000);
-    } else {
-      showToast("Select an assignment file to upload.", "error");
-    }
-    return;
-  }
-  if (window.showToastModal) showToastModal("Uploading Assignment...", "Please wait while we upload your assignment.", "info", true);
-
-  try {
-    let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
-    if (!matricNumber) {
-      const profileResp = await fetch(`${API_BASE}/me`, {
-        headers: { "Authorization": "Bearer " + token }
-      });
-      const profile = await profileResp.json();
-      if (profile && profile.matricNumber) matricNumber = profile.matricNumber;
-    }
-    if (!matricNumber) throw new Error("Matric number not found.");
-
-    // Replace slashes with dashes for URL safety
-    const safeMatricNumber = matricNumber.replace(/\//g, '-');
-
-    const formData = new FormData();
-    formData.append("assignment", inp.files[0]);
-    formData.append("title", inp.files[0].name);
-
-    const resp = await fetch(`${API_BASE}/student/matric/${safeMatricNumber}/assignment`, {
-      method: "POST",
-      headers: { "Authorization": "Bearer " + token },
-      body: formData
-    });
-
-    const text = await resp.text();
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      throw new Error("Server error: " + text);
+    .tab-content.active {
+      display: block;
     }
 
-    if (!resp.ok) throw new Error(data.message || "Assignment upload failed");
-
-    document.getElementById("assignmentStatus").textContent = "Submitted!";
-    inp.value = "";
-    await reloadDashboard();
-
-    if (window.showToastModal) {
-      showToastModal("Success!", "Assignment submitted successfully.", "success");
-      setTimeout(hideToastModal, 20000);
-    } else {
-      showToast("Assignment submitted!", "success");
-    }
-  } catch (err) {
-  if (err.message === "Failed to fetch") {
-    showToastModal("Network Error", "Could not connect to server. Try again later.", "error");
-    setTimeout(hideToastModal, 20000);
-  } else {
-    showToastModal("Error", err.message, "error");
-    setTimeout(hideToastModal, 20000);
-  }
-}
-}
-
-function renderPayments() {
-  const tb = document.getElementById("paymentsTable");
-  tb.innerHTML = "";
-  (student.payments || []).slice(-8).reverse().forEach(p => {
-    tb.innerHTML += `
-      <tr>
-        <td class="border px-2 py-1">${formatDate(p.date)}</td>
-        <td class="border px-2 py-1">₦${p.amount}</td>
-        <td class="border px-2 py-1">${p.status}</td>
-        <td class="border px-2 py-1">${p.ref}</td>
-      </tr>
-    `;
-  });
-  document.getElementById("paymentStatus").textContent =
-    student.hasPaid
-      ? `Last payment: ₦${student.payments?.slice(-1)[0]?.amount || ""} (Ref: ${student.lastPaymentRef || ""})`
-      : "No payment yet. Please complete payment to unlock features.";
-}
-
-// --- Date Formatting ---
-function formatDate(dt) {
-  const date = new Date(dt);
-  if (isNaN(date)) return "";
-  return date.toLocaleString();
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Modal Backdrop Blur */
+    .modal-blur {
+      backdrop-filter: blur(8px);
+      background-color: rgba(15, 23, 42, 0.4);
+    }
 
-// Update assignment upload flow to call reloadDashboard after successful submission
-async function submitAssignment() {
-  const inp = document.getElementById("assignmentInput");
-  if (!inp.files[0]) {
-    showToast("Select an assignment file to upload.", "error");
-    return;
-  }
-  showToastModal("Uploading Assignment...", "Please wait while we upload your assignment.", "info", true);
+    /* Bottom Sheet Animation */
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-  try {
-    let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
-    if (!matricNumber) throw new Error("Matric number not found.");
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-28">
 
-    // Replace slashes with dashes for URL safety
-    const safeMatricNumber = matricNumber.replace(/\//g, '-');
-
-    const formData = new FormData();
-    formData.append("assignment", inp.files[0]);
-    formData.append("title", inp.files[0].name);
-
-    const resp = await fetch(`${API_BASE}/student/matric/${safeMatricNumber}/assignment`, {
-      method: "POST",
-      headers: { "Authorization": "Bearer " + token },
-      body: formData
-    });
-
-    const text = await resp.text();
-    let data;
-    try { data = JSON.parse(text); } catch (e) { throw new Error("Server error: " + text); }
-    if (!resp.ok) throw new Error(data.message || "Assignment upload failed");
-
-    document.getElementById("assignmentStatus").textContent = "Submitted!";
-    inp.value = "";
-    await reloadDashboard();
-
-    showToastModal("Success!", "Assignment submitted successfully.", "success");
-    setTimeout(hideToastModal, 2000);
-  } catch (err) {
-    showToastModal("Error", err.message, "error");
-    setTimeout(hideToastModal, 2000);
-  }
-}
-
-// Update assignment delete flow to reload dashboard after deletion
-async function deleteAssignment(index) {
-  if (!confirm("Delete this assignment? This action cannot be undone.")) return;
-  showToastModal("Deleting...", "Please wait...", "info", true);
-  try {
-    let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
-    if (!matricNumber) throw new Error("Matric number not found.");
-    const safeMatricNumber = matricNumber.replace(/\//g, '-');
-    const resp = await fetch(`${API_BASE}/student/matric/${safeMatricNumber}/assignment/${index}`, {
-      method: "DELETE",
-      headers: { "Authorization": "Bearer " + token }
-    });
-    let data;
-    try { data = await resp.json(); } catch (e) { data = {}; }
-    if (!resp.ok) throw new Error(data.message || "Delete failed");
-    await reloadDashboard();
-    showToastModal("Deleted!", "Assignment deleted.", "success");
-    setTimeout(hideToastModal, 1500);
-  } catch (err) {
-    showToastModal("Error", err.message, "error");
-    setTimeout(hideToastModal, 2000);
-  }
-}
-
-// PAGINATED assignment history rendering for student dashboard
-
-const ASSIGNMENTS_PER_PAGE = 5; // Number of items per page
-let assignmentCurrentPage = 1;
-let totalAssignmentPages = 1;
-
-function renderAssignmentHistoryPaginated(assignmentHistory) {
-  const history = document.getElementById("assignmentHistory");
-  const pagination = document.getElementById("assignmentPagination");
-
-  if (!assignmentHistory || !assignmentHistory.length) {
-    history.innerHTML = `<div class="text-gray-400 text-center">No assignments submitted yet.</div>`;
-    if (pagination) pagination.innerHTML = "";
-    return;
-  }
-
-  // Pagination calculations
-  totalAssignmentPages = Math.ceil(assignmentHistory.length / ASSIGNMENTS_PER_PAGE) || 1;
-  assignmentCurrentPage = Math.min(Math.max(assignmentCurrentPage, 1), totalAssignmentPages);
-  const startIdx = (assignmentCurrentPage - 1) * ASSIGNMENTS_PER_PAGE;
-  const endIdx = startIdx + ASSIGNMENTS_PER_PAGE;
-  const pageAssignments = assignmentHistory.slice(startIdx, endIdx);
-
-  // Render assignment items
-  history.innerHTML = pageAssignments.map((a, idx) => `
-    <div class="flex flex-col md:flex-row items-center bg-gray-50 rounded-lg shadow-sm px-4 py-3 gap-4">
-      <div class="flex-1 min-w-0">
-        <div class="font-semibold text-indigo-700">${a.title || a.fileName || "Assignment"}</div>
-        <div class="text-xs text-gray-500">Submitted: ${a.historyDate ? new Date(a.historyDate).toLocaleString() : (a.date ? new Date(a.date).toLocaleString() : "")}</div>
-        ${a.mark ? `<div class="text-xs text-green-700">Mark: ${a.mark}</div>` : ""}
-        ${a.status ? `<div class="text-xs text-indigo-700">Status: ${a.status}</div>` : ""}
+  <!-- ================= TOP NAVIGATION BAR ================= -->
+  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 py-3">
+    <div class="max-w-xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button class="p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition" onclick="toggleNavMenu()">
+          <i class="bi bi-list text-2xl"></i>
+        </button>
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md shadow-indigo-200">
+            C
+          </div>
+          <div>
+            <h1 class="text-base font-bold text-slate-900 tracking-tight leading-none">CODECX Institute</h1>
+            <p class="text-[11px] font-medium text-indigo-600 mt-0.5">Web Developer Program</p>
+          </div>
+        </div>
       </div>
-      <div class="flex gap-2 mt-2 md:mt-0">
-        <button class="px-3 py-1 bg-gray-200 text-indigo-700 rounded font-semibold hover:bg-indigo-100"
-          onclick="previewAssignmentHistory(${startIdx + idx})">
-          <i class="bi bi-eye-fill mr-1"></i> Preview
+
+      <div class="flex items-center gap-2">
+        <button class="relative p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition">
+          <i class="bi bi-bell text-xl"></i>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-indigo-600 rounded-full ring-2 ring-white"></span>
+        </button>
+
+        <div class="flex items-center gap-2 pl-1">
+          <div class="relative">
+            <img id="studentAvatar" class="w-9 h-9 rounded-full object-cover ring-2 ring-indigo-500/20" src="https://ui-avatars.com/api/?name=User" alt="avatar" />
+            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full ring-2 ring-white"></span>
+          </div>
+          <span id="studentNameHeader" class="hidden sm:inline text-xs font-semibold text-slate-700 truncate max-w-[90px]"></span>
+          <button onclick="logout()" title="Logout" class="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition">
+            <i class="bi bi-box-arrow-right text-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN DASHBOARD CONTAINER ================= -->
+  <main class="max-w-xl mx-auto px-4 pt-4">
+
+    <!-- GREETING SECTION -->
+    <div class="mb-5">
+      <h2 class="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+        Good Morning, <span id="studentGreetingName">Developer</span>! 👋
+      </h2>
+      <p class="text-xs font-medium text-slate-500 mt-1">Let's make today productive and write clean code.</p>
+    </div>
+
+    <!-- TAB CONTENT: HOME (DASHBOARD) -->
+    <div id="tab-home" class="tab-content active space-y-5">
+      
+      <!-- HERO BANNER / DAILY CHALLENGE -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800 p-6 text-white shadow-xl shadow-indigo-200">
+        <div class="relative z-10 max-w-[65%]">
+          <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[11px] font-semibold text-indigo-100 mb-2">
+            Masterclass Active
+          </span>
+          <h3 class="text-xl font-bold tracking-tight">Daily Challenge & Live Labs</h3>
+          <p class="text-xs text-indigo-100/90 mt-1.5 leading-relaxed">
+            Boost your practical skills by completing today's quiz & assignment.
+          </p>
+          <button onclick="switchTab('tab-courses')" class="mt-4 px-5 py-2.5 bg-white text-indigo-700 rounded-full font-bold text-xs shadow-lg hover:bg-indigo-50 transition flex items-center gap-2">
+            <span>Start Practice</span>
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+        <!-- Decorative 3D Illustration Graphic Placeholder -->
+        <div class="absolute -right-2 -bottom-4 w-40 h-40 pointer-events-none opacity-90">
+          <div class="w-full h-full bg-gradient-to-tr from-purple-400/30 to-indigo-300/20 rounded-full blur-2xl"></div>
+          <i class="bi bi-code-square text-9xl text-white/10 absolute top-2 right-2"></i>
+        </div>
+      </div>
+
+      <!-- 2x2 FEATURE GRID CARDS (Matching Screenshot 1) -->
+      <div class="grid grid-cols-2 gap-3.5">
+        
+        <!-- Card 1: Masterclass & Labs -->
+        <div onclick="switchTab('tab-courses')" class="group bg-white p-4 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="w-11 h-11 rounded-2xl bg-blue-500 text-white flex items-center justify-center text-xl shadow-md shadow-blue-100 mb-3">
+              <i class="bi bi-camera-video-fill"></i>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 group-hover:text-indigo-600 transition">Masterclass Labs</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">Live sessions & videos</p>
+          </div>
+          <div class="flex items-center justify-end mt-3">
+            <i class="bi bi-arrow-right text-slate-300 group-hover:text-indigo-600 transition"></i>
+          </div>
+        </div>
+
+        <!-- Card 2: Resources & Notes -->
+        <a href="resource.html" target="_blank" class="group bg-white p-4 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="w-11 h-11 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-xl shadow-md shadow-emerald-100 mb-3">
+              <i class="bi bi-journal-richtext"></i>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 group-hover:text-indigo-600 transition">Resources</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">Notes & hand-outs</p>
+          </div>
+          <div class="flex items-center justify-end mt-3">
+            <i class="bi bi-arrow-right text-slate-300 group-hover:text-indigo-600 transition"></i>
+          </div>
+        </a>
+
+        <!-- Card 3: My Courses -->
+        <div onclick="switchTab('tab-courses')" class="group bg-white p-4 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="w-11 h-11 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-xl shadow-md shadow-purple-100 mb-3">
+              <i class="bi bi-mortarboard-fill"></i>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 group-hover:text-indigo-600 transition">My Courses</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">Track learning scope</p>
+          </div>
+          <div class="flex items-center justify-end mt-3">
+            <i class="bi bi-arrow-right text-slate-300 group-hover:text-indigo-600 transition"></i>
+          </div>
+        </div>
+
+        <!-- Card 4: Assignments & Tasks -->
+        <div onclick="switchTab('tab-assignments')" class="group bg-white p-4 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="w-11 h-11 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-xl shadow-md shadow-amber-100 mb-3">
+              <i class="bi bi-trophy-fill"></i>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 group-hover:text-indigo-600 transition">Assignments</h4>
+            <p class="text-[11px] text-slate-500 mt-0.5">Upload & grades</p>
+          </div>
+          <div class="flex items-center justify-end mt-3">
+            <i class="bi bi-arrow-right text-slate-300 group-hover:text-indigo-600 transition"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- WHATSAPP & ACCESS BANNER (Account Manager Style) -->
+      <div id="masterclassSection" class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 text-center relative overflow-hidden">
+        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3">
+          <i class="bi bi-shield-lock-fill"></i>
+        </div>
+        <h3 class="font-bold text-slate-900 text-base">Masterclass Access & Community</h3>
+        <p class="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
+          Access private live classes, mentor support, and our official developer group on WhatsApp.
+        </p>
+
+        <i class="bi bi-lock-fill padlock-icon text-3xl text-amber-500 my-2 block" style="display:none"></i>
+        
+        <div id="unlockMessage" class="my-3 text-xs text-indigo-700 font-semibold hidden bg-indigo-50 p-2.5 rounded-xl">
+          <i class="bi bi-lock-fill mr-1"></i> These features are locked. Please complete payment to unlock full access!
+        </div>
+
+        <div class="mt-4">
+          <button id="whatsappGroupBtn" class="w-full py-3 bg-emerald-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-emerald-700 transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:pointer-events-none">
+            <i class="bi bi-whatsapp text-base"></i> Join WhatsApp Community
+          </button>
+          <p id="whatsappNote" class="text-[11px] text-slate-400 mt-2"></p>
+        </div>
+      </div>
+
+      <!-- MASTERCLASS LINKS DETAILED -->
+      <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-5 space-y-3">
+        <h3 class="font-bold text-sm text-slate-900 mb-1">Quick Resource Links</h3>
+        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
+          <div class="flex items-center gap-3">
+            <i class="bi bi-collection-play-fill text-indigo-600 text-lg"></i>
+            <span class="text-xs font-semibold text-slate-700">Video Library</span>
+          </div>
+          <a href="video-resources.html" id="videoLibraryLink" target="_blank" class="text-xs font-bold text-indigo-600 hover:underline">Browse</a>
+        </div>
+        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
+          <div class="flex items-center gap-3">
+            <i class="bi bi-code-slash text-purple-600 text-lg"></i>
+            <span class="text-xs font-semibold text-slate-700">Challenges & Projects</span>
+          </div>
+          <a href="challenge.html" id="challengesLink" target="_blank" class="text-xs font-bold text-indigo-600 hover:underline">View</a>
+        </div>
+        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
+          <div class="flex items-center gap-3">
+            <i class="bi bi-journal-check text-emerald-600 text-lg"></i>
+            <span class="text-xs font-semibold text-slate-700">Developer Notes</span>
+          </div>
+          <a href="resource.html" id="resourcesLink" target="_blank" class="text-xs font-bold text-indigo-600 hover:underline">Access</a>
+        </div>
+        <div class="p-3 bg-indigo-50/50 rounded-2xl text-xs text-indigo-900">
+          <span class="font-bold">Next Session:</span> <span id="nextSession" class="font-medium">TBA</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB CONTENT: COURSES & PROGRESS -->
+    <div id="tab-courses" class="tab-content space-y-5">
+      
+      <!-- COURSES SECTION -->
+      <section class="bg-white rounded-3xl border border-slate-100 shadow-sm p-5" id="coursesSection">
+        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+          <i class="bi bi-journal-bookmark-fill text-indigo-600"></i> Enrolled Courses
+        </h3>
+        <div id="coursesList" class="flex flex-wrap gap-2 mb-4"></div>
+        
+        <div class="flex gap-2">
+          <select id="courseSelect" class="flex-1 px-3 py-2 border border-slate-200 rounded-2xl text-xs font-medium bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <option value="">-- Select Course --</option>
+            <option value="HTML Only">HTML Only</option>
+            <option value="CSS Only">CSS Only</option>
+            <option value="JavaScript Only">JavaScript Only</option>
+            <option value="HTML and CSS only">HTML and CSS only</option>
+            <option value="HTML and JavaScript only">HTML and JavaScript only</option>
+            <option value="CSS and JavaScript Only">CSS and JavaScript Only</option>
+            <option value="All three">All three (HTML, CSS, JS)</option>
+            <option value="Full Backend">Full Backend</option>
+            <option value="FullStack">FullStack</option>
+            <option value="Coupon Code">Coupon Code</option>
+          </select>
+          <button onclick="addCourse()" class="px-4 py-2 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition">
+            Add
+          </button>
+        </div>
+      </section>
+
+      <!-- PROGRESS SECTION -->
+      <section class="bg-white rounded-3xl border border-slate-100 shadow-sm p-5" id="progressSection">
+        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center justify-between">
+          <span>Learning Progress</span>
+          <i class="bi bi-bar-chart-line-fill text-indigo-600"></i>
+        </h3>
+        <div id="progressBar" class="w-full bg-slate-100 rounded-full h-3 mb-4 overflow-hidden">
+          <div id="progressBarFill" class="bg-indigo-600 h-full rounded-full transition-all duration-500" style="width: 0%;"></div>
+        </div>
+        <div id="progressSummary" class="mb-4 text-xs font-semibold text-slate-600"></div>
+        <div id="progressGrid" class="space-y-3 max-h-[400px] overflow-y-auto pr-1"></div>
+      </section>
+
+    </div>
+
+    <!-- TAB CONTENT: ASSIGNMENTS -->
+    <div id="tab-assignments" class="tab-content space-y-5">
+      <section class="bg-white rounded-3xl border border-slate-100 shadow-sm p-5" id="assignmentSection">
+        <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+          <i class="bi bi-cloud-arrow-up-fill text-indigo-600"></i> Assignment Submission
+        </h3>
+        
+        <form id="assignmentForm" class="flex flex-col gap-3 mb-6">
+          <input id="assignmentInput" type="file" class="block w-full text-xs text-slate-500 border border-slate-200 rounded-2xl p-2.5 bg-slate-50 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-100 file:text-indigo-700 hover:file:bg-indigo-200" />
+          <button type="button" onclick="submitAssignment()" class="w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition flex items-center justify-center gap-1.5">
+            <i class="bi bi-cloud-arrow-up text-base"></i> Submit Assignment
+          </button>
+          <span id="assignmentStatus" class="text-center text-xs text-emerald-600 font-bold"></span>
+        </form>
+
+        <div>
+          <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <i class="bi bi-clock-history text-indigo-500"></i> Submission History
+          </h4>
+          <div id="assignmentHistory" class="space-y-3"></div>
+          <div id="assignmentPagination" class="flex justify-center items-center gap-2 mt-4 text-xs"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- TAB CONTENT: COMMUNITY & CHAT -->
+    <div id="tab-chat" class="tab-content space-y-5">
+      <section class="bg-white rounded-3xl border border-slate-100 shadow-sm p-5">
+        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+          <i class="bi bi-chat-dots-fill text-indigo-600"></i> Developer Community Chat
+        </h3>
+        <div id="chatArea" class="h-80 overflow-y-auto bg-slate-50 rounded-2xl p-3 border border-slate-100 mb-3 space-y-2">
+          <!-- Chat messages render here -->
+        </div>
+        <form id="chatForm" class="flex gap-2">
+          <input id="chatInput" type="text" placeholder="Ask a question or share ideas..." class="flex-1 px-4 py-2.5 border border-slate-200 rounded-2xl text-xs bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500" autocomplete="off"/>
+          <button type="submit" class="px-5 py-2.5 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition">
+            Send
+          </button>
+        </form>
+      </section>
+
+      <!-- ADMIN NOTES -->
+      <section class="bg-white rounded-3xl border border-slate-100 shadow-sm p-5" id="notesSection">
+        <h3 class="text-sm font-bold text-slate-900 mb-2">Admin Announcements</h3>
+        <div id="adminNote" class="text-xs text-slate-600 bg-amber-50/50 border border-amber-100 rounded-2xl p-3"></div>
+      </section>
+    </div>
+
+    <!-- TAB CONTENT: PROFILE & PAYMENTS -->
+    <div id="tab-profile" class="tab-content space-y-5">
+      
+      <!-- PROFILE CARD -->
+      <section class="bg-white rounded-3xl border border-slate-100 shadow-sm p-5" id="profileSection">
+        <div class="flex items-center gap-4 mb-4">
+          <img id="studentPassport" class="w-16 h-16 rounded-full object-cover ring-4 ring-indigo-50 border" src="" alt="Passport"/>
+          <div class="min-w-0 flex-1">
+            <h3 id="studentFullName" class="text-base font-bold text-slate-900 truncate"></h3>
+            <p id="studentMatric" class="text-xs font-semibold text-slate-500 truncate"></p>
+            <p id="studentEmail" class="text-xs text-slate-400 truncate mt-0.5"></p>
+            <p id="studentPhone" class="text-xs text-slate-400 truncate"></p>
+            <div id="studentStatus" class="mt-2 text-xs"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAYMENTS SECTION -->
+      <section class="bg-white rounded-3xl border border-slate-100 shadow-sm p-5" id="paymentsSection">
+        <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center justify-between">
+          <span>Payment History</span>
+          <i class="bi bi-credit-card-fill text-indigo-600"></i>
+        </h3>
+        <div id="paymentStatus" class="text-xs font-medium text-slate-600 mb-3"></div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead>
+              <tr class="border-b border-slate-100 text-slate-400">
+                <th class="py-2 px-1">Date</th>
+                <th class="py-2 px-1">Amount</th>
+                <th class="py-2 px-1">Status</th>
+                <th class="py-2 px-1">Ref</th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTable" class="divide-y divide-slate-50"></tbody>
+          </table>
+        </div>
+        <button id="payNowBtn" class="mt-4 w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition">
+          Pay Now via Paystack
+        </button>
+      </section>
+
+      <!-- ACTIVITY LOG -->
+      <section class="bg-white rounded-3xl border border-slate-100 shadow-sm p-5" id="activitySection">
+        <h3 class="text-base font-bold text-slate-900 mb-3">Activity Log</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead>
+              <tr class="border-b border-slate-100 text-slate-400">
+                <th class="py-2 px-1">Date</th>
+                <th class="py-2 px-1">Activity</th>
+                <th class="py-2 px-1">Status</th>
+              </tr>
+            </thead>
+            <tbody id="activityTable" class="divide-y divide-slate-50"></tbody>
+          </table>
+        </div>
+        <div class="mt-3 text-xs text-indigo-600 font-semibold" id="attendanceStatus"></div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- ================= FLOATING CENTER ACTION BOTTOM NAVIGATION ================= -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-lg border-t border-slate-100 px-6 py-2">
+    <div class="max-w-md mx-auto flex items-center justify-between relative">
+      
+      <!-- Nav Item 1: Home -->
+      <button onclick="switchTab('tab-home')" class="nav-btn flex flex-col items-center gap-1 text-indigo-600" data-tab="tab-home">
+        <i class="bi bi-house-door-fill text-xl"></i>
+        <span class="text-[10px] font-bold">Home</span>
+      </button>
+
+      <!-- Nav Item 2: Courses/Progress -->
+      <button onclick="switchTab('tab-courses')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600" data-tab="tab-courses">
+        <i class="bi bi-journal-text text-xl"></i>
+        <span class="text-[10px] font-medium">Learning</span>
+      </button>
+
+      <!-- CENTER FLOATING ACTION SHIELD BUTTON (Matching Screenshot 1 & 2) -->
+      <div class="relative -top-5">
+        <button onclick="openQuickActions()" class="w-13 h-13 bg-indigo-600 text-white rounded-full p-3.5 shadow-xl shadow-indigo-300 ring-4 ring-slate-50 flex items-center justify-center hover:bg-indigo-700 transition transform active:scale-95">
+          <i class="bi bi-shield-fill-check text-2xl"></i>
         </button>
       </div>
+
+      <!-- Nav Item 3: Chat -->
+      <button onclick="switchTab('tab-chat')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600" data-tab="tab-chat">
+        <i class="bi bi-chat-dots text-xl"></i>
+        <span class="text-[10px] font-medium">Community</span>
+      </button>
+
+      <!-- Nav Item 4: Profile -->
+      <button onclick="switchTab('tab-profile')" class="nav-btn flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600" data-tab="tab-profile">
+        <i class="bi bi-person text-xl"></i>
+        <span class="text-[10px] font-medium">Profile</span>
+      </button>
+
     </div>
-  `).join("");
+  </nav>
 
-  // Render pagination controls
-  if (pagination) {
-    pagination.innerHTML = totalAssignmentPages > 1 ? `
-      <button
-        class="px-2 py-1 rounded bg-gray-200 hover:bg-indigo-100"
-        onclick="assignmentPrevPage()" ${assignmentCurrentPage === 1 ? 'disabled' : ''}
-      >&larr; Prev</button>
-      <span class="px-3 font-semibold text-indigo-700">Page ${assignmentCurrentPage} of ${totalAssignmentPages}</span>
-      <button
-        class="px-2 py-1 rounded bg-gray-200 hover:bg-indigo-100"
-        onclick="assignmentNextPage()" ${assignmentCurrentPage === totalAssignmentPages ? 'disabled' : ''}
-      >Next &rarr;</button>
-    ` : "";
-  }
-}
-
-// Pagination button handlers
-function assignmentPrevPage() {
-  if (assignmentCurrentPage > 1) {
-    assignmentCurrentPage--;
-    renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
-  }
-}
-function assignmentNextPage() {
-  if (assignmentCurrentPage < totalAssignmentPages) {
-    assignmentCurrentPage++;
-    renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
-  }
-}
-
-// On page load or assignment update, call:
-document.addEventListener("DOMContentLoaded", function() {
-  renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
-});
-
-// Whenever assignments change, call:
-// renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
-
-// Helper to escape HTML for safe code preview
-function escapeHtml(text) {
-  return text.replace(/[&<>"']/g, function (m) {
-    return (
-      {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      }[m]
-    );
-  });
-}
-
-function getExtension(filename) {
-  return filename?.split('.').pop().toLowerCase();
-}
-
-// Main preview function for assignment history
-function previewAssignmentHistory(index) {
-  const assignment = (window.student?.assignmentHistory || [])[index];
-  if (!assignment) return;
-
-  const downloadLink = assignment.fileData
-    ? `<a href="data:${assignment.fileType};base64,${assignment.fileData}" download="${assignment.fileName}" target="_blank"
-      style="color:#6366f1;font-weight:bold;text-decoration:underline;">Download File</a>`
-    : `<div class="text-gray-500">No download available.</div>`;
-
-  const ext = getExtension(assignment.fileName);
-
-  let previewHtml = "";
-  if (assignment.fileType.startsWith("image/")) {
-    previewHtml = `<img src="data:${assignment.fileType};base64,${assignment.fileData}" style="max-width:100%;max-height:300px;border-radius:9px;box-shadow:0 2px 16px #6366f155;" />`;
-  } else if (assignment.fileType === "application/pdf") {
-    previewHtml = `<iframe src="data:application/pdf;base64,${assignment.fileData}" width="100%" height="400" style="border-radius:8px;border:1px solid #eee;"></iframe>`;
-  } else if (
-    assignment.fileType.startsWith("text/") ||
-    ["application/javascript", "text/html", "text/css"].includes(assignment.fileType) ||
-    ["js", "css", "html", "txt"].includes(ext)
-  ) {
-    let decoded = "";
-    try {
-      decoded = atob(assignment.fileData);
-    } catch (e) {
-      decoded = "Unable to decode file data.";
-    }
-
-    let codeType = ext;
-    let codeBlock = "";
-    if (ext === "html") {
-      codeBlock += `<div style="margin-bottom:1.2em;">
-        <span style="font-weight:600;color:#4338ca;">Live HTML Preview:</span>
-        <iframe srcdoc="${escapeHtml(decoded)}" style="width:98%;height:160px;border:1px solid #eee;border-radius:7px;background:white;box-shadow:0 2px 12px #6366f122;"></iframe>
-      </div>`;
-      codeType = "html";
-    }
-    // Use Prism.js classes for syntax highlighting
-    codeBlock += `<pre style="max-height:180px;overflow:auto;text-align:left;background:#f8fafc;border-radius:8px;padding:0.7em;font-size:0.97em;">
-      <code class="language-${codeType}">${escapeHtml(decoded)}</code>
-    </pre>`;
-    previewHtml = codeBlock;
-  } else {
-    previewHtml = `<div class="text-gray-500">Preview not available for this file type. Please download to view.</div>`;
-  }
-
-  let html = `<div style="text-align:center;">
-    <h2 style="font-size:1.2rem;color:#6366f1;font-weight:700;">${assignment.title || assignment.fileName}</h2>
-    <div style="margin:1rem 0;">Submitted: ${assignment.historyDate ? new Date(assignment.historyDate).toLocaleString() : (assignment.date ? new Date(assignment.date).toLocaleString() : "")}</div>
-    <div style="margin-bottom:1rem;">${previewHtml}</div>
-    <div style="margin-bottom:1.3em;">${downloadLink}</div>
-    ${assignment.mark ? `<div>Mark: <b>${assignment.mark}</b></div>` : ""}
-    ${assignment.status ? `<div>Status: <b>${assignment.status}</b></div>` : ""}
-  </div>`;
-  showToastModal("Assignment Preview", html, "info");
-
-  // Wait for modal to render, then trigger Prism
-  setTimeout(() => {
-    if (window.Prism) Prism.highlightAll();
-  }, 100);
-}
+  <!-- ================= QUICK ACTIONS BOTTOM SHEET MODAL (Matching Screenshot 2) ================= -->
+  <div id="quickActionsModal" class="fixed inset-0 z-50 modal-blur flex items-end justify-center hidden">
+    <div class="bg-white w-full max-w-xl rounded-t-3xl p-6 shadow-2xl animate-slide-up relative">
+      <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-4"></div>
       
-// On page load, fetch and render dashboard
-window.addEventListener('DOMContentLoaded', reloadDashboard);
-    
-// --- Optionally: expose initChat for manual reload ---
-window.reloadChat = initChat;
-window.addCourse = addCourse;
-window.removeCourse = removeCourse;
-window.submitAssignment = submitAssignment;
-window.closeDayQuizModal = closeDayQuizModal;
-window.showQuizModal = showQuizModal;
-window.logout = logout;
-window.closePaymentModal = closePaymentModal;
-window.closeReceipt = closeReceipt;
-        function toggleQuickActions() {
-            const modal = document.getElementById('quickActionsModal');
-            modal.classList.toggle('hidden');
-        }
-    </script>
+      <div class="text-center mb-5">
+        <h3 class="text-lg font-bold text-slate-900">Quick Actions</h3>
+        <p class="text-xs text-slate-500">Select what you would like to do or access</p>
+      </div>
 
+      <!-- Category Pill -->
+      <div class="bg-slate-900 text-white rounded-2xl p-3.5 mb-4 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-xl bg-amber-500 text-white flex items-center justify-center text-sm font-bold">
+            <i class="bi bi-mortarboard-fill"></i>
+          </div>
+          <span class="text-xs font-bold uppercase tracking-wider">ACADEMIC DASHBOARD AREA</span>
+        </div>
+        <i class="bi bi-chevron-right text-slate-400 text-sm"></i>
+      </div>
+
+      <!-- Action Grid -->
+      <div class="grid grid-cols-2 gap-3 mb-5">
+        
+        <button onclick="closeQuickActions(); switchTab('tab-courses')" class="bg-amber-50/60 p-3.5 rounded-2xl border border-amber-100 text-left hover:bg-amber-100/50 transition">
+          <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg mb-2">
+            <i class="bi bi-question-circle-fill"></i>
+          </div>
+          <h5 class="font-bold text-xs text-slate-900">Take Daily Quizzes</h5>
+          <p class="text-[10px] text-slate-500">Practice questions & tests</p>
+        </button>
+
+        <button onclick="closeQuickActions(); switchTab('tab-assignments')" class="bg-purple-50/60 p-3.5 rounded-2xl border border-purple-100 text-left hover:bg-purple-100/50 transition">
+          <div class="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center text-lg mb-2">
+            <i class="bi bi-upload"></i>
+          </div>
+          <h5 class="font-bold text-xs text-slate-900">Upload Assignment</h5>
+          <p class="text-[10px] text-slate-500">Submit homework files</p>
+        </button>
+
+        <a href="resource.html" target="_blank" onclick="closeQuickActions()" class="bg-emerald-50/60 p-3.5 rounded-2xl border border-emerald-100 text-left hover:bg-emerald-100/50 transition block">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg mb-2">
+            <i class="bi bi-book-fill"></i>
+          </div>
+          <h5 class="font-bold text-xs text-slate-900">Study Resources</h5>
+          <p class="text-[10px] text-slate-500">Handouts & cheat sheets</p>
+        </a>
+
+        <button onclick="closeQuickActions(); switchTab('tab-profile')" class="bg-blue-50/60 p-3.5 rounded-2xl border border-blue-100 text-left hover:bg-blue-100/50 transition">
+          <div class="w-9 h-9 rounded-xl bg-blue-500 text-white flex items-center justify-center text-lg mb-2">
+            <i class="bi bi-credit-card-2-front-fill"></i>
+          </div>
+          <h5 class="font-bold text-xs text-slate-900">Payments & Ref</h5>
+          <p class="text-[10px] text-slate-500">Manage subscriptions</p>
+        </button>
+
+      </div>
+
+      <button onclick="closeQuickActions()" class="w-full py-3 bg-slate-100 text-slate-700 rounded-2xl font-bold text-xs hover:bg-slate-200 transition">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= PAYMENT MODAL ================= -->
+  <div class="fixed inset-0 z-50 modal-blur flex items-center justify-center hidden p-4" id="paymentModalBg">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl relative text-center" id="paymentModal">
+      <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold" onclick="closePaymentModal()">&times;</button>
+      <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3">
+        <i class="bi bi-credit-card-2-front"></i>
+      </div>
+      <h3 class="font-bold text-base text-slate-900 mb-1">Pay for Masterclass</h3>
+      <p class="text-xs text-slate-500 mb-5">Complete your payment securely with Paystack. Your dashboard will update automatically.</p>
+      
+      <div class="space-y-2">
+        <a href="https://paystack.shop/pay/codec" target="_blank" class="w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition flex items-center justify-center gap-1.5" id="paystackProceedBtn">
+          <i class="bi bi-arrow-right-circle"></i> Proceed to Paystack
+        </a>
+        <button class="w-full py-3 bg-slate-100 text-slate-600 rounded-2xl font-bold text-xs hover:bg-slate-200 transition" onclick="closePaymentModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DAY QUIZ MODAL ================= -->
+  <div class="fixed inset-0 z-50 modal-blur flex items-center justify-center hidden p-4" id="dayQuizModalBg">
+    <div class="bg-white rounded-3xl p-6 max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl relative" id="dayQuizModal">
+      <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold" onclick="closeDayQuizModal()">&times;</button>
+      <div id="dayQuizContent"></div>
+    </div>
+  </div>
+
+  <!-- ================= RECEIPT MODAL ================= -->
+  <div id="receiptModal" class="fixed inset-0 z-50 modal-blur flex items-center justify-center hidden p-4">
+    <div class="bg-white p-6 rounded-3xl shadow-2xl relative max-w-md w-full">
+      <button onclick="closeReceipt()" class="absolute top-4 right-4 text-slate-400 text-xl font-bold">&times;</button>
+      <div id="receiptModalContent"></div>
+    </div>
+  </div>
+
+  <!-- ================= WELCOME MODAL ================= -->
+  <div id="welcomeModalBg" class="fixed inset-0 z-50 modal-blur flex items-center justify-center hidden p-4">
+    <div id="welcomeModal" class="bg-white rounded-3xl shadow-2xl p-6 max-w-md w-full relative">
+      <button aria-label="Close" onclick="closeWelcomeModal()" class="absolute top-4 right-4 text-xl text-slate-400 hover:text-slate-600 font-bold">&times;</button>
+      <div id="welcomeSlides"></div>
+      <div class="flex justify-between items-center mt-6">
+        <button id="welcomePrevBtn" onclick="welcomePrevSlide()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold hover:bg-slate-200 transition">Previous</button>
+        <button id="welcomeNextBtn" onclick="welcomeNextSlide()" class="px-5 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition">Next</button>
+      </div>
+      <div class="flex justify-center mt-4">
+        <div id="welcomeDots" class="flex gap-1.5"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JARS & LOGIC SCRIPT (COMPLETE & UNTOUCHED API LOGIC) ================= -->
+  <script>
+    // Tab switching logic
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if(btn.dataset.tab === tabId) {
+          btn.classList.add('text-indigo-600');
+          btn.classList.remove('text-slate-400');
+          btn.querySelector('span').classList.add('font-bold');
+        } else {
+          btn.classList.remove('text-indigo-600');
+          btn.classList.add('text-slate-400');
+          btn.querySelector('span').classList.remove('font-bold');
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Quick Actions Modal
+    function openQuickActions() {
+      document.getElementById('quickActionsModal').classList.remove('hidden');
+    }
+    function closeQuickActions() {
+      document.getElementById('quickActionsModal').classList.add('hidden');
+    }
+
+    // Welcome modal slides content
+    const welcomeSlides = [
+      {
+        title: "Welcome to CODECX Student Dashboard!",
+        body: `<p>Hi <span id="welcomeStudentName" class="font-bold text-indigo-700"></span> 👋, we're thrilled to have you at CODECX Institute for Developers!</p>
+        <p class="mt-2 text-xs text-slate-500">This dashboard is your all-in-one portal for your learning journey.</p>`
+      },
+      {
+        title: "Explore Your Dashboard",
+        body: `<ul class="list-disc pl-5 mb-2 text-xs text-slate-600 space-y-1">
+          <li><b>Profile:</b> View and update your details.</li>
+          <li><b>Masterclass Features:</b> Join live sessions, access videos, and download resources.</li>
+          <li><b>Community & Chat:</b> Interact with peers, ask questions, and get instant help.</li>
+          <li><b>Assignments:</b> Submit and track your assignment submissions easily.</li>
+          <li><b>Progress:</b> Monitor your progress, course completion, and achievements.</li>
+        </ul>`
+      },
+      {
+        title: "Next Steps",
+        body: `<p class="text-xs text-slate-600 space-y-1">
+          <b>1.</b> <span class="text-indigo-700">Complete your profile</span> for a personalized experience.<br>
+          <b>2.</b> <span class="text-indigo-700">Make payment</span> to unlock masterclass features and join the WhatsApp group.<br>
+          <b>3.</b> <span class="text-indigo-700">Start learning!</span> Join live classes and participate in challenges.
+        </p>
+        <p class="mt-3 text-emerald-700 font-semibold text-xs">We're here to support you at every step. Enjoy your learning!</p>`
+      }
+    ];
+
+    let welcomeCurrentSlide = 0;
+    function showWelcomeModal(studentName = "") {
+      if (!localStorage.getItem('codecx_welcome_shown')) {
+        renderWelcomeSlide();
+        document.getElementById('welcomeModalBg').classList.remove('hidden');
+        setTimeout(() => {
+          const el = document.getElementById('welcomeStudentName');
+          if (el && studentName) el.textContent = studentName;
+        }, 0);
+        localStorage.setItem('codecx_welcome_shown', '1');
+      }
+    }
+    function closeWelcomeModal() {
+      document.getElementById('welcomeModalBg').classList.add('hidden');
+    }
+    function renderWelcomeSlide() {
+      const slide = welcomeSlides[welcomeCurrentSlide];
+      document.getElementById('welcomeSlides').innerHTML = `
+        <h3 class="text-base font-bold text-indigo-700 mb-2">${slide.title}</h3>
+        <div>${slide.body}</div>
+      `;
+      let dots = '';
+      for (let i = 0; i < welcomeSlides.length; i++) {
+        dots += `<span class="w-2 h-2 rounded-full ${i === welcomeCurrentSlide ? 'bg-indigo-600' : 'bg-slate-200'}"></span>`;
+      }
+      document.getElementById('welcomeDots').innerHTML = dots;
+      document.getElementById('welcomePrevBtn').style.display = (welcomeCurrentSlide === 0) ? "none" : "";
+      document.getElementById('welcomeNextBtn').textContent = (welcomeCurrentSlide === welcomeSlides.length - 1) ? "Finish" : "Next";
+    }
+    function welcomeNextSlide() {
+      if (welcomeCurrentSlide < welcomeSlides.length - 1) {
+        welcomeCurrentSlide++;
+        renderWelcomeSlide();
+      } else {
+        closeWelcomeModal();
+      }
+    }
+    function welcomePrevSlide() {
+      if (welcomeCurrentSlide > 0) {
+        welcomeCurrentSlide--;
+        renderWelcomeSlide();
+      }
+    }
+
+    const API_BASE = "https://examguide.onrender.com/api/codecxreg";
+    function showStudentLoader() {
+      if (document.getElementById('studentDataLoader')) return;
+      const loaderHtml = `
+        <div id="studentDataLoader" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md flex items-center justify-center">
+          <div class="bg-white p-6 rounded-3xl shadow-2xl text-center">
+            <div class="inline-block mb-3">
+              <svg width="48" height="48" viewBox="0 0 50 50" class="animate-spin">
+                <circle cx="25" cy="25" r="20" fill="none" stroke="#6366f1" stroke-width="5" stroke-linecap="round" stroke-dasharray="90,150"></circle>
+              </svg>
+            </div>
+            <div class="text-sm font-bold text-indigo-600">Loading your dashboard...</div>
+            <div class="text-xs text-slate-400 mt-1">Fetching student records</div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', loaderHtml);
+    }
+
+    function hideStudentLoader() {
+      const loader = document.getElementById('studentDataLoader');
+      if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 300);
+      }
+    }
+
+    function fetchStudentProfile(token) {
+      return fetch(`${API_BASE}/me`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch profile');
+        return res.json();
+      });
+    }
+
+    function fetchAssignments(token) {
+      return fetchStudentProfile(token).then(profile => profile.assignmentHistory || []);
+    }
+
+    function fetchPayments(token) {
+      return fetchStudentProfile(token).then(profile => profile.payments || []);
+    }
+
+    function loadDashboardData(token) {
+      showStudentLoader();
+      Promise.all([
+        fetchStudentProfile(token),
+        fetchAssignments(token),
+        fetchPayments(token)
+      ])
+      .then(([profile, assignments, payments]) => {
+        try {
+          window.student = profile;
+          window.assignments = assignments;
+          window.payments = payments;
+          renderAssignmentHistoryPaginated(assignments);
+          renderCourses();
+          renderPayments();
+          renderProgressSection();
+        } catch (err) {
+          console.error('Render error:', err);
+          showToast('Failed to render dashboard: ' + err, 'error');
+        }
+      })
+      .catch(err => {
+        console.error('Error loading dashboard:', err);
+        showToast('Failed to load dashboard: ' + err, 'error');
+      })
+      .finally(() => {
+        hideStudentLoader();
+      });
+    }
+
+    const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
+    let student = {};
+    let token = localStorage.getItem('codecx_token');
+
+    function showToast(msg, type = "info") {
+      Toastify({
+        text: msg,
+        duration: 8000,
+        gravity: "top",
+        position: "center",
+        backgroundColor: type === "success" ? "#16a34a" : type === "error" ? "#dc2626" : "#6366f1"
+      }).showToast();
+    }
+
+    function logout() {
+      localStorage.removeItem('codecx_token');
+      localStorage.removeItem('matricNumber');
+      window.location.href = "login.html";
+    }
+
+    function showReceiptModal(html) {
+      document.getElementById("receiptModalContent").innerHTML = html;
+      document.getElementById("receiptModal").classList.remove("hidden");
+    }
+    function closeReceipt() {
+      document.getElementById("receiptModal").classList.add("hidden");
+    }
+
+    document.getElementById("payNowBtn").onclick = function () {
+      document.getElementById("paymentModalBg").classList.remove("hidden");
+    };
+    function closePaymentModal() {
+      document.getElementById("paymentModalBg").classList.add("hidden");
+    }
+
+    function updateWhatsAppBtn() {
+      const btn = document.getElementById("whatsappGroupBtn");
+      const note = document.getElementById("whatsappNote");
+      if (student.hasPaid) {
+        btn.disabled = false;
+        btn.onclick = () => window.open(WS_GROUP_LINK, "_blank");
+        note.textContent = "Access to the closed WhatsApp group is reserved for paid students.";
+      } else {
+        btn.disabled = true;
+        btn.onclick = null;
+        note.textContent = "Pay for the masterclass to access the exclusive WhatsApp group.";
+      }
+    }
+
+    function formatDate(dt) {
+      const date = new Date(dt);
+      if (isNaN(date)) return "";
+      return date.toLocaleString();
+    }
+
+    function getQuizStatus(day) {
+      if (!student.activities) return { quiz: false, attendance: false };
+      const quizAct = student.activities.find(a => a.activity.startsWith(`Quiz completed - Day ${day}`));
+      const attAct = student.activities.find(a => a.activity === `Attendance marked - Day ${day}`);
+      return { quiz: !!quizAct, attendance: !!attAct };
+    }
+
+    async function fetchQuizForDay(day) {
+      try {
+        const response = await fetch('/quizzes.json');
+        if (!response.ok) throw new Error('Failed to load quizzes.json');
+        const data = await response.json();
+        const quiz = data.days.find(q => Number(q.day) === Number(day));
+        return quiz || null;
+      } catch (error) {
+        console.error('Error fetching quiz:', error);
+        return null;
+      }
+    }
+
+    async function renderProgressSection() {
+      const PROGRAM_START_DATE = new Date('2025-09-08T00:00:00Z');
+      const now = new Date();
+      const diffDays = Math.floor((now - PROGRAM_START_DATE) / (1000 * 60 * 60 * 24)) + 1;
+
+      const firstDayToShow = Math.max(1, diffDays - 20);
+      const daysToShow = [];
+      for (let day = diffDays; day >= firstDayToShow; day--) {
+        daysToShow.push(day);
+      }
+
+      const quizzes = await Promise.all(daysToShow.map(day => fetchQuizForDay(day)));
+      const progressSummary = document.getElementById("progressSummary");
+      const progressGrid = document.getElementById("progressGrid");
+
+      if (now < PROGRAM_START_DATE) {
+        progressSummary.textContent = "The program has not started yet.";
+        progressGrid.innerHTML = "";
+        return;
+      }
+      if (!quizzes.some(q => q)) {
+        progressSummary.textContent = "No quizzes found for these days.";
+        progressGrid.innerHTML = "";
+        return;
+      }
+
+      let html = quizzes.map((quiz, index) => {
+        const day = daysToShow[index];
+        if (!quiz) return `<div class="p-3 bg-slate-50 border rounded-2xl text-xs text-slate-400">No quiz for Day ${day}</div>`;
+        const status = getQuizStatus(day);
+        let card = `<div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-start relative">
+          <div class="font-bold text-sm text-slate-900">${quiz.topic}</div>
+          <div class="text-[10px] text-slate-400 mb-2">Day ${quiz.day}</div>
+          <div class="flex items-center gap-2">`;
+        if (status.quiz) {
+          card += `<span class="text-xs text-emerald-600 font-bold flex items-center gap-1"><i class="bi bi-check-circle-fill"></i> Quiz Done</span>`;
+        } else {
+          card += `<button class="px-3 py-1.5 text-xs font-bold bg-indigo-600 text-white rounded-xl shadow-sm quiz-btn" data-day="${quiz.day}">Take Quiz</button>`;
+        }
+        if (status.attendance) {
+          card += `<span class="text-xs text-emerald-600 font-bold flex items-center gap-1"><i class="bi bi-person-check-fill"></i> Attendance Marked</span>`;
+        } else if (status.quiz) {
+          card += `<button class="px-3 py-1.5 text-xs font-bold bg-emerald-600 text-white rounded-xl shadow-sm attendance-btn" data-day="${quiz.day}">Mark Attendance</button>`;
+        }
+        card += `</div></div>`;
+        return card;
+      }).join("");
+
+      progressSummary.textContent = `Showing quizzes for Days ${firstDayToShow} to ${diffDays}.`;
+      progressGrid.innerHTML = html;
+
+      document.querySelectorAll(".quiz-btn").forEach(btn => {
+        btn.onclick = async function () {
+          const day = parseInt(btn.getAttribute("data-day"), 10);
+          await showQuizModal(day);
+        };
+      });
+
+      document.querySelectorAll(".attendance-btn").forEach(btn => {
+        btn.onclick = async function () {
+          const day = parseInt(btn.getAttribute("data-day"), 10);
+          await markAttendance(day);
+        };
+      });
+    }
+
+    async function showQuizModal(day) {
+      try {
+        let data = await fetchQuizForDay(day);
+        if (!data || !data.questions) {
+          showToast("Could not load quiz", "error");
+          return;
+        }
+        let html = `<h3 class="text-base font-bold text-slate-900 mb-3">Day ${day} Quiz</h3>
+          <form id="quizForm" class="space-y-4">`;
+        data.questions.forEach((q, i) => {
+          html += `<div class="text-xs font-bold text-slate-800">Q${i + 1}: ${escapeHtml(q.question)}</div>`;
+          if (q.code) {
+            html += `<pre class="bg-slate-900 text-slate-100 rounded-xl p-2.5 text-xs overflow-x-auto"><code class="language-html">${escapeHtml(q.code)}</code></pre>`;
+          }
+          html += `<div class="space-y-1.5 mb-3">` +
+            q.options.map((opt) =>
+              `<label class="flex items-center gap-2 p-2 bg-slate-50 rounded-xl text-xs text-slate-700 hover:bg-indigo-50 cursor-pointer">
+                <input type="radio" name="q${i}" value="${escapeHtml(opt)}" class="text-indigo-600"/>
+                <span>${escapeHtml(opt)}</span>
+              </label>`
+            ).join("") + `</div>`;
+        });
+        html += `<div class="flex gap-2 pt-2">
+            <button type="submit" class="flex-1 py-2.5 bg-indigo-600 text-white rounded-xl font-bold text-xs" id="submitQuizBtn">Submit Quiz</button>
+            <button type="button" class="px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-xs" onclick="closeDayQuizModal()">Cancel</button>
+          </div>
+          </form>
+          <div id="quizResult" class="mt-3 text-xs"></div>`;
+        document.getElementById("dayQuizContent").innerHTML = html;
+        document.getElementById("dayQuizModalBg").classList.remove("hidden");
+
+        setTimeout(() => { if (window.Prism) Prism.highlightAll(); }, 100);
+
+        document.getElementById("quizForm").onsubmit = async function (e) {
+          e.preventDefault();
+          const submitBtn = document.getElementById("submitQuizBtn");
+          submitBtn.disabled = true;
+          const answers = [];
+          for (let i = 0; i < data.questions.length; i++) {
+            const ansInput = document.querySelector(`input[name="q${i}"]:checked`);
+            answers.push(ansInput ? ansInput.value : "");
+          }
+
+          try {
+            let score = 0;
+            let total = data.questions.length;
+            data.questions.forEach((q, idx) => {
+              if (answers[idx] === q.answer) score++;
+            });
+            const percent = Math.round((score / total) * 100);
+
+            document.getElementById("quizResult").innerHTML = `<div class="font-bold text-emerald-600">Quiz Score: ${score} / ${total} (${percent}%)</div>`;
+            await markQuizCompletedWithScore(day, score);
+            await markAttendance(day, true);
+            showToast(`Quiz Submitted! Score: ${score}/${total}`, "success");
+
+            setTimeout(() => {
+              closeDayQuizModal();
+              reloadDashboard();
+            }, 3000);
+          } catch (err) {
+            showToast(err.message, "error");
+            submitBtn.disabled = false;
+          }
+        };
+      } catch (err) {
+        showToast(err.message, "error");
+      }
+    }
+
+    async function markQuizCompletedWithScore(day, score) {
+      try {
+        const resp = await fetch(`${API_BASE}/activities`, {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ activity: `Quiz completed - Day ${day} (Score: ${score})` })
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.message);
+        return true;
+      } catch (err) {
+        throw new Error("Failed to record quiz completion: " + err.message);
+      }
+    }
+
+    async function markAttendance(day, auto = false) {
+      try {
+        const resp = await fetch(`${API_BASE}/activities`, {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ activity: `Attendance marked - Day ${day}` })
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.message);
+        return true;
+      } catch (err) {
+        if (!auto) showToast(err.message, "error");
+        return false;
+      }
+    }
+
+    function closeDayQuizModal() {
+      document.getElementById("dayQuizModalBg").classList.add("hidden");
+    }
+
+    async function reloadDashboard() {
+      if (!token) { logout(); return; }
+      try {
+        const resp = await fetch(`${API_BASE}/me`, {
+          headers: { "Authorization": "Bearer " + token }
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.message);
+        student = data;
+        window.student = student;
+
+        localStorage.setItem('matricNumber', student.matricNumber);
+
+        const avatarUrl = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
+        document.getElementById("studentAvatar").src = avatarUrl;
+        document.getElementById("studentPassport").src = avatarUrl;
+        document.getElementById("studentFullName").textContent = student.fullName;
+        document.getElementById("studentNameHeader").textContent = student.fullName;
+        
+        // Update greeting banner name
+        const greetingEl = document.getElementById("studentGreetingName");
+        if(greetingEl) greetingEl.textContent = student.fullName.split(' ')[0] || student.fullName;
+
+        document.getElementById("studentMatric").textContent = student.matricNumber;
+        document.getElementById("studentEmail").textContent = student.email;
+        document.getElementById("studentPhone").textContent = student.phone;
+        document.getElementById("studentStatus").innerHTML = student.hasPaid
+          ? `<span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Paid & Active</span>`
+          : `<span class="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold">Unpaid</span>`;
+        
+        updateWhatsAppBtn();
+
+        const locked = !student.hasPaid;
+        document.getElementById("masterclassSection").classList.toggle("locked", locked);
+        document.querySelector("#masterclassSection .padlock-icon").style.display = locked ? "block" : "none";
+        document.getElementById("unlockMessage").classList.toggle("hidden", !locked);
+
+        renderAssignmentHistoryPaginated(student.assignmentHistory || []);
+        renderCourses();
+        renderActivity();
+        renderPayments();
+        renderProgressSection();
+
+        document.getElementById("adminNote").textContent = student.adminNote || "No current announcements.";
+
+      } catch (err) {
+        showToast("Error loading dashboard: " + err.message, "error");
+        logout();
+      }
+    }
+
+    function renderCourses() {
+      const list = document.getElementById("coursesList");
+      list.innerHTML = "";
+      (student.courses || []).forEach(c => {
+        list.innerHTML += `<span class="px-3 py-1.5 rounded-2xl bg-indigo-50 text-indigo-700 text-xs font-bold flex items-center gap-1.5">
+          ${c.name}
+          <button class="text-rose-500 hover:text-rose-700" onclick="removeCourse('${c.name}')">&times;</button>
+        </span>`;
+      });
+    }
+
+    async function addCourse() {
+      const select = document.getElementById("courseSelect");
+      const courseName = select.value;
+      if (!courseName) { showToast("Select a course first", "error"); return; }
+      try {
+        const resp = await fetch(`${API_BASE}/courses`, {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+          body: JSON.stringify({ courseName })
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.message);
+        await reloadDashboard();
+        showToast("Course added successfully!", "success");
+      } catch (err) {
+        showToast(err.message, "error");
+      }
+    }
+
+    async function removeCourse(courseName) {
+      try {
+        const resp = await fetch(`${API_BASE}/courses`, {
+          method: "DELETE",
+          headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+          body: JSON.stringify({ courseName })
+        });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.message);
+        await reloadDashboard();
+        showToast("Course removed!", "success");
+      } catch (err) {
+        showToast(err.message, "error");
+      }
+    }
+
+    function renderActivity() {
+      const table = document.getElementById("activityTable");
+      table.innerHTML = "";
+      (student.activities || []).slice(-8).reverse().forEach(act => {
+        table.innerHTML += `
+          <tr class="text-slate-600">
+            <td class="py-2 px-1">${formatDate(act.date)}</td>
+            <td class="py-2 px-1 font-medium">${act.activity}</td>
+            <td class="py-2 px-1">${act.status || 'Done'}</td>
+          </tr>
+        `;
+      });
+      let latestAttendance = (student.activities || []).filter(a => /^Attendance marked - Day \d+$/.test(a.activity)).slice(-1)[0];
+      document.getElementById("attendanceStatus").textContent =
+        latestAttendance ? `Last attendance: ${formatDate(latestAttendance.date)}` : "No attendance marked yet.";
+    }
+
+    async function submitAssignment() {
+      const inp = document.getElementById("assignmentInput");
+      if (!inp.files[0]) { showToast("Select a file to upload.", "error"); return; }
+
+      try {
+        let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
+        if (!matricNumber) throw new Error("Matric number not found.");
+        const safeMatricNumber = matricNumber.replace(/\//g, '-');
+
+        const formData = new FormData();
+        formData.append("assignment", inp.files[0]);
+        formData.append("title", inp.files[0].name);
+
+        const resp = await fetch(`${API_BASE}/student/matric/${safeMatricNumber}/assignment`, {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + token },
+          body: formData
+        });
+
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.message || "Upload failed");
+
+        document.getElementById("assignmentStatus").textContent = "Submitted successfully!";
+        inp.value = "";
+        await reloadDashboard();
+        showToast("Assignment submitted!", "success");
+      } catch (err) {
+        showToast(err.message, "error");
+      }
+    }
+
+    function renderPayments() {
+      const tb = document.getElementById("paymentsTable");
+      tb.innerHTML = "";
+      (student.payments || []).slice(-6).reverse().forEach(p => {
+        tb.innerHTML += `
+          <tr class="text-slate-600">
+            <td class="py-2 px-1">${formatDate(p.date)}</td>
+            <td class="py-2 px-1 font-bold">₦${p.amount}</td>
+            <td class="py-2 px-1 text-emerald-600 font-medium">${p.status}</td>
+            <td class="py-2 px-1 font-mono">${p.ref}</td>
+          </tr>
+        `;
+      });
+      document.getElementById("paymentStatus").textContent =
+        student.hasPaid
+          ? `Last payment: ₦${student.payments?.slice(-1)[0]?.amount || ""} (Ref: ${student.lastPaymentRef || ""})`
+          : "No payment recorded yet.";
+    }
+
+    const ASSIGNMENTS_PER_PAGE = 5;
+    let assignmentCurrentPage = 1;
+    let totalAssignmentPages = 1;
+
+    function renderAssignmentHistoryPaginated(assignmentHistory) {
+      const history = document.getElementById("assignmentHistory");
+      const pagination = document.getElementById("assignmentPagination");
+
+      if (!assignmentHistory || !assignmentHistory.length) {
+        history.innerHTML = `<div class="text-slate-400 text-center py-4 text-xs">No assignments submitted yet.</div>`;
+        if (pagination) pagination.innerHTML = "";
+        return;
+      }
+
+      totalAssignmentPages = Math.ceil(assignmentHistory.length / ASSIGNMENTS_PER_PAGE) || 1;
+      assignmentCurrentPage = Math.min(Math.max(assignmentCurrentPage, 1), totalAssignmentPages);
+      const startIdx = (assignmentCurrentPage - 1) * ASSIGNMENTS_PER_PAGE;
+      const pageAssignments = assignmentHistory.slice(startIdx, startIdx + ASSIGNMENTS_PER_PAGE);
+
+      history.innerHTML = pageAssignments.map((a, idx) => `
+        <div class="flex items-center justify-between bg-slate-50 rounded-2xl p-3 border border-slate-100">
+          <div class="min-w-0 flex-1 pr-2">
+            <div class="font-bold text-xs text-indigo-700 truncate">${a.title || a.fileName || "Assignment"}</div>
+            <div class="text-[10px] text-slate-400">${a.historyDate ? new Date(a.historyDate).toLocaleString() : ""}</div>
+          </div>
+          <button class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-xl font-bold text-xs hover:bg-indigo-100" onclick="previewAssignmentHistory(${startIdx + idx})">
+            Preview
+          </button>
+        </div>
+      `).join("");
+
+      if (pagination) {
+        pagination.innerHTML = totalAssignmentPages > 1 ? `
+          <button class="px-3 py-1 rounded-xl bg-slate-100 font-bold" onclick="assignmentPrevPage()" ${assignmentCurrentPage === 1 ? 'disabled' : ''}>Prev</button>
+          <span class="font-bold text-slate-600">Page ${assignmentCurrentPage} of ${totalAssignmentPages}</span>
+          <button class="px-3 py-1 rounded-xl bg-slate-100 font-bold" onclick="assignmentNextPage()" ${assignmentCurrentPage === totalAssignmentPages ? 'disabled' : ''}>Next</button>
+        ` : "";
+      }
+    }
+
+    function assignmentPrevPage() {
+      if (assignmentCurrentPage > 1) {
+        assignmentCurrentPage--;
+        renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
+      }
+    }
+    function assignmentNextPage() {
+      if (assignmentCurrentPage < totalAssignmentPages) {
+        assignmentCurrentPage++;
+        renderAssignmentHistoryPaginated(window.student.assignmentHistory || []);
+      }
+    }
+
+    function escapeHtml(text) {
+      return text ? text.replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m]) : "";
+    }
+
+    function previewAssignmentHistory(index) {
+      const assignment = (window.student?.assignmentHistory || [])[index];
+      if (!assignment) return;
+      alert(`Previewing: ${assignment.title || assignment.fileName}`);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const token = localStorage.getItem('codecx_token');
+      if (token) {
+        loadDashboardData(token);
+      } else {
+        window.location.href = "login.html";
+      }
+
+      setTimeout(() => {
+        let name = (window.student && window.student.fullName) || localStorage.getItem('studentName') || '';
+        showWelcomeModal(name);
+      }, 1200);
+    });
+  </script>
 </body>
 </html>
