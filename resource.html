@@ -28,7 +28,7 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white pb-28">
 
-  <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-800 shadow-lg">
+  <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md text-white border-b border-slate-800 shadow-lg">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
       
       <div class="flex items-center gap-3">
@@ -371,37 +371,105 @@
 
   </main>
 
-  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-2 py-2 shadow-lg">
-    <div class="max-w-md mx-auto grid grid-cols-5 items-center text-center">
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-100 px-6 py-2 shadow-lg">
+    <div class="max-w-md mx-auto flex items-center justify-between relative">
+      <a href="dashboard.html" class="flex flex-col items-center gap-1 text-indigo-600 text-[11px] font-bold">
+        <i class="bi bi-house-door-fill text-xl"></i>
+        <span>Home</span>
+      </a>
       
-      <a href="dashboard.html" class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-600 text-[10px] font-medium transition-colors py-1 group">
-        <i class="bi bi-house text-xl group-hover:scale-110 transition-transform"></i>
-        <span class="mt-0.5">Home</span>
+      <a href="#" class="flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600 text-[11px] font-medium transition-colors">
+        <i class="bi bi-journal-text text-xl"></i>
+        <span>Learning</span>
       </a>
-
-      <a href="#" class="flex flex-col items-center justify-center text-blue-600 text-[10px] font-bold transition-colors py-1 group">
-        <i class="bi bi-journal-text text-xl group-hover:scale-110 transition-transform"></i>
-        <span class="mt-0.5">Learning</span>
-      </a>
-
-      <div class="relative flex justify-center items-center -mt-7">
-        <button type="button" class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center text-2xl shadow-lg shadow-blue-500/40 ring-4 ring-white active:scale-95 transition-all">
-          <i class="bi bi-shield-check"></i>
+      
+      <div class="relative -top-5">
+        <button onclick="toggleQuickActionsModal()" class="w-14 h-14 rounded-full bg-indigo-600 text-white flex items-center justify-center text-2xl shadow-xl shadow-indigo-500/40 border-4 border-white active:scale-95 transition-transform focus:outline-none">
+          <i class="bi bi-shield-fill-check"></i>
         </button>
       </div>
 
-      <a href="#" class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-600 text-[10px] font-medium transition-colors py-1 group">
-        <i class="bi bi-chat-dots text-xl group-hover:scale-110 transition-transform"></i>
-        <span class="mt-0.5">Community</span>
+      <a href="#" class="flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600 text-[11px] font-medium transition-colors">
+        <i class="bi bi-chat-dots text-xl"></i>
+        <span>Community</span>
       </a>
-
-      <a href="#" class="flex flex-col items-center justify-center text-slate-400 hover:text-blue-600 text-[10px] font-medium transition-colors py-1 group">
-        <i class="bi bi-person text-xl group-hover:scale-110 transition-transform"></i>
-        <span class="mt-0.5">Profile</span>
+      
+      <a href="#" class="flex flex-col items-center gap-1 text-slate-400 hover:text-indigo-600 text-[11px] font-medium transition-colors">
+        <i class="bi bi-person text-xl"></i>
+        <span>Profile</span>
       </a>
-
     </div>
   </nav>
+
+  <div id="quickActionsModal" class="fixed inset-0 z-50 hidden flex items-end sm:items-center justify-center bg-slate-900/60 backdrop-blur-sm transition-opacity">
+    <div onclick="toggleQuickActionsModal()" class="absolute inset-0"></div>
+    <div class="relative w-full max-w-lg bg-white rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl space-y-5 z-10 transition-transform">
+      
+      <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto -mt-2"></div>
+      
+      <div class="text-center space-y-1">
+        <h3 class="text-base font-extrabold text-slate-900 tracking-tight">Quick Actions</h3>
+        <p class="text-xs font-medium text-slate-500">Select what you would like to do or access</p>
+      </div>
+
+      <a href="#" class="flex items-center justify-between p-4 rounded-2xl bg-slate-900 text-white shadow-md hover:bg-slate-800 transition-colors">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white text-base font-bold shadow-sm">
+            <i class="bi bi-mortarboard-fill"></i>
+          </div>
+          <span class="text-xs font-bold tracking-wide uppercase">ACADEMIC DASHBOARD AREA</span>
+        </div>
+        <i class="bi bi-chevron-right text-xs text-slate-400"></i>
+      </a>
+
+      <div class="grid grid-cols-2 gap-3">
+        <a href="#" class="p-4 rounded-2xl bg-amber-50/70 border border-amber-100 flex flex-col justify-between space-y-4 hover:bg-amber-100/50 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg shadow-sm">
+            <i class="bi bi-question-circle-fill"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-900">Take Daily Quizzes</h4>
+            <p class="text-[10px] font-medium text-slate-500 mt-0.5">Practice questions & tests</p>
+          </div>
+        </a>
+
+        <a href="#" class="p-4 rounded-2xl bg-purple-50/70 border border-purple-100 flex flex-col justify-between space-y-4 hover:bg-purple-100/50 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center text-lg shadow-sm">
+            <i class="bi bi-upload"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-900">Upload Assignment</h4>
+            <p class="text-[10px] font-medium text-slate-500 mt-0.5">Submit homework files</p>
+          </div>
+        </a>
+
+        <a href="#" class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 flex flex-col justify-between space-y-4 hover:bg-emerald-100/50 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg shadow-sm">
+            <i class="bi bi-book-half"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-900">Study Resources</h4>
+            <p class="text-[10px] font-medium text-slate-500 mt-0.5">Handouts & cheat sheets</p>
+          </div>
+        </a>
+
+        <a href="#" class="p-4 rounded-2xl bg-blue-50/70 border border-blue-100 flex flex-col justify-between space-y-4 hover:bg-blue-100/50 transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center text-lg shadow-sm">
+            <i class="bi bi-credit-card-fill"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-slate-900">Payments & Ref</h4>
+            <p class="text-[10px] font-medium text-slate-500 mt-0.5">Manage subscriptions</p>
+          </div>
+        </a>
+      </div>
+
+      <button onclick="toggleQuickActionsModal()" class="w-full py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors">
+        Cancel
+      </button>
+
+    </div>
+  </div>
 
   <script>
     const API_PROFILE_ENDPOINT = "https://examguide.onrender.com/api/codecxreg/me";
@@ -759,6 +827,11 @@
         document.getElementById("resourcesSkeleton").classList.add("hidden");
         document.getElementById("coursesGrid").classList.remove("hidden");
       }, 400);
+    }
+
+    function toggleQuickActionsModal() {
+      const modal = document.getElementById("quickActionsModal");
+      modal.classList.toggle("hidden");
     }
 
     function openCourseView(courseKey) {
