@@ -54,6 +54,11 @@
       animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
+    /* Drawer Animation */
+    .drawer-transform {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
     /* Custom scrollbars */
     ::-webkit-scrollbar {
       width: 6px;
@@ -63,13 +68,13 @@
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen pb-28">
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-28 relative">
 
   <!-- ================= TOP NAVIGATION BAR ================= -->
   <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 py-3">
     <div class="max-w-xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <button class="p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition" onclick="toggleNavMenu()">
+        <button class="p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition" onclick="toggleNavMenu()" aria-label="Toggle Navigation">
           <i class="bi bi-list text-2xl"></i>
         </button>
         <div class="flex items-center gap-2.5">
@@ -84,10 +89,40 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <button class="relative p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition">
-          <i class="bi bi-bell text-xl"></i>
-          <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-indigo-600 rounded-full ring-2 ring-white"></span>
-        </button>
+        <!-- NOTIFICATION BELL BUTTON -->
+        <div class="relative">
+          <button id="notificationBtn" onclick="toggleNotifications()" class="relative p-2 text-slate-600 hover:bg-slate-100 rounded-xl transition" aria-label="Notifications">
+            <i class="bi bi-bell text-xl"></i>
+            <span id="unreadDot" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-indigo-600 rounded-full ring-2 ring-white"></span>
+          </button>
+
+          <!-- NOTIFICATION DROPDOWN MENU -->
+          <div id="notificationDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-3xl shadow-2xl border border-slate-100 z-50 p-4 animate-slide-up">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+              <div class="flex items-center gap-2">
+                <i class="bi bi-bell-fill text-indigo-600 text-sm"></i>
+                <h4 class="font-bold text-xs text-slate-900">Notifications</h4>
+              </div>
+              <button onclick="clearNotifications()" class="text-[10px] font-bold text-indigo-600 hover:underline">Mark all read</button>
+            </div>
+            <div id="notificationList" class="space-y-2.5 max-h-64 overflow-y-auto pr-1">
+              <div class="p-2.5 bg-indigo-50/60 rounded-2xl border border-indigo-100/50">
+                <div class="flex items-start justify-between">
+                  <span class="text-[11px] font-bold text-slate-800">🚀 Masterclass Update</span>
+                  <span class="text-[9px] text-slate-400">Just now</span>
+                </div>
+                <p class="text-[10px] text-slate-600 mt-0.5 leading-tight">Welcome to the dashboard! Be sure to take today's quiz and check live assignments.</p>
+              </div>
+              <div class="p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
+                <div class="flex items-start justify-between">
+                  <span class="text-[11px] font-bold text-slate-800">📚 New Quiz Available</span>
+                  <span class="text-[9px] text-slate-400">2h ago</span>
+                </div>
+                <p class="text-[10px] text-slate-500 mt-0.5 leading-tight">Day quiz modules are updated in your Learning tab.</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div class="flex items-center gap-2 pl-1">
           <div class="relative">
@@ -102,6 +137,55 @@
       </div>
     </div>
   </header>
+
+  <!-- ================= MOBILE / SIDEBAR NAVIGATION DRAWER ================= -->
+  <div id="mobileNavBackdrop" onclick="toggleNavMenu()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <div id="mobileNavDrawer" class="fixed top-0 left-0 bottom-0 w-72 bg-white z-50 shadow-2xl drawer-transform -translate-x-full flex flex-col justify-between p-5">
+    <div>
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md shadow-indigo-200">
+            C
+          </div>
+          <div>
+            <h2 class="text-sm font-bold text-slate-900 leading-none">CODECX Institute</h2>
+            <p class="text-[10px] text-indigo-600 mt-0.5 font-medium">Student Portal</p>
+          </div>
+        </div>
+        <button onclick="toggleNavMenu()" class="p-1.5 text-slate-400 hover:text-slate-600 rounded-xl transition">
+          <i class="bi bi-x-lg text-lg"></i>
+        </button>
+      </div>
+
+      <nav class="space-y-1.5">
+        <button onclick="switchTab('tab-home'); toggleNavMenu();" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition">
+          <i class="bi bi-house-door-fill text-lg"></i> Home Dashboard
+        </button>
+        <button onclick="switchTab('tab-courses'); toggleNavMenu();" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+          <i class="bi bi-journal-text text-lg"></i> Learning & Progress
+        </button>
+        <button onclick="switchTab('tab-assignments'); toggleNavMenu();" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+          <i class="bi bi-cloud-arrow-up text-lg"></i> Assignments
+        </button>
+        <button onclick="switchTab('tab-chat'); toggleNavMenu();" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+          <i class="bi bi-chat-dots text-lg"></i> Community Chat
+        </button>
+        <button onclick="switchTab('tab-profile'); toggleNavMenu();" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+          <i class="bi bi-person text-lg"></i> Student Profile
+        </button>
+        <hr class="my-3 border-slate-100" />
+        <button onclick="openWelcomeModal(); toggleNavMenu();" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-indigo-600 bg-indigo-50/70 hover:bg-indigo-100 transition">
+          <i class="bi bi-info-circle-fill text-lg"></i> Restart Welcome Tour
+        </button>
+      </nav>
+    </div>
+
+    <div class="pt-4 border-t border-slate-100">
+      <button onclick="logout()" class="w-full py-2.5 bg-rose-50 text-rose-600 rounded-2xl font-bold text-xs hover:bg-rose-100 transition flex items-center justify-center gap-2">
+        <i class="bi bi-box-arrow-right"></i> Sign Out
+      </button>
+    </div>
+  </div>
 
   <!-- ================= MAIN DASHBOARD CONTAINER ================= -->
   <main class="max-w-xl mx-auto px-4 pt-4">
@@ -265,21 +349,35 @@
         <div id="coursesList" class="flex flex-wrap gap-2 mb-4"></div>
         
         <div class="flex gap-2">
-          <select id="courseSelect" class="flex-1 px-3 py-2 border border-slate-200 rounded-2xl text-xs font-medium bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <!-- EXPANDED COURSE SELECT DROPDOWN WITH TECH & CODING OPTIONS -->
+          <select id="courseSelect" class="flex-1 px-3 py-2.5 border border-slate-200 rounded-2xl text-xs font-medium bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             <option value="">-- Select Course --</option>
-            <option value="HTML Only">HTML Only</option>
-            <option value="CSS Only">CSS Only</option>
-            <option value="JavaScript Only">JavaScript Only</option>
-            <option value="HTML and CSS only">HTML and CSS only</option>
-            <option value="HTML and JavaScript only">HTML and JavaScript only</option>
-            <option value="CSS and JavaScript Only">CSS and JavaScript Only</option>
-            <option value="All three">All three (HTML, CSS, JS)</option>
-            <option value="Full Backend">Full Backend</option>
-            <option value="FullStack">FullStack</option>
-            <option value="Coupon Code">Coupon Code</option>
+            <optgroup label="Web Development">
+              <option value="HTML Only">HTML Only</option>
+              <option value="CSS Only">CSS Only</option>
+              <option value="JavaScript Only">JavaScript Only</option>
+              <option value="HTML and CSS only">HTML & CSS Fundamentals</option>
+              <option value="HTML and JavaScript only">HTML & JavaScript</option>
+              <option value="CSS and JavaScript Only">CSS & JavaScript</option>
+              <option value="All three">All three (HTML, CSS, Modern JS)</option>
+              <option value="Frontend Development">Frontend Development (React / Tailwind)</option>
+              <option value="Full Backend">Backend Engineering (Node.js & Express)</option>
+              <option value="FullStack">FullStack Development (MERN Stack)</option>
+            </optgroup>
+            <optgroup label="Programming & Software">
+              <option value="Python Essentials">Python for Beginners</option>
+              <option value="Data Science & Python">Data Science & Python</option>
+              <option value="Mobile App Development">Mobile Apps (React Native / Flutter)</option>
+              <option value="Git & GitHub Workflow">Git & Cloud Deployment</option>
+              <option value="Cybersecurity Basics">Cybersecurity Basics</option>
+              <option value="UI/UX Engineering">UI/UX Design & Figma</option>
+            </optgroup>
+            <optgroup label="Promotions & Other">
+              <option value="Coupon Code">Coupon Code Access</option>
+            </optgroup>
           </select>
-          <button onclick="addCourse()" class="px-4 py-2 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition">
-            Add
+          <button id="addCourseBtn" onclick="addCourse()" class="px-5 py-2.5 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition flex items-center gap-1">
+            <span>Add</span>
           </button>
         </div>
       </section>
@@ -306,9 +404,9 @@
           <i class="bi bi-cloud-arrow-up-fill text-indigo-600"></i> Assignment Submission
         </h3>
         
-        <form id="assignmentForm" class="flex flex-col gap-3 mb-6">
+        <form id="assignmentForm" class="flex flex-col gap-3 mb-6" onsubmit="event.preventDefault();">
           <input id="assignmentInput" type="file" class="block w-full text-xs text-slate-500 border border-slate-200 rounded-2xl p-2.5 bg-slate-50 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-100 file:text-indigo-700 hover:file:bg-indigo-200" />
-          <button type="button" onclick="submitAssignment()" class="w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition flex items-center justify-center gap-1.5">
+          <button id="submitAssignmentBtn" type="button" onclick="submitAssignment()" class="w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition flex items-center justify-center gap-1.5">
             <i class="bi bi-cloud-arrow-up text-base"></i> Submit Assignment
           </button>
           <span id="assignmentStatus" class="text-center text-xs text-emerald-600 font-bold"></span>
@@ -333,10 +431,10 @@
         <div id="chatArea" class="h-80 overflow-y-auto bg-slate-50 rounded-2xl p-3 border border-slate-100 mb-3 space-y-2">
           <!-- Chat messages render here -->
         </div>
-        <form id="chatForm" class="flex gap-2">
+        <form id="chatForm" class="flex gap-2" onsubmit="handleChatSubmit(event)">
           <input id="chatInput" type="text" placeholder="Ask a question or share ideas..." class="flex-1 px-4 py-2.5 border border-slate-200 rounded-2xl text-xs bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500" autocomplete="off"/>
-          <button type="submit" class="px-5 py-2.5 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition">
-            Send
+          <button id="sendChatBtn" type="submit" class="px-5 py-2.5 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition flex items-center justify-center gap-1">
+            <span>Send</span>
           </button>
         </form>
       </section>
@@ -385,7 +483,7 @@
             <tbody id="paymentsTable" class="divide-y divide-slate-50"></tbody>
           </table>
         </div>
-        <button id="payNowBtn" class="mt-4 w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition">
+        <button id="payNowBtn" class="mt-4 w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition flex items-center justify-center">
           Pay Now via Paystack
         </button>
       </section>
@@ -430,7 +528,7 @@
 
       <!-- CENTER FLOATING ACTION BUTTON -->
       <div class="relative -top-5">
-        <button onclick="openQuickActions()" class="w-13 h-13 bg-indigo-600 text-white rounded-full p-3.5 shadow-xl shadow-indigo-300 ring-4 ring-slate-50 flex items-center justify-center hover:bg-indigo-700 transition transform active:scale-95">
+        <button onclick="openQuickActions()" class="w-13 h-13 bg-indigo-600 text-white rounded-full p-3.5 shadow-xl shadow-indigo-300 ring-4 ring-slate-50 flex items-center justify-center hover:bg-indigo-700 transition transform active:scale-95" aria-label="Quick Actions">
           <i class="bi bi-shield-fill-check text-2xl"></i>
         </button>
       </div>
@@ -526,7 +624,7 @@
         </div>
       </div>
       <div id="previewModalContent" class="p-5 flex-1 overflow-y-auto flex items-center justify-center bg-slate-100/50 min-h-[320px]">
-        <!-- Preview dynamic content -->
+        <!-- Dynamic preview renderer -->
       </div>
     </div>
   </div>
@@ -542,9 +640,9 @@
       <p class="text-xs text-slate-500 mb-5">Complete your payment securely with Paystack. Your dashboard will update automatically.</p>
       
       <div class="space-y-2">
-        <a href="https://paystack.shop/pay/codec" target="_blank" class="w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition flex items-center justify-center gap-1.5" id="paystackProceedBtn">
+        <button onclick="handlePaystackProceed()" id="paystackProceedBtn" class="w-full py-3 bg-indigo-600 text-white rounded-2xl font-bold text-xs shadow-md hover:bg-indigo-700 transition flex items-center justify-center gap-1.5">
           <i class="bi bi-arrow-right-circle"></i> Proceed to Paystack
-        </a>
+        </button>
         <button class="w-full py-3 bg-slate-100 text-slate-600 rounded-2xl font-bold text-xs hover:bg-slate-200 transition" onclick="closePaymentModal()">Cancel</button>
       </div>
     </div>
@@ -558,20 +656,17 @@
     </div>
   </div>
 
-  <!-- ================= RECEIPT MODAL ================= -->
-  <div id="receiptModal" class="fixed inset-0 z-50 modal-blur flex items-center justify-center hidden p-4">
-    <div class="bg-white p-6 rounded-3xl shadow-2xl relative max-w-md w-full">
-      <button onclick="closeReceipt()" class="absolute top-4 right-4 text-slate-400 text-xl font-bold">&times;</button>
-      <div id="receiptModalContent"></div>
-    </div>
-  </div>
-
   <!-- ================= WELCOME MODAL ================= -->
   <div id="welcomeModalBg" class="fixed inset-0 z-50 modal-blur flex items-center justify-center hidden p-4">
     <div id="welcomeModal" class="bg-white rounded-3xl shadow-2xl p-6 max-w-md w-full relative">
       <button aria-label="Close" onclick="closeWelcomeModal()" class="absolute top-4 right-4 text-xl text-slate-400 hover:text-slate-600 font-bold">&times;</button>
-      <div id="welcomeSlides"></div>
-      <div class="flex justify-between items-center mt-6">
+      
+      <!-- SLIDES CONTENT CONTAINER -->
+      <div id="welcomeSlidesContainer" class="text-center pt-2">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="flex justify-between items-center mt-6 pt-3 border-t border-slate-100">
         <button id="welcomePrevBtn" onclick="welcomePrevSlide()" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-bold hover:bg-slate-200 transition">Previous</button>
         <button id="welcomeNextBtn" onclick="welcomeNextSlide()" class="px-5 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition">Next</button>
       </div>
@@ -587,17 +682,39 @@
     const WS_GROUP_LINK = "https://chat.whatsapp.com/HErvit5xKqY4cMGm9hsi5R?mode=ems_copy_c";
     let token = localStorage.getItem('codecx_token');
     
-    // In-memory data cache to prevent refetching
+    // Cache object to eliminate redundant network calls
     const cache = {
       profile: null,
       assignments: null,
       quizzes: null
     };
 
-    // Lazy load & Tab Switching
+    /* ================= BUTTON SPINNER & DOUBLE TRIGGER PREVENTION ================= */
+    async function withButtonSpinner(buttonOrId, asyncFn, loadingText = "Processing...") {
+      const btn = typeof buttonOrId === 'string' ? document.getElementById(buttonOrId) : buttonOrId;
+      if (!btn || btn.disabled) return;
+
+      const originalHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.classList.add('opacity-75', 'cursor-not-allowed');
+      btn.innerHTML = `<span class="inline-block w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin mr-1.5 align-middle"></span><span>${loadingText}</span>`;
+
+      try {
+        await asyncFn();
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.classList.remove('opacity-75', 'cursor-not-allowed');
+          btn.innerHTML = originalHtml;
+        }
+      }
+    }
+
+    /* ================= TAB SWITCHING ================= */
     async function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
+      const activeEl = document.getElementById(tabId);
+      if (activeEl) activeEl.classList.add('active');
 
       document.querySelectorAll('.nav-btn').forEach(btn => {
         if (btn.dataset.tab === tabId) {
@@ -613,7 +730,7 @@
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // Lazy fetch designated tab data on click if not cached
+      // Lazy load tab data
       if (tabId === 'tab-courses') {
         await loadCoursesAndProgressTab();
       } else if (tabId === 'tab-assignments') {
@@ -623,11 +740,115 @@
       }
     }
 
-    // Modal Control Helper
+    /* ================= NAVIGATION & NOTIFICATION CONTROLS ================= */
+    function toggleNavMenu() {
+      const drawer = document.getElementById('mobileNavDrawer');
+      const backdrop = document.getElementById('mobileNavBackdrop');
+      const isHidden = drawer.classList.contains('-translate-x-full');
+      
+      if (isHidden) {
+        drawer.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        drawer.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    function toggleNotifications() {
+      const dropdown = document.getElementById('notificationDropdown');
+      dropdown.classList.toggle('hidden');
+    }
+
+    function clearNotifications() {
+      const unreadDot = document.getElementById('unreadDot');
+      if (unreadDot) unreadDot.style.display = 'none';
+      showToast("Notifications marked as read", "info");
+      document.getElementById('notificationDropdown').classList.add('hidden');
+    }
+
     function openQuickActions() { document.getElementById('quickActionsModal').classList.remove('hidden'); }
     function closeQuickActions() { document.getElementById('quickActionsModal').classList.add('hidden'); }
 
-    // Loader controls
+    /* ================= WELCOME ONBOARDING MODAL ================= */
+    const welcomeSlidesData = [
+      {
+        icon: "bi bi-rocket-takeoff-fill text-indigo-600",
+        title: "Welcome to CODECX Institute! 👋",
+        body: "We are thrilled to have you here! This interactive dashboard is your personal hub to master software development, track your progress, and access live masterclasses."
+      },
+      {
+        icon: "bi bi-journal-code text-purple-600",
+        title: "Practice & Assignments 💻",
+        body: "Stay sharp by taking daily quizzes, marking attendance, and submitting your hands-on code assignments right from the **Learning** and **Assignments** tabs."
+      },
+      {
+        icon: "bi bi-people-fill text-emerald-600",
+        title: "Join the Developer Community 🚀",
+        body: "Connect with instructors and peers! Complete your masterclass registration to unlock the official private WhatsApp group and direct mentorship."
+      }
+    ];
+
+    let currentWelcomeSlide = 0;
+
+    function openWelcomeModal() {
+      currentWelcomeSlide = 0;
+      renderWelcomeSlide();
+      document.getElementById('welcomeModalBg').classList.remove('hidden');
+    }
+
+    function closeWelcomeModal() {
+      document.getElementById('welcomeModalBg').classList.add('hidden');
+      localStorage.setItem('codecx_welcome_seen', 'true');
+    }
+
+    function renderWelcomeSlide() {
+      const slide = welcomeSlidesData[currentWelcomeSlide];
+      const container = document.getElementById('welcomeSlidesContainer');
+      const prevBtn = document.getElementById('welcomePrevBtn');
+      const nextBtn = document.getElementById('welcomeNextBtn');
+      const dotsContainer = document.getElementById('welcomeDots');
+
+      container.innerHTML = `
+        <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
+          <i class="${slide.icon}"></i>
+        </div>
+        <h3 class="text-base font-extrabold text-slate-900 mb-2">${slide.title}</h3>
+        <p class="text-xs text-slate-500 leading-relaxed max-w-xs mx-auto">${slide.body}</p>
+      `;
+
+      prevBtn.style.visibility = currentWelcomeSlide === 0 ? 'hidden' : 'visible';
+      nextBtn.textContent = currentWelcomeSlide === welcomeSlidesData.length - 1 ? 'Get Started 🎉' : 'Next';
+
+      dotsContainer.innerHTML = welcomeSlidesData.map((_, i) => `
+        <span class="w-2 h-2 rounded-full transition-all ${i === currentWelcomeSlide ? 'w-5 bg-indigo-600' : 'bg-slate-200'}"></span>
+      `).join('');
+    }
+
+    function welcomeNextSlide() {
+      if (currentWelcomeSlide < welcomeSlidesData.length - 1) {
+        currentWelcomeSlide++;
+        renderWelcomeSlide();
+      } else {
+        closeWelcomeModal();
+      }
+    }
+
+    function welcomePrevSlide() {
+      if (currentWelcomeSlide > 0) {
+        currentWelcomeSlide--;
+        renderWelcomeSlide();
+      }
+    }
+
+    function checkFirstTimeWelcome() {
+      const seen = localStorage.getItem('codecx_welcome_seen');
+      if (!seen) {
+        openWelcomeModal();
+      }
+    }
+
+    /* ================= DASHBOARD LOADERS & INITIALIZATION ================= */
     function showStudentLoader() {
       if (document.getElementById('studentDataLoader')) return;
       const loaderHtml = `
@@ -654,7 +875,6 @@
       }
     }
 
-    // Skeleton renderers
     function renderCoursesSkeleton() {
       document.getElementById("coursesList").innerHTML = `
         <div class="flex gap-2 animate-pulse">
@@ -668,14 +888,12 @@
         <div class="space-y-3 animate-pulse">
           <div class="h-16 bg-slate-100 rounded-2xl w-full"></div>
           <div class="h-16 bg-slate-100 rounded-2xl w-full"></div>
-          <div class="h-16 bg-slate-100 rounded-2xl w-full"></div>
         </div>`;
     }
 
     function renderAssignmentsSkeleton() {
       document.getElementById("assignmentHistory").innerHTML = `
         <div class="space-y-3 animate-pulse">
-          <div class="h-14 bg-slate-100 rounded-2xl w-full"></div>
           <div class="h-14 bg-slate-100 rounded-2xl w-full"></div>
           <div class="h-14 bg-slate-100 rounded-2xl w-full"></div>
         </div>`;
@@ -685,20 +903,13 @@
       document.getElementById("paymentsTable").innerHTML = `
         <tr class="animate-pulse">
           <td colspan="4" class="py-3"><div class="h-4 bg-slate-100 rounded-xl w-full"></div></td>
-        </tr>
-        <tr class="animate-pulse">
-          <td colspan="4" class="py-3"><div class="h-4 bg-slate-100 rounded-xl w-full"></div></td>
         </tr>`;
       document.getElementById("activityTable").innerHTML = `
-        <tr class="animate-pulse">
-          <td colspan="3" class="py-3"><div class="h-4 bg-slate-100 rounded-xl w-full"></div></td>
-        </tr>
         <tr class="animate-pulse">
           <td colspan="3" class="py-3"><div class="h-4 bg-slate-100 rounded-xl w-full"></div></td>
         </tr>`;
     }
 
-    // Main initial loader - Wait until profile is loaded
     async function initDashboard() {
       if (!token) { logout(); return; }
       showStudentLoader();
@@ -710,13 +921,13 @@
 
         populateProfileHeader(studentData);
         populateHomeTab(studentData);
+        checkFirstTimeWelcome();
 
       } catch (err) {
         console.error("Dashboard Init Error:", err);
         showToast("Failed to fetch user data: " + err.message, "error");
         logout();
       } finally {
-        // Unhide loader only after user data fetching completes
         hideStudentLoader();
       }
     }
@@ -732,9 +943,9 @@
     }
 
     function populateProfileHeader(student) {
-      localStorage.setItem('matricNumber', student.matricNumber);
+      localStorage.setItem('matricNumber', student.matricNumber || '');
 
-      const avatarUrl = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName);
+      const avatarUrl = student.passportBase64 || "https://ui-avatars.com/api/?name=" + encodeURIComponent(student.fullName || "Student");
       document.getElementById("studentAvatar").src = avatarUrl;
       document.getElementById("studentPassport").src = avatarUrl;
       document.getElementById("studentFullName").textContent = student.fullName || "Student";
@@ -760,7 +971,7 @@
       document.getElementById("adminNote").textContent = student.adminNote || "No current announcements.";
     }
 
-    // Lazy load handler for Learning/Courses
+    /* ================= LAZY TAB LOADERS ================= */
     async function loadCoursesAndProgressTab() {
       if (!cache.profile) return;
       renderCourses();
@@ -772,7 +983,6 @@
       }
     }
 
-    // Lazy load handler for Assignments
     async function loadAssignmentsTab() {
       if (cache.assignments) {
         renderAssignmentHistoryPaginated(cache.assignments);
@@ -789,7 +999,6 @@
       }
     }
 
-    // Lazy load handler for Profile & Payments
     async function loadProfileTab() {
       renderProfileSkeletons();
       if (!cache.profile) {
@@ -799,7 +1008,6 @@
       renderActivity();
     }
 
-    // WhatsApp button logic
     function updateWhatsAppBtn(studentData = window.student) {
       const btn = document.getElementById("whatsappGroupBtn");
       const note = document.getElementById("whatsappNote");
@@ -814,7 +1022,7 @@
       }
     }
 
-    // Course features
+    /* ================= COURSE MANAGEMENT ================= */
     function renderCourses() {
       const list = document.getElementById("coursesList");
       list.innerHTML = "";
@@ -825,31 +1033,36 @@
       }
       courses.forEach(c => {
         list.innerHTML += `<span class="px-3 py-1.5 rounded-2xl bg-indigo-50 text-indigo-700 text-xs font-bold flex items-center gap-1.5">
-          ${c.name}
-          <button class="text-rose-500 hover:text-rose-700" onclick="removeCourse('${c.name}')">&times;</button>
+          ${escapeHtml(c.name)}
+          <button class="text-rose-500 hover:text-rose-700" onclick="removeCourse('${escapeHtml(c.name)}')">&times;</button>
         </span>`;
       });
     }
 
-    async function addCourse() {
+    function addCourse() {
       const select = document.getElementById("courseSelect");
       const courseName = select.value;
       if (!courseName) { showToast("Select a course first", "error"); return; }
-      try {
-        const resp = await fetch(`${API_BASE}/courses`, {
-          method: "POST",
-          headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
-          body: JSON.stringify({ courseName })
-        });
-        const data = await resp.json();
-        if (!resp.ok) throw new Error(data.message);
-        cache.profile = null; // Invalidate profile cache
-        await initDashboard();
-        renderCourses();
-        showToast("Course added successfully!", "success");
-      } catch (err) {
-        showToast(err.message, "error");
-      }
+
+      withButtonSpinner("addCourseBtn", async () => {
+        try {
+          const resp = await fetch(`${API_BASE}/courses`, {
+            method: "POST",
+            headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+            body: JSON.stringify({ courseName })
+          });
+          const data = await resp.json();
+          if (!resp.ok) throw new Error(data.message);
+          
+          cache.profile = null;
+          await initDashboard();
+          renderCourses();
+          select.value = "";
+          showToast("Course added successfully!", "success");
+        } catch (err) {
+          showToast(err.message, "error");
+        }
+      }, "Adding...");
     }
 
     async function removeCourse(courseName) {
@@ -861,7 +1074,8 @@
         });
         const data = await resp.json();
         if (!resp.ok) throw new Error(data.message);
-        cache.profile = null; // Invalidate profile cache
+        
+        cache.profile = null;
         await initDashboard();
         renderCourses();
         showToast("Course removed!", "success");
@@ -870,7 +1084,7 @@
       }
     }
 
-    // Quiz & Learning Progress
+    /* ================= QUIZZES & PROGRESS ================= */
     function getQuizStatus(day) {
       const activities = window.student?.activities || [];
       const quizAct = activities.find(a => a.activity.startsWith(`Quiz completed - Day ${day}`));
@@ -881,10 +1095,9 @@
     async function fetchQuizForDay(day) {
       try {
         const response = await fetch('/quizzes.json');
-        if (!response.ok) throw new Error('Failed to load quizzes.json');
+        if (!response.ok) throw new Error('Failed to load quizzes');
         const data = await response.json();
-        const quiz = data.days.find(q => Number(q.day) === Number(day));
-        return quiz || null;
+        return data.days.find(q => Number(q.day) === Number(day)) || null;
       } catch (error) {
         return null;
       }
@@ -921,7 +1134,7 @@
         if (!quiz) return `<div class="p-3 bg-slate-50 border rounded-2xl text-xs text-slate-400">No quiz for Day ${day}</div>`;
         const status = getQuizStatus(day);
         let card = `<div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col items-start relative">
-          <div class="font-bold text-sm text-slate-900">${quiz.topic}</div>
+          <div class="font-bold text-sm text-slate-900">${escapeHtml(quiz.topic)}</div>
           <div class="text-[10px] text-slate-400 mb-2">Day ${quiz.day}</div>
           <div class="flex items-center gap-2">`;
         if (status.quiz) {
@@ -951,7 +1164,9 @@
       document.querySelectorAll(".attendance-btn").forEach(btn => {
         btn.onclick = async function () {
           const day = parseInt(btn.getAttribute("data-day"), 10);
-          await markAttendance(day);
+          await withButtonSpinner(btn, async () => {
+            await markAttendance(day);
+          }, "Marking...");
         };
       });
     }
@@ -960,7 +1175,7 @@
       try {
         let data = await fetchQuizForDay(day);
         if (!data || !data.questions) {
-          showToast("Could not load quiz", "error");
+          showToast("Could not load quiz questions", "error");
           return;
         }
         let html = `<h3 class="text-base font-bold text-slate-900 mb-3">Day ${day} Quiz</h3>
@@ -992,14 +1207,14 @@
         document.getElementById("quizForm").onsubmit = async function (e) {
           e.preventDefault();
           const submitBtn = document.getElementById("submitQuizBtn");
-          submitBtn.disabled = true;
-          const answers = [];
-          for (let i = 0; i < data.questions.length; i++) {
-            const ansInput = document.querySelector(`input[name="q${i}"]:checked`);
-            answers.push(ansInput ? ansInput.value : "");
-          }
 
-          try {
+          await withButtonSpinner(submitBtn, async () => {
+            const answers = [];
+            for (let i = 0; i < data.questions.length; i++) {
+              const ansInput = document.querySelector(`input[name="q${i}"]:checked`);
+              answers.push(ansInput ? ansInput.value : "");
+            }
+
             let score = 0;
             let total = data.questions.length;
             data.questions.forEach((q, idx) => {
@@ -1017,11 +1232,8 @@
               cache.profile = null;
               cache.quizzes = null;
               initDashboard();
-            }, 2000);
-          } catch (err) {
-            showToast(err.message, "error");
-            submitBtn.disabled = false;
-          }
+            }, 1800);
+          }, "Evaluating...");
         };
       } catch (err) {
         showToast(err.message, "error");
@@ -1048,6 +1260,7 @@
         });
         const data = await resp.json();
         if (!resp.ok) throw new Error(data.message);
+        if (!auto) showToast("Attendance marked!", "success");
         return true;
       } catch (err) {
         if (!auto) showToast(err.message, "error");
@@ -1057,40 +1270,41 @@
 
     function closeDayQuizModal() { document.getElementById("dayQuizModalBg").classList.add("hidden"); }
 
-    // Assignment Upload & Preview Logic
-    async function submitAssignment() {
+    /* ================= ASSIGNMENTS & FILE PREVIEW ================= */
+    function submitAssignment() {
       const inp = document.getElementById("assignmentInput");
       if (!inp.files[0]) { showToast("Select a file to upload.", "error"); return; }
 
-      try {
-        let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
-        if (!matricNumber) throw new Error("Matric number not found.");
-        const safeMatricNumber = matricNumber.replace(/\//g, '-');
+      withButtonSpinner("submitAssignmentBtn", async () => {
+        try {
+          let matricNumber = window.student?.matricNumber || localStorage.getItem("matricNumber");
+          if (!matricNumber) throw new Error("Matric number not found.");
+          const safeMatricNumber = matricNumber.replace(/\//g, '-');
 
-        const formData = new FormData();
-        formData.append("assignment", inp.files[0]);
-        formData.append("title", inp.files[0].name);
+          const formData = new FormData();
+          formData.append("assignment", inp.files[0]);
+          formData.append("title", inp.files[0].name);
 
-        const resp = await fetch(`${API_BASE}/student/matric/${safeMatricNumber}/assignment`, {
-          method: "POST",
-          headers: { "Authorization": "Bearer " + token },
-          body: formData
-        });
+          const resp = await fetch(`${API_BASE}/student/matric/${safeMatricNumber}/assignment`, {
+            method: "POST",
+            headers: { "Authorization": "Bearer " + token },
+            body: formData
+          });
 
-        const data = await resp.json();
-        if (!resp.ok) throw new Error(data.message || "Upload failed");
+          const data = await resp.json();
+          if (!resp.ok) throw new Error(data.message || "Upload failed");
 
-        document.getElementById("assignmentStatus").textContent = "Submitted successfully!";
-        inp.value = "";
-        
-        // Invalidate assignments cache
-        cache.assignments = null;
-        cache.profile = null;
-        await loadAssignmentsTab();
-        showToast("Assignment submitted!", "success");
-      } catch (err) {
-        showToast(err.message, "error");
-      }
+          document.getElementById("assignmentStatus").textContent = "Submitted successfully!";
+          inp.value = "";
+          
+          cache.assignments = null;
+          cache.profile = null;
+          await loadAssignmentsTab();
+          showToast("Assignment submitted!", "success");
+        } catch (err) {
+          showToast(err.message, "error");
+        }
+      }, "Uploading...");
     }
 
     const ASSIGNMENTS_PER_PAGE = 5;
@@ -1115,7 +1329,7 @@
       history.innerHTML = pageAssignments.map((a, idx) => `
         <div class="flex items-center justify-between bg-slate-50 rounded-2xl p-3 border border-slate-100">
           <div class="min-w-0 flex-1 pr-2">
-            <div class="font-bold text-xs text-indigo-700 truncate">${a.title || a.fileName || "Assignment"}</div>
+            <div class="font-bold text-xs text-indigo-700 truncate">${escapeHtml(a.title || a.fileName || "Assignment")}</div>
             <div class="text-[10px] text-slate-400">${a.historyDate ? new Date(a.historyDate).toLocaleString() : (a.date ? new Date(a.date).toLocaleString() : "")}</div>
           </div>
           <button class="px-3 py-1.5 bg-indigo-50 text-indigo-600 rounded-xl font-bold text-xs hover:bg-indigo-100 transition" onclick="previewAssignmentHistory(${startIdx + idx})">
@@ -1146,7 +1360,7 @@
       }
     }
 
-    // PREVIEW MODAL FOR ALL UPLOADED ASSIGNMENTS
+    /* COMPREHENSIVE MULTI-FORMAT PREVIEW MODAL ENGINE */
     function previewAssignmentHistory(index) {
       const assignmentList = cache.assignments || window.student?.assignmentHistory || [];
       const assignment = assignmentList[index];
@@ -1158,22 +1372,19 @@
       document.getElementById("previewTitle").textContent = title;
       const downloadBtn = document.getElementById("previewDownloadBtn");
       downloadBtn.href = url || "#";
-      if (!url) {
-        downloadBtn.classList.add("hidden");
-      } else {
-        downloadBtn.classList.remove("hidden");
-      }
+      downloadBtn.classList.toggle("hidden", !url);
 
       const contentArea = document.getElementById("previewModalContent");
       contentArea.innerHTML = `<div class="text-xs font-semibold text-slate-400 animate-pulse">Loading preview...</div>`;
       document.getElementById("previewModal").classList.remove("hidden");
 
-      const ext = (url.split('.').pop() || '').toLowerCase();
+      const ext = (url.split('.').pop() || '').toLowerCase().split('?')[0];
       const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext) || url.startsWith('data:image/');
       const isPdf = ext === 'pdf';
       const isVideo = ['mp4', 'webm', 'ogg'].includes(ext);
-      const isAudio = ['mp3', 'wav', 'aac'].includes(ext);
-      const isCode = ['js', 'html', 'css', 'json', 'py', 'txt', 'md'].includes(ext);
+      const isAudio = ['mp3', 'wav', 'aac', 'm4a'].includes(ext);
+      const isCodeOrText = ['js', 'html', 'css', 'json', 'py', 'txt', 'md', 'ts', 'java', 'cpp', 'php'].includes(ext);
+      const isOfficeDoc = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].includes(ext);
 
       if (isImage) {
         contentArea.innerHTML = `<img src="${url}" alt="${escapeHtml(title)}" class="max-h-[60vh] max-w-full object-contain rounded-2xl shadow-sm"/>`;
@@ -1182,8 +1393,12 @@
       } else if (isVideo) {
         contentArea.innerHTML = `<video src="${url}" controls class="max-h-[60vh] w-full rounded-2xl shadow-sm"></video>`;
       } else if (isAudio) {
-        contentArea.innerHTML = `<audio src="${url}" controls class="w-full max-w-md p-4 bg-white rounded-2xl shadow-sm"></audio>`;
-      } else if (isCode) {
+        contentArea.innerHTML = `<div class="bg-white p-6 rounded-2xl shadow-sm text-center w-full max-w-md">
+          <i class="bi bi-music-note-beaming text-4xl text-indigo-600 mb-2 block"></i>
+          <p class="text-xs font-bold text-slate-700 mb-3">${escapeHtml(title)}</p>
+          <audio src="${url}" controls class="w-full"></audio>
+        </div>`;
+      } else if (isCodeOrText) {
         fetch(url)
           .then(res => res.text())
           .then(codeText => {
@@ -1197,14 +1412,15 @@
               <a href="${url}" target="_blank" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold inline-block">Open File Directly</a>
             </div>`;
           });
+      } else if (isOfficeDoc) {
+        contentArea.innerHTML = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" class="w-full h-[60vh] rounded-2xl border-0"></iframe>`;
       } else if (url) {
-        // Fallback for Office Documents or General files using Google Docs Viewer
         contentArea.innerHTML = `<iframe src="https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true" class="w-full h-[60vh] rounded-2xl border-0"></iframe>`;
       } else {
         contentArea.innerHTML = `<div class="text-center p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
           <i class="bi bi-file-earmark-check text-4xl text-indigo-500 mb-2 block"></i>
           <p class="text-xs font-bold text-slate-800">${escapeHtml(title)}</p>
-          <p class="text-[11px] text-slate-400 mt-1">Assignment submitted. Dynamic preview URL unavailable.</p>
+          <p class="text-[11px] text-slate-400 mt-1">Assignment submitted. Direct web preview unavailable for this format.</p>
         </div>`;
       }
     }
@@ -1213,7 +1429,34 @@
       document.getElementById("previewModal").classList.add("hidden");
     }
 
-    // Profile & Payments Renderers
+    /* ================= COMMUNITY CHAT ================= */
+    function handleChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById("chatInput");
+      const message = input.value.trim();
+      if (!message) return;
+
+      withButtonSpinner("sendChatBtn", async () => {
+        const chatArea = document.getElementById("chatArea");
+        const userMsg = document.createElement("div");
+        userMsg.className = "p-2.5 bg-indigo-600 text-white rounded-2xl text-xs max-w-[80%] ml-auto mb-2 shadow-sm";
+        userMsg.textContent = message;
+        chatArea.appendChild(userMsg);
+        input.value = "";
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        // Simulated community reply response
+        setTimeout(() => {
+          const reply = document.createElement("div");
+          reply.className = "p-2.5 bg-white border border-slate-100 text-slate-800 rounded-2xl text-xs max-w-[80%] mr-auto mb-2 shadow-sm";
+          reply.innerHTML = `<span class="font-bold text-indigo-600 block text-[10px]">Instructor Bot</span>Thanks for posting! Our mentors will address this in the live lab session.`;
+          chatArea.appendChild(reply);
+          chatArea.scrollTop = chatArea.scrollHeight;
+        }, 1000);
+      }, "Sending...");
+    }
+
+    /* ================= PROFILE & PAYMENTS ================= */
     function renderPayments() {
       const tb = document.getElementById("paymentsTable");
       tb.innerHTML = "";
@@ -1226,8 +1469,8 @@
             <tr class="text-slate-600">
               <td class="py-2 px-1">${formatDate(p.date)}</td>
               <td class="py-2 px-1 font-bold">₦${p.amount}</td>
-              <td class="py-2 px-1 text-emerald-600 font-medium">${p.status}</td>
-              <td class="py-2 px-1 font-mono">${p.ref}</td>
+              <td class="py-2 px-1 text-emerald-600 font-medium">${escapeHtml(p.status)}</td>
+              <td class="py-2 px-1 font-mono">${escapeHtml(p.ref)}</td>
             </tr>`;
         });
       }
@@ -1248,8 +1491,8 @@
           table.innerHTML += `
             <tr class="text-slate-600">
               <td class="py-2 px-1">${formatDate(act.date)}</td>
-              <td class="py-2 px-1 font-medium">${act.activity}</td>
-              <td class="py-2 px-1">${act.status || 'Done'}</td>
+              <td class="py-2 px-1 font-medium">${escapeHtml(act.activity)}</td>
+              <td class="py-2 px-1">${escapeHtml(act.status || 'Done')}</td>
             </tr>`;
         });
       }
@@ -1258,7 +1501,17 @@
         latestAttendance ? `Last attendance: ${formatDate(latestAttendance.date)}` : "No attendance marked yet.";
     }
 
-    // Utility Helpers
+    function handlePaystackProceed() {
+      withButtonSpinner("paystackProceedBtn", async () => {
+        window.open("https://paystack.shop/pay/codec", "_blank");
+        await new Promise(resolve => setTimeout(resolve, 800));
+        closePaymentModal();
+      }, "Redirecting...");
+    }
+
+    function closePaymentModal() { document.getElementById("paymentModalBg").classList.add("hidden"); }
+
+    /* ================= UTILITY HELPERS ================= */
     function formatDate(dt) {
       const date = new Date(dt);
       if (isNaN(date)) return "";
@@ -1266,13 +1519,13 @@
     }
 
     function escapeHtml(text) {
-      return text ? text.replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m]) : "";
+      return text ? String(text).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m]) : "";
     }
 
     function showToast(msg, type = "info") {
       Toastify({
         text: msg,
-        duration: 5000,
+        duration: 4000,
         gravity: "top",
         position: "center",
         backgroundColor: type === "success" ? "#16a34a" : type === "error" ? "#dc2626" : "#6366f1"
@@ -1285,11 +1538,9 @@
       window.location.href = "login.html";
     }
 
-    // Modal Triggers
     document.getElementById("payNowBtn").onclick = () => document.getElementById("paymentModalBg").classList.remove("hidden");
-    function closePaymentModal() { document.getElementById("paymentModalBg").classList.add("hidden"); }
 
-    // On DOM Ready
+    /* On DOM Ready */
     document.addEventListener("DOMContentLoaded", function() {
       initDashboard();
     });
